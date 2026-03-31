@@ -717,7 +717,6 @@ let expTask=null;
 let homeSec={tasks:true,fq:false,help:false};
 let toastTimer=null;
 let morePage='grid';
-let activeSong=null;
 function sv(){for(const[k,v]of Object.entries({sk:S.sk,la:S.la,dc:S.dc,dd:S.dd,wd:S.wd,fk:S.fk,qt:S.qt,qc:S.qc,fq:S.fq}))L.s(k,v);}
 function us(){const t=localDay();if(S.la===t)return;const prev=new Date(S.la),curr=new Date(t),diff=Math.round((curr-prev)/(864e5));S.sk=(diff===1)?S.sk+1:1;S.la=t;sv();}
 function showSaved(){const t=document.getElementById('toast');if(!t)return;t.classList.add('sh');if(toastTimer)clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove('sh'),1500);}
@@ -796,25 +795,13 @@ function cs(){const tw=48,dw=Object.values(S.wd).filter(Boolean).length,p=Math.r
 /* ===== HOME ===== */
 function rH(){rd();us();const{dw,p,kw}=cs();const d=new Date(),dn=d.toLocaleDateString('en-US',{weekday:'long'}),ds=d.toLocaleDateString('en-US',{month:'long',day:'numeric'});const mo=MO[0|Math.random()*MO.length];const cc=Object.values(S.dc).filter(Boolean).length;
 const catCls={daily:'cat-daily',florida:'cat-florida',parent:'cat-parent',culture:'cat-culture'};
-let h=`<div class="hero"><h2>¡Buenos días${profile?' '+profile.name:''}!</h2><div class="dt2">${dn}, ${ds}${profile?' · '+profile.child+'\'s learning day':''}</div><div class="mot">${mo}</div></div>
+let h=`${profile&&dw===0?`<div onclick="goMore('gs')" style="background:var(--teal);color:var(--w);padding:14px;border-radius:var(--r);text-align:center;font-weight:700;font-size:14px;cursor:pointer;margin-bottom:12px;">🚀 New here? Tap to read the Getting Started guide — it walks you through everything!</div>`:''}<div class="hero"><h2>¡Buenos días${profile?' '+profile.name:''}!</h2><div class="dt2">${dn}, ${ds}${profile?' · '+profile.child+'\'s learning day':''}</div><div class="mot">${mo}</div></div>
 <div class="cls ${homeSec.help?'':'cp'}" style="background:var(--ink);color:var(--w);border:2px solid var(--gold);">
 <button onclick="tgHomeSec('help')" class="clh tg" style="border:none;justify-content:center;">
 <span style="font-size:16px;">🆘 HELP ME — Emergency Phrases</span><span class="clx">${homeSec.help?'−':'+'}</span>
 </button>
 <div id="helpme" class="cls-bd" style="padding:12px 16px;">
 <p style="text-align:center;font-size:12px;color:#CBD5E1;margin-bottom:10px;">Toddler meltdown? Tap for instant phrases.</p>
-</button>
-<div id="helpme" class="cls-bd" style="padding:12px 16px;">
-<p style="text-align:center;font-size:12px;color:#CBD5E1;margin-bottom:10px;">Toddler meltdown? Tap for instant phrases.</p>
-</button>
-<div id="helpme" class="cls-bd" style="padding:12px 16px;">
-<p style="text-align:center;font-size:12px;color:#CBD5E1;margin-bottom:10px;">Toddler meltdown? Tap for instant phrases.</p>
-<div class="card ${homeSec.help?'':'cp'}" style="background:var(--ink);color:var(--w);border:2px solid var(--gold);">
-<button onclick="tgHomeSec('help')" class="clh tg" style="background:none;border:none;justify-content:center;padding:0 0 8px;color:var(--gold);">
-<span style="font-size:16px;">🆘 HELP ME — Emergency Phrases</span><span class="clx">${homeSec.help?'−':'+'}</span>
-</button>
-<p style="text-align:center;font-size:12px;color:#CBD5E1;">Toddler meltdown? Tap for instant phrases.</p>
-<div id="helpme" class="cls-bd" style="margin-top:12px;">
 <div style="background:rgba(212,160,23,.1);border:1px solid rgba(212,160,23,.2);padding:12px;border-radius:12px;margin-bottom:8px;display:flex;align-items:center;gap:10px;"><button class="spk" data-speak="Cálmate mi amor" style="background:var(--gold);border-color:var(--gold);color:var(--ink);">🔊</button><div><b style="font-size:18px;color:var(--gold);">Cálmate</b><br><span style="font-size:12px;color:#C8C8DA;">KAL-mah-teh · Calm down</span></div></div>
 <div style="background:rgba(212,160,23,.1);border:1px solid rgba(212,160,23,.2);padding:12px;border-radius:12px;margin-bottom:8px;display:flex;align-items:center;gap:10px;"><button class="spk" data-speak="Usa tus palabras" style="background:var(--gold);border-color:var(--gold);color:var(--ink);">🔊</button><div><b style="font-size:18px;color:var(--gold);">Usa tus palabras</b><br><span style="font-size:12px;color:#C8C8DA;">OO-sah toos pah-LAH-brahs · Use your words</span></div></div>
 <div style="background:rgba(212,160,23,.1);border:1px solid rgba(212,160,23,.2);padding:12px;border-radius:12px;margin-bottom:8px;display:flex;align-items:center;gap:10px;"><button class="spk" data-speak="Respira" style="background:var(--gold);border-color:var(--gold);color:var(--ink);">🔊</button><div><b style="font-size:18px;color:var(--gold);">Respira</b><br><span style="font-size:12px;color:#C8C8DA;">reh-SPEE-rah · Breathe</span></div></div>
@@ -822,10 +809,17 @@ let h=`<div class="hero"><h2>¡Buenos días${profile?' '+profile.name:''}!</h2><
 </div></div>
 <div class="rc"><div class="rw"><svg width="120" height="120"><circle cx="60" cy="60" r="52" fill="none" stroke="var(--grl)" stroke-width="8"/><circle cx="60" cy="60" r="52" fill="none" stroke="url(#rg)" stroke-width="8" stroke-dasharray="326.7" stroke-dashoffset="${326.7-(326.7*p/100)}" stroke-linecap="round"/><defs><linearGradient id="rg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="var(--teal)"/><stop offset="100%" stop-color="var(--gold)"/></linearGradient></defs></svg><div class="rcn"><div class="rpct">${p}%</div><div class="rlb">Complete</div></div></div><div style="font-size:12px;color:var(--gr);font-weight:600;">${dw} of 48 weeks</div></div>
 <div class="srow"><div class="sc2"><div class="sn cc">🔥 ${S.sk}</div><div class="sl2">Streak</div></div><div class="sc2"><div class="sn cy">${kw}</div><div class="sl2">Words</div></div><div class="sc2"><div class="sn cs">${S.qc}</div><div class="sl2">Quiz ✓</div></div><div class="sc2"><div class="sn cg">${dw}</div><div class="sl2">Weeks</div></div></div>
+<div style="margin:8px 0 2px;"><div style="font-weight:800;font-size:14px;color:var(--ink);margin-bottom:8px;">🧰 Quick Tools</div><div style="display:flex;gap:10px;overflow-x:auto;padding:4px 0 12px;-webkit-overflow-scrolling:touch;">${[
+['gs','🚀','Getting Started'],
+['sc','📅','Schedule'],
+['hn','🇭🇳','Honduran'],
+['sg','🎵','Songs'],
+['rs','📚','Resources'],
+['cg','🔗','Cognates']
+].map(([id,emoji,label])=>`<button onclick="goMore('${id}')" style="background:var(--w);border:1px solid var(--bd);border-radius:12px;padding:10px 14px;min-width:90px;text-align:center;box-shadow:var(--sh);flex-shrink:0;"><span style="font-size:22px;display:block;">${emoji}</span><span style="font-size:11px;font-weight:700;color:var(--ink);">${label}</span></button>`).join('')}</div></div>
 <div class="cls ${homeSec.tasks?'':'cp'}"><button class="clh tg" onclick="tgHomeSec('tasks')"><span>📋 Today's Tasks</span><span><span class="clc">${cc}/${TK.length}</span><span class="clx">${homeSec.tasks?'−':'+'}</span></span></button><div class="cls-bd">${TK.map(t=>{const dn2=S.dc[t.id];const ex=expTask===t.id;return`<div class="ci ${dn2?'dn':''} ${ex?'exp':''}"><div class="cb" onclick="event.stopPropagation();tgD('${t.id}')">${dn2?'✓':''}</div><div style="flex:1;cursor:pointer;" onclick="tgE('${t.id}')"><div class="ct">${t.t}</div><div class="csub">${t.s} <span class="cat-badge ${catCls[t.cat]||'cat-daily'}">${t.cat}</span></div><div class="ci-exp">${ex?'▲ Hide':'▼ Tap for instructions'}</div><div class="ci-det">${t.d}</div></div></div>`}).join('')}</div></div>
 
 <div class="cls ${homeSec.fq?'':'cp'}"><button class="clh tg" onclick="tgHomeSec('fq')"><span>🌴 Florida Quest — Fort Myers</span><span><span class="clc">${Object.values(S.fq||{}).filter(Boolean).length}/${FQ.length}</span><span class="clx">${homeSec.fq?'−':'+'}</span></span></button><div class="cls-bd">${FQ.map(q=>{const dn3=S.fq&&S.fq[q.id];return`<div class="ci ${dn3?'dn':''}" style="cursor:pointer;"><div class="cb" onclick="event.stopPropagation();tgFQ('${q.id}')">${dn3?'✓':''}</div><div style="flex:1;"><div class="ct" style="font-size:13px;">${q.t}</div><div class="csub">${q.d}</div></div></div>`}).join('')}</div></div>
-<div class="cls ${homeSec.fq?'':'cp'}"><button class="clh tg" onclick="tgHomeSec('fq')"><span>🌴 Florida Quest — Cape Coral</span><span><span class="clc">${Object.values(S.fq||{}).filter(Boolean).length}/${FQ.length}</span><span class="clx">${homeSec.fq?'−':'+'}</span></span></button><div class="cls-bd">${FQ.map(q=>{const dn3=S.fq&&S.fq[q.id];return`<div class="ci ${dn3?'dn':''}" style="cursor:pointer;"><div class="cb" onclick="event.stopPropagation();tgFQ('${q.id}')">${dn3?'✓':''}</div><div style="flex:1;"><div class="ct" style="font-size:13px;">${q.t}</div><div class="csub">${q.d}</div></div></div>`}).join('')}</div></div>
 
 ${profile?`<button onclick="shareStreak()" style="width:100%;padding:14px;border-radius:50px;background:var(--ink);color:var(--gold);font-weight:700;font-size:14px;border:2px solid var(--gold);margin-bottom:16px;">📤 Share ${S.sk}-Day Streak with Partner</button>`:''}`;
 document.getElementById('p-home').innerHTML=h;}
@@ -907,13 +901,26 @@ setTimeout(()=>{qI++;qA=false;rQ();},ok?700:1400);
 /* ===== MORE ===== */
 function rM(){let h=`<div class="pt">📋 More</div>`;
 h+=`<div class="subpg ${morePage==='grid'?'act':''}" id="m-grid"><div class="more-grid">${[
+['gs','🚀','Getting Started','Everything you need to know to use this app.'],
 ['sc','📅','Schedule','Daily and weekly learning rhythm.'],
 ['rs','📚','Resources','Apps, YouTube, podcasts, and community.'],
 ['hn','🇭🇳','Honduran Guide','Pronunciation, slang, food, and recipes.'],
-['sg','🎵','Songs','Spanish songs with in-app YouTube player.'],
+['sg','🎵','Songs','Spanish songs with YouTube search links.'],
 ['cg','🔗','Cognates','Bilingual bonus words you already know.'],
 ['st','⚙️','Settings','Profile updates and reset progress tools.']
 ].map(([id,ico,title,desc])=>`<button class="more-card" onclick="openMore('${id}')"><div class="more-ico">${ico}</div><h3>${title}</h3><p>${desc}</p></button>`).join('')}</div></div>`;
+
+h+=`<div class="subpg ${morePage==='gs'?'act':''}" id="m-gs"><button class="back-btn" onclick="openMore('grid')">← Back to More</button>
+<div class="card"><h3>👋 Welcome to ¡Vamos!</h3><p style="font-size:13px;">This is your free 12-month Spanish learning program built for you and your toddler. Everything you need is right here — no other apps required to get started.<br><br>Just 45 minutes a day, broken into small chunks around naps and meals. You'll learn conversational Latin American Spanish with a focus on Honduran culture, and your toddler will pick it up right alongside you.</p></div>
+<div class="card hl-teal"><h3>📱 Install on Your Phone</h3><p style="font-size:13px;"><b>For the best experience, add this to your home screen:</b><br><br>• iPhone: Tap the share button (the square with an arrow) at the bottom of Safari → scroll down → tap 'Add to Home Screen'<br>• Android: Tap the three dots menu (⋮) at the top right of Chrome → tap 'Add to Home Screen'<br><br>This makes it open like a real app — no browser bar, no tabs. Your progress saves automatically.</p></div>
+<div class="card"><h3>🏠 The 5 Tabs</h3><p style="font-size:13px;"><b>TODAY</b> — Your daily home base. Check off tasks, track your streak, and see your progress. The Help Me button gives you emergency Spanish phrases for toddler meltdowns.<br><br><b>LEARN</b> — Your 48-week curriculum. Open Phase 1 and start with Week 1. Each week tells you exactly what to do — step by step. Check off weeks as you finish them.<br><br><b>CARDS</b> — Flashcards for vocabulary. 12 decks covering greetings, numbers, colors, food, family, body parts, commands, feelings, Honduran slang, parenting, kitchen words, and neighborhood phrases. Tap to flip, tap 🔊 to hear it spoken.<br><br><b>QUIZ</b> — Test yourself with 10 random questions from all flashcard decks. Great for a quick 2-minute practice session.<br><br><b>MORE</b> — You're here! Schedule, resources, Honduran guide, songs, cognates, settings, and this guide.</p></div>
+<div class="card"><h3>👶 Toddler Mode</h3><p style="font-size:13px;">Tap the gold TODDLER button in the top right corner anytime. This opens a full-screen play area just for your child:<br><br>• Tap any picture to hear the Spanish word spoken out loud<br>• Use the category tabs (Animals, Food, Colors, Body, Count, Nature) to focus<br>• The Counting Game teaches numbers 1-10 with tap navigation<br>• The Color Matching Game says a color and your child taps the right one — confetti on correct!<br>• The Punta Drums at the bottom let your toddler tap for different drum sounds<br><br>Hand your phone to your child and let them explore. Everything is toddler-safe.</p></div>
+<div class="card hl-gold"><h3>📋 Your Daily Routine</h3><p style="font-size:13px;"><b>Your 45 minutes breaks down like this:</b><br><br>• Morning (10 min): Sing 'Buenos días a ti' + narrate getting dressed<br>• Breakfast (5 min): Name foods in Spanish — 'Aquí está tu leche'<br>• Mid-morning (10 min): Watch a Spanish video together (YouTube suggestions are in the curriculum)<br>• Play time (10 min): Color hunt, Simon Says in Spanish, or Toddler Mode<br>• Nap time (15 min): Your solo study — Language Transfer podcast is the #1 resource<br>• Bedtime (5 min): Bath vocab + recap the day in Spanish<br><br>5 out of 7 days is success. Don't stress about perfection.</p></div>
+<div class="card"><h3>🎧 The #1 Resource: Language Transfer</h3><p style="font-size:13px;">If you do ONE thing outside this app, listen to Language Transfer Complete Spanish. It's free, 90 episodes, on YouTube and Spotify. Search 'Language Transfer Complete Spanish Episode 1.'<br><br>Listen during nap time — one episode per day. This will teach you how Spanish WORKS, not just memorize words. The curriculum tells you exactly which episodes to listen to each week.</p></div>
+<div class="card hl-teal"><h3>💾 Does My Progress Save?</h3><p style="font-size:13px;"><b>Yes — automatically.</b> Every time you check off a task, complete a week, flip a flashcard, or take a quiz, it saves instantly to your phone. You'll see a '✓ Saved' notification confirm it.<br><br>Your progress is stored on THIS device. If you use the app on a different phone or clear your browser data, it won't be there. For best results, install it to your home screen and always use the same phone.</p></div>
+<div class="card"><h3>🔊 Sound Not Working?</h3><p style="font-size:13px;">The app uses your phone's text-to-speech to pronounce Spanish words. If you don't hear anything when you tap 🔊:<br><br>• Make sure your phone isn't on silent/mute<br>• Turn up your media volume (not just ringer volume)<br>• On iPhone: go to Settings → Siri & Search → make sure a Spanish voice is available<br>• Try closing and reopening the app<br><br>The pronunciation uses a Mexican Spanish voice, which is the closest to Honduran Spanish.</p></div>
+<div class="card hl-gold"><h3>✅ Week 1 Checklist</h3><p style="font-size:13px;"><b>Start here:</b><br><br>• 1. Fill out the onboarding (your name, child's name, age, level)<br>• 2. Open the Learn tab → Phase 1 → Week 1: Getting Started<br>• 3. Follow each step — they tell you exactly what to do<br>• 4. Check off your daily tasks on the Today tab<br>• 5. Let your toddler play in Toddler Mode<br>• 6. Listen to Language Transfer Episode 1 during nap time<br>• 7. Sing 'Buenos días a ti' every morning this week<br>• 8. Come back tomorrow and keep your streak going!</p></div>
+<div class="card hl-rust"><h3>❤️ A Note From Us</h3><p style="font-size:13px;">Every word you learn is a gift to your child. You don't need to be perfect — you just need to be consistent.<br><br>Your toddler doesn't judge your accent. They just hear their parent trying, and that's the most powerful thing in the world. ¡Va pues! 🇭🇳</p></div></div>`;
 
 h+=`<div class="subpg ${morePage==='sc'?'act':''}" id="m-sc"><button class="back-btn" onclick="openMore('grid')">← Back to More</button><div class="card hl-teal"><h3>⏰ 45 min/day</h3><p>Small blocks around naps & meals. 5/7 days = success.</p></div>
 <div class="sbl"><div class="sbh">📅 Weekday</div>${[['7:00','Morning song + dress narration','5m'],['7:30','Breakfast narration','5m'],['9:00','Songs + video together','10m'],['10:00','Play activity in Spanish','10m'],['1:00','Solo study (nap time)','15m'],['6:30','Bath/bedtime routine','5m']].map(([t,a,d])=>`<div class="sr"><span class="stm">${t}</span><div class="sac">${a}</div><span style="font-size:10px;color:var(--gr);font-weight:700;">${d}</span></div>`).join('')}</div>
@@ -934,17 +941,7 @@ h+=`<div class="subpg ${morePage==='hn'?'act':''}" id="m-hn"><button class="back
 <div class="card hl-rust"><h3>🍳 Make Baleadas Together!</h3><p style="font-size:13px;"><b>Ingredients:</b> Flour tortillas, canned refried beans, shredded cheese, sour cream (or crema).<br><b>Steps:</b> 1) Warm tortilla on a skillet. 2) Spread beans on one half. 3) Add cheese and crema. 4) Fold. 5) ¡Buen provecho!<br><b>Say while cooking:</b> "Vamos a cocinar. Necesitamos tortillas, frijoles, y queso. Primero, calentamos la tortilla…"</p></div>
 <div class="card"><h3>🎵 Honduran Music</h3><ul><li><b>Guillermo Anderson</b> — "En Mi País," "Ceibeño"</li><li><b>Punta music</b> — Banda Blanca, Kazzabe</li><li><b>Polache</b> — comedian/singer</li></ul></div></div>`;
 
-h+=`<div class="subpg ${morePage==='sg'?'act':''}" id="m-sg"><button class="back-btn" onclick="openMore('grid')">← Back to More</button><div class="card"><h3>🎵 Songs — Tap to Play In-App</h3><p style="font-size:12px;color:#4B5563;margin-bottom:8px;">Tap a song title to open an embedded YouTube player below it.</p>${[
-["Buenos Días","Mo 1","0jCqJXVdkW4"],
-["Los Pollitos Dicen","Mo 1","IkFbOOWpmpA"],
-["Cabeza Hombros Rodillas Pies","Mo 2","ZanHgPprl-0"],
-["Pin Pon","Mo 2","XqZsoesa55w"],
-["Estrellita ¿Dónde Estás?","Mo 3","ZDRidMMUm5M"],
-["Arroz con Leche","Mo 4","FEUZa6GEi-Q"],
-["La Vaca Lola","Mo 5","or0iYBXBSIA"],
-["Un Elefante Se Balanceaba","Mo 6","bXsaA04gXOA"],
-["De Colores","Mo 7+","MS8SaqT9JRU"]
-].map(([n,w,id])=>`<div class="song-item"><div class="song-row"><button class="song-play" onclick="openSong('${id}')">▶️</button><div style="flex:1"><button onclick="openSong('${id}')" style="background:none;text-align:left;width:100%;"><b style="font-size:13px;color:var(--ink)">${n}</b></button><div>${spB(n)} <span style="font-size:11px;color:var(--gr)">${w}</span></div></div></div>${activeSong===id?`<iframe width="100%" height="200" style="border-radius:12px;border:none;margin-top:8px;" src="https://www.youtube.com/embed/${id}?autoplay=1&rel=0" allow="autoplay; encrypted-media" allowfullscreen></iframe><button class="song-close" onclick="closeSong()">✕ Close</button>`:''}</div>`).join('')}</div></div>`;
+h+=`<div class="subpg ${morePage==='sg'?'act':''}" id="m-sg"><button class="back-btn" onclick="openMore('grid')">← Back to More</button><div class="card"><h3>🎵 Songs — Tap to Open YouTube</h3><p style="font-size:12px;color:#4B5563;margin-bottom:8px;">Tap ▶️ to open YouTube search results in a new tab.</p>${[
 ["Buenos Días","Mo 1","buenos dias cancion infantil español"],
 ["Los Pollitos Dicen","Mo 1","los pollitos dicen canticos"],
 ["Cabeza Hombros Rodillas Pies","Mo 2","cabeza hombros rodillas pies cancion infantil"],
@@ -954,7 +951,7 @@ h+=`<div class="subpg ${morePage==='sg'?'act':''}" id="m-sg"><button class="back
 ["La Vaca Lola","Mo 5","la vaca lola cancion"],
 ["Un Elefante Se Balanceaba","Mo 6","un elefante se balanceaba cancion"],
 ["De Colores","Mo 7+","de colores cancion tradicional español"]
-].map(([n,w,q])=>`<div class="song-item"><div class="song-row"><button class="song-play" onclick="openSong('${encodeURIComponent(q)}')">▶️</button><div style="flex:1"><button onclick="openSong('${encodeURIComponent(q)}')" style="background:none;text-align:left;width:100%;"><b style="font-size:13px;color:var(--ink)">${n}</b></button><div>${spB(n)} <span style="font-size:11px;color:var(--gr)">${w}</span></div></div></div>${activeSong===encodeURIComponent(q)?`<iframe class="song-frame" src="https://www.youtube.com/embed/?listType=search&list=${encodeURIComponent(q)}" title="${n}" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe><button class="song-close" onclick="closeSong()">Close Player</button>`:''}</div>`).join('')}</div></div>`;
+].map(([n,w,q])=>`<div class="song-item"><div class="song-row"><button class="song-play" onclick="openSong('${encodeURIComponent(q)}')">▶️</button><div style="flex:1"><button onclick="openSong('${encodeURIComponent(q)}')" style="background:none;text-align:left;width:100%;"><b style="font-size:13px;color:var(--ink)">${n}</b></button><div>${spB(n)} <span style="font-size:11px;color:var(--gr)">${w}</span></div></div></div></div>`).join('')}</div></div>`;
 
 h+=`<div class="subpg ${morePage==='cg'?'act':''}" id="m-cg"><button class="back-btn" onclick="openMore('grid')">← Back to More</button><div class="card hl-gold"><h3>🔗 Bilingual Bonus: Cognates</h3><p>These words sound similar in English and Spanish — you already know more than you think! Honduras's Caribbean coast has English-Creole influence, making these even more familiar.</p></div>
 <div class="card"><h3>Words You Already Know</h3>${[["Chocolate","Chocolate — from Nahuatl, same word!"],["Hospital","Hospital — identical"],["Familia","Family — sounds similar"],["Música","Music — add an accent"],["Animal","Animal — exactly the same"],["Teléfono","Telephone — easy cognate"],["Banana / Guineo","Banana — Caribbean English root"],["Limón","Lemon — close enough"],["Importante","Important — just add -e"],["Información","Information — swap the ending"],["Natural","Natural — identical"],["Tropical","Tropical — same in Florida!"]].map(([a,b])=>`<div class="vp"><span class="ve">${a.split('/')[0].trim()} ${spB(a.split('/')[0].trim())}</span><span class="vn">${b}</span></div>`).join('')}</div>
@@ -971,8 +968,14 @@ h+=`<div class="subpg ${morePage==='st'?'act':''}" id="m-st"><button class="back
 <div class="card hl-gold"><h3>📊 Reset Progress</h3><p style="margin-bottom:8px;">Start completely fresh. This cannot be undone.</p><button onclick="if(confirm('Reset ALL progress?')){localStorage.clear();location.reload();}" style="padding:10px 20px;border-radius:50px;background:var(--terra);color:var(--w);font-weight:700;font-size:13px;">Reset Everything</button></div></div>`;
 document.getElementById('p-more').innerHTML=h;}
 function openMore(id){morePage=id;rM();}
-function openSong(query){activeSong=query;morePage='sg';rM();}
-function closeSong(){activeSong=null;rM();}
+function goMore(id){
+  document.querySelectorAll('.nb').forEach(x=>x.classList.remove('act'));
+  document.querySelectorAll('.pg').forEach(p=>p.classList.remove('act'));
+  document.querySelector('[data-p="more"]').classList.add('act');
+  document.getElementById('p-more').classList.add('act');
+  openMore(id);
+}
+function openSong(query){ window.open('https://www.youtube.com/results?search_query=' + query, '_blank'); }
 document.getElementById('color-dots').addEventListener('click',e=>{const b=e.target.closest('[data-color]');if(!b)return;checkColor(b.dataset.color);});
 
 /* ===== INIT ===== */
