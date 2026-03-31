@@ -1054,27 +1054,24 @@ const WALK_STEPS=[
   {emoji:'📋',title:'These are your daily tasks',body:'Every day you get 8 small activities. Tap any task to see instructions and Spanish phrases you can hear spoken. Check them off as you go.',btn:'Next →',action:function(){document.querySelector('[data-p="home"]').click();}},
   {emoji:'📖',title:'Your 48-week curriculum',body:'Tap Learn at the bottom. Open Phase 1 → Week 1 for step-by-step lessons. Each week tells you exactly what to do — which videos, phrases, and songs.',btn:'Next →',action:function(){document.querySelector('[data-p="learn"]').click();}},
   {emoji:'🃏',title:'Flashcards & Quiz',body:'Cards has 12 vocabulary decks — tap to flip, tap 🔊 to hear. Quiz tests you with 10 random questions. Both track your progress.',btn:'Next →',action:function(){document.querySelector('[data-p="cards"]').click();}},
-  {emoji:'👶',title:'Toddler Mode',body:'See the gold TODDLER button? Tap it anytime to let your child play. They tap pictures to hear Spanish words, play counting and color games, and bang on punta drums. The exit button requires a 3-second hold so they can\'t escape.',btn:'Next →',action:function(){document.querySelector('[data-p="home"]').click();}},
-  {emoji:'🧰',title:'Quick Tools',body:'This scrollable strip has shortcuts to the Schedule, Honduran Guide, Songs, Resources, and more. You don\'t have to dig for anything — it\'s all right here.',btn:'Next →'},
+  {emoji:'👶',title:'Toddler Mode',body:'See the gold TODDLER button? Tap it anytime to let your child play. They tap pictures to hear Spanish words, play counting and color games, and bang on punta drums. The exit button requires a 3-second hold so they can't escape.',btn:'Next →',action:function(){document.querySelector('[data-p="home"]').click();}},
+  {emoji:'🧰',title:'Quick Tools',body:'This scrollable strip has shortcuts to the Schedule, Honduran Guide, Songs, Resources, and more. You don't have to dig for anything — it's all right here.',btn:'Next →'},
   {emoji:'🔊',title:'Tap 🔊 to hear any word',body:'Everywhere you see a gold 🔊 button, tap it to hear the Spanish word spoken out loud. The gold boxes show phonetic pronunciation so you know exactly how to say it.',btn:'Next →'},
-  {emoji:'💾',title:'Your progress saves automatically',body:'Every task you check, every week you complete, every flashcard you flip — it all saves to your phone. You\'ll see a ✓ Saved notification each time. Just keep using the same phone.',btn:'Next →'},
-  {emoji:'🚀',title:'You\'re ready!',body:'Start with the Today tab. Check off tasks as you do them. Open Learn → Phase 1 → Week 1 when you\'re ready to dive in. ¡Va pues!',btn:'¡Vamos! Let\'s go! 🇭🇳'}
+  {emoji:'💾',title:'Your progress saves automatically',body:'Every task you check, every week you complete, every flashcard you flip — it all saves to your phone. You'll see a ✓ Saved notification each time. Just keep using the same phone.',btn:'Next →'},
+  {emoji:'🚀',title:'You're ready!',body:'Start with the Today tab. Check off tasks as you do them. Open Learn → Phase 1 → Week 1 when you're ready to dive in. ¡Va pues!',btn:'¡Vamos! Let's go! 🇭🇳'}
 ];
 
 function showWalk(){
   if(!walkActive)return;
-  try{
-    const step=WALK_STEPS[walkStep];
-    if(!step){endWalk();return;}
-    if(step.action)step.action();
-    const dots=WALK_STEPS.map((_,i)=>'<div class="walk-dot '+(i===walkStep?'act':'')+'"></div>').join('');
-    const isLast=walkStep===WALK_STEPS.length-1;
-    let overlay=document.getElementById('walk-overlay');
-    if(!overlay){overlay=document.createElement('div');overlay.id='walk-overlay';overlay.className='walk-overlay';document.body.appendChild(overlay);}
-    overlay.innerHTML='<div class="walk-card"><div class="walk-emoji">'+step.emoji+'</div><h3>'+step.title+'</h3><p>'+step.body+'</p><div class="walk-btns">'+(isLast?'':'<button class="walk-skip" onclick="endWalk()">Skip tour</button>')+'<button class="walk-next" onclick="'+(isLast?'endWalk()':'nextWalk()')+'">'+step.btn+'</button></div><div class="walk-dots">'+dots+'</div></div>';
-    overlay.onclick=function(e){if(e.target===overlay)endWalk();};
-    overlay.style.display='flex';
-  }catch(e){console.error('Walk error:',e);endWalk();}
+  const step=WALK_STEPS[walkStep];
+  if(!step){endWalk();return;}
+  if(step.action)step.action();
+  const dots=WALK_STEPS.map((_,i)=>`<div class="walk-dot ${i===walkStep?'act':''}"></div>`).join('');
+  const isLast=walkStep===WALK_STEPS.length-1;
+  let overlay=document.getElementById('walk-overlay');
+  if(!overlay){overlay=document.createElement('div');overlay.id='walk-overlay';overlay.className='walk-overlay';document.body.appendChild(overlay);}
+  overlay.innerHTML=`<div class="walk-card"><div class="walk-emoji">${step.emoji}</div><h3>${step.title}</h3><p>${step.body}</p><div class="walk-btns">${!isLast?'<button class="walk-skip" onclick="endWalk()">Skip tour</button>':''}<button class="walk-next" onclick="${isLast?'endWalk()':'nextWalk()'}">${step.btn}</button></div><div class="walk-dots">${dots}</div></div>`;
+  overlay.style.display='flex';
 }
 
 function nextWalk(){walkStep++;showWalk();}
