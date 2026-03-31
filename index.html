@@ -717,7 +717,6 @@ let expTask=null;
 let homeSec={tasks:true,fq:false,help:false};
 let toastTimer=null;
 let morePage='grid';
-let activeSong=null;
 function sv(){for(const[k,v]of Object.entries({sk:S.sk,la:S.la,dc:S.dc,dd:S.dd,wd:S.wd,fk:S.fk,qt:S.qt,qc:S.qc,fq:S.fq}))L.s(k,v);}
 function us(){const t=localDay();if(S.la===t)return;const prev=new Date(S.la),curr=new Date(t),diff=Math.round((curr-prev)/(864e5));S.sk=(diff===1)?S.sk+1:1;S.la=t;sv();}
 function showSaved(){const t=document.getElementById('toast');if(!t)return;t.classList.add('sh');if(toastTimer)clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove('sh'),1500);}
@@ -803,18 +802,6 @@ let h=`<div class="hero"><h2>¡Buenos días${profile?' '+profile.name:''}!</h2><
 </button>
 <div id="helpme" class="cls-bd" style="padding:12px 16px;">
 <p style="text-align:center;font-size:12px;color:#CBD5E1;margin-bottom:10px;">Toddler meltdown? Tap for instant phrases.</p>
-</button>
-<div id="helpme" class="cls-bd" style="padding:12px 16px;">
-<p style="text-align:center;font-size:12px;color:#CBD5E1;margin-bottom:10px;">Toddler meltdown? Tap for instant phrases.</p>
-</button>
-<div id="helpme" class="cls-bd" style="padding:12px 16px;">
-<p style="text-align:center;font-size:12px;color:#CBD5E1;margin-bottom:10px;">Toddler meltdown? Tap for instant phrases.</p>
-<div class="card ${homeSec.help?'':'cp'}" style="background:var(--ink);color:var(--w);border:2px solid var(--gold);">
-<button onclick="tgHomeSec('help')" class="clh tg" style="background:none;border:none;justify-content:center;padding:0 0 8px;color:var(--gold);">
-<span style="font-size:16px;">🆘 HELP ME — Emergency Phrases</span><span class="clx">${homeSec.help?'−':'+'}</span>
-</button>
-<p style="text-align:center;font-size:12px;color:#CBD5E1;">Toddler meltdown? Tap for instant phrases.</p>
-<div id="helpme" class="cls-bd" style="margin-top:12px;">
 <div style="background:rgba(212,160,23,.1);border:1px solid rgba(212,160,23,.2);padding:12px;border-radius:12px;margin-bottom:8px;display:flex;align-items:center;gap:10px;"><button class="spk" data-speak="Cálmate mi amor" style="background:var(--gold);border-color:var(--gold);color:var(--ink);">🔊</button><div><b style="font-size:18px;color:var(--gold);">Cálmate</b><br><span style="font-size:12px;color:#C8C8DA;">KAL-mah-teh · Calm down</span></div></div>
 <div style="background:rgba(212,160,23,.1);border:1px solid rgba(212,160,23,.2);padding:12px;border-radius:12px;margin-bottom:8px;display:flex;align-items:center;gap:10px;"><button class="spk" data-speak="Usa tus palabras" style="background:var(--gold);border-color:var(--gold);color:var(--ink);">🔊</button><div><b style="font-size:18px;color:var(--gold);">Usa tus palabras</b><br><span style="font-size:12px;color:#C8C8DA;">OO-sah toos pah-LAH-brahs · Use your words</span></div></div>
 <div style="background:rgba(212,160,23,.1);border:1px solid rgba(212,160,23,.2);padding:12px;border-radius:12px;margin-bottom:8px;display:flex;align-items:center;gap:10px;"><button class="spk" data-speak="Respira" style="background:var(--gold);border-color:var(--gold);color:var(--ink);">🔊</button><div><b style="font-size:18px;color:var(--gold);">Respira</b><br><span style="font-size:12px;color:#C8C8DA;">reh-SPEE-rah · Breathe</span></div></div>
@@ -825,7 +812,6 @@ let h=`<div class="hero"><h2>¡Buenos días${profile?' '+profile.name:''}!</h2><
 <div class="cls ${homeSec.tasks?'':'cp'}"><button class="clh tg" onclick="tgHomeSec('tasks')"><span>📋 Today's Tasks</span><span><span class="clc">${cc}/${TK.length}</span><span class="clx">${homeSec.tasks?'−':'+'}</span></span></button><div class="cls-bd">${TK.map(t=>{const dn2=S.dc[t.id];const ex=expTask===t.id;return`<div class="ci ${dn2?'dn':''} ${ex?'exp':''}"><div class="cb" onclick="event.stopPropagation();tgD('${t.id}')">${dn2?'✓':''}</div><div style="flex:1;cursor:pointer;" onclick="tgE('${t.id}')"><div class="ct">${t.t}</div><div class="csub">${t.s} <span class="cat-badge ${catCls[t.cat]||'cat-daily'}">${t.cat}</span></div><div class="ci-exp">${ex?'▲ Hide':'▼ Tap for instructions'}</div><div class="ci-det">${t.d}</div></div></div>`}).join('')}</div></div>
 
 <div class="cls ${homeSec.fq?'':'cp'}"><button class="clh tg" onclick="tgHomeSec('fq')"><span>🌴 Florida Quest — Fort Myers</span><span><span class="clc">${Object.values(S.fq||{}).filter(Boolean).length}/${FQ.length}</span><span class="clx">${homeSec.fq?'−':'+'}</span></span></button><div class="cls-bd">${FQ.map(q=>{const dn3=S.fq&&S.fq[q.id];return`<div class="ci ${dn3?'dn':''}" style="cursor:pointer;"><div class="cb" onclick="event.stopPropagation();tgFQ('${q.id}')">${dn3?'✓':''}</div><div style="flex:1;"><div class="ct" style="font-size:13px;">${q.t}</div><div class="csub">${q.d}</div></div></div>`}).join('')}</div></div>
-<div class="cls ${homeSec.fq?'':'cp'}"><button class="clh tg" onclick="tgHomeSec('fq')"><span>🌴 Florida Quest — Cape Coral</span><span><span class="clc">${Object.values(S.fq||{}).filter(Boolean).length}/${FQ.length}</span><span class="clx">${homeSec.fq?'−':'+'}</span></span></button><div class="cls-bd">${FQ.map(q=>{const dn3=S.fq&&S.fq[q.id];return`<div class="ci ${dn3?'dn':''}" style="cursor:pointer;"><div class="cb" onclick="event.stopPropagation();tgFQ('${q.id}')">${dn3?'✓':''}</div><div style="flex:1;"><div class="ct" style="font-size:13px;">${q.t}</div><div class="csub">${q.d}</div></div></div>`}).join('')}</div></div>
 
 ${profile?`<button onclick="shareStreak()" style="width:100%;padding:14px;border-radius:50px;background:var(--ink);color:var(--gold);font-weight:700;font-size:14px;border:2px solid var(--gold);margin-bottom:16px;">📤 Share ${S.sk}-Day Streak with Partner</button>`:''}`;
 document.getElementById('p-home').innerHTML=h;}
@@ -934,17 +920,7 @@ h+=`<div class="subpg ${morePage==='hn'?'act':''}" id="m-hn"><button class="back
 <div class="card hl-rust"><h3>🍳 Make Baleadas Together!</h3><p style="font-size:13px;"><b>Ingredients:</b> Flour tortillas, canned refried beans, shredded cheese, sour cream (or crema).<br><b>Steps:</b> 1) Warm tortilla on a skillet. 2) Spread beans on one half. 3) Add cheese and crema. 4) Fold. 5) ¡Buen provecho!<br><b>Say while cooking:</b> "Vamos a cocinar. Necesitamos tortillas, frijoles, y queso. Primero, calentamos la tortilla…"</p></div>
 <div class="card"><h3>🎵 Honduran Music</h3><ul><li><b>Guillermo Anderson</b> — "En Mi País," "Ceibeño"</li><li><b>Punta music</b> — Banda Blanca, Kazzabe</li><li><b>Polache</b> — comedian/singer</li></ul></div></div>`;
 
-h+=`<div class="subpg ${morePage==='sg'?'act':''}" id="m-sg"><button class="back-btn" onclick="openMore('grid')">← Back to More</button><div class="card"><h3>🎵 Songs — Tap to Play In-App</h3><p style="font-size:12px;color:#4B5563;margin-bottom:8px;">Tap a song title to open an embedded YouTube player below it.</p>${[
-["Buenos Días","Mo 1","0jCqJXVdkW4"],
-["Los Pollitos Dicen","Mo 1","IkFbOOWpmpA"],
-["Cabeza Hombros Rodillas Pies","Mo 2","ZanHgPprl-0"],
-["Pin Pon","Mo 2","XqZsoesa55w"],
-["Estrellita ¿Dónde Estás?","Mo 3","ZDRidMMUm5M"],
-["Arroz con Leche","Mo 4","FEUZa6GEi-Q"],
-["La Vaca Lola","Mo 5","or0iYBXBSIA"],
-["Un Elefante Se Balanceaba","Mo 6","bXsaA04gXOA"],
-["De Colores","Mo 7+","MS8SaqT9JRU"]
-].map(([n,w,id])=>`<div class="song-item"><div class="song-row"><button class="song-play" onclick="openSong('${id}')">▶️</button><div style="flex:1"><button onclick="openSong('${id}')" style="background:none;text-align:left;width:100%;"><b style="font-size:13px;color:var(--ink)">${n}</b></button><div>${spB(n)} <span style="font-size:11px;color:var(--gr)">${w}</span></div></div></div>${activeSong===id?`<iframe width="100%" height="200" style="border-radius:12px;border:none;margin-top:8px;" src="https://www.youtube.com/embed/${id}?autoplay=1&rel=0" allow="autoplay; encrypted-media" allowfullscreen></iframe><button class="song-close" onclick="closeSong()">✕ Close</button>`:''}</div>`).join('')}</div></div>`;
+h+=`<div class="subpg ${morePage==='sg'?'act':''}" id="m-sg"><button class="back-btn" onclick="openMore('grid')">← Back to More</button><div class="card"><h3>🎵 Songs — Tap to Open YouTube</h3><p style="font-size:12px;color:#4B5563;margin-bottom:8px;">Tap ▶️ to open YouTube search results in a new tab.</p>${[
 ["Buenos Días","Mo 1","buenos dias cancion infantil español"],
 ["Los Pollitos Dicen","Mo 1","los pollitos dicen canticos"],
 ["Cabeza Hombros Rodillas Pies","Mo 2","cabeza hombros rodillas pies cancion infantil"],
@@ -954,7 +930,7 @@ h+=`<div class="subpg ${morePage==='sg'?'act':''}" id="m-sg"><button class="back
 ["La Vaca Lola","Mo 5","la vaca lola cancion"],
 ["Un Elefante Se Balanceaba","Mo 6","un elefante se balanceaba cancion"],
 ["De Colores","Mo 7+","de colores cancion tradicional español"]
-].map(([n,w,q])=>`<div class="song-item"><div class="song-row"><button class="song-play" onclick="openSong('${encodeURIComponent(q)}')">▶️</button><div style="flex:1"><button onclick="openSong('${encodeURIComponent(q)}')" style="background:none;text-align:left;width:100%;"><b style="font-size:13px;color:var(--ink)">${n}</b></button><div>${spB(n)} <span style="font-size:11px;color:var(--gr)">${w}</span></div></div></div>${activeSong===encodeURIComponent(q)?`<iframe class="song-frame" src="https://www.youtube.com/embed/?listType=search&list=${encodeURIComponent(q)}" title="${n}" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe><button class="song-close" onclick="closeSong()">Close Player</button>`:''}</div>`).join('')}</div></div>`;
+].map(([n,w,q])=>`<div class="song-item"><div class="song-row"><button class="song-play" onclick="openSong('${encodeURIComponent(q)}')">▶️</button><div style="flex:1"><button onclick="openSong('${encodeURIComponent(q)}')" style="background:none;text-align:left;width:100%;"><b style="font-size:13px;color:var(--ink)">${n}</b></button><div>${spB(n)} <span style="font-size:11px;color:var(--gr)">${w}</span></div></div></div></div>`).join('')}</div></div>`;
 
 h+=`<div class="subpg ${morePage==='cg'?'act':''}" id="m-cg"><button class="back-btn" onclick="openMore('grid')">← Back to More</button><div class="card hl-gold"><h3>🔗 Bilingual Bonus: Cognates</h3><p>These words sound similar in English and Spanish — you already know more than you think! Honduras's Caribbean coast has English-Creole influence, making these even more familiar.</p></div>
 <div class="card"><h3>Words You Already Know</h3>${[["Chocolate","Chocolate — from Nahuatl, same word!"],["Hospital","Hospital — identical"],["Familia","Family — sounds similar"],["Música","Music — add an accent"],["Animal","Animal — exactly the same"],["Teléfono","Telephone — easy cognate"],["Banana / Guineo","Banana — Caribbean English root"],["Limón","Lemon — close enough"],["Importante","Important — just add -e"],["Información","Information — swap the ending"],["Natural","Natural — identical"],["Tropical","Tropical — same in Florida!"]].map(([a,b])=>`<div class="vp"><span class="ve">${a.split('/')[0].trim()} ${spB(a.split('/')[0].trim())}</span><span class="vn">${b}</span></div>`).join('')}</div>
@@ -971,8 +947,7 @@ h+=`<div class="subpg ${morePage==='st'?'act':''}" id="m-st"><button class="back
 <div class="card hl-gold"><h3>📊 Reset Progress</h3><p style="margin-bottom:8px;">Start completely fresh. This cannot be undone.</p><button onclick="if(confirm('Reset ALL progress?')){localStorage.clear();location.reload();}" style="padding:10px 20px;border-radius:50px;background:var(--terra);color:var(--w);font-weight:700;font-size:13px;">Reset Everything</button></div></div>`;
 document.getElementById('p-more').innerHTML=h;}
 function openMore(id){morePage=id;rM();}
-function openSong(query){activeSong=query;morePage='sg';rM();}
-function closeSong(){activeSong=null;rM();}
+function openSong(query){ window.open('https://www.youtube.com/results?search_query=' + query, '_blank'); }
 document.getElementById('color-dots').addEventListener('click',e=>{const b=e.target.closest('[data-color]');if(!b)return;checkColor(b.dataset.color);});
 
 /* ===== INIT ===== */
