@@ -821,10 +821,10 @@ async function playDrum(t){
 function toggleTM(){const tm=document.getElementById('tmode');tm.classList.toggle('act');if(document.getElementById('tmode').classList.contains('act')){try{document.documentElement.requestFullscreen?.();}catch(e){}}else{try{document.exitFullscreen?.();}catch(e){}}if(profile)document.getElementById('tm-greeting').textContent='¡Hola '+profile.child+'!';}
 let exitTimer=null;let exitCount=3;
 const exitBtn=document.getElementById('tm-lock-exit');
-function startExit(){exitCount=3;exitBtn.textContent='Exiting 3...';exitTimer=setInterval(()=>{exitCount--;if(exitCount<=0){clearInterval(exitTimer);exitTimer=null;exitBtn.textContent='🔒 Hold to Exit';toggleTM();}else{exitBtn.textContent='Exiting '+exitCount+'...';}},1000);}
-function cancelExit(){if(exitTimer){clearInterval(exitTimer);exitTimer=null;}exitBtn.textContent='🔒 Hold to Exit';}
-exitBtn.addEventListener('mousedown',startExit);exitBtn.addEventListener('mouseup',cancelExit);exitBtn.addEventListener('mouseleave',cancelExit);
-exitBtn.addEventListener('touchstart',e=>{e.preventDefault();startExit();});exitBtn.addEventListener('touchend',cancelExit);exitBtn.addEventListener('touchcancel',cancelExit);
+function startExit(){if(!exitBtn)return;exitCount=3;exitBtn.textContent='Exiting 3...';exitTimer=setInterval(()=>{exitCount--;if(exitCount<=0){clearInterval(exitTimer);exitTimer=null;exitBtn.textContent='🔒 Hold to Exit';toggleTM();}else{exitBtn.textContent='Exiting '+exitCount+'...';}},1000);}
+function cancelExit(){if(exitTimer){clearInterval(exitTimer);exitTimer=null;}if(exitBtn)exitBtn.textContent='🔒 Hold to Exit';}
+if(exitBtn){exitBtn.addEventListener('mousedown',startExit);exitBtn.addEventListener('mouseup',cancelExit);exitBtn.addEventListener('mouseleave',cancelExit);
+exitBtn.addEventListener('touchstart',e=>{e.preventDefault();startExit();});exitBtn.addEventListener('touchend',cancelExit);exitBtn.addEventListener('touchcancel',cancelExit);}
 function renderToys(){
   const items=tCat==='all'?sh(TOYS).slice(0,12):TOYS.filter(t=>t.cat===tCat);
   document.getElementById('toyGrid').innerHTML=items.map(t=>`<button class="toy-btn" data-speak="${t.es}">${t.emoji}<span class="toy-lbl">${t.es}</span></button>`).join('');
@@ -1054,11 +1054,11 @@ const WALK_STEPS=[
   {emoji:'📋',title:'These are your daily tasks',body:'Every day you get 8 small activities. Tap any task to see instructions and Spanish phrases you can hear spoken. Check them off as you go.',btn:'Next →',action:function(){document.querySelector('[data-p="home"]').click();}},
   {emoji:'📖',title:'Your 48-week curriculum',body:'Tap Learn at the bottom. Open Phase 1 → Week 1 for step-by-step lessons. Each week tells you exactly what to do — which videos, phrases, and songs.',btn:'Next →',action:function(){document.querySelector('[data-p="learn"]').click();}},
   {emoji:'🃏',title:'Flashcards & Quiz',body:'Cards has 12 vocabulary decks — tap to flip, tap 🔊 to hear. Quiz tests you with 10 random questions. Both track your progress.',btn:'Next →',action:function(){document.querySelector('[data-p="cards"]').click();}},
-  {emoji:'👶',title:'Toddler Mode',body:'See the gold TODDLER button? Tap it anytime to let your child play. They tap pictures to hear Spanish words, play counting and color games, and bang on punta drums. The exit button requires a 3-second hold so they can't escape.',btn:'Next →',action:function(){document.querySelector('[data-p="home"]').click();}},
-  {emoji:'🧰',title:'Quick Tools',body:'This scrollable strip has shortcuts to the Schedule, Honduran Guide, Songs, Resources, and more. You don't have to dig for anything — it's all right here.',btn:'Next →'},
+  {emoji:'👶',title:'Toddler Mode',body:'See the gold TODDLER button? Tap it anytime to let your child play. They tap pictures to hear Spanish words, play counting and color games, and bang on punta drums. The exit button requires a 3-second hold so they can\'t escape.',btn:'Next →',action:function(){document.querySelector('[data-p="home"]').click();}},
+  {emoji:'🧰',title:'Quick Tools',body:'This scrollable strip has shortcuts to the Schedule, Honduran Guide, Songs, Resources, and more. You don\'t have to dig for anything — it\'s all right here.',btn:'Next →'},
   {emoji:'🔊',title:'Tap 🔊 to hear any word',body:'Everywhere you see a gold 🔊 button, tap it to hear the Spanish word spoken out loud. The gold boxes show phonetic pronunciation so you know exactly how to say it.',btn:'Next →'},
-  {emoji:'💾',title:'Your progress saves automatically',body:'Every task you check, every week you complete, every flashcard you flip — it all saves to your phone. You'll see a ✓ Saved notification each time. Just keep using the same phone.',btn:'Next →'},
-  {emoji:'🚀',title:'You're ready!',body:'Start with the Today tab. Check off tasks as you do them. Open Learn → Phase 1 → Week 1 when you're ready to dive in. ¡Va pues!',btn:'¡Vamos! Let's go! 🇭🇳'}
+  {emoji:'💾',title:'Your progress saves automatically',body:'Every task you check, every week you complete, every flashcard you flip — it all saves to your phone. You\'ll see a ✓ Saved notification each time. Just keep using the same phone.',btn:'Next →'},
+  {emoji:'🚀',title:'You\'re ready!',body:'Start with the Today tab. Check off tasks as you do them. Open Learn → Phase 1 → Week 1 when you\'re ready to dive in. ¡Va pues!',btn:'¡Vamos! Let\'s go! 🇭🇳'}
 ];
 
 function showWalk(){
