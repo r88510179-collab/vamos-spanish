@@ -806,6 +806,9 @@ let h=`<div class="hero"><h2>¡Buenos días${profile?' '+profile.name:''}!</h2><
 </button>
 <div id="helpme" class="cls-bd" style="padding:12px 16px;">
 <p style="text-align:center;font-size:12px;color:#CBD5E1;margin-bottom:10px;">Toddler meltdown? Tap for instant phrases.</p>
+</button>
+<div id="helpme" class="cls-bd" style="padding:12px 16px;">
+<p style="text-align:center;font-size:12px;color:#CBD5E1;margin-bottom:10px;">Toddler meltdown? Tap for instant phrases.</p>
 <div class="card ${homeSec.help?'':'cp'}" style="background:var(--ink);color:var(--w);border:2px solid var(--gold);">
 <button onclick="tgHomeSec('help')" class="clh tg" style="background:none;border:none;justify-content:center;padding:0 0 8px;color:var(--gold);">
 <span style="font-size:16px;">🆘 HELP ME — Emergency Phrases</span><span class="clx">${homeSec.help?'−':'+'}</span>
@@ -932,6 +935,16 @@ h+=`<div class="subpg ${morePage==='hn'?'act':''}" id="m-hn"><button class="back
 <div class="card"><h3>🎵 Honduran Music</h3><ul><li><b>Guillermo Anderson</b> — "En Mi País," "Ceibeño"</li><li><b>Punta music</b> — Banda Blanca, Kazzabe</li><li><b>Polache</b> — comedian/singer</li></ul></div></div>`;
 
 h+=`<div class="subpg ${morePage==='sg'?'act':''}" id="m-sg"><button class="back-btn" onclick="openMore('grid')">← Back to More</button><div class="card"><h3>🎵 Songs — Tap to Play In-App</h3><p style="font-size:12px;color:#4B5563;margin-bottom:8px;">Tap a song title to open an embedded YouTube player below it.</p>${[
+["Buenos Días","Mo 1","0jCqJXVdkW4"],
+["Los Pollitos Dicen","Mo 1","IkFbOOWpmpA"],
+["Cabeza Hombros Rodillas Pies","Mo 2","ZanHgPprl-0"],
+["Pin Pon","Mo 2","XqZsoesa55w"],
+["Estrellita ¿Dónde Estás?","Mo 3","ZDRidMMUm5M"],
+["Arroz con Leche","Mo 4","FEUZa6GEi-Q"],
+["La Vaca Lola","Mo 5","or0iYBXBSIA"],
+["Un Elefante Se Balanceaba","Mo 6","bXsaA04gXOA"],
+["De Colores","Mo 7+","MS8SaqT9JRU"]
+].map(([n,w,id])=>`<div class="song-item"><div class="song-row"><button class="song-play" onclick="openSong('${id}')">▶️</button><div style="flex:1"><button onclick="openSong('${id}')" style="background:none;text-align:left;width:100%;"><b style="font-size:13px;color:var(--ink)">${n}</b></button><div>${spB(n)} <span style="font-size:11px;color:var(--gr)">${w}</span></div></div></div>${activeSong===id?`<iframe width="100%" height="200" style="border-radius:12px;border:none;margin-top:8px;" src="https://www.youtube.com/embed/${id}?autoplay=1&rel=0" allow="autoplay; encrypted-media" allowfullscreen></iframe><button class="song-close" onclick="closeSong()">✕ Close</button>`:''}</div>`).join('')}</div></div>`;
 ["Buenos Días","Mo 1","buenos dias cancion infantil español"],
 ["Los Pollitos Dicen","Mo 1","los pollitos dicen canticos"],
 ["Cabeza Hombros Rodillas Pies","Mo 2","cabeza hombros rodillas pies cancion infantil"],
