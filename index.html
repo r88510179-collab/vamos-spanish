@@ -489,9 +489,9 @@ const MO=['"Poco a poco se va lejos." — Little by little you go far.','"La pr�
 /* ===== STATE ===== */
 const L={g(k,d){try{const v=localStorage.getItem('v_'+k);return v?JSON.parse(v):d}catch{return d}},s(k,v){try{localStorage.setItem('v_'+k,JSON.stringify(v))}catch{}}};
 function localDay(){return new Date().toLocaleDateString('en-CA');} // YYYY-MM-DD in local tz
-let S={sk:L.g('sk',0),la:L.g('la',''),dc:L.g('dc',{}),dd:L.g('dd',''),wd:L.g('wd',{}),fk:L.g('fk',{}),qt:L.g('qt',0),qc:L.g('qc',0)};
+let S={sk:L.g('sk',0),la:L.g('la',''),dc:L.g('dc',{}),dd:L.g('dd',''),wd:L.g('wd',{}),fk:L.g('fk',{}),qt:L.g('qt',0),qc:L.g('qc',0),fq:L.g('fq',{})};
 let expTask=null;
-function sv(){for(const[k,v]of Object.entries({sk:S.sk,la:S.la,dc:S.dc,dd:S.dd,wd:S.wd,fk:S.fk,qt:S.qt,qc:S.qc}))L.s(k,v);}
+function sv(){for(const[k,v]of Object.entries({sk:S.sk,la:S.la,dc:S.dc,dd:S.dd,wd:S.wd,fk:S.fk,qt:S.qt,qc:S.qc,fq:S.fq}))L.s(k,v);}
 function us(){const t=localDay();if(S.la===t)return;const prev=new Date(S.la),curr=new Date(t),diff=Math.round((curr-prev)/(864e5));S.sk=(diff===1)?S.sk+1:1;S.la=t;sv();}
 function rd(){if(S.dd!==localDay()){S.dc={};S.dd=localDay();sv();}}
 
@@ -500,6 +500,9 @@ function speak(t){if(!('speechSynthesis' in window))return;speechSynthesis.cance
 if('speechSynthesis' in window)speechSynthesis.getVoices();
 function spB(t){return `<button class="spk" data-speak="${t.replace(/"/g,'&quot;')}">🔊</button>`;}
 function sh(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=0|Math.random()*(i+1);[b[i],b[j]]=[b[j],b[i]];}return b;}
+
+/* ===== PHONETICS MAP ===== */
+const PH={"Hola":"OH-lah","Adiós":"ah-dee-OHS","Buenos días":"BWEH-nohs DEE-ahs","¡Buenas!":"BWEH-nahs","Por favor":"por fah-VOR","Gracias":"GRAH-see-ahs","De nada":"deh NAH-dah","¿Cómo estás?":"KOH-moh ehs-TAHS","Estoy bien":"ehs-TOY bee-EHN","Me llamo":"meh YAH-moh","Mucho gusto":"MOO-choh GOO-stoh","Rojo":"ROH-hoh","Azul":"ah-SOOL","Verde":"VEHR-deh","Amarillo":"ah-mah-REE-yoh","Blanco":"BLAHN-koh","Negro":"NEH-groh","Mamá":"mah-MAH","Papá":"pah-PAH","Bebé":"beh-BEH","Abuelo":"ah-BWEH-loh","Abuela":"ah-BWEH-lah","Agua":"AH-gwah","Leche":"LEH-cheh","Pollo":"POH-yoh","Arroz":"ah-ROHS","Frijoles":"free-HOH-lehs","Huevo":"WEH-voh","Baleada":"bah-leh-AH-dah","Guineo":"gee-NEH-oh","Tajadas":"tah-HAH-dahs","Tortilla":"tor-TEE-yah","Queso":"KEH-soh","Cabeza":"kah-BEH-sah","Ojos":"OH-hohs","Nariz":"nah-REES","Boca":"BOH-kah","Manos":"MAH-nohs","Pies":"pee-EHS","Barriga":"bah-REE-gah","Pelo":"PEH-loh","Ven aquí":"vehn ah-KEE","Mira":"MEE-rah","Siéntate":"see-EHN-tah-teh","Dame":"DAH-meh","Vamos":"VAH-mohs","Espera":"ehs-PEH-rah","No se pega":"noh seh PEH-gah","Cuidado":"kwee-DAH-doh","Despacito":"dehs-pah-SEE-toh","Contento":"kohn-TEHN-toh","Triste":"TREES-teh","Enojado":"eh-noh-HAH-doh","Cansado":"kahn-SAH-doh","Hambre":"AHM-breh","Catracho":"kah-TRAH-choh","Pisto":"PEES-toh","Cipote":"see-POH-teh","Maje":"MAH-heh","Puchica":"poo-CHEE-kah","Cheque":"CHEH-keh","¡Va pues!":"vah PWEHS","Alero":"ah-LEH-roh","Quimbombó":"keem-bohm-BOH","Yuca":"YOO-kah","Sazón":"sah-SOHN","Coco":"KOH-koh","¡Pase adelante!":"PAH-seh ah-deh-LAHN-teh","¿Qué cuenta?":"keh KWEHN-tah","Bienvenidos":"bee-ehn-veh-NEE-dohs","Vecino":"veh-SEE-noh","Cuídese":"KWEE-deh-seh","Comparte":"kohm-PAR-teh","Te quiero mucho":"teh key-EH-roh MOO-choh"};
 
 /* ===== DELEGATED EVENTS (Codex XSS fix) ===== */
 document.addEventListener('click',function(e){
@@ -550,12 +553,42 @@ function cs(){const tw=48,dw=Object.values(S.wd).filter(Boolean).length,p=Math.r
 function rH(){rd();us();const{dw,p,kw}=cs();const d=new Date(),dn=d.toLocaleDateString('en-US',{weekday:'long'}),ds=d.toLocaleDateString('en-US',{month:'long',day:'numeric'});const mo=MO[0|Math.random()*MO.length];const cc=Object.values(S.dc).filter(Boolean).length;
 const catCls={daily:'cat-daily',florida:'cat-florida',parent:'cat-parent',culture:'cat-culture'};
 let h=`<div class="hero"><h2>¡Buenos días${profile?' '+profile.name:''}!</h2><div class="dt2">${dn}, ${ds}${profile?' · '+profile.child+'\'s learning day':''}</div><div class="mot">${mo}</div></div>
+
+<div class="card" style="background:var(--terra);color:var(--w);border:none;cursor:pointer;" onclick="document.getElementById('helpme').style.display=document.getElementById('helpme').style.display==='block'?'none':'block'">
+<h3 style="color:var(--w);justify-content:center;font-size:16px;">🆘 HELP ME — Emergency Phrases</h3>
+<p style="text-align:center;font-size:12px;opacity:.8;">Toddler meltdown? Tap here for instant phrases.</p>
+<div id="helpme" style="display:none;margin-top:12px;">
+<div style="background:rgba(255,255,255,.15);padding:12px;border-radius:12px;margin-bottom:8px;display:flex;align-items:center;gap:10px;"><button class="spk" data-speak="Cálmate mi amor" style="background:rgba(255,255,255,.2);border-color:rgba(255,255,255,.3);color:var(--w);">🔊</button><div><b style="font-size:18px;">Cálmate</b><br><span style="font-size:12px;opacity:.8;">KAL-mah-teh · Calm down</span></div></div>
+<div style="background:rgba(255,255,255,.15);padding:12px;border-radius:12px;margin-bottom:8px;display:flex;align-items:center;gap:10px;"><button class="spk" data-speak="Usa tus palabras" style="background:rgba(255,255,255,.2);border-color:rgba(255,255,255,.3);color:var(--w);">🔊</button><div><b style="font-size:18px;">Usa tus palabras</b><br><span style="font-size:12px;opacity:.8;">OO-sah toos pah-LAH-brahs · Use your words</span></div></div>
+<div style="background:rgba(255,255,255,.15);padding:12px;border-radius:12px;margin-bottom:8px;display:flex;align-items:center;gap:10px;"><button class="spk" data-speak="Respira" style="background:rgba(255,255,255,.2);border-color:rgba(255,255,255,.3);color:var(--w);">🔊</button><div><b style="font-size:18px;">Respira</b><br><span style="font-size:12px;opacity:.8;">reh-SPEE-rah · Breathe</span></div></div>
+<div style="background:rgba(255,255,255,.15);padding:12px;border-radius:12px;display:flex;align-items:center;gap:10px;"><button class="spk" data-speak="Te quiero mucho" style="background:rgba(255,255,255,.2);border-color:rgba(255,255,255,.3);color:var(--w);">🔊</button><div><b style="font-size:18px;">Te quiero mucho</b><br><span style="font-size:12px;opacity:.8;">teh key-EH-roh MOO-choh · I love you so much</span></div></div>
+</div></div>
 <div class="rc"><div class="rw"><svg width="120" height="120"><circle cx="60" cy="60" r="52" fill="none" stroke="var(--grl)" stroke-width="8"/><circle cx="60" cy="60" r="52" fill="none" stroke="url(#rg)" stroke-width="8" stroke-dasharray="326.7" stroke-dashoffset="${326.7-(326.7*p/100)}" stroke-linecap="round"/><defs><linearGradient id="rg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="var(--teal)"/><stop offset="100%" stop-color="var(--gold)"/></linearGradient></defs></svg><div class="rcn"><div class="rpct">${p}%</div><div class="rlb">Complete</div></div></div><div style="font-size:12px;color:var(--gr);font-weight:600;">${dw} of 48 weeks</div></div>
 <div class="srow"><div class="sc2"><div class="sn cc">🔥 ${S.sk}</div><div class="sl2">Streak</div></div><div class="sc2"><div class="sn cy">${kw}</div><div class="sl2">Words</div></div><div class="sc2"><div class="sn cs">${S.qc}</div><div class="sl2">Quiz ✓</div></div><div class="sc2"><div class="sn cg">${dw}</div><div class="sl2">Weeks</div></div></div>
-<div class="cls"><div class="clh"><span>📋 Today's Tasks</span><span class="clc">${cc}/${TK.length}</span></div>${TK.map(t=>{const dn2=S.dc[t.id];const ex=expTask===t.id;return`<div class="ci ${dn2?'dn':''} ${ex?'exp':''}"><div class="cb" onclick="event.stopPropagation();tgD('${t.id}')">${dn2?'✓':''}</div><div style="flex:1;cursor:pointer;" onclick="tgE('${t.id}')"><div class="ct">${t.t}</div><div class="csub">${t.s} <span class="cat-badge ${catCls[t.cat]||'cat-daily'}">${t.cat}</span></div><div class="ci-exp">${ex?'▲ Hide':'▼ Tap for instructions'}</div><div class="ci-det">${t.d}</div></div></div>`}).join('')}</div>`;
+<div class="cls"><div class="clh"><span>📋 Today's Tasks</span><span class="clc">${cc}/${TK.length}</span></div>${TK.map(t=>{const dn2=S.dc[t.id];const ex=expTask===t.id;return`<div class="ci ${dn2?'dn':''} ${ex?'exp':''}"><div class="cb" onclick="event.stopPropagation();tgD('${t.id}')">${dn2?'✓':''}</div><div style="flex:1;cursor:pointer;" onclick="tgE('${t.id}')"><div class="ct">${t.t}</div><div class="csub">${t.s} <span class="cat-badge ${catCls[t.cat]||'cat-daily'}">${t.cat}</span></div><div class="ci-exp">${ex?'▲ Hide':'▼ Tap for instructions'}</div><div class="ci-det">${t.d}</div></div></div>`}).join('')}</div>
+
+<div class="cls"><div class="clh" style="background:linear-gradient(135deg,#E65100,#FF8F00);"><span>🌴 Florida Quest — Cape Coral</span><span class="clc">${Object.values(S.fq||{}).filter(Boolean).length}/${FQ.length}</span></div>${FQ.map(q=>{const dn3=S.fq&&S.fq[q.id];return`<div class="ci ${dn3?'dn':''}" style="cursor:pointer;"><div class="cb" onclick="event.stopPropagation();tgFQ('${q.id}')">${dn3?'✓':''}</div><div style="flex:1;"><div class="ct" style="font-size:13px;">${q.t}</div><div class="csub">${q.d}</div></div></div>`}).join('')}</div>
+
+${profile?`<button onclick="shareStreak()" style="width:100%;padding:14px;border-radius:50px;background:var(--ink);color:var(--gold);font-weight:700;font-size:14px;border:2px solid var(--gold);margin-bottom:16px;">📤 Share ${S.sk}-Day Streak with Partner</button>`:''}`;
 document.getElementById('p-home').innerHTML=h;}
 function tgD(id){S.dc[id]=!S.dc[id];if(S.dc[id])confetti();sv();us();rH();}
 function tgE(id){expTask=expTask===id?null:id;rH();}
+function tgFQ(id){if(!S.fq)S.fq={};S.fq[id]=!S.fq[id];if(S.fq[id])confetti();sv();rH();}
+function shareStreak(){const name=profile?profile.child:'our child';const msg=encodeURIComponent(`We hit a ${S.sk}-day Spanish streak today! 🔥🇭🇳 Ask ${name} where the "pelota" is when you get home! — from ¡Vamos! app`);window.open('sms:?body='+msg);}
+
+/* ===== FLORIDA QUEST DATA ===== */
+const FQ=[
+{id:'fq1',t:'Visit a Latin market on Pine Island Rd',d:'Find 3 fruits and say their names in Spanish'},
+{id:'fq2',t:'Order something in Spanish at a restaurant',d:'"Una baleada, por favor" or "Un jugo de naranja"'},
+{id:'fq3',t:'Cape Coral Farmers Market',d:'Find plátanos, mangos, or aguacates. Let your toddler point and say ¡Mira!'},
+{id:'fq4',t:'Nature walk at Four Mile Cove',d:'Label 5 things: árbol, pájaro, agua, sol, flor'},
+{id:'fq5',t:'Find a sign in Spanish in your neighborhood',d:'Take a mental note: Abierto, Cerrado, Salida, Entrada'},
+{id:'fq6',t:'Visit a panadería or bakery',d:'Ask: "¿Tiene pan de coco?" or "¿Qué me recomienda?"'},
+{id:'fq7',t:'Attend a Spanish-language church service',d:'Even 15 minutes of immersion is powerful. Check local Catholic churches.'},
+{id:'fq8',t:'Cook baleadas at home together',d:'Follow the recipe in the Honduran section. Narrate every step in Spanish.'},
+{id:'fq9',t:'Watch Bluey en Español together',d:'Spot 3 words from this month\'s vocab. Disney+ → Audio → Español'},
+{id:'fq10',t:'Say "¡Buenas!" to a Spanish speaker in public',d:'At a store, restaurant, or park. Just one word. You can do it!'}
+];
 
 /* ===== LEARN ===== */
 function rL(){let wIdx=0;let h=`<div class="pt">📖 Curriculum</div><p class="ps">Your complete 12-month roadmap. Each week tells you exactly what to do — no guessing.</p>`;
@@ -588,7 +621,7 @@ function sD(n){cD=n;dk=sh([...V[n]]);cI=0;fK=0;fA=0;fl=false;rC();}
 function rC(){const ds=Object.keys(V);let h=`<div class="pt">🃏 Flashcards</div><p class="ps">Tap to flip · 🔊 for pronunciation</p><div class="dkp">${ds.map(d=>`<button class="dkb ${d===cD?'act':''}" onclick="sD('${d}')">${d}</button>`).join('')}</div>`;
 if(!dk.length){sD(cD);return;}
 if(cI>=dk.length){h+=`<div class="card" style="text-align:center;padding:30px;"><h3 style="justify-content:center;">Deck Complete! 🎉</h3><div class="qbg">${fK}/${dk.length}</div><p style="color:var(--gr);">Know: <b style="color:var(--teal)">${fK}</b> · Again: <b style="color:var(--terra)">${fA}</b></p><button class="qrb" onclick="sD('${cD}')">Shuffle & Retry</button></div>`;document.getElementById('p-cards').innerHTML=h;return;}
-const c=dk[cI];h+=`<div class="fpg">${cI+1} of ${dk.length}</div><div style="display:flex;gap:14px;justify-content:center;font-size:12px;font-weight:700;margin-bottom:10px;"><span style="color:var(--teal)">✓ ${fK}</span><span style="color:var(--terra)">✗ ${fA}</span></div><div class="fca"><div class="fcc" onclick="fl=!fl;rC()"><div class="fc ${fl?'fl':''}"><div class="ff ffr"><div class="fw">${c.e}</div><div class="fh">Tap to reveal</div></div><div class="ff fbk"><div class="fw">${c.e}</div><div class="ft">${c.n}</div>${c.x?`<div class="fe">"${c.x}"</div>`:''}</div></div></div><button class="splg" data-speak="${c.e.replace(/"/g,'&quot;')}">🔊</button>${fl?`<div class="fcl"><button class="fcb ba" onclick="fR(0)">🔄 Again</button><button class="fcb bk" onclick="fR(1)">✓ Know it</button></div>`:''}</div>`;
+const c=dk[cI];h+=`<div class="fpg">${cI+1} of ${dk.length}</div><div style="display:flex;gap:14px;justify-content:center;font-size:12px;font-weight:700;margin-bottom:10px;"><span style="color:var(--teal)">✓ ${fK}</span><span style="color:var(--terra)">✗ ${fA}</span></div><div class="fca"><div class="fcc" onclick="fl=!fl;rC()"><div class="fc ${fl?'fl':''}"><div class="ff ffr"><div class="fw">${c.e}</div><div class="fh">Tap to reveal</div></div><div class="ff fbk"><div class="fw">${c.e}</div><div class="ft">${c.n}</div>${PH[c.e]?`<div style="font-size:12px;color:var(--terra);font-weight:700;margin-top:4px;">🗣 ${PH[c.e]}</div>`:''}${c.x?`<div class="fe">"${c.x}"</div>`:''}</div></div></div><button class="splg" data-speak="${c.e.replace(/"/g,'&quot;')}">🔊</button>${fl?`<div class="fcl"><button class="fcb ba" onclick="fR(0)">🔄 Again</button><button class="fcb bk" onclick="fR(1)">✓ Know it</button></div>`:''}</div>`;
 document.getElementById('p-cards').innerHTML=h;}
 function fR(k){const c=dk[cI];if(k){fK++;S.fk[c.e]=true;}else{fA++;S.fk[c.e]=false;}sv();cI++;fl=false;rC();}
 
