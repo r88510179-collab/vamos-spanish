@@ -11,12 +11,12 @@
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Playfair+Display:wght@700;900&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --gold:#FFC107;--goldd:#D4A106;--goldl:#FFF8E1;
-  --ink:#1A1A1A;--ink2:#2D2D2D;
+  --gold:#D4A017;--goldd:#B8860B;--goldl:#FFF8E1;
+  --ink:#1A1B4B;--ink2:#2D2E5E;
   --teal:#008080;--teall:#E0F2F1;--teald:#006666;
-  --rust:#D35400;--rustl:#FDE8D8;
-  --w:#FFFFFF;--sand:#FAF7F2;
-  --gr:#6B7280;--gr2:#9CA3AF;--grl:#F3F4F6;--bd:#DDDDDD;
+  --terra:#C75B39;--terral:#FDEEE8;
+  --w:#FFFFFF;--sand:#F5EDE0;
+  --gr:#6B7280;--gr2:#9CA3AF;--grl:#F3F4F6;--bd:#D5CFC5;
   --r:16px;--rs:10px;
   --sh:0 3px 10px rgba(0,0,0,.1);--shl:0 8px 24px rgba(0,0,0,.15);
 }
@@ -55,7 +55,7 @@ button{font-family:'Quicksand',sans-serif;border:none;cursor:pointer;-webkit-tap
 .card li{margin-bottom:4px;}
 .hl-gold{border-left:4px solid var(--gold);background:var(--goldl);}
 .hl-teal{border-left:4px solid var(--teal);background:var(--teall);}
-.hl-rust{border-left:4px solid var(--rust);background:var(--rustl);}
+.hl-rust{border-left:4px solid var(--terra);background:var(--terral);}
 
 /* HERO */
 .hero{background:var(--ink);color:var(--w);border-radius:var(--r);padding:22px;margin-bottom:16px;position:relative;overflow:hidden;box-shadow:var(--shl);border:2px solid var(--gold);}
@@ -76,7 +76,7 @@ button{font-family:'Quicksand',sans-serif;border:none;cursor:pointer;-webkit-tap
 .srow{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:16px;}
 .sc2{background:var(--w);border-radius:var(--r);padding:12px 6px;text-align:center;border:1px solid var(--bd);}
 .sn{font-family:'Playfair Display',serif;font-size:20px;font-weight:900;}
-.sn.cg{color:var(--teal);}.sn.cy{color:var(--goldd);}.sn.cc{color:var(--rust);}.sn.cs{color:var(--teald);}
+.sn.cg{color:var(--teal);}.sn.cy{color:var(--goldd);}.sn.cc{color:var(--terra);}.sn.cs{color:var(--teald);}
 .sl2{font-size:9px;color:var(--gr);font-weight:700;text-transform:uppercase;margin-top:2px;}
 
 /* CHECKLIST */
@@ -111,7 +111,7 @@ button{font-family:'Quicksand',sans-serif;border:none;cursor:pointer;-webkit-tap
 .t1{background:var(--teall);color:var(--teald);}
 .t2{background:#E3F2FD;color:#1565C0;}
 .t3{background:var(--goldl);color:var(--goldd);}
-.t4{background:var(--rustl);color:var(--rust);}
+.t4{background:var(--terral);color:var(--terra);}
 .pchev{color:var(--gr2);transition:transform .3s;}
 .phase-card.op .pchev{transform:rotate(180deg);}
 .phase-bd{max-height:0;overflow:hidden;transition:max-height .5s ease;}
@@ -146,7 +146,7 @@ button{font-family:'Quicksand',sans-serif;border:none;cursor:pointer;-webkit-tap
 .fcl{display:flex;gap:10px;margin-top:14px;}
 .fcb{padding:12px 26px;border-radius:50px;font-size:13px;font-weight:700;}
 .fcb:active{transform:scale(.94);}
-.bk{background:var(--teal);color:var(--w);}.ba{background:var(--rustl);color:var(--rust);}
+.bk{background:var(--teal);color:var(--w);}.ba{background:var(--terral);color:var(--terra);}
 .fpg{text-align:center;font-size:12px;color:var(--gr);font-weight:600;margin-bottom:6px;}
 .splg{width:48px;height:48px;border-radius:50%;border:2px solid var(--gold);background:var(--goldl);display:flex;align-items:center;justify-content:center;font-size:20px;}
 .splg:active{transform:scale(.9);}
@@ -158,7 +158,7 @@ button{font-family:'Quicksand',sans-serif;border:none;cursor:pointer;-webkit-tap
 .qob{padding:14px 10px;border-radius:var(--rs);border:2px solid var(--bd);background:var(--w);font-size:14px;font-weight:600;}
 .qob:active{transform:scale(.97);}
 .qob.ok{border-color:var(--teal);background:var(--teall);color:var(--teald);animation:pop .3s;}
-.qob.no{border-color:var(--rust);background:var(--rustl);color:var(--rust);animation:shk .35s;}
+.qob.no{border-color:var(--terra);background:var(--terral);color:var(--terra);animation:shk .35s;}
 @keyframes pop{50%{transform:scale(1.05)}}
 @keyframes shk{20%{transform:translateX(-4px)}40%{transform:translateX(4px)}60%{transform:translateX(-3px)}80%{transform:translateX(3px)}}
 .qrb{padding:12px 32px;border-radius:50px;background:var(--teal);color:var(--w);font-size:15px;font-weight:700;margin-top:14px;}
@@ -206,11 +206,43 @@ button{font-family:'Quicksand',sans-serif;border:none;cursor:pointer;-webkit-tap
 </head>
 <body>
 <canvas id="confetti"></canvas>
+
+<!-- ONBOARDING -->
+<div id="onboard" style="display:none;position:fixed;inset:0;background:var(--ink);z-index:5000;overflow-y:auto;padding:40px 24px;">
+<div style="max-width:400px;margin:0 auto;text-align:center;color:var(--w);">
+<h1 style="font-family:'Baloo 2',cursive;font-size:32px;color:var(--gold);margin-bottom:4px;">¡Bienvenidos!</h1>
+<p style="font-size:14px;opacity:.8;margin-bottom:28px;">Let's personalize your learning journey.</p>
+<div style="text-align:left;">
+<label style="font-size:12px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.5px;">Your name</label>
+<input id="ob-name" type="text" placeholder="e.g. Maria" style="width:100%;padding:14px;border-radius:12px;border:2px solid rgba(255,255,255,.2);background:rgba(255,255,255,.08);color:var(--w);font-family:'Quicksand';font-size:16px;font-weight:600;margin:6px 0 16px;outline:none;">
+
+<label style="font-size:12px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.5px;">Child's name</label>
+<input id="ob-child" type="text" placeholder="e.g. Junior" style="width:100%;padding:14px;border-radius:12px;border:2px solid rgba(255,255,255,.2);background:rgba(255,255,255,.08);color:var(--w);font-family:'Quicksand';font-size:16px;font-weight:600;margin:6px 0 16px;outline:none;">
+
+<label style="font-size:12px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.5px;">Child's age</label>
+<div style="display:flex;gap:8px;margin:6px 0 16px;" id="ob-ages">
+<button class="ob-opt" data-age="1" style="flex:1;padding:12px;border-radius:12px;border:2px solid rgba(255,255,255,.2);background:rgba(255,255,255,.05);color:var(--w);font-family:'Quicksand';font-size:15px;font-weight:700;">1 yr</button>
+<button class="ob-opt" data-age="2" style="flex:1;padding:12px;border-radius:12px;border:2px solid var(--gold);background:rgba(212,160,23,.15);color:var(--gold);font-family:'Quicksand';font-size:15px;font-weight:700;">2 yr</button>
+<button class="ob-opt" data-age="3" style="flex:1;padding:12px;border-radius:12px;border:2px solid rgba(255,255,255,.2);background:rgba(255,255,255,.05);color:var(--w);font-family:'Quicksand';font-size:15px;font-weight:700;">3 yr</button>
+<button class="ob-opt" data-age="4" style="flex:1;padding:12px;border-radius:12px;border:2px solid rgba(255,255,255,.2);background:rgba(255,255,255,.05);color:var(--w);font-family:'Quicksand';font-size:15px;font-weight:700;">4 yr</button>
+</div>
+
+<label style="font-size:12px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.5px;">Your Spanish level</label>
+<div style="display:flex;flex-direction:column;gap:8px;margin:6px 0 24px;" id="ob-levels">
+<button class="ob-lvl" data-lvl="0" style="padding:14px;border-radius:12px;border:2px solid var(--gold);background:rgba(212,160,23,.15);color:var(--gold);font-family:'Quicksand';font-size:14px;font-weight:700;text-align:left;">🌱 <b>Zero</b> — I don't know any Spanish</button>
+<button class="ob-lvl" data-lvl="1" style="padding:14px;border-radius:12px;border:2px solid rgba(255,255,255,.2);background:rgba(255,255,255,.05);color:var(--w);font-family:'Quicksand';font-size:14px;font-weight:700;text-align:left;">🌿 <b>A little</b> — I know some words (hola, gracias)</button>
+<button class="ob-lvl" data-lvl="2" style="padding:14px;border-radius:12px;border:2px solid rgba(255,255,255,.2);background:rgba(255,255,255,.05);color:var(--w);font-family:'Quicksand';font-size:14px;font-weight:700;text-align:left;">🌳 <b>Some</b> — I can say basic sentences</button>
+</div>
+</div>
+<button onclick="saveOnboard()" style="width:100%;padding:16px;border-radius:50px;background:var(--gold);color:var(--ink);font-family:'Baloo 2',cursive;font-size:18px;font-weight:800;border:none;box-shadow:0 4px 16px rgba(212,160,23,.4);">¡Vamos! Let's Start →</button>
+<p style="font-size:11px;opacity:.5;margin-top:12px;">You can change this later in Settings</p>
+</div>
+</div>
 <button class="tm-float" onclick="toggleTM()">👶 TODDLER</button>
 
 <div id="tmode">
 <button class="tm-exit" onclick="toggleTM()">✕ EXIT</button>
-<h2 style="font-family:'Baloo 2';font-size:30px;color:var(--ink);margin-top:30px;">¡Hola Bebé!</h2>
+<h2 id="tm-greeting" style="font-family:'Baloo 2';font-size:30px;color:var(--ink);margin-top:30px;">¡Hola Bebé!</h2>
 <p style="font-size:14px;font-weight:700;color:var(--ink2);">Tap the pictures to hear the words!</p>
 <div class="toy-grid" id="toyGrid"></div>
 <div class="punta-pad">
@@ -255,8 +287,32 @@ const V={
 "Commands":[{e:"Ven aquí",n:"Come here",x:"Ven aquí, mi amor."},{e:"Mira",n:"Look",x:"¡Mira, un pájaro!"},{e:"Siéntate",n:"Sit down",x:"Siéntate a comer."},{e:"Dame",n:"Give me",x:"Dame la mano."},{e:"Vamos",n:"Let's go",x:"¡Vamos al parque!"},{e:"Espera",n:"Wait",x:"Espera un momento."},{e:"Para",n:"Stop",x:"Para, por favor."},{e:"No se pega",n:"No hitting",x:"No se pega, mi amor."},{e:"Cuidado",n:"Be careful",x:"¡Cuidado, está caliente!"},{e:"Despacito",n:"Slowly/gently",x:"Despacito, con cuidado."}],
 "Feelings":[{e:"Contento",n:"Happy",x:"Estoy contento."},{e:"Triste",n:"Sad",x:"Está triste."},{e:"Enojado",n:"Angry",x:"No estoy enojado."},{e:"Cansado",n:"Tired",x:"Estoy cansado."},{e:"Asustado",n:"Scared",x:"No tengas miedo."},{e:"Emocionado",n:"Excited",x:"¡Estoy emocionado!"},{e:"Hambre",n:"Hungry",x:"Tengo hambre."},{e:"Sed",n:"Thirsty",x:"Tengo sed."}],
 "Honduran":[{e:"¡Qué onda!",n:"What's up!",x:"¡Qué onda, maje!"},{e:"Catracho",n:"Honduran person",x:"Soy catracho."},{e:"Pisto",n:"Money",x:"No tengo pisto."},{e:"Cipote",n:"Kid",x:"Los cipotes."},{e:"Maje",n:"Dude (informal)",x:"¿Qué tal, maje?"},{e:"Puchica",n:"Wow/dang",x:"¡Puchica!"},{e:"Cheque",n:"Okay/sure",x:"Está cheque."},{e:"¡Va pues!",n:"Alright!",x:"¡Va pues, vamos!"},{e:"Baleada",n:"Stuffed tortilla",x:"Una baleada con todo."},{e:"Alero",n:"Close friend",x:"Mi alero."},{e:"Jalar",n:"To leave",x:"Me voy a jalar."},{e:"¡Ideay!",n:"So?/Well?",x:"¡Ideay! ¿Qué pasó?"}],
-"Parenting":[{e:"No se pega",n:"No hitting",x:"No se pega. Usamos las manos con cariño."},{e:"Usa tus palabras",n:"Use your words",x:"Usa tus palabras, mi amor."},{e:"¿Necesitas ayuda?",n:"Do you need help?",x:"¿Necesitas ayuda con eso?"},{e:"Muy bien hecho",n:"Well done!",x:"¡Muy bien hecho, mi amor!"},{e:"Es hora de dormir",n:"Time for bed",x:"Es hora de dormir. Buenas noches."},{e:"Comparte",n:"Share",x:"Comparte con tu amigo."},{e:"Vamos a limpiar",n:"Let's clean up",x:"Vamos a limpiar los juguetes."},{e:"Te quiero mucho",n:"I love you so much",x:"Te quiero mucho, mi bebé."}]
+"Parenting":[{e:"No se pega",n:"No hitting",x:"No se pega. Usamos las manos con cariño."},{e:"Usa tus palabras",n:"Use your words",x:"Usa tus palabras, mi amor."},{e:"¿Necesitas ayuda?",n:"Do you need help?",x:"¿Necesitas ayuda con eso?"},{e:"Muy bien hecho",n:"Well done!",x:"¡Muy bien hecho, mi amor!"},{e:"Es hora de dormir",n:"Time for bed",x:"Es hora de dormir. Buenas noches."},{e:"Comparte",n:"Share",x:"Comparte con tu amigo."},{e:"Vamos a limpiar",n:"Let's clean up",x:"Vamos a limpiar los juguetes."},{e:"Te quiero mucho",n:"I love you so much",x:"Te quiero mucho, mi bebé."}],
+"Kitchen Soul":[{e:"Arroz",n:"Rice",x:"Arroz con frijoles — just like rice and beans."},{e:"Frijoles",n:"Beans",x:"Frijoles negros, like black-eyed peas."},{e:"Plátano",n:"Plantain",x:"Plátano frito — fried plantain, like a sweet side."},{e:"Yuca",n:"Cassava/Yuca",x:"Yuca frita, crispy like fries."},{e:"Maíz",n:"Corn",x:"Pan de maíz — cornbread!"},{e:"Guiso",n:"Stew",x:"Un guiso caliente, like a slow-cooked pot."},{e:"Sazón",n:"Seasoning",x:"Necesita más sazón — it needs more seasoning!"},{e:"Manteca",n:"Lard/Fat",x:"Cocinado con manteca, like grandma did."},{e:"Quimbombó",n:"Okra",x:"Quimbombó — same word from West Africa."},{e:"Coco",n:"Coconut",x:"Arroz con coco — coconut rice, Garífuna style."}],
+"Neighborhood":[{e:"¡Pase adelante!",n:"Come on in!",x:"¡Pase adelante! Mi casa es su casa."},{e:"¿Qué cuenta?",n:"What's the news?",x:"¡Buenas, vecina! ¿Qué cuenta?"},{e:"Bienvenidos",n:"Welcome",x:"¡Bienvenidos a nuestra casa!"},{e:"¿Quiere café?",n:"Want coffee?",x:"¿Quiere un cafecito?"},{e:"Con gusto",n:"With pleasure",x:"Con gusto, para eso estamos."},{e:"Que Dios le bendiga",n:"God bless you",x:"Gracias, que Dios le bendiga."},{e:"Vecino/a",n:"Neighbor",x:"Mi vecina es muy amable."},{e:"Cuídese",n:"Take care",x:"Cuídese mucho. ¡Buenas noches!"}]
 };
+
+/* ===== USER PROFILE (Onboarding) ===== */
+let profile=JSON.parse(localStorage.getItem('v_profile')||'null');
+function showOnboard(){if(!profile)document.getElementById('onboard').style.display='block';}
+function saveOnboard(){
+  const name=document.getElementById('ob-name').value.trim()||'Friend';
+  const child=document.getElementById('ob-child').value.trim()||'Baby';
+  const ageEl=document.querySelector('#ob-ages .ob-sel');
+  const lvlEl=document.querySelector('#ob-levels .ob-sel');
+  profile={name,child,age:ageEl?+ageEl.dataset.age:2,level:lvlEl?+lvlEl.dataset.lvl:0};
+  localStorage.setItem('v_profile',JSON.stringify(profile));
+  document.getElementById('onboard').style.display='none';
+  rH();rL();
+}
+document.querySelectorAll('#ob-ages .ob-opt').forEach(b=>b.addEventListener('click',function(){
+  document.querySelectorAll('#ob-ages .ob-opt').forEach(x=>{x.style.borderColor='rgba(255,255,255,.2)';x.style.background='rgba(255,255,255,.05)';x.style.color='var(--w)';x.classList.remove('ob-sel');});
+  this.style.borderColor='var(--gold)';this.style.background='rgba(212,160,23,.15)';this.style.color='var(--gold)';this.classList.add('ob-sel');
+}));
+document.querySelectorAll('#ob-levels .ob-lvl').forEach(b=>b.addEventListener('click',function(){
+  document.querySelectorAll('#ob-levels .ob-lvl').forEach(x=>{x.style.borderColor='rgba(255,255,255,.2)';x.style.background='rgba(255,255,255,.05)';x.style.color='var(--w)';x.classList.remove('ob-sel');});
+  this.style.borderColor='var(--gold)';this.style.background='rgba(212,160,23,.15)';this.style.color='var(--gold)';this.classList.add('ob-sel');
+}));
 
 /* ===== TODDLER BUTTONS ===== */
 const TOYS=[
@@ -419,7 +475,7 @@ function confetti(){const c=document.getElementById('confetti'),x=c.getContext('
 function playDrum(t){if(navigator.vibrate)navigator.vibrate(t==='hi'?30:60);const a=new AudioContext(),o=a.createOscillator(),g=a.createGain();o.connect(g);g.connect(a.destination);o.frequency.value=t==='hi'?300:120;o.type='triangle';g.gain.setValueAtTime(.3,a.currentTime);g.gain.exponentialRampToValueAtTime(.001,a.currentTime+.15);o.start();o.stop(a.currentTime+.15);}
 
 /* ===== TODDLER MODE ===== */
-function toggleTM(){document.getElementById('tmode').classList.toggle('act');}
+function toggleTM(){const tm=document.getElementById('tmode');tm.classList.toggle('act');if(profile)document.getElementById('tm-greeting').textContent='¡Hola '+profile.child+'!';}
 function renderToys(){document.getElementById('toyGrid').innerHTML=sh(TOYS).slice(0,8).map(t=>`<button class="toy-btn" data-speak="${t.es}">${t.emoji}<span class="toy-lbl">${t.es}</span></button>`).join('');}
 
 /* ===== NAV ===== */
@@ -431,7 +487,7 @@ function cs(){const tw=48,dw=Object.values(S.wd).filter(Boolean).length,p=Math.r
 /* ===== HOME ===== */
 function rH(){rd();us();const{dw,p,kw}=cs();const d=new Date(),dn=d.toLocaleDateString('en-US',{weekday:'long'}),ds=d.toLocaleDateString('en-US',{month:'long',day:'numeric'});const mo=MO[0|Math.random()*MO.length];const cc=Object.values(S.dc).filter(Boolean).length;
 const catCls={daily:'cat-daily',florida:'cat-florida',parent:'cat-parent',culture:'cat-culture'};
-let h=`<div class="hero"><h2>¡Buenos días!</h2><div class="dt2">${dn}, ${ds}</div><div class="mot">${mo}</div></div>
+let h=`<div class="hero"><h2>¡Buenos días${profile?' '+profile.name:''}!</h2><div class="dt2">${dn}, ${ds}${profile?' · '+profile.child+'\'s learning day':''}</div><div class="mot">${mo}</div></div>
 <div class="rc"><div class="rw"><svg width="120" height="120"><circle cx="60" cy="60" r="52" fill="none" stroke="var(--grl)" stroke-width="8"/><circle cx="60" cy="60" r="52" fill="none" stroke="url(#rg)" stroke-width="8" stroke-dasharray="326.7" stroke-dashoffset="${326.7-(326.7*p/100)}" stroke-linecap="round"/><defs><linearGradient id="rg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="var(--teal)"/><stop offset="100%" stop-color="var(--gold)"/></linearGradient></defs></svg><div class="rcn"><div class="rpct">${p}%</div><div class="rlb">Complete</div></div></div><div style="font-size:12px;color:var(--gr);font-weight:600;">${dw} of 48 weeks</div></div>
 <div class="srow"><div class="sc2"><div class="sn cc">🔥 ${S.sk}</div><div class="sl2">Streak</div></div><div class="sc2"><div class="sn cy">${kw}</div><div class="sl2">Words</div></div><div class="sc2"><div class="sn cs">${S.qc}</div><div class="sl2">Quiz ✓</div></div><div class="sc2"><div class="sn cg">${dw}</div><div class="sl2">Weeks</div></div></div>
 <div class="cls"><div class="clh"><span>📋 Today's Tasks</span><span class="clc">${cc}/${TK.length}</span></div>${TK.map(t=>{const dn2=S.dc[t.id];const ex=expTask===t.id;return`<div class="ci ${dn2?'dn':''} ${ex?'exp':''}"><div class="cb" onclick="event.stopPropagation();tgD('${t.id}')">${dn2?'✓':''}</div><div style="flex:1;cursor:pointer;" onclick="tgE('${t.id}')"><div class="ct">${t.t}</div><div class="csub">${t.s} <span class="cat-badge ${catCls[t.cat]||'cat-daily'}">${t.cat}</span></div><div class="ci-exp">${ex?'▲ Hide':'▼ Tap for instructions'}</div><div class="ci-det">${t.d}</div></div></div>`}).join('')}</div>`;
@@ -469,8 +525,8 @@ let cD="Greetings",cI=0,dk=[],fK=0,fA=0,fl=false;
 function sD(n){cD=n;dk=sh([...V[n]]);cI=0;fK=0;fA=0;fl=false;rC();}
 function rC(){const ds=Object.keys(V);let h=`<div class="pt">🃏 Flashcards</div><p class="ps">Tap to flip · 🔊 for pronunciation</p><div class="dkp">${ds.map(d=>`<button class="dkb ${d===cD?'act':''}" onclick="sD('${d}')">${d}</button>`).join('')}</div>`;
 if(!dk.length){sD(cD);return;}
-if(cI>=dk.length){h+=`<div class="card" style="text-align:center;padding:30px;"><h3 style="justify-content:center;">Deck Complete! 🎉</h3><div class="qbg">${fK}/${dk.length}</div><p style="color:var(--gr);">Know: <b style="color:var(--teal)">${fK}</b> · Again: <b style="color:var(--rust)">${fA}</b></p><button class="qrb" onclick="sD('${cD}')">Shuffle & Retry</button></div>`;document.getElementById('p-cards').innerHTML=h;return;}
-const c=dk[cI];h+=`<div class="fpg">${cI+1} of ${dk.length}</div><div style="display:flex;gap:14px;justify-content:center;font-size:12px;font-weight:700;margin-bottom:10px;"><span style="color:var(--teal)">✓ ${fK}</span><span style="color:var(--rust)">✗ ${fA}</span></div><div class="fca"><div class="fcc" onclick="fl=!fl;rC()"><div class="fc ${fl?'fl':''}"><div class="ff ffr"><div class="fw">${c.e}</div><div class="fh">Tap to reveal</div></div><div class="ff fbk"><div class="fw">${c.e}</div><div class="ft">${c.n}</div>${c.x?`<div class="fe">"${c.x}"</div>`:''}</div></div></div><button class="splg" data-speak="${c.e.replace(/"/g,'&quot;')}">🔊</button>${fl?`<div class="fcl"><button class="fcb ba" onclick="fR(0)">🔄 Again</button><button class="fcb bk" onclick="fR(1)">✓ Know it</button></div>`:''}</div>`;
+if(cI>=dk.length){h+=`<div class="card" style="text-align:center;padding:30px;"><h3 style="justify-content:center;">Deck Complete! 🎉</h3><div class="qbg">${fK}/${dk.length}</div><p style="color:var(--gr);">Know: <b style="color:var(--teal)">${fK}</b> · Again: <b style="color:var(--terra)">${fA}</b></p><button class="qrb" onclick="sD('${cD}')">Shuffle & Retry</button></div>`;document.getElementById('p-cards').innerHTML=h;return;}
+const c=dk[cI];h+=`<div class="fpg">${cI+1} of ${dk.length}</div><div style="display:flex;gap:14px;justify-content:center;font-size:12px;font-weight:700;margin-bottom:10px;"><span style="color:var(--teal)">✓ ${fK}</span><span style="color:var(--terra)">✗ ${fA}</span></div><div class="fca"><div class="fcc" onclick="fl=!fl;rC()"><div class="fc ${fl?'fl':''}"><div class="ff ffr"><div class="fw">${c.e}</div><div class="fh">Tap to reveal</div></div><div class="ff fbk"><div class="fw">${c.e}</div><div class="ft">${c.n}</div>${c.x?`<div class="fe">"${c.x}"</div>`:''}</div></div></div><button class="splg" data-speak="${c.e.replace(/"/g,'&quot;')}">🔊</button>${fl?`<div class="fcl"><button class="fcb ba" onclick="fR(0)">🔄 Again</button><button class="fcb bk" onclick="fR(1)">✓ Know it</button></div>`:''}</div>`;
 document.getElementById('p-cards').innerHTML=h;}
 function fR(k){const c=dk[cI];if(k){fK++;S.fk[c.e]=true;}else{fA++;S.fk[c.e]=false;}sv();cI++;fl=false;rC();}
 
@@ -492,7 +548,7 @@ setTimeout(()=>{qI++;qA=false;rQ();},ok?700:1400);
 }));}
 
 /* ===== MORE ===== */
-function rM(){let h=`<div class="pt">📋 More</div><div class="stb"><button class="st act" onclick="sM('sc',this)">Schedule</button><button class="st" onclick="sM('rs',this)">Resources</button><button class="st" onclick="sM('hn',this)">🇭🇳 Honduran</button><button class="st" onclick="sM('sg',this)">🎵 Songs</button></div>`;
+function rM(){let h=`<div class="pt">📋 More</div><div class="stb"><button class="st act" onclick="sM('sc',this)">Schedule</button><button class="st" onclick="sM('rs',this)">Resources</button><button class="st" onclick="sM('hn',this)">🇭🇳 Honduran</button><button class="st" onclick="sM('sg',this)">🎵 Songs</button><button class="st" onclick="sM('cg',this)">🔗 Cognates</button><button class="st" onclick="sM('st',this)">⚙️ Settings</button></div>`;
 h+=`<div class="msec act" id="m-sc"><div class="card hl-teal"><h3>⏰ 45 min/day</h3><p>Small blocks around naps & meals. 5/7 days = success.</p></div>
 <div class="sbl"><div class="sbh">📅 Weekday</div>${[['7:00','Morning song + dress narration','5m'],['7:30','Breakfast narration','5m'],['9:00','Songs + video together','10m'],['10:00','Play activity in Spanish','10m'],['1:00','Solo study (nap time)','15m'],['6:30','Bath/bedtime routine','5m']].map(([t,a,d])=>`<div class="sr"><span class="stm">${t}</span><div class="sac">${a}</div><span style="font-size:10px;color:var(--gr);font-weight:700;">${d}</span></div>`).join('')}</div>
 <div class="sbl"><div class="sbh">🌴 Weekend Bonus</div>${[['AM','Florida field trip or extended play','20m'],['Nap','Extra study or HelloTalk chat','25m'],['PM','Spanish show together','20m']].map(([t,a,d])=>`<div class="sr"><span class="stm">${t}</span><div class="sac">${a}</div><span style="font-size:10px;color:var(--gr);font-weight:700;">${d}</span></div>`).join('')}</div></div>`;
@@ -507,10 +563,25 @@ h+=`<div class="msec" id="m-hn"><div class="card hl-gold"><h3>🇭🇳 Honduran 
 <div class="card"><h3>🎵 Honduran Music</h3><ul><li><b>Guillermo Anderson</b> — "En Mi País," "Ceibeño"</li><li><b>Punta music</b> — Banda Blanca, Kazzabe</li><li><b>Polache</b> — comedian/singer</li></ul></div></div>`;
 
 h+=`<div class="msec" id="m-sg"><div class="card"><h3>🎵 Songs in Order</h3>${[["Buenos Días","Mo 1"],["Los Pollitos Dicen","Mo 1"],["Cabeza Hombros Rodillas Pies","Mo 2"],["Pin Pon","Mo 2"],["Estrellita ¿Dónde Estás?","Mo 3"],["Arroz con Leche","Mo 4"],["La Vaca Lola","Mo 5"],["Un Elefante Se Balanceaba","Mo 6"],["De Colores","Mo 7+"]].map(([n,w])=>`<div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--grl)"><div><b style="font-size:13px">${n}</b> ${spB(n)}<br><span style="font-size:11px;color:var(--gr)">${w}</span></div></div>`).join('')}</div></div>`;
+
+h+=`<div class="msec" id="m-cg"><div class="card hl-gold"><h3>🔗 Bilingual Bonus: Cognates</h3><p>These words sound similar in English and Spanish — you already know more than you think! Honduras's Caribbean coast has English-Creole influence, making these even more familiar.</p></div>
+<div class="card"><h3>Words You Already Know</h3>${[["Chocolate","Chocolate — from Nahuatl, same word!"],["Hospital","Hospital — identical"],["Familia","Family — sounds similar"],["Música","Music — add an accent"],["Animal","Animal — exactly the same"],["Teléfono","Telephone — easy cognate"],["Banana / Guineo","Banana — Caribbean English root"],["Limón","Lemon — close enough"],["Importante","Important — just add -e"],["Información","Information — swap the ending"],["Natural","Natural — identical"],["Tropical","Tropical — same in Florida!"]].map(([a,b])=>`<div class="vp"><span class="ve">${a.split('/')[0].trim()} ${spB(a.split('/')[0].trim())}</span><span class="vn">${b}</span></div>`).join('')}</div>
+<div class="card hl-teal"><h3>💡 The -tion → -ción Cheat Code</h3><p>Almost ANY English word ending in "-tion" becomes Spanish by changing it to "-ción": nation→nación, education→educación, information→información, celebration→celebración, communication→comunicación. You just unlocked hundreds of words!</p></div></div>`;
+
+h+=`<div class="msec" id="m-st"><div class="card"><h3>⚙️ Your Profile</h3>
+<p style="margin-bottom:12px;">Tap to update your info.</p>
+<div style="background:var(--grl);padding:14px;border-radius:var(--rs);margin-bottom:8px;"><b>Name:</b> ${profile?profile.name:'Not set'}</div>
+<div style="background:var(--grl);padding:14px;border-radius:var(--rs);margin-bottom:8px;"><b>Child:</b> ${profile?profile.child:'Not set'}</div>
+<div style="background:var(--grl);padding:14px;border-radius:var(--rs);margin-bottom:8px;"><b>Child's age:</b> ${profile?profile.age+' years':'Not set'}</div>
+<div style="background:var(--grl);padding:14px;border-radius:var(--rs);margin-bottom:8px;"><b>Spanish level:</b> ${profile?['🌱 Zero','🌿 A little','🌳 Some'][profile.level]:'Not set'}</div>
+<button onclick="localStorage.removeItem('v_profile');profile=null;document.getElementById('onboard').style.display='block';" style="width:100%;padding:12px;border-radius:50px;background:var(--terra);color:var(--w);font-weight:700;font-size:14px;margin-top:12px;">Edit Profile</button>
+</div>
+<div class="card hl-gold"><h3>📊 Reset Progress</h3><p style="margin-bottom:8px;">Start completely fresh. This cannot be undone.</p><button onclick="if(confirm('Reset ALL progress?')){localStorage.clear();location.reload();}" style="padding:10px 20px;border-radius:50px;background:var(--terra);color:var(--w);font-weight:700;font-size:13px;">Reset Everything</button></div></div>`;
 document.getElementById('p-more').innerHTML=h;}
 function sM(id,b){document.querySelectorAll('.msec').forEach(s=>s.classList.remove('act'));document.getElementById('m-'+id).classList.add('act');b.parentElement.querySelectorAll('.st').forEach(x=>x.classList.remove('act'));b.classList.add('act');}
 
 /* ===== INIT ===== */
+showOnboard();
 rH();rL();dk=sh([...V[cD]]);rC();rQ();rM();renderToys();
 </script>
 </body>
