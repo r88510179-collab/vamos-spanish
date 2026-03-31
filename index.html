@@ -88,7 +88,7 @@ button,.cb,.wkc,.spk,.splg{min-width:44px;min-height:44px;}
 /* CHECKLIST */
 .cls{background:var(--w);border-radius:var(--r);border:1px solid var(--bd);overflow:hidden;margin-bottom:16px;}
 .clh{padding:14px 16px;font-weight:700;font-size:14px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--bd);background:var(--ink);color:var(--gold);}
-.clh.tg{cursor:pointer;width:100%;display:flex;text-align:left;background:var(--ink);color:var(--gold);appearance:none;-webkit-appearance:none;border:none;border-radius:0;}
+.clh.tg{cursor:pointer;}
 .clc{font-size:11px;background:rgba(255,193,7,.2);padding:2px 8px;border-radius:50px;}
 .clx{font-size:14px;font-weight:900;color:var(--gold);margin-left:10px;}
 .cls.cp .clh{border-bottom:none;}
@@ -793,6 +793,12 @@ let h=`<div class="hero"><h2>¡Buenos días${profile?' '+profile.name:''}!</h2><
 </button>
 <div id="helpme" class="cls-bd" style="padding:12px 16px;">
 <p style="text-align:center;font-size:12px;color:#CBD5E1;margin-bottom:10px;">Toddler meltdown? Tap for instant phrases.</p>
+<div class="card ${homeSec.help?'':'cp'}" style="background:var(--ink);color:var(--w);border:2px solid var(--gold);">
+<button onclick="tgHomeSec('help')" class="clh tg" style="background:none;border:none;justify-content:center;padding:0 0 8px;color:var(--gold);">
+<span style="font-size:16px;">🆘 HELP ME — Emergency Phrases</span><span class="clx">${homeSec.help?'−':'+'}</span>
+</button>
+<p style="text-align:center;font-size:12px;color:#CBD5E1;">Toddler meltdown? Tap for instant phrases.</p>
+<div id="helpme" class="cls-bd" style="margin-top:12px;">
 <div style="background:rgba(212,160,23,.1);border:1px solid rgba(212,160,23,.2);padding:12px;border-radius:12px;margin-bottom:8px;display:flex;align-items:center;gap:10px;"><button class="spk" data-speak="Cálmate mi amor" style="background:var(--gold);border-color:var(--gold);color:var(--ink);">🔊</button><div><b style="font-size:18px;color:var(--gold);">Cálmate</b><br><span style="font-size:12px;color:#C8C8DA;">KAL-mah-teh · Calm down</span></div></div>
 <div style="background:rgba(212,160,23,.1);border:1px solid rgba(212,160,23,.2);padding:12px;border-radius:12px;margin-bottom:8px;display:flex;align-items:center;gap:10px;"><button class="spk" data-speak="Usa tus palabras" style="background:var(--gold);border-color:var(--gold);color:var(--ink);">🔊</button><div><b style="font-size:18px;color:var(--gold);">Usa tus palabras</b><br><span style="font-size:12px;color:#C8C8DA;">OO-sah toos pah-LAH-brahs · Use your words</span></div></div>
 <div style="background:rgba(212,160,23,.1);border:1px solid rgba(212,160,23,.2);padding:12px;border-radius:12px;margin-bottom:8px;display:flex;align-items:center;gap:10px;"><button class="spk" data-speak="Respira" style="background:var(--gold);border-color:var(--gold);color:var(--ink);">🔊</button><div><b style="font-size:18px;color:var(--gold);">Respira</b><br><span style="font-size:12px;color:#C8C8DA;">reh-SPEE-rah · Breathe</span></div></div>
@@ -803,6 +809,7 @@ let h=`<div class="hero"><h2>¡Buenos días${profile?' '+profile.name:''}!</h2><
 <div class="cls ${homeSec.tasks?'':'cp'}"><button class="clh tg" onclick="tgHomeSec('tasks')"><span>📋 Today's Tasks</span><span><span class="clc">${cc}/${TK.length}</span><span class="clx">${homeSec.tasks?'−':'+'}</span></span></button><div class="cls-bd">${TK.map(t=>{const dn2=S.dc[t.id];const ex=expTask===t.id;return`<div class="ci ${dn2?'dn':''} ${ex?'exp':''}"><div class="cb" onclick="event.stopPropagation();tgD('${t.id}')">${dn2?'✓':''}</div><div style="flex:1;cursor:pointer;" onclick="tgE('${t.id}')"><div class="ct">${t.t}</div><div class="csub">${t.s} <span class="cat-badge ${catCls[t.cat]||'cat-daily'}">${t.cat}</span></div><div class="ci-exp">${ex?'▲ Hide':'▼ Tap for instructions'}</div><div class="ci-det">${t.d}</div></div></div>`}).join('')}</div></div>
 
 <div class="cls ${homeSec.fq?'':'cp'}"><button class="clh tg" onclick="tgHomeSec('fq')"><span>🌴 Florida Quest — Fort Myers</span><span><span class="clc">${Object.values(S.fq||{}).filter(Boolean).length}/${FQ.length}</span><span class="clx">${homeSec.fq?'−':'+'}</span></span></button><div class="cls-bd">${FQ.map(q=>{const dn3=S.fq&&S.fq[q.id];return`<div class="ci ${dn3?'dn':''}" style="cursor:pointer;"><div class="cb" onclick="event.stopPropagation();tgFQ('${q.id}')">${dn3?'✓':''}</div><div style="flex:1;"><div class="ct" style="font-size:13px;">${q.t}</div><div class="csub">${q.d}</div></div></div>`}).join('')}</div></div>
+<div class="cls ${homeSec.fq?'':'cp'}"><button class="clh tg" onclick="tgHomeSec('fq')"><span>🌴 Florida Quest — Cape Coral</span><span><span class="clc">${Object.values(S.fq||{}).filter(Boolean).length}/${FQ.length}</span><span class="clx">${homeSec.fq?'−':'+'}</span></span></button><div class="cls-bd">${FQ.map(q=>{const dn3=S.fq&&S.fq[q.id];return`<div class="ci ${dn3?'dn':''}" style="cursor:pointer;"><div class="cb" onclick="event.stopPropagation();tgFQ('${q.id}')">${dn3?'✓':''}</div><div style="flex:1;"><div class="ct" style="font-size:13px;">${q.t}</div><div class="csub">${q.d}</div></div></div>`}).join('')}</div></div>
 
 ${profile?`<button onclick="shareStreak()" style="width:100%;padding:14px;border-radius:50px;background:var(--ink);color:var(--gold);font-weight:700;font-size:14px;border:2px solid var(--gold);margin-bottom:16px;">📤 Share ${S.sk}-Day Streak with Partner</button>`:''}`;
 document.getElementById('p-home').innerHTML=h;}
