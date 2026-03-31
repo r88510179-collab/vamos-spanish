@@ -5,7 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="theme-color" content="#1A1A1A">
+<meta name="apple-mobile-web-app-title" content="¡Vamos!">
+<meta name="theme-color" content="#1A1B4B">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%231A1B4B'/%3E%3Ccircle cx='32' cy='32' r='22' fill='%23D4A017'/%3E%3Ctext x='32' y='39' text-anchor='middle' font-family='Arial,sans-serif' font-size='22' font-weight='700' fill='%231A1B4B'%3E%C2%A1V!%3C/text%3E%3C/svg%3E">
+<link rel="manifest" href="manifest.webmanifest">
 <title>¡Vamos! — Learn Spanish Together</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Playfair+Display:wght@700;900&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -23,6 +26,7 @@
 *{margin:0;padding:0;box-sizing:border-box;}
 body{font-family:'Quicksand',sans-serif;background:var(--sand);color:var(--ink);line-height:1.65;-webkit-font-smoothing:antialiased;padding-bottom:82px;overflow-x:hidden;}
 button{font-family:'Quicksand',sans-serif;border:none;cursor:pointer;-webkit-tap-highlight-color:transparent;}
+button,.cb,.wkc,.spk,.splg{min-width:44px;min-height:44px;}
 
 /* HEADER */
 .hdr{background:var(--ink);color:var(--gold);padding:calc(env(safe-area-inset-top,20px)+28px) 24px 28px;text-align:center;border-bottom:5px solid var(--gold);position:relative;}
@@ -123,7 +127,7 @@ button{font-family:'Quicksand',sans-serif;border:none;cursor:pointer;-webkit-tap
 .lesson-step{background:var(--w);border-radius:8px;padding:12px;margin-top:8px;border:1px solid var(--bd);}
 .lesson-step h5{font-size:13px;font-weight:700;color:var(--teal);margin-bottom:4px;}
 .lesson-step p{font-size:12.5px;}
-.lesson-step .phrase{display:flex;align-items:center;gap:6px;background:var(--goldl);padding:6px 10px;border-radius:8px;margin:6px 0;font-weight:700;font-size:14px;border:1px solid #FFE082;}
+.lesson-step .phrase{display:flex;align-items:flex-start;gap:6px;background:var(--goldl);padding:8px 10px;border-radius:8px;margin:6px 0;font-weight:700;font-size:14px;border:1px solid #FFE082;flex-wrap:wrap;}
 .wkc{width:22px;height:22px;border:2px solid var(--bd);border-radius:6px;background:var(--w);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:11px;color:transparent;transition:all .25s;}
 .wkc.dn{background:var(--teal);border-color:var(--teal);color:var(--w);}
 
@@ -330,6 +334,25 @@ const V={
 /* ===== USER PROFILE (Onboarding) ===== */
 let profile=JSON.parse(localStorage.getItem('v_profile')||'null');
 function showOnboard(){if(!profile)document.getElementById('onboard').style.display='block';}
+function resetOnboardForm(){
+  document.getElementById('ob-name').value='';
+  document.getElementById('ob-child').value='';
+  document.querySelectorAll('#ob-ages .ob-opt').forEach((b,i)=>{
+    const on=i===1;
+    b.style.borderColor=on?'var(--gold)':'rgba(255,255,255,.2)';
+    b.style.background=on?'rgba(212,160,23,.15)':'rgba(255,255,255,.05)';
+    b.style.color=on?'var(--gold)':'var(--w)';
+    b.classList.toggle('ob-sel',on);
+  });
+  document.querySelectorAll('#ob-levels .ob-lvl').forEach((b,i)=>{
+    const on=i===0;
+    b.style.borderColor=on?'var(--gold)':'rgba(255,255,255,.2)';
+    b.style.background=on?'rgba(212,160,23,.15)':'rgba(255,255,255,.05)';
+    b.style.color=on?'var(--gold)':'var(--w)';
+    b.classList.toggle('ob-sel',on);
+  });
+}
+function editProfile(){localStorage.removeItem('v_profile');profile=null;resetOnboardForm();document.getElementById('onboard').style.display='block';}
 function saveOnboard(){
   const name=document.getElementById('ob-name').value.trim()||'Friend';
   const child=document.getElementById('ob-child').value.trim()||'Baby';
@@ -681,13 +704,20 @@ const PH={"Hola":"OH-lah","Adiós":"ah-dee-OHS","Buenos días":"BWEH-nohs DEE-ah
 document.addEventListener('click',function(e){
   const sp=e.target.closest('[data-speak]');
   if(sp){e.stopPropagation();speak(sp.dataset.speak);return;}
+  if(e.target.closest('[data-help-toggle]')){
+    const hm=document.getElementById('helpme');
+    hm.style.display=hm.style.display==='block'?'none':'block';
+    return;
+  }
 });
 
 /* ===== CONFETTI ===== */
-function confetti(){const c=document.getElementById('confetti'),x=c.getContext('2d');c.width=innerWidth;c.height=innerHeight;let p=Array.from({length:60},()=>({x:Math.random()*c.width,y:c.height+10,c:['#FFC107','#008080','#D35400','#FFFFFF'][0|Math.random()*4],vx:(Math.random()-.5)*4,vy:-(Math.random()*6+6),s:Math.random()*6+4}));let f=0;function d(){x.clearRect(0,0,c.width,c.height);p.forEach(q=>{x.fillStyle=q.c;x.fillRect(q.x,q.y,q.s,q.s);q.x+=q.vx;q.y+=q.vy;q.vy+=.15;});f++;if(f<90)requestAnimationFrame(d);else x.clearRect(0,0,c.width,c.height);}d();}
+let confettiRAF=0;
+function confetti(){const c=document.getElementById('confetti'),x=c.getContext('2d');if(confettiRAF)cancelAnimationFrame(confettiRAF);c.width=innerWidth;c.height=innerHeight;let p=Array.from({length:60},()=>({x:Math.random()*c.width,y:c.height+10,c:['#FFC107','#008080','#D35400','#FFFFFF'][0|Math.random()*4],vx:(Math.random()-.5)*4,vy:-(Math.random()*6+6),s:Math.random()*6+4}));let f=0;function d(){x.clearRect(0,0,c.width,c.height);p.forEach(q=>{x.fillStyle=q.c;x.fillRect(q.x,q.y,q.s,q.s);q.x+=q.vx;q.y+=q.vy;q.vy+=.15;});f++;if(f<90)confettiRAF=requestAnimationFrame(d);else{x.clearRect(0,0,c.width,c.height);confettiRAF=0;}}d();}
 
 /* ===== DRUM ===== */
-function playDrum(t){if(navigator.vibrate)navigator.vibrate(t==='hi'?30:t==='mid'?50:70);try{const a=new AudioContext(),o=a.createOscillator(),g=a.createGain();o.connect(g);g.connect(a.destination);o.frequency.value=t==='hi'?400:t==='mid'?220:100;o.type=t==='mid'?'square':'triangle';g.gain.setValueAtTime(.4,a.currentTime);g.gain.exponentialRampToValueAtTime(.001,a.currentTime+.2);o.start();o.stop(a.currentTime+.2);}catch(e){}}
+let drumAudioCtx=null;
+function playDrum(t){if(navigator.vibrate)navigator.vibrate(t==='hi'?30:t==='mid'?50:70);try{if(!drumAudioCtx)drumAudioCtx=new (window.AudioContext||window.webkitAudioContext)();if(drumAudioCtx.state==='suspended')drumAudioCtx.resume();const a=drumAudioCtx,o=a.createOscillator(),g=a.createGain();o.connect(g);g.connect(a.destination);o.frequency.value=t==='hi'?400:t==='mid'?220:100;o.type=t==='mid'?'square':'triangle';g.gain.setValueAtTime(.4,a.currentTime);g.gain.exponentialRampToValueAtTime(.001,a.currentTime+.2);o.start();o.stop(a.currentTime+.2);}catch(e){}}
 
 /* ===== TODDLER MODE ===== */
 function toggleTM(){const tm=document.getElementById('tmode');tm.classList.toggle('act');if(profile)document.getElementById('tm-greeting').textContent='¡Hola '+profile.child+'!';}
@@ -708,7 +738,7 @@ function startColorGame(){
   document.getElementById('color-prompt').innerHTML=`Toca <b>${colorTarget.es}</b>`;
   speak('Toca '+colorTarget.es);
   document.getElementById('color-result').textContent='';
-  document.getElementById('color-dots').innerHTML=pool.slice(0,4).map(c=>`<button onclick="checkColor('${c.es}')" style="width:100%;height:80px;border-radius:16px;background:${c.hex};border:4px solid var(--ink);box-shadow:0 6px 0 var(--ink);" data-speak="${c.es}"></button>`).join('');
+  document.getElementById('color-dots').innerHTML=pool.slice(0,4).map(c=>`<button style="width:100%;height:80px;border-radius:16px;background:${c.hex};border:4px solid var(--ink);box-shadow:0 6px 0 var(--ink);" data-color="${c.es}" data-speak="${c.es}"></button>`).join('');
 }
 function checkColor(picked){
   const res=document.getElementById('color-result');
@@ -727,14 +757,16 @@ function rH(){rd();us();const{dw,p,kw}=cs();const d=new Date(),dn=d.toLocaleDate
 const catCls={daily:'cat-daily',florida:'cat-florida',parent:'cat-parent',culture:'cat-culture'};
 let h=`<div class="hero"><h2>¡Buenos días${profile?' '+profile.name:''}!</h2><div class="dt2">${dn}, ${ds}${profile?' · '+profile.child+'\'s learning day':''}</div><div class="mot">${mo}</div></div>
 
-<div class="card" style="background:var(--terra);color:var(--w);border:none;cursor:pointer;" onclick="document.getElementById('helpme').style.display=document.getElementById('helpme').style.display==='block'?'none':'block'">
-<h3 style="color:var(--w);justify-content:center;font-size:16px;">🆘 HELP ME — Emergency Phrases</h3>
-<p style="text-align:center;font-size:12px;opacity:.8;">Toddler meltdown? Tap here for instant phrases.</p>
+<div class="card" style="background:var(--ink);color:var(--w);border:2px solid var(--gold);">
+<button data-help-toggle="1" style="width:100%;background:none;color:inherit;padding:0;">
+<h3 style="color:var(--gold);justify-content:center;font-size:16px;">🆘 HELP ME — Emergency Phrases</h3>
+<p style="text-align:center;font-size:12px;color:#B8B8D0;">Toddler meltdown? Tap here for instant phrases.</p>
+</button>
 <div id="helpme" style="display:none;margin-top:12px;">
-<div style="background:rgba(255,255,255,.15);padding:12px;border-radius:12px;margin-bottom:8px;display:flex;align-items:center;gap:10px;"><button class="spk" data-speak="Cálmate mi amor" style="background:rgba(255,255,255,.2);border-color:rgba(255,255,255,.3);color:var(--w);">🔊</button><div><b style="font-size:18px;">Cálmate</b><br><span style="font-size:12px;opacity:.8;">KAL-mah-teh · Calm down</span></div></div>
-<div style="background:rgba(255,255,255,.15);padding:12px;border-radius:12px;margin-bottom:8px;display:flex;align-items:center;gap:10px;"><button class="spk" data-speak="Usa tus palabras" style="background:rgba(255,255,255,.2);border-color:rgba(255,255,255,.3);color:var(--w);">🔊</button><div><b style="font-size:18px;">Usa tus palabras</b><br><span style="font-size:12px;opacity:.8;">OO-sah toos pah-LAH-brahs · Use your words</span></div></div>
-<div style="background:rgba(255,255,255,.15);padding:12px;border-radius:12px;margin-bottom:8px;display:flex;align-items:center;gap:10px;"><button class="spk" data-speak="Respira" style="background:rgba(255,255,255,.2);border-color:rgba(255,255,255,.3);color:var(--w);">🔊</button><div><b style="font-size:18px;">Respira</b><br><span style="font-size:12px;opacity:.8;">reh-SPEE-rah · Breathe</span></div></div>
-<div style="background:rgba(255,255,255,.15);padding:12px;border-radius:12px;display:flex;align-items:center;gap:10px;"><button class="spk" data-speak="Te quiero mucho" style="background:rgba(255,255,255,.2);border-color:rgba(255,255,255,.3);color:var(--w);">🔊</button><div><b style="font-size:18px;">Te quiero mucho</b><br><span style="font-size:12px;opacity:.8;">teh key-EH-roh MOO-choh · I love you so much</span></div></div>
+<div style="background:rgba(212,160,23,.1);border:1px solid rgba(212,160,23,.2);padding:12px;border-radius:12px;margin-bottom:8px;display:flex;align-items:center;gap:10px;"><button class="spk" data-speak="Cálmate mi amor" style="background:var(--gold);border-color:var(--gold);color:var(--ink);">🔊</button><div><b style="font-size:18px;color:var(--gold);">Cálmate</b><br><span style="font-size:12px;color:#C8C8DA;">KAL-mah-teh · Calm down</span></div></div>
+<div style="background:rgba(212,160,23,.1);border:1px solid rgba(212,160,23,.2);padding:12px;border-radius:12px;margin-bottom:8px;display:flex;align-items:center;gap:10px;"><button class="spk" data-speak="Usa tus palabras" style="background:var(--gold);border-color:var(--gold);color:var(--ink);">🔊</button><div><b style="font-size:18px;color:var(--gold);">Usa tus palabras</b><br><span style="font-size:12px;color:#C8C8DA;">OO-sah toos pah-LAH-brahs · Use your words</span></div></div>
+<div style="background:rgba(212,160,23,.1);border:1px solid rgba(212,160,23,.2);padding:12px;border-radius:12px;margin-bottom:8px;display:flex;align-items:center;gap:10px;"><button class="spk" data-speak="Respira" style="background:var(--gold);border-color:var(--gold);color:var(--ink);">🔊</button><div><b style="font-size:18px;color:var(--gold);">Respira</b><br><span style="font-size:12px;color:#C8C8DA;">reh-SPEE-rah · Breathe</span></div></div>
+<div style="background:rgba(212,160,23,.1);border:1px solid rgba(212,160,23,.2);padding:12px;border-radius:12px;display:flex;align-items:center;gap:10px;"><button class="spk" data-speak="Te quiero mucho" style="background:var(--gold);border-color:var(--gold);color:var(--ink);">🔊</button><div><b style="font-size:18px;color:var(--gold);">Te quiero mucho</b><br><span style="font-size:12px;color:#C8C8DA;">teh key-EH-roh MOO-choh · I love you so much</span></div></div>
 </div></div>
 <div class="rc"><div class="rw"><svg width="120" height="120"><circle cx="60" cy="60" r="52" fill="none" stroke="var(--grl)" stroke-width="8"/><circle cx="60" cy="60" r="52" fill="none" stroke="url(#rg)" stroke-width="8" stroke-dasharray="326.7" stroke-dashoffset="${326.7-(326.7*p/100)}" stroke-linecap="round"/><defs><linearGradient id="rg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="var(--teal)"/><stop offset="100%" stop-color="var(--gold)"/></linearGradient></defs></svg><div class="rcn"><div class="rpct">${p}%</div><div class="rlb">Complete</div></div></div><div style="font-size:12px;color:var(--gr);font-weight:600;">${dw} of 48 weeks</div></div>
 <div class="srow"><div class="sc2"><div class="sn cc">🔥 ${S.sk}</div><div class="sl2">Streak</div></div><div class="sc2"><div class="sn cy">${kw}</div><div class="sl2">Words</div></div><div class="sc2"><div class="sn cs">${S.qc}</div><div class="sl2">Quiz ✓</div></div><div class="sc2"><div class="sn cg">${dw}</div><div class="sl2">Weeks</div></div></div>
@@ -747,7 +779,7 @@ document.getElementById('p-home').innerHTML=h;}
 function tgD(id){S.dc[id]=!S.dc[id];if(S.dc[id])confetti();sv();us();rH();}
 function tgE(id){expTask=expTask===id?null:id;rH();}
 function tgFQ(id){if(!S.fq)S.fq={};S.fq[id]=!S.fq[id];if(S.fq[id])confetti();sv();rH();}
-function shareStreak(){const name=profile?profile.child:'our child';const msg=encodeURIComponent(`We hit a ${S.sk}-day Spanish streak today! 🔥🇭🇳 Ask ${name} where the "pelota" is when you get home! — from ¡Vamos! app`);window.open('sms:?body='+msg);}
+function shareStreak(){const name=profile?profile.child:'our child';const msg=encodeURIComponent(`We hit a ${S.sk}-day Spanish streak today! 🔥🇭🇳 Ask ${name} where the "pelota" is when you get home! — from ¡Vamos! app`);window.open('sms:&body='+msg);}
 
 /* ===== FLORIDA QUEST DATA ===== */
 const FQ=[
@@ -776,8 +808,10 @@ h+=`<div class="lesson"><h4>${w.t} <div class="wkc ${dn?'dn':''}" onclick="tgW('
 if(w.steps)w.steps.forEach(s=>{
 h+=`<div class="lesson-step"><h5>${s.h}</h5><p>${s.p}</p>`;
 if(s.phrases)s.phrases.forEach(p2=>{
-const parts=p2.split('|');const es=parts[0];const en=parts[1]||'';
-h+=`<div class="phrase">${spB(es)} <span>${es}</span>${en?` <span style="color:var(--gr);font-weight:500;margin-left:8px;">(${en})</span>`:''}</div>`;
+const parts=p2.split('|');const es=parts[0];
+const ph=parts.length===3?parts[1]:'';
+const en=parts.length===3?parts[2]:(parts[1]||'');
+h+=`<div class="phrase">${spB(es)} <span>${es}</span>${ph?` <span style="color:var(--terra);font-size:12px;font-weight:700;">🗣 ${ph}</span>`:''}${en?` <span style="color:var(--gr);font-weight:500;margin-left:8px;">(${en})</span>`:''}</div>`;
 });
 h+=`</div>`;
 });
@@ -858,11 +892,12 @@ h+=`<div class="msec" id="m-st"><div class="card"><h3>⚙️ Your Profile</h3>
 <div style="background:var(--grl);padding:14px;border-radius:var(--rs);margin-bottom:8px;"><b>Child:</b> ${profile?profile.child:'Not set'}</div>
 <div style="background:var(--grl);padding:14px;border-radius:var(--rs);margin-bottom:8px;"><b>Child's age:</b> ${profile?profile.age+' years':'Not set'}</div>
 <div style="background:var(--grl);padding:14px;border-radius:var(--rs);margin-bottom:8px;"><b>Spanish level:</b> ${profile?['🌱 Zero','🌿 A little','🌳 Some'][profile.level]:'Not set'}</div>
-<button onclick="localStorage.removeItem('v_profile');profile=null;document.getElementById('onboard').style.display='block';" style="width:100%;padding:12px;border-radius:50px;background:var(--terra);color:var(--w);font-weight:700;font-size:14px;margin-top:12px;">Edit Profile</button>
+<button onclick="editProfile()" style="width:100%;padding:12px;border-radius:50px;background:var(--terra);color:var(--w);font-weight:700;font-size:14px;margin-top:12px;">Edit Profile</button>
 </div>
 <div class="card hl-gold"><h3>📊 Reset Progress</h3><p style="margin-bottom:8px;">Start completely fresh. This cannot be undone.</p><button onclick="if(confirm('Reset ALL progress?')){localStorage.clear();location.reload();}" style="padding:10px 20px;border-radius:50px;background:var(--terra);color:var(--w);font-weight:700;font-size:13px;">Reset Everything</button></div></div>`;
 document.getElementById('p-more').innerHTML=h;}
 function sM(id,b){document.querySelectorAll('.msec').forEach(s=>s.classList.remove('act'));document.getElementById('m-'+id).classList.add('act');b.parentElement.querySelectorAll('.st').forEach(x=>x.classList.remove('act'));b.classList.add('act');}
+document.getElementById('color-dots').addEventListener('click',e=>{const b=e.target.closest('[data-color]');if(!b)return;checkColor(b.dataset.color);});
 
 /* ===== INIT ===== */
 showOnboard();
