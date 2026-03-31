@@ -14,9 +14,9 @@
   --gold:#D4A017;--goldd:#B8860B;--goldl:#FFF8E1;
   --ink:#1A1B4B;--ink2:#2D2E5E;
   --teal:#008080;--teall:#E0F2F1;--teald:#006666;
-  --terra:#C75B39;--terral:#FDEEE8;
+  --terra:#C75B39;--terra-aa:#BF4F2C;--terral:#FDEEE8;
   --w:#FFFFFF;--sand:#F5EDE0;
-  --gr:#6B7280;--gr2:#9CA3AF;--grl:#F3F4F6;--bd:#D5CFC5;
+  --gr:#5F6673;--gr2:#9CA3AF;--grl:#F3F4F6;--bd:#D5CFC5;
   --r:16px;--rs:10px;
   --sh:0 3px 10px rgba(0,0,0,.1);--shl:0 8px 24px rgba(0,0,0,.15);
 }
@@ -55,7 +55,7 @@ button{font-family:'Quicksand',sans-serif;border:none;cursor:pointer;-webkit-tap
 .card li{margin-bottom:4px;}
 .hl-gold{border-left:4px solid var(--gold);background:var(--goldl);}
 .hl-teal{border-left:4px solid var(--teal);background:var(--teall);}
-.hl-rust{border-left:4px solid var(--terra);background:var(--terral);}
+.hl-rust{border-left:4px solid var(--terra-aa);background:var(--terral);}
 
 /* HERO */
 .hero{background:var(--ink);color:var(--w);border-radius:var(--r);padding:22px;margin-bottom:16px;position:relative;overflow:hidden;box-shadow:var(--shl);border:2px solid var(--gold);}
@@ -76,7 +76,7 @@ button{font-family:'Quicksand',sans-serif;border:none;cursor:pointer;-webkit-tap
 .srow{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:16px;}
 .sc2{background:var(--w);border-radius:var(--r);padding:12px 6px;text-align:center;border:1px solid var(--bd);}
 .sn{font-family:'Playfair Display',serif;font-size:20px;font-weight:900;}
-.sn.cg{color:var(--teal);}.sn.cy{color:var(--goldd);}.sn.cc{color:var(--terra);}.sn.cs{color:var(--teald);}
+.sn.cg{color:var(--teal);}.sn.cy{color:var(--goldd);}.sn.cc{color:var(--terra-aa);}.sn.cs{color:var(--teald);}
 .sl2{font-size:9px;color:var(--gr);font-weight:700;text-transform:uppercase;margin-top:2px;}
 
 /* CHECKLIST */
@@ -224,14 +224,14 @@ button{font-family:'Quicksand',sans-serif;border:none;cursor:pointer;-webkit-tap
 <label style="font-size:12px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.5px;">Child's age</label>
 <div style="display:flex;gap:8px;margin:6px 0 16px;" id="ob-ages">
 <button class="ob-opt" data-age="1" style="flex:1;padding:12px;border-radius:12px;border:2px solid rgba(255,255,255,.2);background:rgba(255,255,255,.05);color:var(--w);font-family:'Quicksand';font-size:15px;font-weight:700;">1 yr</button>
-<button class="ob-opt" data-age="2" style="flex:1;padding:12px;border-radius:12px;border:2px solid var(--gold);background:rgba(212,160,23,.15);color:var(--gold);font-family:'Quicksand';font-size:15px;font-weight:700;">2 yr</button>
+<button class="ob-opt ob-sel" data-age="2" style="flex:1;padding:12px;border-radius:12px;border:2px solid var(--gold);background:rgba(212,160,23,.15);color:var(--gold);font-family:'Quicksand';font-size:15px;font-weight:700;">2 yr</button>
 <button class="ob-opt" data-age="3" style="flex:1;padding:12px;border-radius:12px;border:2px solid rgba(255,255,255,.2);background:rgba(255,255,255,.05);color:var(--w);font-family:'Quicksand';font-size:15px;font-weight:700;">3 yr</button>
 <button class="ob-opt" data-age="4" style="flex:1;padding:12px;border-radius:12px;border:2px solid rgba(255,255,255,.2);background:rgba(255,255,255,.05);color:var(--w);font-family:'Quicksand';font-size:15px;font-weight:700;">4 yr</button>
 </div>
 
 <label style="font-size:12px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.5px;">Your Spanish level</label>
 <div style="display:flex;flex-direction:column;gap:8px;margin:6px 0 24px;" id="ob-levels">
-<button class="ob-lvl" data-lvl="0" style="padding:14px;border-radius:12px;border:2px solid var(--gold);background:rgba(212,160,23,.15);color:var(--gold);font-family:'Quicksand';font-size:14px;font-weight:700;text-align:left;">🌱 <b>Zero</b> — I don't know any Spanish</button>
+<button class="ob-lvl ob-sel" data-lvl="0" style="padding:14px;border-radius:12px;border:2px solid var(--gold);background:rgba(212,160,23,.15);color:var(--gold);font-family:'Quicksand';font-size:14px;font-weight:700;text-align:left;">🌱 <b>Zero</b> — I don't know any Spanish</button>
 <button class="ob-lvl" data-lvl="1" style="padding:14px;border-radius:12px;border:2px solid rgba(255,255,255,.2);background:rgba(255,255,255,.05);color:var(--w);font-family:'Quicksand';font-size:14px;font-weight:700;text-align:left;">🌿 <b>A little</b> — I know some words (hola, gracias)</button>
 <button class="ob-lvl" data-lvl="2" style="padding:14px;border-radius:12px;border:2px solid rgba(255,255,255,.2);background:rgba(255,255,255,.05);color:var(--w);font-family:'Quicksand';font-size:14px;font-weight:700;text-align:left;">🌳 <b>Some</b> — I can say basic sentences</button>
 </div>
@@ -323,13 +323,20 @@ const V={
 "Feelings":[{e:"Contento",n:"Happy",x:"Estoy contento."},{e:"Triste",n:"Sad",x:"Está triste."},{e:"Enojado",n:"Angry",x:"No estoy enojado."},{e:"Cansado",n:"Tired",x:"Estoy cansado."},{e:"Asustado",n:"Scared",x:"No tengas miedo."},{e:"Emocionado",n:"Excited",x:"¡Estoy emocionado!"},{e:"Hambre",n:"Hungry",x:"Tengo hambre."},{e:"Sed",n:"Thirsty",x:"Tengo sed."}],
 "Honduran":[{e:"¡Qué onda!",n:"What's up!",x:"¡Qué onda, maje!"},{e:"Catracho",n:"Honduran person",x:"Soy catracho."},{e:"Pisto",n:"Money",x:"No tengo pisto."},{e:"Cipote",n:"Kid",x:"Los cipotes."},{e:"Maje",n:"Dude (informal)",x:"¿Qué tal, maje?"},{e:"Puchica",n:"Wow/dang",x:"¡Puchica!"},{e:"Cheque",n:"Okay/sure",x:"Está cheque."},{e:"¡Va pues!",n:"Alright!",x:"¡Va pues, vamos!"},{e:"Baleada",n:"Stuffed tortilla",x:"Una baleada con todo."},{e:"Alero",n:"Close friend",x:"Mi alero."},{e:"Jalar",n:"To leave",x:"Me voy a jalar."},{e:"¡Ideay!",n:"So?/Well?",x:"¡Ideay! ¿Qué pasó?"}],
 "Parenting":[{e:"No se pega",n:"No hitting",x:"No se pega. Usamos las manos con cariño."},{e:"Usa tus palabras",n:"Use your words",x:"Usa tus palabras, mi amor."},{e:"¿Necesitas ayuda?",n:"Do you need help?",x:"¿Necesitas ayuda con eso?"},{e:"Muy bien hecho",n:"Well done!",x:"¡Muy bien hecho, mi amor!"},{e:"Es hora de dormir",n:"Time for bed",x:"Es hora de dormir. Buenas noches."},{e:"Comparte",n:"Share",x:"Comparte con tu amigo."},{e:"Vamos a limpiar",n:"Let's clean up",x:"Vamos a limpiar los juguetes."},{e:"Te quiero mucho",n:"I love you so much",x:"Te quiero mucho, mi bebé."}],
-"Kitchen Soul":[{e:"Arroz",n:"Rice",x:"Arroz con frijoles — just like rice and beans."},{e:"Frijoles",n:"Beans",x:"Frijoles negros, like black-eyed peas."},{e:"Plátano",n:"Plantain",x:"Plátano frito — fried plantain, like a sweet side."},{e:"Yuca",n:"Cassava/Yuca",x:"Yuca frita, crispy like fries."},{e:"Maíz",n:"Corn",x:"Pan de maíz — cornbread!"},{e:"Guiso",n:"Stew",x:"Un guiso caliente, like a slow-cooked pot."},{e:"Sazón",n:"Seasoning",x:"Necesita más sazón — it needs more seasoning!"},{e:"Manteca",n:"Lard/Fat",x:"Cocinado con manteca, like grandma did."},{e:"Quimbombó",n:"Okra",x:"Quimbombó — same word from West Africa."},{e:"Coco",n:"Coconut",x:"Arroz con coco — coconut rice, Garífuna style."}],
-"Neighborhood":[{e:"¡Pase adelante!",n:"Come on in!",x:"¡Pase adelante! Mi casa es su casa."},{e:"¿Qué cuenta?",n:"What's the news?",x:"¡Buenas, vecina! ¿Qué cuenta?"},{e:"Bienvenidos",n:"Welcome",x:"¡Bienvenidos a nuestra casa!"},{e:"¿Quiere café?",n:"Want coffee?",x:"¿Quiere un cafecito?"},{e:"Con gusto",n:"With pleasure",x:"Con gusto, para eso estamos."},{e:"Que Dios le bendiga",n:"God bless you",x:"Gracias, que Dios le bendiga."},{e:"Vecino/a",n:"Neighbor",x:"Mi vecina es muy amable."},{e:"Cuídese",n:"Take care",x:"Cuídese mucho. ¡Buenas noches!"}]
+"Kitchen Soul":[{e:"Arroz",n:"Rice",x:"Arroz con frijoles — just like rice and beans."},{e:"Frijoles",n:"Beans",x:"Frijoles negros, like black-eyed peas."},{e:"Plátano",n:"Plantain",x:"Plátano frito — fried plantain, like a sweet side."},{e:"Yuca",n:"Cassava",x:"Yuca frita, crispy like fries."},{e:"Maíz",n:"Corn",x:"Pan de maíz — cornbread!"},{e:"Guiso",n:"Stew",x:"Un guiso caliente, like a slow-cooked pot."},{e:"Sazón",n:"Seasoning",x:"Necesita más sazón — it needs more seasoning!"},{e:"Manteca",n:"Lard",x:"Cocinado con manteca, like grandma did."},{e:"Quimbombó",n:"Okra",x:"Quimbombó — same word from West Africa."},{e:"Coco",n:"Coconut",x:"Arroz con coco — coconut rice, Garífuna style."}],
+"Neighborhood":[{e:"¡Pase adelante!",n:"Come on in",x:"¡Pase adelante! Mi casa es su casa."},{e:"¿Qué cuenta?",n:"What's the news",x:"¡Buenas, vecina! ¿Qué cuenta?"},{e:"Bienvenidos",n:"Welcome",x:"¡Bienvenidos a nuestra casa!"},{e:"¿Quiere café?",n:"Want coffee?",x:"¿Quiere un cafecito?"},{e:"Con gusto",n:"With pleasure",x:"Con gusto, para eso estamos."},{e:"Que Dios le bendiga",n:"God bless you",x:"Gracias, que Dios le bendiga."},{e:"Vecino/a",n:"Neighbor",x:"Mi vecina es muy amable."},{e:"Cuídese",n:"Take care",x:"Cuídese mucho. ¡Buenas noches!"}]
 };
 
 /* ===== USER PROFILE (Onboarding) ===== */
 let profile=JSON.parse(localStorage.getItem('v_profile')||'null');
 function showOnboard(){if(!profile)document.getElementById('onboard').style.display='block';}
+// Resets onboarding UI so "Edit Profile" always starts from clean defaults.
+function resetOnboardForm(){
+  document.getElementById('ob-name').value='';
+  document.getElementById('ob-child').value='';
+  document.querySelectorAll('#ob-ages .ob-opt').forEach((x,i)=>{x.style.borderColor='rgba(255,255,255,.2)';x.style.background='rgba(255,255,255,.05)';x.style.color='var(--w)';x.classList.remove('ob-sel');if(i===1){x.style.borderColor='var(--gold)';x.style.background='rgba(212,160,23,.15)';x.style.color='var(--gold)';x.classList.add('ob-sel');}});
+  document.querySelectorAll('#ob-levels .ob-lvl').forEach((x,i)=>{x.style.borderColor='rgba(255,255,255,.2)';x.style.background='rgba(255,255,255,.05)';x.style.color='var(--w)';x.classList.remove('ob-sel');if(i===0){x.style.borderColor='var(--gold)';x.style.background='rgba(212,160,23,.15)';x.style.color='var(--gold)';x.classList.add('ob-sel');}});
+}
 function saveOnboard(){
   const name=document.getElementById('ob-name').value.trim()||'Friend';
   const child=document.getElementById('ob-child').value.trim()||'Baby';
@@ -355,6 +362,7 @@ const TOYS=[
 {emoji:"🍌",es:"Guineo",en:"Banana",cat:"food"},{emoji:"🍎",es:"Manzana",en:"Apple",cat:"food"},{emoji:"🌮",es:"Baleada",en:"Baleada",cat:"food"},{emoji:"💧",es:"Agua",en:"Water",cat:"food"},{emoji:"🥛",es:"Leche",en:"Milk",cat:"food"},{emoji:"🍚",es:"Arroz",en:"Rice",cat:"food"},{emoji:"🧀",es:"Queso",en:"Cheese",cat:"food"},{emoji:"🍞",es:"Pan",en:"Bread",cat:"food"},
 {emoji:"🔴",es:"Rojo",en:"Red",cat:"colors"},{emoji:"🔵",es:"Azul",en:"Blue",cat:"colors"},{emoji:"🟢",es:"Verde",en:"Green",cat:"colors"},{emoji:"🟡",es:"Amarillo",en:"Yellow",cat:"colors"},{emoji:"⚫",es:"Negro",en:"Black",cat:"colors"},{emoji:"⚪",es:"Blanco",en:"White",cat:"colors"},{emoji:"🟠",es:"Naranja",en:"Orange",cat:"colors"},{emoji:"🟣",es:"Morado",en:"Purple",cat:"colors"},
 {emoji:"🖐️",es:"Mano",en:"Hand",cat:"body"},{emoji:"👃",es:"Nariz",en:"Nose",cat:"body"},{emoji:"👁️",es:"Ojo",en:"Eye",cat:"body"},{emoji:"👄",es:"Boca",en:"Mouth",cat:"body"},{emoji:"👂",es:"Oreja",en:"Ear",cat:"body"},{emoji:"🦶",es:"Pie",en:"Foot",cat:"body"},{emoji:"🦵",es:"Rodilla",en:"Knee",cat:"body"},{emoji:"💪",es:"Brazo",en:"Arm",cat:"body"},
+{emoji:"1️⃣",es:"Uno",en:"One",cat:"count"},{emoji:"2️⃣",es:"Dos",en:"Two",cat:"count"},{emoji:"3️⃣",es:"Tres",en:"Three",cat:"count"},{emoji:"4️⃣",es:"Cuatro",en:"Four",cat:"count"},{emoji:"5️⃣",es:"Cinco",en:"Five",cat:"count"},{emoji:"6️⃣",es:"Seis",en:"Six",cat:"count"},{emoji:"7️⃣",es:"Siete",en:"Seven",cat:"count"},{emoji:"8️⃣",es:"Ocho",en:"Eight",cat:"count"},
 {emoji:"☀️",es:"Sol",en:"Sun",cat:"nature"},{emoji:"🌙",es:"Luna",en:"Moon",cat:"nature"},{emoji:"⭐",es:"Estrella",en:"Star",cat:"nature"},{emoji:"🌊",es:"Mar",en:"Sea",cat:"nature"},{emoji:"🌴",es:"Palma",en:"Palm tree",cat:"nature"},{emoji:"🌺",es:"Flor",en:"Flower",cat:"nature"},{emoji:"🌧️",es:"Lluvia",en:"Rain",cat:"nature"},{emoji:"☁️",es:"Nube",en:"Cloud",cat:"nature"}
 ];
 const NUMS=["","Uno","Dos","Tres","Cuatro","Cinco","Seis","Siete","Ocho","Nueve","Diez"];
@@ -500,6 +508,8 @@ function speak(t){if(!('speechSynthesis' in window))return;speechSynthesis.cance
 if('speechSynthesis' in window)speechSynthesis.getVoices();
 function spB(t){return `<button class="spk" data-speak="${t.replace(/"/g,'&quot;')}">🔊</button>`;}
 function sh(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=0|Math.random()*(i+1);[b[i],b[j]]=[b[j],b[i]];}return b;}
+// Helper keeps YouTube search URLs safely encoded.
+function ytSearchUrl(q){return 'https://www.youtube.com/results?search_query='+encodeURIComponent(q);}
 
 /* ===== PHONETICS MAP ===== */
 const PH={"Hola":"OH-lah","Adiós":"ah-dee-OHS","Buenos días":"BWEH-nohs DEE-ahs","¡Buenas!":"BWEH-nahs","Por favor":"por fah-VOR","Gracias":"GRAH-see-ahs","De nada":"deh NAH-dah","¿Cómo estás?":"KOH-moh ehs-TAHS","Estoy bien":"ehs-TOY bee-EHN","Me llamo":"meh YAH-moh","Mucho gusto":"MOO-choh GOO-stoh","Rojo":"ROH-hoh","Azul":"ah-SOOL","Verde":"VEHR-deh","Amarillo":"ah-mah-REE-yoh","Blanco":"BLAHN-koh","Negro":"NEH-groh","Mamá":"mah-MAH","Papá":"pah-PAH","Bebé":"beh-BEH","Abuelo":"ah-BWEH-loh","Abuela":"ah-BWEH-lah","Agua":"AH-gwah","Leche":"LEH-cheh","Pollo":"POH-yoh","Arroz":"ah-ROHS","Frijoles":"free-HOH-lehs","Huevo":"WEH-voh","Baleada":"bah-leh-AH-dah","Guineo":"gee-NEH-oh","Tajadas":"tah-HAH-dahs","Tortilla":"tor-TEE-yah","Queso":"KEH-soh","Cabeza":"kah-BEH-sah","Ojos":"OH-hohs","Nariz":"nah-REES","Boca":"BOH-kah","Manos":"MAH-nohs","Pies":"pee-EHS","Barriga":"bah-REE-gah","Pelo":"PEH-loh","Ven aquí":"vehn ah-KEE","Mira":"MEE-rah","Siéntate":"see-EHN-tah-teh","Dame":"DAH-meh","Vamos":"VAH-mohs","Espera":"ehs-PEH-rah","No se pega":"noh seh PEH-gah","Cuidado":"kwee-DAH-doh","Despacito":"dehs-pah-SEE-toh","Contento":"kohn-TEHN-toh","Triste":"TREES-teh","Enojado":"eh-noh-HAH-doh","Cansado":"kahn-SAH-doh","Hambre":"AHM-breh","Catracho":"kah-TRAH-choh","Pisto":"PEES-toh","Cipote":"see-POH-teh","Maje":"MAH-heh","Puchica":"poo-CHEE-kah","Cheque":"CHEH-keh","¡Va pues!":"vah PWEHS","Alero":"ah-LEH-roh","Quimbombó":"keem-bohm-BOH","Yuca":"YOO-kah","Sazón":"sah-SOHN","Coco":"KOH-koh","¡Pase adelante!":"PAH-seh ah-deh-LAHN-teh","¿Qué cuenta?":"keh KWEHN-tah","Bienvenidos":"bee-ehn-veh-NEE-dohs","Vecino":"veh-SEE-noh","Cuídese":"KWEE-deh-seh","Comparte":"kohm-PAR-teh","Te quiero mucho":"teh key-EH-roh MOO-choh"};
@@ -508,13 +518,56 @@ const PH={"Hola":"OH-lah","Adiós":"ah-dee-OHS","Buenos días":"BWEH-nohs DEE-ah
 document.addEventListener('click',function(e){
   const sp=e.target.closest('[data-speak]');
   if(sp){e.stopPropagation();speak(sp.dataset.speak);return;}
+  const colorBtn=e.target.closest('[data-color]');
+  if(colorBtn){checkColor(colorBtn.dataset.color);}
 });
 
 /* ===== CONFETTI ===== */
-function confetti(){const c=document.getElementById('confetti'),x=c.getContext('2d');c.width=innerWidth;c.height=innerHeight;let p=Array.from({length:60},()=>({x:Math.random()*c.width,y:c.height+10,c:['#FFC107','#008080','#D35400','#FFFFFF'][0|Math.random()*4],vx:(Math.random()-.5)*4,vy:-(Math.random()*6+6),s:Math.random()*6+4}));let f=0;function d(){x.clearRect(0,0,c.width,c.height);p.forEach(q=>{x.fillStyle=q.c;x.fillRect(q.x,q.y,q.s,q.s);q.x+=q.vx;q.y+=q.vy;q.vy+=.15;});f++;if(f<90)requestAnimationFrame(d);else x.clearRect(0,0,c.width,c.height);}d();}
+const confettiState={raf:0,frame:0,parts:[]};
+function sizeConfettiCanvas(){const c=document.getElementById('confetti');c.width=innerWidth;c.height=innerHeight;}
+function confetti(){
+  const c=document.getElementById('confetti'),x=c.getContext('2d');
+  // Cancel previous run to prevent stacked/conflicting animations.
+  if(confettiState.raf)cancelAnimationFrame(confettiState.raf);
+  sizeConfettiCanvas();
+  confettiState.parts=Array.from({length:60},()=>({x:Math.random()*c.width,y:c.height+10,c:['#FFC107','#008080','#D35400','#FFFFFF'][0|Math.random()*4],vx:(Math.random()-.5)*4,vy:-(Math.random()*6+6),s:Math.random()*6+4}));
+  confettiState.frame=0;
+  function d(){
+    x.clearRect(0,0,c.width,c.height);
+    confettiState.parts.forEach(q=>{x.fillStyle=q.c;x.fillRect(q.x,q.y,q.s,q.s);q.x+=q.vx;q.y+=q.vy;q.vy+=.15;});
+    confettiState.frame++;
+    if(confettiState.frame<90)confettiState.raf=requestAnimationFrame(d);
+    else{x.clearRect(0,0,c.width,c.height);confettiState.raf=0;}
+  }
+  d();
+}
+window.addEventListener('resize',sizeConfettiCanvas);
+window.addEventListener('orientationchange',sizeConfettiCanvas);
 
 /* ===== DRUM ===== */
-function playDrum(t){if(navigator.vibrate)navigator.vibrate(t==='hi'?30:t==='mid'?50:70);try{const a=new AudioContext(),o=a.createOscillator(),g=a.createGain();o.connect(g);g.connect(a.destination);o.frequency.value=t==='hi'?400:t==='mid'?220:100;o.type=t==='mid'?'square':'triangle';g.gain.setValueAtTime(.4,a.currentTime);g.gain.exponentialRampToValueAtTime(.001,a.currentTime+.2);o.start();o.stop(a.currentTime+.2);}catch(e){}}
+// Reuse one AudioContext to avoid creating a new context on every tap.
+let drumCtx=null;
+function getDrumCtx(){
+  if(drumCtx)return drumCtx;
+  const Ctx=window.AudioContext||window.webkitAudioContext;
+  if(!Ctx)return null;
+  drumCtx=new Ctx();
+  return drumCtx;
+}
+function playDrum(t){
+  if(typeof navigator.vibrate==='function')navigator.vibrate(t==='hi'?30:t==='mid'?50:70);
+  try{
+    const a=getDrumCtx();if(!a)return;
+    if(a.state==='suspended')a.resume();
+    const o=a.createOscillator(),g=a.createGain();
+    o.connect(g);g.connect(a.destination);
+    o.frequency.value=t==='hi'?400:t==='mid'?220:100;
+    o.type=t==='mid'?'square':'triangle';
+    g.gain.setValueAtTime(.4,a.currentTime);
+    g.gain.exponentialRampToValueAtTime(.001,a.currentTime+.2);
+    o.start();o.stop(a.currentTime+.2);
+  }catch(e){}
+}
 
 /* ===== TODDLER MODE ===== */
 function toggleTM(){const tm=document.getElementById('tmode');tm.classList.toggle('act');if(profile)document.getElementById('tm-greeting').textContent='¡Hola '+profile.child+'!';}
@@ -532,10 +585,13 @@ function updCount(){document.getElementById('count-display').textContent=countN;
 function speakCount(){speak(NUMS[countN]);}
 function startColorGame(){
   const pool=sh([...COLORS_GAME]);colorTarget=pool[0];
+  // Build 4 guaranteed-unique options and always include target.
+  const opts=[colorTarget];
+  for(const c of pool){if(opts.length===4)break;if(!opts.find(o=>o.es===c.es))opts.push(c);}
   document.getElementById('color-prompt').innerHTML=`Toca <b>${colorTarget.es}</b>`;
   speak('Toca '+colorTarget.es);
   document.getElementById('color-result').textContent='';
-  document.getElementById('color-dots').innerHTML=pool.slice(0,4).map(c=>`<button onclick="checkColor('${c.es}')" style="width:100%;height:80px;border-radius:16px;background:${c.hex};border:4px solid var(--ink);box-shadow:0 6px 0 var(--ink);" data-speak="${c.es}"></button>`).join('');
+  document.getElementById('color-dots').innerHTML=sh(opts).map(c=>`<button data-color="${c.es}" style="width:100%;height:80px;border-radius:16px;background:${c.hex};border:4px solid var(--ink);box-shadow:0 6px 0 var(--ink);" data-speak="${c.es}"></button>`).join('');
 }
 function checkColor(picked){
   const res=document.getElementById('color-result');
@@ -650,8 +706,8 @@ h+=`<div class="msec act" id="m-sc"><div class="card hl-teal"><h3>⏰ 45 min/day
 
 h+=`<div class="msec" id="m-rs">${[
 ['📱 Apps',[['Duolingo','Latin American Spanish, free tier','https://www.duolingo.com'],['HelloTalk','Filter for Honduran partners','https://www.hellotalk.com'],['Tandem','Conversation partners','https://www.tandem.net'],['Libby','Free w/ library card','https://www.overdrive.com/apps/libby']]],
-['🎧 Audio',[['Language Transfer','90 eps — THE #1 resource','https://www.youtube.com/results?search_query=language+transfer+complete+spanish+episode+1'],['Dreaming Spanish','Best listening practice','https://www.youtube.com/results?search_query=dreaming+spanish+superbeginner'],['News in Slow Spanish','Weekly, LatAm edition','https://www.newsinslowspanish.com'],['Hoy Hablamos','Daily 10-min Spanish','https://www.hoyhablamos.com']]],
-['📺 Toddler YouTube',[['Canticos','Bilingual nursery rhymes','https://www.youtube.com/results?search_query=canticos+nursery+rhymes+spanish'],['El Reino Infantil','Huge song library','https://www.youtube.com/@reinoinfantil'],['Peppa Pig en Español','Familiar stories','https://www.youtube.com/results?search_query=peppa+pig+español+latino+episodio'],['Pocoyó','Originally Spanish','https://www.youtube.com/results?search_query=pocoyo+español+episodio+completo']]],
+['🎧 Audio',[['Language Transfer','90 eps — THE #1 resource',ytSearchUrl('language transfer complete spanish episode 1')],['Dreaming Spanish','Best listening practice',ytSearchUrl('dreaming spanish superbeginner')],['News in Slow Spanish','Weekly, LatAm edition','https://www.newsinslowspanish.com'],['Hoy Hablamos','Daily 10-min Spanish','https://www.hoyhablamos.com']]],
+['📺 Toddler YouTube',[['Canticos','Bilingual nursery rhymes',ytSearchUrl('canticos nursery rhymes spanish')],['El Reino Infantil','Huge song library','https://www.youtube.com/@reinoinfantil'],['Peppa Pig en Español','Familiar stories',ytSearchUrl('peppa pig español latino episodio')],['Pocoyó','Originally Spanish',ytSearchUrl('pocoyo español episodio completo')]],
 ['📺 Parent YouTube',[['Spanish with Paul','Clear grammar','https://www.youtube.com/@SpanishWithPaul'],['Español con Juan','1001 palabras','https://www.youtube.com/@EspanolconJuan'],['Destinos','Free 52-ep telenovela','https://www.learner.org/series/destinos-an-introduction-to-spanish/'],['SpanishDict','Best dictionary','https://www.spanishdict.com']]],
 ['🌐 Community',[['ConversationExchange','Free partners','https://www.conversationexchange.com'],['BBC Mundo','News in Spanish','https://www.bbc.com/mundo'],['Hondureños en Florida','Facebook group','https://www.facebook.com/search/groups/?q=hondureños%20en%20florida'],['FL Library (Lee County)','Bilingual events','https://www.leelibrary.net']]]
 ].map(([cat,items])=>`<div style="margin-bottom:16px"><h3 style="font-family:'Baloo 2';font-size:15px;margin-bottom:8px">${cat}</h3>${items.map(([n,d,url])=>`<a href="${url}" target="_blank" rel="noopener" style="text-decoration:none;display:block;"><div class="card" style="padding:12px;margin-bottom:6px;display:flex;align-items:center;gap:10px;"><div style="flex:1"><b style="font-size:13px;color:var(--ink)">${n}</b><br><span style="font-size:11px;color:var(--gr)">${d}</span></div><span style="color:var(--teal);font-size:18px;">→</span></div></a>`).join('')}</div>`).join('')}</div>`;
@@ -664,15 +720,15 @@ h+=`<div class="msec" id="m-hn"><div class="card hl-gold"><h3>🇭🇳 Honduran 
 <div class="card"><h3>🎵 Honduran Music</h3><ul><li><b>Guillermo Anderson</b> — "En Mi País," "Ceibeño"</li><li><b>Punta music</b> — Banda Blanca, Kazzabe</li><li><b>Polache</b> — comedian/singer</li></ul></div></div>`;
 
 h+=`<div class="msec" id="m-sg"><div class="card"><h3>🎵 Songs — Tap ▶️ to Watch</h3><p style="font-size:12px;color:var(--gr);margin-bottom:8px;">Links open YouTube. Save these to a playlist!</p>${[
-["Buenos Días","Mo 1","https://www.youtube.com/results?search_query=buenos+dias+cancion+infantil+español"],
-["Los Pollitos Dicen","Mo 1","https://www.youtube.com/results?search_query=los+pollitos+dicen+canticos"],
-["Cabeza Hombros Rodillas Pies","Mo 2","https://www.youtube.com/results?search_query=cabeza+hombros+rodillas+pies+cancion+infantil"],
-["Pin Pon","Mo 2","https://www.youtube.com/results?search_query=pin+pon+es+un+muñeco+cancion"],
-["Estrellita ¿Dónde Estás?","Mo 3","https://www.youtube.com/results?search_query=estrellita+donde+estas+español+cancion+infantil"],
-["Arroz con Leche","Mo 4","https://www.youtube.com/results?search_query=arroz+con+leche+cancion+infantil"],
-["La Vaca Lola","Mo 5","https://www.youtube.com/results?search_query=la+vaca+lola+cancion"],
-["Un Elefante Se Balanceaba","Mo 6","https://www.youtube.com/results?search_query=un+elefante+se+balanceaba+cancion"],
-["De Colores","Mo 7+","https://www.youtube.com/results?search_query=de+colores+cancion+tradicional+español"]
+["Buenos Días","Mo 1",ytSearchUrl('buenos dias cancion infantil español')],
+["Los Pollitos Dicen","Mo 1",ytSearchUrl('los pollitos dicen canticos')],
+["Cabeza Hombros Rodillas Pies","Mo 2",ytSearchUrl('cabeza hombros rodillas pies cancion infantil')],
+["Pin Pon","Mo 2",ytSearchUrl('pin pon es un muñeco cancion')],
+["Estrellita ¿Dónde Estás?","Mo 3",ytSearchUrl('estrellita donde estas español cancion infantil')],
+["Arroz con Leche","Mo 4",ytSearchUrl('arroz con leche cancion infantil')],
+["La Vaca Lola","Mo 5",ytSearchUrl('la vaca lola cancion')],
+["Un Elefante Se Balanceaba","Mo 6",ytSearchUrl('un elefante se balanceaba cancion')],
+["De Colores","Mo 7+",ytSearchUrl('de colores cancion tradicional español')]
 ].map(([n,w,url])=>`<div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--grl)"><a href="${url}" target="_blank" rel="noopener" style="text-decoration:none;display:flex;align-items:center;justify-content:center;width:40px;height:40px;background:var(--terra);color:var(--w);border-radius:10px;font-size:16px;flex-shrink:0;">▶️</a><div style="flex:1"><b style="font-size:13px">${n}</b> ${spB(n)}<br><span style="font-size:11px;color:var(--gr)">${w}</span></div></div>`).join('')}</div></div>`;
 
 h+=`<div class="msec" id="m-cg"><div class="card hl-gold"><h3>🔗 Bilingual Bonus: Cognates</h3><p>These words sound similar in English and Spanish — you already know more than you think! Honduras's Caribbean coast has English-Creole influence, making these even more familiar.</p></div>
@@ -685,9 +741,9 @@ h+=`<div class="msec" id="m-st"><div class="card"><h3>⚙️ Your Profile</h3>
 <div style="background:var(--grl);padding:14px;border-radius:var(--rs);margin-bottom:8px;"><b>Child:</b> ${profile?profile.child:'Not set'}</div>
 <div style="background:var(--grl);padding:14px;border-radius:var(--rs);margin-bottom:8px;"><b>Child's age:</b> ${profile?profile.age+' years':'Not set'}</div>
 <div style="background:var(--grl);padding:14px;border-radius:var(--rs);margin-bottom:8px;"><b>Spanish level:</b> ${profile?['🌱 Zero','🌿 A little','🌳 Some'][profile.level]:'Not set'}</div>
-<button onclick="localStorage.removeItem('v_profile');profile=null;document.getElementById('onboard').style.display='block';" style="width:100%;padding:12px;border-radius:50px;background:var(--terra);color:var(--w);font-weight:700;font-size:14px;margin-top:12px;">Edit Profile</button>
+<button onclick="localStorage.removeItem('v_profile');profile=null;resetOnboardForm();document.getElementById('onboard').style.display='block';" style="width:100%;padding:12px;border-radius:50px;background:var(--terra-aa);color:var(--w);font-weight:700;font-size:14px;margin-top:12px;">Edit Profile</button>
 </div>
-<div class="card hl-gold"><h3>📊 Reset Progress</h3><p style="margin-bottom:8px;">Start completely fresh. This cannot be undone.</p><button onclick="if(confirm('Reset ALL progress?')){localStorage.clear();location.reload();}" style="padding:10px 20px;border-radius:50px;background:var(--terra);color:var(--w);font-weight:700;font-size:13px;">Reset Everything</button></div></div>`;
+<div class="card hl-gold"><h3>📊 Reset Progress</h3><p style="margin-bottom:8px;">Start completely fresh. This cannot be undone.</p><button onclick="if(confirm('Reset ALL progress?')){localStorage.clear();location.reload();}" style="padding:10px 20px;border-radius:50px;background:var(--terra-aa);color:var(--w);font-weight:700;font-size:13px;">Reset Everything</button></div></div>`;
 document.getElementById('p-more').innerHTML=h;}
 function sM(id,b){document.querySelectorAll('.msec').forEach(s=>s.classList.remove('act'));document.getElementById('m-'+id).classList.add('act');b.parentElement.querySelectorAll('.st').forEach(x=>x.classList.remove('act'));b.classList.add('act');}
 
