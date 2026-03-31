@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#1B4332">
+<title>¡Vamos! — Learn Spanish Together</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;0,900;1,400&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--g:#2D6A4F;--gd:#1B4332;--gl:#D8F3DC;--gb:#EFF8F1;--go:#F7B731;--gol:#FFF8E7;--god:#C78D1A;--sk:#219EBC;--sl:#D4F0FC;--sd:#0C6B8A;--co:#E76F51;--cl:#FDEBE6;--pu:#7C3AED;--pl:#EDE9FE;--sand:#FDFAF5;--w:#FFF;--ink:#1A1A2E;--gr:#6B7280;--gr2:#9CA3AF;--grl:#F3F4F6;--bd:#E5E7EB;--r:16px;--rs:10px;--sh:0 2px 8px rgba(0,0,0,.06);--shm:0 4px 12px rgba(0,0,0,.08);--shl:0 8px 30px rgba(0,0,0,.12);}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Quicksand',sans-serif;background:var(--sand);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased;padding-bottom:78px;overflow-x:hidden;}
+button{font-family:'Quicksand',sans-serif;border:none;cursor:pointer;-webkit-tap-highlight-color:transparent;}
+
+.header{position:relative;overflow:hidden;background:linear-gradient(160deg,#1B4332 0%,#2D6A4F 45%,#40916C 100%);color:#fff;padding:calc(env(safe-area-inset-top,20px)+32px) 24px 68px;text-align:center;}
+.header::before{content:'';position:absolute;width:200px;height:200px;border-radius:50%;background:rgba(255,255,255,.03);top:-70px;right:-50px;}
+.header::after{content:'';position:absolute;width:100px;height:100px;border-radius:50%;background:rgba(255,255,255,.04);bottom:40px;left:-20px;}
+.header h1{font-family:'Baloo 2',cursive;font-size:34px;font-weight:800;letter-spacing:-.3px;position:relative;z-index:4;line-height:1.1;text-shadow:0 2px 6px rgba(0,0,0,.15);}
+.header p{font-family:'Quicksand',sans-serif;font-size:14px;opacity:1;position:relative;z-index:4;margin-top:10px;font-weight:700;letter-spacing:.3px;text-shadow:0 1px 4px rgba(0,0,0,.3);background:rgba(255,255,255,.12);display:inline-block;padding:4px 16px;border-radius:50px;backdrop-filter:blur(4px);}
+.hwave{position:absolute;bottom:-1px;left:0;width:100%;z-index:3;}
+
+.sbar{display:flex;align-items:center;justify-content:center;gap:16px;padding:12px 16px;background:rgba(255,255,255,.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--bd);position:sticky;top:0;z-index:50;}
+.spill{display:flex;align-items:center;gap:5px;padding:4px 11px;border-radius:50px;font-size:12.5px;font-weight:700;}
+.sf{background:linear-gradient(135deg,#FFF1E6,#FFE0CC);color:#E8590C;}
+.sw{background:var(--gl);color:var(--gd);}
+.prm{position:relative;width:38px;height:38px;}
+.prm svg{transform:rotate(-90deg);}
+.prm .pp{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;color:var(--g);}
+
+.bnav{position:fixed;bottom:0;left:0;right:0;background:var(--w);border-top:1px solid var(--bd);display:flex;justify-content:space-around;padding:5px 0 max(5px,env(safe-area-inset-bottom));z-index:100;box-shadow:0 -3px 16px rgba(0,0,0,.05);}
+.nb{display:flex;flex-direction:column;align-items:center;gap:1px;padding:7px 14px;background:none;font-size:10px;font-weight:600;color:var(--gr2);transition:color .2s;}
+.nb svg{width:23px;height:23px;transition:transform .2s;}
+.nb.act{color:var(--g);}
+.nb.act svg{transform:scale(1.12);}
+.nb .dt{width:4px;height:4px;border-radius:50%;background:var(--g);opacity:0;transition:opacity .2s;margin-top:1px;}
+.nb.act .dt{opacity:1;}
+
+.pg{display:none;padding:18px 16px 24px;max-width:600px;margin:0 auto;animation:fu .3s ease;}
+.pg.act{display:block;}
+@keyframes fu{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.pt{font-family:'Baloo 2',cursive;font-size:24px;font-weight:800;color:var(--gd);margin-bottom:4px;}
+.ps{font-size:13px;color:var(--gr);margin-bottom:16px;}
+
+.card{background:var(--w);border-radius:var(--r);padding:18px;margin-bottom:12px;border:1px solid var(--bd);box-shadow:var(--sh);position:relative;overflow:hidden;}
+.card h3{font-size:15px;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:8px;}
+.card p,.card li{font-size:13px;color:#374151;}
+.card ul{padding-left:16px;margin:6px 0;}
+.card li{margin-bottom:4px;}
+.hlg{border-left:4px solid var(--g);background:var(--gb);}
+.hly{border-left:4px solid var(--go);background:var(--gol);}
+
+/* Hero card */
+.hc{background:linear-gradient(135deg,#1B4332,#2D6A4F 50%,#40916C);color:#fff;border-radius:var(--r);padding:22px;margin-bottom:16px;position:relative;overflow:hidden;box-shadow:0 4px 20px rgba(27,67,50,.3);}
+.hc::before{content:'';position:absolute;width:140px;height:140px;border-radius:50%;background:rgba(255,255,255,.04);top:-35px;right:-25px;}
+.hc h2{font-family:'Baloo 2',cursive;font-size:24px;font-weight:800;position:relative;z-index:1;}
+.hc .dt2{font-size:13px;opacity:.7;position:relative;z-index:1;}
+.hc .mot{font-size:13px;margin-top:12px;padding:10px 14px;background:rgba(255,255,255,.1);border-radius:var(--rs);font-style:italic;line-height:1.5;position:relative;z-index:1;}
+
+/* Progress ring */
+.rc{display:flex;flex-direction:column;align-items:center;margin:6px 0 16px;}
+.rw{position:relative;width:120px;height:120px;}
+.rw svg{transform:rotate(-90deg);width:120px;height:120px;}
+.rcn{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+.rpct{font-family:'Playfair Display',serif;font-size:28px;font-weight:800;color:var(--gd);}
+.rlb{font-size:10px;color:var(--gr);font-weight:600;text-transform:uppercase;letter-spacing:.5px;}
+.rcp{font-size:12px;color:var(--gr);margin-top:6px;font-weight:600;}
+
+/* Stats */
+.srow{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:16px;}
+.sc2{background:var(--w);border-radius:var(--r);padding:14px 6px;text-align:center;border:1px solid var(--bd);box-shadow:var(--sh);}
+.si{margin-bottom:2px;}
+.sn{font-family:'Playfair Display',serif;font-size:20px;font-weight:800;}
+.sn.cg{color:var(--g);}.sn.cy{color:var(--god);}.sn.cc{color:var(--co);}.sn.cs{color:var(--sk);}
+.sl2{font-size:9px;color:var(--gr);font-weight:700;text-transform:uppercase;letter-spacing:.4px;margin-top:2px;}
+
+/* Checklist */
+.cls{background:var(--w);border-radius:var(--r);border:1px solid var(--bd);overflow:hidden;margin-bottom:16px;box-shadow:var(--sh);}
+.clh{padding:13px 16px;font-weight:700;font-size:14px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--bd);}
+.clc{font-size:11px;color:var(--gr);font-weight:600;background:var(--grl);padding:2px 8px;border-radius:50px;}
+.ci{display:flex;align-items:flex-start;gap:12px;padding:12px 16px;border-bottom:1px solid #F9FAFB;cursor:pointer;-webkit-user-select:none;user-select:none;transition:background .15s;}
+.ci:active{background:#F3FAF5;}
+.ci:last-child{border-bottom:none;}
+.cb{width:24px;height:24px;border:2px solid var(--bd);border-radius:8px;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .25s;margin-top:1px;}
+.ci.dn .cb{background:var(--g);border-color:var(--g);}
+.ci.dn .cb svg{opacity:1;transform:scale(1);}
+.cb svg{opacity:0;transform:scale(.5);transition:all .25s;width:14px;height:14px;}
+.ci.dn .ct{text-decoration:line-through;color:var(--gr2);}
+.ct{font-size:14px;font-weight:600;}
+.csub{font-size:11px;color:var(--gr);font-weight:600;margin-top:2px;display:flex;align-items:center;gap:6px;}
+.ci-detail{font-size:12.5px;color:#374151;line-height:1.6;margin-top:8px;padding:10px 12px;background:var(--gb);border-radius:var(--rs);border:1px solid #D1E7DD;display:none;}
+.ci.exp .ci-detail{display:block;animation:fu .25s ease;}
+.ci-expand{color:var(--g);font-size:11px;font-weight:700;margin-top:3px;cursor:pointer;}
+.ci-body{flex:1;cursor:pointer;}
+.wb{font-size:9px;font-weight:700;padding:2px 7px;border-radius:50px;text-transform:uppercase;letter-spacing:.3px;}
+.wt{background:var(--pl);color:var(--pu);}.ws2{background:var(--sl);color:var(--sd);}
+
+/* Phase cards */
+.pc{background:var(--w);border-radius:var(--r);border:1px solid var(--bd);margin-bottom:12px;overflow:hidden;box-shadow:var(--sh);}
+.ph{padding:16px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;-webkit-user-select:none;}
+.ph h3{font-size:14px;font-weight:700;display:flex;align-items:center;gap:8px;}
+.ptg{font-size:10px;font-weight:700;padding:3px 9px;border-radius:50px;text-transform:uppercase;letter-spacing:.4px;}
+.t1{background:var(--gl);color:var(--gd);}.t2{background:var(--sl);color:var(--sd);}.t3{background:var(--gol);color:var(--god);}.t4{background:var(--cl);color:#C4533D;}
+.pch{color:var(--gr2);transition:transform .3s;}
+.pc.op .pch{transform:rotate(180deg);}
+.pbd{max-height:0;overflow:hidden;transition:max-height .5s ease;}
+.pc.op .pbd{max-height:15000px;}
+.pct2{padding:0 16px 16px;border-top:1px solid var(--bd);}
+.mt{margin-top:16px;font-size:14.5px;font-weight:700;}
+.wk{margin-top:10px;background:var(--grl);border-radius:var(--rs);padding:14px;}
+.wk h4{font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:space-between;}
+.wkc{width:22px;height:22px;border:2px solid var(--bd);border-radius:6px;background:var(--w);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .25s;flex-shrink:0;}
+.wkc.dn{background:var(--g);border-color:var(--g);}
+.wkc svg{width:12px;height:12px;opacity:0;transform:scale(.5);transition:all .25s;}
+.wkc.dn svg{opacity:1;transform:scale(1);}
+.wk p,.wk li{font-size:12px;color:#374151;}
+.wk ul{padding-left:14px;margin-top:5px;}
+.wk li{margin-bottom:3px;}
+.tbx{background:#FFFBEB;border:1px solid #FDE68A;border-radius:var(--rs);padding:8px 10px;font-size:12px;margin-top:8px;display:flex;gap:6px;align-items:flex-start;}
+
+/* Speak buttons */
+.spk{display:inline-flex;align-items:center;gap:3px;background:var(--gl);border:1px solid #B7E4C7;color:var(--gd);padding:2px 7px 2px 5px;border-radius:50px;font-size:11px;font-weight:700;cursor:pointer;transition:all .2s;vertical-align:middle;}
+.spk:active{transform:scale(.92);}
+.spk svg{width:13px;height:13px;}
+.splg{width:48px;height:48px;border-radius:50%;border:2px solid var(--g);background:var(--gl);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;box-shadow:var(--sh);}
+.splg:active{transform:scale(.9);}
+.splg svg{width:20px;height:20px;color:var(--gd);}
+
+/* Flashcards */
+.dkp{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;}
+.dkb{padding:7px 12px;border-radius:50px;border:2px solid var(--bd);background:var(--w);font-size:12px;font-weight:600;transition:all .2s;}
+.dkb.act{background:var(--g);color:#fff;border-color:var(--g);box-shadow:0 2px 8px rgba(45,106,79,.3);}
+.fca{display:flex;flex-direction:column;align-items:center;margin:12px 0;}
+.fcc{width:100%;max-width:320px;height:210px;perspective:1000px;cursor:pointer;margin-bottom:12px;}
+.fc{width:100%;height:100%;position:relative;transform-style:preserve-3d;transition:transform .5s cubic-bezier(.4,.2,.2,1);}
+.fc.fl{transform:rotateY(180deg);}
+.ff{position:absolute;inset:0;border-radius:var(--r);display:flex;flex-direction:column;align-items:center;justify-content:center;backface-visibility:hidden;padding:24px;text-align:center;}
+.ffr{background:linear-gradient(145deg,#1B4332,#2D6A4F 40%,#40916C);color:#fff;box-shadow:var(--shl);overflow:hidden;}
+.ffr::before{content:'';position:absolute;width:180px;height:180px;border-radius:50%;background:rgba(255,255,255,.04);top:-50px;right:-50px;}
+.ffr .fw{font-family:'Baloo 2',cursive;font-size:32px;font-weight:800;position:relative;z-index:1;}
+.ffr .fh{font-size:12px;opacity:.55;margin-top:10px;position:relative;z-index:1;}
+.fbk{background:var(--w);border:2px solid var(--g);transform:rotateY(180deg);box-shadow:var(--shl);}
+.fbk .fw{font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:var(--gd);}
+.fbk .ft{font-size:15px;color:var(--gr);margin-top:4px;font-weight:600;}
+.fbk .fe{font-size:12px;color:var(--ink);margin-top:12px;font-style:italic;padding-top:12px;border-top:1px solid var(--bd);line-height:1.5;}
+.fcl{display:flex;gap:10px;margin-top:14px;}
+.fcb{padding:12px 26px;border-radius:50px;font-size:13px;font-weight:700;transition:all .15s;box-shadow:var(--sh);}
+.fcb:active{transform:scale(.94);}
+.bk{background:var(--g);color:#fff;}.ba{background:var(--cl);color:var(--co);}
+.fpg{text-align:center;font-size:12px;color:var(--gr);font-weight:600;margin-bottom:6px;}
+.fsc{display:flex;gap:14px;justify-content:center;font-size:12px;font-weight:700;margin-bottom:10px;}
+.fsk{color:var(--g);}.fsa{color:var(--co);}
+
+/* Quiz */
+.qc2{background:var(--w);border-radius:var(--r);padding:24px;border:1px solid var(--bd);text-align:center;margin-bottom:16px;box-shadow:var(--sh);}
+.ql{font-size:13px;color:var(--gr);font-weight:600;margin-bottom:4px;}
+.qw{font-family:'Baloo 2',cursive;font-size:30px;font-weight:800;color:var(--gd);margin-bottom:20px;display:flex;align-items:center;justify-content:center;gap:8px;}
+.qo{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.qob{padding:14px 10px;border-radius:var(--rs);border:2px solid var(--bd);background:var(--w);font-size:14px;font-weight:600;transition:all .2s;box-shadow:var(--sh);}
+.qob:active{transform:scale(.97);}
+.qob.ok{border-color:var(--g);background:var(--gl);color:var(--gd);animation:pop .3s ease;}
+.qob.no{border-color:var(--co);background:var(--cl);color:var(--co);animation:shk .35s ease;}
+@keyframes pop{50%{transform:scale(1.05)}}
+@keyframes shk{20%{transform:translateX(-4px)}40%{transform:translateX(4px)}60%{transform:translateX(-3px)}80%{transform:translateX(3px)}}
+.qr{background:var(--w);border-radius:var(--r);padding:30px;text-align:center;border:1px solid var(--bd);box-shadow:var(--sh);}
+.qr h2{font-family:'Baloo 2',cursive;font-size:24px;color:var(--gd);}
+.qbg{font-family:'Playfair Display',serif;font-size:52px;font-weight:900;color:var(--g);margin:8px 0;}
+.qrb{padding:12px 32px;border-radius:50px;background:var(--g);color:#fff;font-size:15px;font-weight:700;margin-top:14px;box-shadow:0 4px 12px rgba(45,106,79,.3);}
+.qrb:active{transform:scale(.95);}
+.qpb{width:100%;height:6px;background:var(--grl);border-radius:3px;overflow:hidden;margin-top:4px;}
+.qpf{height:100%;background:linear-gradient(90deg,var(--g),var(--go));border-radius:3px;transition:width .4s ease;}
+
+/* More page */
+.stb{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;}
+.st{padding:7px 12px;border-radius:50px;border:2px solid var(--bd);background:var(--w);font-size:12px;font-weight:600;transition:all .2s;}
+.st.act{background:var(--g);color:#fff;border-color:var(--g);}
+.msec{display:none;animation:fu .25s ease;}
+.msec.act{display:block;}
+
+.sbl{background:var(--w);border-radius:var(--r);border:1px solid var(--bd);margin-bottom:10px;overflow:hidden;box-shadow:var(--sh);}
+.sbh{padding:11px 16px;font-weight:700;font-size:13px;background:var(--gb);border-bottom:1px solid var(--bd);}
+.sr{display:flex;gap:10px;padding:9px 16px;border-bottom:1px solid #F9FAFB;align-items:flex-start;}
+.sr:last-child{border-bottom:none;}
+.stm{font-size:11px;font-weight:700;color:var(--g);min-width:48px;flex-shrink:0;margin-top:2px;}
+.sac{font-size:12px;flex:1;}
+.sdr{font-size:10px;color:var(--gr);font-weight:700;flex-shrink:0;background:var(--grl);padding:2px 6px;border-radius:50px;margin-top:2px;}
+
+.rg{display:grid;grid-template-columns:1fr;gap:8px;margin-bottom:16px;}
+.ri{background:var(--w);border-radius:var(--rs);padding:12px 14px;border:1px solid var(--bd);display:flex;gap:10px;align-items:flex-start;}
+.ric{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:15px;}
+.rn{font-weight:700;font-size:13px;}
+.rd{font-size:11px;color:var(--gr);line-height:1.5;}
+
+.vp{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--grl);align-items:center;}
+.vp:last-child{border-bottom:none;}
+.ve{font-weight:700;color:var(--gd);font-size:14px;display:flex;align-items:center;gap:4px;}
+.vn{color:var(--gr);font-size:12px;text-align:right;max-width:50%;}
+
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
+.fa{animation:pulse 2s ease-in-out infinite;}
+@media(max-width:380px){.srow{grid-template-columns:repeat(2,1fr);}.qo{grid-template-columns:1fr;}.sn{font-size:17px;}}
+</style>
+</head>
+<body>
+<svg style="display:none" xmlns="http://www.w3.org/2000/svg">
+<symbol id="ic" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></symbol>
+<symbol id="ih" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></symbol>
+<symbol id="ib" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></symbol>
+<symbol id="id" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="4" width="14" height="16" rx="2"/><path d="M18 8h2a2 2 0 012 2v8a2 2 0 01-2 2h-2"/></symbol>
+<symbol id="ip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 2v4m0 12v4m-7.07-15.07l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83"/></symbol>
+<symbol id="im" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></symbol>
+<symbol id="if" viewBox="0 0 24 24"><path d="M12 23c-3.9 0-7-3.1-7-7 0-2.8 1.6-5.2 3.2-7.2.4-.5 1.3-.3 1.3.4v1.3c0 .6.7 1 1.2.6C12.6 9.4 14 7 14 4c0-.7.8-1.1 1.3-.6C17.6 5.8 19 9 19 12v4c0 3.9-3.1 7-7 7z" fill="#E8590C"/><path d="M12 23c-2.2 0-4-1.8-4-4 0-1.6.9-3 1.8-4.1.2-.3.7-.1.7.2v.8c0 .3.4.5.7.3.8-.6 1.8-2 1.8-3.7 0-.4.4-.6.7-.3 1.1 1.1 2.3 3 2.3 5v1.8c0 2.2-1.8 4-4 4z" fill="#FFA94D"/></symbol>
+<symbol id="is" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 010 7.07"/><path d="M19.07 4.93a10 10 0 010 14.14"/></symbol>
+<symbol id="it" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></symbol>
+<symbol id="iw" viewBox="0 0 24 24" fill="#F7B731" stroke="#F7B731" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></symbol>
+<symbol id="il" viewBox="0 0 24 24" fill="none" stroke="#92400E" stroke-width="2" stroke-linecap="round"><path d="M9 18h6m-5 4h4M12 2a7 7 0 00-4 12.7V17h8v-2.3A7 7 0 0012 2z"/></symbol>
+<symbol id="iy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9H4a2 2 0 01-2-2V5a2 2 0 012-2h2m12 6h2a2 2 0 002-2V5a2 2 0 00-2-2h-2M6 3h12v7a6 6 0 11-12 0V3zm3 18h6m-3-4v4"/></symbol>
+</svg>
+
+<div class="header">
+<h1>¡Vamos a Aprender!</h1>
+<p>Parent + Toddler · Conversational Spanish · Free</p>
+<svg class="hwave" viewBox="0 0 1440 50" preserveAspectRatio="none" style="height:18px"><path d="M0,30C360,50,1080,0,1440,30L1440,50L0,50Z" fill="var(--sand)"/></svg>
+</div>
+
+<div class="sbar">
+<div class="spill sf"><svg class="fa" width="17" height="17"><use href="#if"/></svg><span id="ss">0</span> streak</div>
+<div class="spill sw"><svg width="13" height="13"><use href="#iw"/></svg><span id="sw2">0</span> words</div>
+<div class="prm"><svg width="38" height="38"><circle cx="19" cy="19" r="15" fill="none" stroke="var(--grl)" stroke-width="3.5"/><circle id="mr" cx="19" cy="19" r="15" fill="none" stroke="var(--g)" stroke-width="3.5" stroke-dasharray="94.2" stroke-dashoffset="94.2" stroke-linecap="round"/></svg><div class="pp" id="mp">0%</div></div>
+</div>
+
+<div class="pg act" id="p-home"></div>
+<div class="pg" id="p-learn"></div>
+<div class="pg" id="p-cards"></div>
+<div class="pg" id="p-quiz"></div>
+<div class="pg" id="p-more"></div>
+
+<div class="bnav">
+<button class="nb act" data-p="home"><svg><use href="#ih"/></svg>Today<div class="dt"></div></button>
+<button class="nb" data-p="learn"><svg><use href="#ib"/></svg>Learn<div class="dt"></div></button>
+<button class="nb" data-p="cards"><svg><use href="#id"/></svg>Cards<div class="dt"></div></button>
+<button class="nb" data-p="quiz"><svg><use href="#ip"/></svg>Quiz<div class="dt"></div></button>
+<button class="nb" data-p="more"><svg><use href="#im"/></svg>More<div class="dt"></div></button>
+</div>
+
+<script>
+const V={"Greetings":[{e:"Hola",n:"Hello",x:"¡Hola! ¿Cómo estás?"},{e:"Adiós",n:"Goodbye",x:"Adiós, nos vemos."},{e:"Buenos días",n:"Good morning",x:"Buenos días."},{e:"Buenas tardes",n:"Good afternoon",x:"Buenas tardes."},{e:"Buenas noches",n:"Good night",x:"Buenas noches."},{e:"¡Buenas!",n:"Hi! (Honduran)",x:"¡Buenas! ¿Qué onda?"},{e:"Por favor",n:"Please",x:"Más agua, por favor."},{e:"Gracias",n:"Thank you",x:"Muchas gracias."},{e:"De nada",n:"You're welcome",x:"De nada."},{e:"¿Cómo estás?",n:"How are you?",x:"¿Cómo estás hoy?"},{e:"Estoy bien",n:"I'm fine",x:"Estoy bien, gracias."},{e:"Me llamo",n:"My name is",x:"Me llamo Juan."}],"Numbers":[{e:"Uno",n:"One",x:"Tengo uno."},{e:"Dos",n:"Two",x:"Dame dos."},{e:"Tres",n:"Three",x:"Tres gatos."},{e:"Cuatro",n:"Four",x:"Cuatro sillas."},{e:"Cinco",n:"Five",x:"Cinco dedos."},{e:"Seis",n:"Six",x:"Seis años."},{e:"Siete",n:"Seven",x:"Siete días."},{e:"Ocho",n:"Eight",x:"Son las ocho."},{e:"Nueve",n:"Nine",x:"Faltan nueve."},{e:"Diez",n:"Ten",x:"Cuenta hasta diez."},{e:"Veinte",n:"Twenty",x:"Tengo veinte."},{e:"Cien",n:"Hundred",x:"Cien por ciento."}],"Colors":[{e:"Rojo",n:"Red",x:"El carro rojo."},{e:"Azul",n:"Blue",x:"El cielo azul."},{e:"Verde",n:"Green",x:"Hierba verde."},{e:"Amarillo",n:"Yellow",x:"Sol amarillo."},{e:"Blanco",n:"White",x:"Leche blanca."},{e:"Negro",n:"Black",x:"Gato negro."},{e:"Rosado",n:"Pink",x:"Flores rosadas."},{e:"Morado",n:"Purple",x:"Uva morada."},{e:"Naranja",n:"Orange",x:"Una naranja."},{e:"Café",n:"Brown",x:"Perro café."}],"Family":[{e:"Mamá",n:"Mom",x:"Mi mamá."},{e:"Papá",n:"Dad",x:"Papá está aquí."},{e:"Bebé",n:"Baby",x:"El bebé duerme."},{e:"Hermano",n:"Brother",x:"Mi hermano."},{e:"Hermana",n:"Sister",x:"Mi hermana."},{e:"Abuelo",n:"Grandpa",x:"Mi abuelo."},{e:"Abuela",n:"Grandma",x:"La abuela."},{e:"Hijo",n:"Son",x:"Mi hijo."},{e:"Hija",n:"Daughter",x:"Mi hija."},{e:"Familia",n:"Family",x:"Mi familia."}],"Food":[{e:"Agua",n:"Water",x:"Quiero agua."},{e:"Leche",n:"Milk",x:"Vaso de leche."},{e:"Pollo",n:"Chicken",x:"Pollo con arroz."},{e:"Arroz",n:"Rice",x:"Arroz con frijoles."},{e:"Frijoles",n:"Beans",x:"Frijoles ricos."},{e:"Huevo",n:"Egg",x:"Dos huevos."},{e:"Pan",n:"Bread",x:"Pan con queso."},{e:"Fruta",n:"Fruit",x:"Me gusta la fruta."},{e:"Manzana",n:"Apple",x:"Manzana roja."},{e:"Banano",n:"Banana (HN)",x:"Quiero un banano."},{e:"Tortilla",n:"Tortilla",x:"Tortillas de maíz."},{e:"Queso",n:"Cheese",x:"Queso con tortilla."}],"Body":[{e:"Cabeza",n:"Head",x:"Me duele la cabeza."},{e:"Ojos",n:"Eyes",x:"Ojos bonitos."},{e:"Nariz",n:"Nose",x:"Toca tu nariz."},{e:"Boca",n:"Mouth",x:"Abre la boca."},{e:"Orejas",n:"Ears",x:"Tus orejas."},{e:"Manos",n:"Hands",x:"Lávate las manos."},{e:"Pies",n:"Feet",x:"Los pies."},{e:"Barriga",n:"Belly",x:"Mi barriga."},{e:"Dedos",n:"Fingers",x:"Diez dedos."},{e:"Pelo",n:"Hair",x:"Pelo bonito."}],"Commands":[{e:"Ven aquí",n:"Come here",x:"Ven aquí, mi amor."},{e:"Mira",n:"Look",x:"¡Mira, un pájaro!"},{e:"Siéntate",n:"Sit down",x:"Siéntate a comer."},{e:"Dame",n:"Give me",x:"Dame la mano."},{e:"Toma",n:"Take/Here",x:"Toma tu leche."},{e:"Abre",n:"Open",x:"Abre la puerta."},{e:"Cierra",n:"Close",x:"Cierra los ojos."},{e:"Vamos",n:"Let's go",x:"¡Vamos al parque!"},{e:"Espera",n:"Wait",x:"Espera un momento."},{e:"Para",n:"Stop",x:"Para, por favor."}],"Feelings":[{e:"Contento",n:"Happy",x:"Estoy contento."},{e:"Triste",n:"Sad",x:"Está triste."},{e:"Enojado",n:"Angry",x:"No estoy enojado."},{e:"Cansado",n:"Tired",x:"Estoy cansado."},{e:"Asustado",n:"Scared",x:"No tengas miedo."},{e:"Emocionado",n:"Excited",x:"¡Estoy emocionado!"},{e:"Hambre",n:"Hungry",x:"Tengo hambre."},{e:"Sed",n:"Thirsty",x:"Tengo sed."}],"Honduran":[{e:"¡Qué onda!",n:"What's up!",x:"¡Qué onda, maje!"},{e:"Catracho",n:"Honduran",x:"Soy catracho."},{e:"Pisto",n:"Money",x:"No tengo pisto."},{e:"Cipote",n:"Kid",x:"Los cipotes."},{e:"Maje",n:"Dude",x:"¿Qué tal, maje?"},{e:"Puchica",n:"Wow",x:"¡Puchica!"},{e:"Cheque",n:"Okay",x:"Cheque, nos vemos."},{e:"¡Va pues!",n:"Alright!",x:"¡Va pues, vamos!"},{e:"Baleada",n:"Stuffed tortilla",x:"Una baleada con todo."},{e:"Alero",n:"Close friend",x:"Mi alero."},{e:"Jalar",n:"To leave",x:"Me voy a jalar."},{e:"¡Ideay!",n:"So?/Well?",x:"¡Ideay! ¿Qué pasó?"}]};
+const TK=[
+{id:'ms',t:'Morning greeting song — Buenos Días',s:'7:00 AM · 5 min',w:'t',d:'Sing "Buenos días a ti, buenos días a ti, buenos días querido/a, buenos días a ti" to the tune of Happy Birthday while getting your child up. Name each piece of clothing as you dress them: "Tu camisa roja, tus pantalones azules." Do this every single morning — it anchors the whole habit.'},
+{id:'mn',t:'Narrate a meal in Spanish',s:'Mealtime · 5 min',w:'t',d:'During any meal, label the food and actions in Spanish: "Aquí está tu leche. ¿Quieres más? Muy bien, estás comiendo." Use: agua, leche, más, todo (all done), rico (yummy), cuchara (spoon). Don\'t worry about mistakes — the exposure matters more than perfection.'},
+{id:'yt',t:'Spanish song or video together',s:'9:00 AM · 10 min',w:'t',d:'Watch 1–2 videos from Canticos, El Reino Infantil, or Peppa Pig en Español on YouTube. Sing along and do the motions together. Favorites to start: "Los Pollitos Dicen," "Cabeza Hombros Rodillas Pies," "Pin Pon." Repeat the same songs for a week — toddlers love repetition and it helps YOU learn too.'},
+{id:'pl',t:'Play activity in Spanish',s:'10:00 AM · 10 min',w:'t',d:'Pick one: 🔹 Color scavenger hunt — "¿Dónde está algo rojo?" 🔹 Simón Dice (Simon Says) with body parts 🔹 Counting toys, stairs, or snacks in Spanish 🔹 Pretend play (store, kitchen, animals) narrated in Spanish 🔹 Hide a toy and give directions to find it. Just 5–10 minutes — if your toddler wanders after 3, you still won.'},
+{id:'st',t:'Solo study — Language Transfer / Duolingo',s:'Nap time · 15 min',w:'s',d:'This is YOUR structured learning time while the child naps. Do ONE of these: 🔹 1 Language Transfer episode (5–12 min audio, the #1 most important resource) 🔹 1–2 Duolingo lessons 🔹 1 Dreaming Spanish video (Superbeginner → Beginner level) 🔹 Write 3 sentences in your Spanish journal. Rotate these through the week — don\'t try to do all four.'},
+{id:'bt',t:'Bath or bedtime routine in Spanish',s:'6:30 PM · 5 min',w:'t',d:'During bath: name body parts as you wash — "manos, pies, barriga, pelo." Count rubber ducks or toys. At bedtime: tell a short recap of the day in Spanish — "Hoy jugamos en el parque. Comiste pollo. Vimos un perro." Or read a bilingual book. End with "Buenas noches, te quiero."'}
+];
+const MO=['"Poco a poco se va lejos." — Little by little you go far.','"La práctica hace al maestro." — Practice makes perfect.','"Querer es poder." — Where there\'s a will, there\'s a way.','"Hoy es un buen día para aprender."','"Cada día un poco más." — Every day a little more.','"Tu hijo aprende contigo." — Your child learns with you.'];
+const CU=[{p:"Phase 1 — Foundation",g:"Mo 1–3",c:"t1",m:[{t:"Month 1: Sounds & Greetings",w:[{t:"Week 1",i:["Spanish alphabet & vowels","Hola, Adiós, Por favor, Gracias","Numbers 1–10","Language Transfer ep 1–4"],p:"Start Buenos Días morning song!"},{t:"Week 2",i:["¿Cómo estás? / Estoy bien","Colors: rojo, azul, verde, amarillo, blanco, negro","Language Transfer ep 5–8"],p:"Color scavenger hunt"},{t:"Week 3",i:["Family: mamá, papá, bebé, hermano/a","¿Qué es esto? = What is this?","Language Transfer ep 9–12"],p:"Point at everything & name it"},{t:"Week 4",i:["Commands: Vamos, Ven aquí, Mira, Siéntate","Review all Month 1 vocab"],p:"Play Simón Dice"}]},{t:"Month 2: Numbers & Commands",w:[{t:"Week 5",i:["Numbers 11–30","Shapes: círculo, cuadrado, triángulo","¿Cuántos? = How many?"],p:"Count everything in Spanish"},{t:"Week 6",i:["Commands: Dame, Toma, Abre, Cierra","Dreaming Spanish — Superbeginner","Language Transfer ep 13–18"],p:"Commands during play & meals"},{t:"Week 7",i:["Quiero ___ / Tengo ___ / No quiero","Use daily","Language Transfer ep 19–24"],p:"'Quiero más' at every meal"},{t:"Week 8",i:["Combine: Quiero más leche, por favor","Review & consolidation"],p:"Songs: Los Pollitos, Pin Pon"}]},{t:"Month 3: Putting It Together",w:[{t:"Week 9",i:["¿Qué? ¿Quién? ¿Dónde?","Journal 3 sentences/day","Language Transfer ep 25–32"],p:"Watch Peppa Pig en Español"},{t:"Week 10",i:["Label 15 objects w/ sticky notes","Join HelloTalk or Tandem"],p:"Finger play songs"},{t:"Week 11",i:["Describe your day in 5 sentences","Language Transfer ep 33–40"],p:"Bedtime story recap in Spanish"},{t:"Week 12",i:["Full Phase 1 review","Record 1-min voice diary","🎉 Phase 1 complete!"],p:"Child knows 30–50 words!"}]}]},{p:"Phase 2 — Daily Life",g:"Mo 4–6",c:"t2",m:[{t:"Month 4: Verbs, Food & Body",w:[{t:"Week 13",i:["Present tense -AR verbs","Food vocab: pollo, arroz, frijoles","Language Transfer ep 40–48"],p:"Narrate every meal"},{t:"Week 14",i:["Body parts: cabeza → pies","Head Shoulders song 3x daily","ER/IR verbs: comer, beber, dormir"],p:"Body song + Simón Dice"},{t:"Week 15",i:["Daily verbs: despertar, comer, jugar, dormir","Describe what you're doing now","Language Transfer ep 49–55"],p:"Animal sounds in Spanish"},{t:"Week 16",i:["Combos: Estoy comiendo pollo","Dreaming Spanish 10 min/day"],p:"Play kitchen in Spanish"}]},{t:"Month 5: Weather & Routines",w:[{t:"Week 17",i:["Weather: hace calor/frío, lloviendo","Clothes: camisa, pantalones, zapatos","Es hora de ___"],p:"Morning weather check ritual"},{t:"Week 18",i:["Get dressed narration daily","News in Slow Spanish podcast","Language Transfer ep 56–63"],p:"Estrellita, Arroz con Leche"},{t:"Week 19",i:["¿Estás listo/a? Vamos a ___","Weekly HelloTalk conversation"],p:"Library bilingual books"},{t:"Week 20",i:["Full routine narrations","Phase 2 midpoint! 🎉"],p:"La Vaca Lola, Un Elefante"}]},{t:"Month 6: Questions & Descriptions",w:[{t:"Week 21",i:["All question words","Practice asking questions","Language Transfer ep 64–72"],p:"Book pictures: ¿Qué es?"},{t:"Week 22",i:["Prepositions: en, sobre, debajo de","Adjective AFTER noun"],p:"Hide & seek w/ prepositions"},{t:"Week 23",i:["Describe everything you see","Dreaming Spanish 15 min/day"],p:"Describe drawings together"},{t:"Week 24",i:["Finish Language Transfer!","Phase 2 review"],p:"Child knows 80–120 words!"}]}]},{p:"Phase 3 — Conversations",g:"Mo 7–9",c:"t3",m:[{t:"Month 7: Past Tense",w:[{t:"Week 25",i:["Pretérito: fui, comí, hablé","Restart Language Transfer!"],p:"Bedtime recap in past tense"},{t:"Week 26",i:["Describe yesterday","Daily voice diary"],p:"Stories w/ stuffed animals"},{t:"Week 27",i:["Irregular past: fui, hice, dije","2 conversations/week"],p:"Act out stories"},{t:"Week 28",i:["5-sentence story in past tense","Compare voice diary to Month 1"],p:"De Colores song"}]},{t:"Month 8: Feelings & Opinions",w:[{t:"Week 29",i:["Emotions vocabulary","Creo que… Me gusta…"],p:"Make feelings chart"},{t:"Week 30",i:["Express opinions","Watch Destinos (free)"],p:"¿Cuál te gusta más?"},{t:"Week 31",i:["Connectors: porque, pero, también","BBC Mundo headlines"],p:"Latin music dance party!"},{t:"Week 32",i:["Give reasons for opinions","Journal a memory"],p:"Child says contento/triste!"}]},{t:"Month 9: Real World",w:[{t:"Week 33",i:["¿Cuánto cuesta? ¿Dónde está?","Directions & shopping"],p:"Pretend store"},{t:"Week 34",i:["Visit a Latin restaurant!","Hoy Hablamos podcast"],p:"Treasure hunt in Spanish"},{t:"Week 35",i:["Restaurant vocabulary","Dreaming Spanish 20 min/day"],p:"Cook baleadas together!"},{t:"Week 36",i:["Full real-world practice","Phase 3 complete! 🎉"],p:"Child follows 3-step instructions!"}]}]},{p:"Phase 4 — Fluency",g:"Mo 10–12",c:"t4",m:[{t:"Month 10: Culture & Depth",w:[{t:"Week 37",i:["5-min conversations 2x/week","Advanced connectors"],p:"Start daily 'Spanish Hour'"},{t:"Week 38",i:["BBC Mundo full paragraphs","Practice circumlocution"],p:"Make baleadas, explore Honduras"},{t:"Week 39",i:["Honduran slang deep dive","Guillermo Anderson music"],p:"Honduras video with child"},{t:"Week 40",i:["7-min conversations","Journal 3x/week"],p:"Child uses 2-3 word phrases!"}]},{t:"Month 11: Grammar Polish",w:[{t:"Week 41",i:["Subjunctive: Quiero que…","Real-time narration practice"],p:"Puppet show in Spanish"},{t:"Week 42",i:["Conversation group online","Full movie w/ Spanish subtitles"],p:"Art + Spanish"},{t:"Week 43",i:["3-min story from memory","8+ minute conversations"],p:"Video call — child says hola!"},{t:"Week 44",i:["Review all grammar tenses","Full self-assessment"],p:"Child names things spontaneously!"}]},{t:"Month 12: Celebration!",w:[{t:"Week 45",i:["10-min conversations","Full movies in Spanish"],p:"Find Spanish playgroup"},{t:"Week 46",i:["Record final 3-min story","Compare to Month 1!"],p:"Latin community event"},{t:"Week 47",i:["Review all 12 months vocab","Understand 60%+ of podcasts"],p:"Child vocabulary exploding!"},{t:"Week 48",i:["🎉🎉🎉 YOU DID IT!","Plan Year 2: preschool? travel?"],p:"10-min convos! Child knows 200+ words!"}]}]}];
+
+// STATE
+const L={g(k,d){try{const v=localStorage.getItem('v_'+k);return v?JSON.parse(v):d}catch{return d}},s(k,v){try{localStorage.setItem('v_'+k,JSON.stringify(v))}catch{}}};
+let S={sk:L.g('sk',0),la:L.g('la',''),dc:L.g('dc',{}),dd:L.g('dd',''),wd:L.g('wd',{}),fk:L.g('fk',{}),qt:L.g('qt',0),qc:L.g('qc',0)};
+let expandedTask=null;
+function sv(){Object.entries({sk:S.sk,la:S.la,dc:S.dc,dd:S.dd,wd:S.wd,fk:S.fk,qt:S.qt,qc:S.qc}).forEach(([k,v])=>L.s(k,v));}
+function td(){return new Date().toISOString().split('T')[0];}
+function us(){const t=td(),y=new Date(Date.now()-864e5).toISOString().split('T')[0];if(S.la===t)return;S.sk=S.la===y?S.sk+1:1;S.la=t;sv();}
+function rd(){if(S.dd!==td()){S.dc={};S.dd=td();sv();}}
+function speak(t){if(!('speechSynthesis' in window))return;speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang='es-MX';u.rate=.82;const vs=speechSynthesis.getVoices(),v=vs.find(x=>x.lang.startsWith('es-MX'))||vs.find(x=>x.lang.startsWith('es'));if(v)u.voice=v;speechSynthesis.speak(u);}
+if('speechSynthesis' in window)speechSynthesis.getVoices();
+const spI='<svg width="13" height="13"><use href="#is"/></svg>';
+function spB(t){return `<button class="spk" onclick="event.stopPropagation();speak(\`${t.replace(/`/g,"'")}\`)">${spI}</button>`;}
+function sh(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=0|Math.random()*(i+1);[b[i],b[j]]=[b[j],b[i]];}return b;}
+
+// NAV
+document.querySelectorAll('.nb').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.nb').forEach(x=>x.classList.remove('act'));document.querySelectorAll('.pg').forEach(p=>p.classList.remove('act'));b.classList.add('act');document.getElementById('p-'+b.dataset.p).classList.add('act');}));
+
+function cs(){const tw=48,dw=Object.values(S.wd).filter(Boolean).length,p=Math.round(dw/tw*100),kw=Object.keys(S.fk).filter(k=>S.fk[k]).length;return{dw,p,kw};}
+function ub(){const{p,kw}=cs();document.getElementById('ss').textContent=S.sk;document.getElementById('sw2').textContent=kw;document.getElementById('mp').textContent=p+'%';document.getElementById('mr').style.strokeDashoffset=94.2-(94.2*p/100);}
+
+// HOME
+function rH(){rd();us();const{dw,p,kw}=cs();const d=new Date(),dn=d.toLocaleDateString('en-US',{weekday:'long'}),ds=d.toLocaleDateString('en-US',{month:'long',day:'numeric'});const mo=MO[0|Math.random()*MO.length];const cc=Object.values(S.dc).filter(Boolean).length;
+let h=`<div class="hc"><h2>¡Buenos días!</h2><div class="dt2">${dn}, ${ds}</div><div class="mot">${mo}</div></div>
+<div class="rc"><div class="rw"><svg width="120" height="120"><circle cx="60" cy="60" r="52" fill="none" stroke="var(--grl)" stroke-width="8"/><circle cx="60" cy="60" r="52" fill="none" stroke="url(#rg2)" stroke-width="8" stroke-dasharray="326.7" stroke-dashoffset="${326.7-(326.7*p/100)}" stroke-linecap="round"/><defs><linearGradient id="rg2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="var(--g)"/><stop offset="100%" stop-color="var(--go)"/></linearGradient></defs></svg><div class="rcn"><div class="rpct">${p}%</div><div class="rlb">Complete</div></div></div><div class="rcp">${dw} of 48 weeks done</div></div>
+<div class="srow"><div class="sc2"><div class="si"><svg width="22" height="22"><use href="#if"/></svg></div><div class="sn cc">${S.sk}</div><div class="sl2">Streak</div></div><div class="sc2"><div class="si"><svg width="22" height="22"><use href="#iw"/></svg></div><div class="sn cy">${kw}</div><div class="sl2">Words</div></div><div class="sc2"><div class="si"><svg width="22" height="22" style="color:var(--sk)"><use href="#ip"/></svg></div><div class="sn cs">${S.qc}</div><div class="sl2">Quiz ✓</div></div><div class="sc2"><div class="si"><svg width="22" height="22" style="color:var(--g)"><use href="#iy"/></svg></div><div class="sn cg">${dw}</div><div class="sl2">Weeks</div></div></div>
+<div class="cls"><div class="clh"><span><svg width="15" height="15" style="vertical-align:middle;margin-right:3px"><use href="#it"/></svg> Today's Tasks</span><span class="clc">${cc}/${TK.length}</span></div>${TK.map(t=>{const dn=S.dc[t.id];const ex=expandedTask===t.id;return`<div class="ci ${dn?'dn':''} ${ex?'exp':''}"><div class="cb" onclick="event.stopPropagation();tD('${t.id}')"><svg><use href="#ic"/></svg></div><div class="ci-body" onclick="tE('${t.id}')"><div class="ct">${t.t}</div><div class="csub">${t.s} <span class="wb ${t.w==='t'?'wt':'ws2'}">${t.w==='t'?'Together':'Solo'}</span></div><div class="ci-expand">${ex?'▲ Hide instructions':'▼ Tap for instructions'}</div><div class="ci-detail">${t.d}</div></div></div>`}).join('')}</div>`;
+document.getElementById('p-home').innerHTML=h;ub();}
+function tD(id){S.dc[id]=!S.dc[id];sv();us();rH();}
+function tE(id){expandedTask=expandedTask===id?null:id;rH();}
+
+// LEARN
+function rL(){let wi=0,h=`<div class="pt">📖 Curriculum</div><p class="ps">Tap phases to expand. Check off completed weeks.</p>`;
+CU.forEach((p,i)=>{h+=`<div class="pc ${i===0?'op':''}" id="ph${i}"><div class="ph" onclick="document.getElementById('ph${i}').classList.toggle('op')"><h3><span class="ptg ${p.c}">${p.g}</span> ${p.p}</h3><svg class="pch" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div><div class="pbd"><div class="pct2">`;
+p.m.forEach(m=>{h+=`<div class="mt">${m.t}</div>`;m.w.forEach(w=>{wi++;const k='w'+wi,d=S.wd[k];h+=`<div class="wk"><h4>${w.t}<div class="wkc ${d?'dn':''}" onclick="tW('${k}')"><svg><use href="#ic"/></svg></div></h4><ul>${w.i.map(x=>`<li>${x}</li>`).join('')}</ul>${w.p?`<div class="tbx"><svg width="15" height="15"><use href="#il"/></svg><span>${w.p}</span></div>`:''}</div>`;});});
+h+=`</div></div></div>`;});
+document.getElementById('p-learn').innerHTML=h;}
+function tW(k){S.wd[k]=!S.wd[k];sv();rL();rH();}
+
+// CARDS
+let cD="Greetings",cI=0,dk=[],fK=0,fA=0,fl=false;
+function sD(n){cD=n;dk=sh([...V[n]]);cI=0;fK=0;fA=0;fl=false;rC();}
+function rC(){const ds=Object.keys(V);let h=`<div class="pt">🃏 Flashcards</div><p class="ps">Tap to flip · 🔊 for pronunciation</p><div class="dkp">${ds.map(d=>`<button class="dkb ${d===cD?'act':''}" onclick="sD('${d}')">${d}</button>`).join('')}</div>`;
+if(!dk.length){sD(cD);return;}
+if(cI>=dk.length){h+=`<div class="qr"><svg width="44" height="44"><use href="#iy" style="color:var(--go)"/></svg><h2 style="margin-top:8px">Deck Complete!</h2><div class="qbg">${fK}/${dk.length}</div><p style="color:var(--gr);font-size:13px">Know: <b style="color:var(--g)">${fK}</b> · Again: <b style="color:var(--co)">${fA}</b></p><button class="qrb" onclick="sD('${cD}')">Shuffle & Retry</button></div>`;document.getElementById('p-cards').innerHTML=h;return;}
+const c=dk[cI];h+=`<div class="fpg">${cI+1} of ${dk.length}</div><div class="fsc"><span class="fsk">✓ ${fK}</span><span class="fsa">✗ ${fA}</span></div><div class="fca"><div class="fcc" onclick="fl=!fl;rC()"><div class="fc ${fl?'fl':''}"><div class="ff ffr"><div class="fw">${c.e}</div><div class="fh">Tap to reveal</div></div><div class="ff fbk"><div class="fw">${c.e}</div><div class="ft">${c.n}</div>${c.x?`<div class="fe">"${c.x}"</div>`:''}</div></div></div><button class="splg" onclick="event.stopPropagation();speak(\`${c.e.replace(/`/g,"'")}\`)"><svg><use href="#is"/></svg></button>${fl?`<div class="fcl"><button class="fcb ba" onclick="fR(0)">🔄 Again</button><button class="fcb bk" onclick="fR(1)">✓ Know it</button></div>`:''}</div>`;
+document.getElementById('p-cards').innerHTML=h;}
+function fR(k){const c=dk[cI];if(k){fK++;S.fk[c.e]=true;}else{fA++;S.fk[c.e]=false;}sv();cI++;fl=false;rC();ub();}
+
+// QUIZ
+let qQ=[],qI=0,qS=0,qA=false;
+function gQ(){const all=Object.values(V).flat(),s=sh([...all]);qQ=s.slice(0,10).map(q=>{const wr=sh(all.filter(w=>w.n!==q.n)).slice(0,3).map(w=>w.n);return{...q,o:sh([q.n,...wr])};});qI=0;qS=0;qA=false;rQ();}
+function rQ(){let h=`<div class="pt">🧩 Quiz</div>`;
+if(!qQ.length){h+=`<div class="card" style="text-align:center;padding:30px"><svg width="44" height="44" style="color:var(--g)"><use href="#ip"/></svg><h3 style="justify-content:center;margin-top:10px">Ready to test yourself?</h3><p style="margin:8px 0 16px;font-size:13px;color:var(--gr)">10 random questions from all decks</p><button class="qrb" onclick="gQ()">Start Quiz</button></div>`;document.getElementById('p-quiz').innerHTML=h;return;}
+if(qI>=qQ.length){const pc=Math.round(qS/qQ.length*100),mg=pc>=80?"¡Excelente! 🌟":pc>=50?"¡Muy bien! 💪":"¡Sigue! 📚";h+=`<div class="qr"><svg width="44" height="44"><use href="#iy" style="color:var(--go)"/></svg><h2 style="margin-top:8px">${mg}</h2><div class="qbg">${qS}/${qQ.length}</div><p style="color:var(--gr)">${pc}%</p><button class="qrb" onclick="gQ()">New Quiz</button></div>`;document.getElementById('p-quiz').innerHTML=h;return;}
+const q=qQ[qI],pr=qI/qQ.length*100;
+h+=`<div style="margin-bottom:14px"><div style="display:flex;justify-content:space-between;font-size:12px;font-weight:600;color:var(--gr);margin-bottom:4px"><span>Q ${qI+1}/10</span><span>Score: ${qS}</span></div><div class="qpb"><div class="qpf" style="width:${pr}%"></div></div></div>
+<div class="qc2"><div class="ql">What does this mean?</div><div class="qw">${q.e} <button class="splg" style="width:34px;height:34px" onclick="speak(\`${q.e.replace(/`/g,"'")}\`)"><svg width="16" height="16"><use href="#is"/></svg></button></div><div class="qo">${q.o.map((o,i)=>`<button class="qob" id="q${i}" onclick="qR(${i},'${o.replace(/'/g,"\\'")}')">${o}</button>`).join('')}</div></div>`;
+document.getElementById('p-quiz').innerHTML=h;}
+function qR(i,a){if(qA)return;qA=true;const q=qQ[qI],ok=a===q.n;if(ok){qS++;S.qc++;}S.qt++;sv();document.getElementById('q'+i).classList.add(ok?'ok':'no');if(!ok)q.o.forEach((o,j)=>{if(o===q.n)document.getElementById('q'+j).classList.add('ok');});setTimeout(()=>{qI++;qA=false;rQ();ub();},ok?700:1400);}
+
+// MORE
+function rM(){let h=`<div class="pt">📋 More</div><div class="stb"><button class="st act" onclick="sM('sc',this)">Schedule</button><button class="st" onclick="sM('rs',this)">Resources</button><button class="st" onclick="sM('hn',this)">🇭🇳 Honduran</button><button class="st" onclick="sM('sg',this)">🎵 Songs</button></div>`;
+// Schedule
+h+=`<div class="msec act" id="m-sc"><div class="card hlg"><h3><svg width="16" height="16"><use href="#it"/></svg> 45 min/day</h3><p>Small blocks around naps & meals. 5/7 days = success.</p></div>
+<div class="sbl"><div class="sbh">📅 Weekday</div>${[['7:00','Morning song + dress narration','5m','Together'],['7:30','Breakfast narration','5m','Together'],['9:00','Songs + video','10m','Together'],['10:00','Play in Spanish','10m','Together'],['1:00','Solo study (nap time)','15m','Solo'],['6:30','Bath/bedtime routine','5m','Together']].map(([t,a,d,w])=>`<div class="sr"><span class="stm">${t}</span><div class="sac"><strong>${a.split('—')[0]}</strong>${a.includes('—')?'—'+a.split('—')[1]:''}<br><span class="wb ${w==='Together'?'wt':'ws2'}">${w}</span></div><span class="sdr">${d}</span></div>`).join('')}</div>
+<div class="sbl"><div class="sbh">🌞 Weekend Bonus</div>${[['AM','Extended play — cooking, art, nature','20m'],['Nap','Extra study, conversation, journal','25m'],['PM','Spanish show together','20m']].map(([t,a,d])=>`<div class="sr"><span class="stm">${t}</span><div class="sac">${a}</div><span class="sdr">${d}</span></div>`).join('')}</div>
+<div class="card hly"><h3><svg width="16" height="16"><use href="#iw"/></svg> Rules</h3><ul><li><b>Never skip the morning song.</b></li><li><b>Narration ≠ study.</b> Just talk.</li><li><b>Miss a day?</b> Don't double up.</li><li><b>3 min of toddler attention</b> = win.</li></ul></div></div>`;
+// Resources
+h+=`<div class="msec" id="m-rs">${[['📱 Apps',[['Duolingo','Latin American Spanish, free tier'],['HelloTalk','Filter for Honduran partners'],['Tandem','Find conversation partners'],['Libby/Hoopla','Free w/ Indiana library card']]],['🎧 Audio',[['Language Transfer','90 eps, best free grammar'],['News in Slow Spanish','Weekly, LatAm edition'],['Hoy Hablamos','Daily 10-min, all Spanish']]],['📺 Toddler YouTube',[['Canticos','Bilingual nursery rhymes'],['El Reino Infantil','Huge song library'],['Peppa Pig en Español','Familiar stories'],['Pocoyó','Simple, originally Spanish']]],['📺 Parent YouTube',[['Dreaming Spanish','Comprehensible input, all levels'],['Spanish with Paul','Clear grammar videos'],['Español con Juan','1001 palabras series'],['Destinos','52-ep telenovela, free']]],['🌐 Websites',[['SpanishDict.com','Best free dictionary'],['ConversationExchange','Free partners'],['BBC Mundo','News in Spanish'],['Indiana Library','Bilingual books, events']]]].map(([cat,items])=>`<div style="margin-bottom:16px"><h3 style="font-size:15px;font-weight:700;margin-bottom:8px">${cat}</h3><div class="rg">${items.map(([n,d])=>`<div class="ri"><div class="ric" style="background:var(--gl)">📗</div><div><div class="rn">${n}</div><div class="rd">${d}</div></div></div>`).join('')}</div></div>`).join('')}</div>`;
+// Honduran
+h+=`<div class="msec" id="m-hn"><div class="card hly"><h3>🇭🇳 Honduran Spanish</h3><p>Very close to standard LatAm. Add these local flavors.</p></div>
+<div class="card"><h3>🗣 Pronunciation</h3><ul><li><b>S-aspiration:</b> "Estamos" → "ehtamoh"</li><li><b>Vos:</b> hablás, comés, vivís</li><li><b>No "th":</b> Gracias = grah-see-ahs</li></ul></div>
+<div class="card"><h3>🇭🇳 Expressions</h3>${[["¡Buenas!","Hi!"],["¡Qué onda!","What's up!"],["Catracho","Honduran"],["Pisto","Money"],["Cipote","Kid"],["Maje","Dude"],["Puchica","Wow"],["Cheque","Okay"],["¡Va pues!","Alright!"],["Alero","Friend"],["Jalar","To leave"],["¡Ideay!","So?/Well?"]].map(([a,b])=>`<div class="vp"><span class="ve">${a} ${spB(a)}</span><span class="vn">${b}</span></div>`).join('')}</div>
+<div class="card"><h3>🍳 Food</h3>${[["Baleada","Tortilla+beans+cheese"],["Tajadas","Fried plantains"],["Sopa de caracol","Conch soup"],["Atol de elote","Corn drink"],["Licuado","Smoothie"],["Horchata","Rice drink"]].map(([a,b])=>`<div class="vp"><span class="ve">${a} ${spB(a)}</span><span class="vn">${b}</span></div>`).join('')}</div>
+<div class="card"><h3>🎵 Music</h3><ul><li><b>Guillermo Anderson</b> — "En Mi País"</li><li><b>Punta</b> — Banda Blanca, Kazzabe</li><li><b>Polache</b> — comedian/singer</li></ul></div></div>`;
+// Songs
+h+=`<div class="msec" id="m-sg"><div class="card"><h3>🎵 Essential Songs</h3><p style="font-size:12px;color:var(--gr);margin-bottom:8px">Tap to hear. Search YouTube for full versions.</p>${[["Buenos Días","Mo 1"],["Los Pollitos Dicen","Mo 1–2"],["Pin Pon","Mo 2"],["Cabeza Hombros Rodillas Pies","Mo 2–3"],["Estrellita ¿Dónde Estás?","Mo 3"],["Arroz con Leche","Mo 4"],["La Araña Pequeñita","Mo 4"],["La Vaca Lola","Mo 5"],["Un Elefante Se Balanceaba","Mo 6"],["De Colores","Mo 7+"]].map(([n,w])=>`<div style="display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--grl)"><div><div style="font-weight:700;font-size:13.5px">${n} ${spB(n)}</div><div style="font-size:11px;color:var(--gr)">${w}</div></div></div>`).join('')}</div></div>`;
+document.getElementById('p-more').innerHTML=h;}
+function sM(id,b){document.querySelectorAll('.msec').forEach(s=>s.classList.remove('act'));document.getElementById('m-'+id).classList.add('act');b.parentElement.querySelectorAll('.st').forEach(x=>x.classList.remove('act'));b.classList.add('act');}
+
+// INIT
+rH();rL();dk=sh([...V[cD]]);rC();rQ();rM();
+</script>
+</body>
+</html>
