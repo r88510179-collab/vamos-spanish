@@ -14,9 +14,9 @@
   --gold:#D4A017;--goldd:#B8860B;--goldl:#FFF8E1;
   --ink:#1A1B4B;--ink2:#2D2E5E;
   --teal:#008080;--teall:#E0F2F1;--teald:#006666;
-  --terra:#C75B39;--terra-aa:#BF4F2C;--terral:#FDEEE8;
+  --terra:#C75B39;--terral:#FDEEE8;
   --w:#FFFFFF;--sand:#F5EDE0;
-  --gr:#5F6673;--gr2:#9CA3AF;--grl:#F3F4F6;--bd:#D5CFC5;
+  --gr:#6B7280;--gr2:#9CA3AF;--grl:#F3F4F6;--bd:#D5CFC5;
   --r:16px;--rs:10px;
   --sh:0 3px 10px rgba(0,0,0,.1);--shl:0 8px 24px rgba(0,0,0,.15);
 }
@@ -55,7 +55,7 @@ button{font-family:'Quicksand',sans-serif;border:none;cursor:pointer;-webkit-tap
 .card li{margin-bottom:4px;}
 .hl-gold{border-left:4px solid var(--gold);background:var(--goldl);}
 .hl-teal{border-left:4px solid var(--teal);background:var(--teall);}
-.hl-rust{border-left:4px solid var(--terra-aa);background:var(--terral);}
+.hl-rust{border-left:4px solid var(--terra);background:var(--terral);}
 
 /* HERO */
 .hero{background:var(--ink);color:var(--w);border-radius:var(--r);padding:22px;margin-bottom:16px;position:relative;overflow:hidden;box-shadow:var(--shl);border:2px solid var(--gold);}
@@ -76,7 +76,7 @@ button{font-family:'Quicksand',sans-serif;border:none;cursor:pointer;-webkit-tap
 .srow{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:16px;}
 .sc2{background:var(--w);border-radius:var(--r);padding:12px 6px;text-align:center;border:1px solid var(--bd);}
 .sn{font-family:'Playfair Display',serif;font-size:20px;font-weight:900;}
-.sn.cg{color:var(--teal);}.sn.cy{color:var(--goldd);}.sn.cc{color:var(--terra-aa);}.sn.cs{color:var(--teald);}
+.sn.cg{color:var(--teal);}.sn.cy{color:var(--goldd);}.sn.cc{color:var(--terra);}.sn.cs{color:var(--teald);}
 .sl2{font-size:9px;color:var(--gr);font-weight:700;text-transform:uppercase;margin-top:2px;}
 
 /* CHECKLIST */
@@ -224,14 +224,14 @@ button{font-family:'Quicksand',sans-serif;border:none;cursor:pointer;-webkit-tap
 <label style="font-size:12px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.5px;">Child's age</label>
 <div style="display:flex;gap:8px;margin:6px 0 16px;" id="ob-ages">
 <button class="ob-opt" data-age="1" style="flex:1;padding:12px;border-radius:12px;border:2px solid rgba(255,255,255,.2);background:rgba(255,255,255,.05);color:var(--w);font-family:'Quicksand';font-size:15px;font-weight:700;">1 yr</button>
-<button class="ob-opt ob-sel" data-age="2" style="flex:1;padding:12px;border-radius:12px;border:2px solid var(--gold);background:rgba(212,160,23,.15);color:var(--gold);font-family:'Quicksand';font-size:15px;font-weight:700;">2 yr</button>
+<button class="ob-opt" data-age="2" style="flex:1;padding:12px;border-radius:12px;border:2px solid var(--gold);background:rgba(212,160,23,.15);color:var(--gold);font-family:'Quicksand';font-size:15px;font-weight:700;">2 yr</button>
 <button class="ob-opt" data-age="3" style="flex:1;padding:12px;border-radius:12px;border:2px solid rgba(255,255,255,.2);background:rgba(255,255,255,.05);color:var(--w);font-family:'Quicksand';font-size:15px;font-weight:700;">3 yr</button>
 <button class="ob-opt" data-age="4" style="flex:1;padding:12px;border-radius:12px;border:2px solid rgba(255,255,255,.2);background:rgba(255,255,255,.05);color:var(--w);font-family:'Quicksand';font-size:15px;font-weight:700;">4 yr</button>
 </div>
 
 <label style="font-size:12px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.5px;">Your Spanish level</label>
 <div style="display:flex;flex-direction:column;gap:8px;margin:6px 0 24px;" id="ob-levels">
-<button class="ob-lvl ob-sel" data-lvl="0" style="padding:14px;border-radius:12px;border:2px solid var(--gold);background:rgba(212,160,23,.15);color:var(--gold);font-family:'Quicksand';font-size:14px;font-weight:700;text-align:left;">🌱 <b>Zero</b> — I don't know any Spanish</button>
+<button class="ob-lvl" data-lvl="0" style="padding:14px;border-radius:12px;border:2px solid var(--gold);background:rgba(212,160,23,.15);color:var(--gold);font-family:'Quicksand';font-size:14px;font-weight:700;text-align:left;">🌱 <b>Zero</b> — I don't know any Spanish</button>
 <button class="ob-lvl" data-lvl="1" style="padding:14px;border-radius:12px;border:2px solid rgba(255,255,255,.2);background:rgba(255,255,255,.05);color:var(--w);font-family:'Quicksand';font-size:14px;font-weight:700;text-align:left;">🌿 <b>A little</b> — I know some words (hola, gracias)</button>
 <button class="ob-lvl" data-lvl="2" style="padding:14px;border-radius:12px;border:2px solid rgba(255,255,255,.2);background:rgba(255,255,255,.05);color:var(--w);font-family:'Quicksand';font-size:14px;font-weight:700;text-align:left;">🌳 <b>Some</b> — I can say basic sentences</button>
 </div>
@@ -323,20 +323,13 @@ const V={
 "Feelings":[{e:"Contento",n:"Happy",x:"Estoy contento."},{e:"Triste",n:"Sad",x:"Está triste."},{e:"Enojado",n:"Angry",x:"No estoy enojado."},{e:"Cansado",n:"Tired",x:"Estoy cansado."},{e:"Asustado",n:"Scared",x:"No tengas miedo."},{e:"Emocionado",n:"Excited",x:"¡Estoy emocionado!"},{e:"Hambre",n:"Hungry",x:"Tengo hambre."},{e:"Sed",n:"Thirsty",x:"Tengo sed."}],
 "Honduran":[{e:"¡Qué onda!",n:"What's up!",x:"¡Qué onda, maje!"},{e:"Catracho",n:"Honduran person",x:"Soy catracho."},{e:"Pisto",n:"Money",x:"No tengo pisto."},{e:"Cipote",n:"Kid",x:"Los cipotes."},{e:"Maje",n:"Dude (informal)",x:"¿Qué tal, maje?"},{e:"Puchica",n:"Wow/dang",x:"¡Puchica!"},{e:"Cheque",n:"Okay/sure",x:"Está cheque."},{e:"¡Va pues!",n:"Alright!",x:"¡Va pues, vamos!"},{e:"Baleada",n:"Stuffed tortilla",x:"Una baleada con todo."},{e:"Alero",n:"Close friend",x:"Mi alero."},{e:"Jalar",n:"To leave",x:"Me voy a jalar."},{e:"¡Ideay!",n:"So?/Well?",x:"¡Ideay! ¿Qué pasó?"}],
 "Parenting":[{e:"No se pega",n:"No hitting",x:"No se pega. Usamos las manos con cariño."},{e:"Usa tus palabras",n:"Use your words",x:"Usa tus palabras, mi amor."},{e:"¿Necesitas ayuda?",n:"Do you need help?",x:"¿Necesitas ayuda con eso?"},{e:"Muy bien hecho",n:"Well done!",x:"¡Muy bien hecho, mi amor!"},{e:"Es hora de dormir",n:"Time for bed",x:"Es hora de dormir. Buenas noches."},{e:"Comparte",n:"Share",x:"Comparte con tu amigo."},{e:"Vamos a limpiar",n:"Let's clean up",x:"Vamos a limpiar los juguetes."},{e:"Te quiero mucho",n:"I love you so much",x:"Te quiero mucho, mi bebé."}],
-"Kitchen Soul":[{e:"Arroz",n:"Rice",x:"Arroz con frijoles — just like rice and beans."},{e:"Frijoles",n:"Beans",x:"Frijoles negros, like black-eyed peas."},{e:"Plátano",n:"Plantain",x:"Plátano frito — fried plantain, like a sweet side."},{e:"Yuca",n:"Cassava",x:"Yuca frita, crispy like fries."},{e:"Maíz",n:"Corn",x:"Pan de maíz — cornbread!"},{e:"Guiso",n:"Stew",x:"Un guiso caliente, like a slow-cooked pot."},{e:"Sazón",n:"Seasoning",x:"Necesita más sazón — it needs more seasoning!"},{e:"Manteca",n:"Lard",x:"Cocinado con manteca, like grandma did."},{e:"Quimbombó",n:"Okra",x:"Quimbombó — same word from West Africa."},{e:"Coco",n:"Coconut",x:"Arroz con coco — coconut rice, Garífuna style."}],
-"Neighborhood":[{e:"¡Pase adelante!",n:"Come on in",x:"¡Pase adelante! Mi casa es su casa."},{e:"¿Qué cuenta?",n:"What's the news",x:"¡Buenas, vecina! ¿Qué cuenta?"},{e:"Bienvenidos",n:"Welcome",x:"¡Bienvenidos a nuestra casa!"},{e:"¿Quiere café?",n:"Want coffee?",x:"¿Quiere un cafecito?"},{e:"Con gusto",n:"With pleasure",x:"Con gusto, para eso estamos."},{e:"Que Dios le bendiga",n:"God bless you",x:"Gracias, que Dios le bendiga."},{e:"Vecino/a",n:"Neighbor",x:"Mi vecina es muy amable."},{e:"Cuídese",n:"Take care",x:"Cuídese mucho. ¡Buenas noches!"}]
+"Kitchen Soul":[{e:"Arroz",n:"Rice",x:"Arroz con frijoles — just like rice and beans."},{e:"Frijoles",n:"Beans",x:"Frijoles negros, like black-eyed peas."},{e:"Plátano",n:"Plantain",x:"Plátano frito — fried plantain, like a sweet side."},{e:"Yuca",n:"Cassava/Yuca",x:"Yuca frita, crispy like fries."},{e:"Maíz",n:"Corn",x:"Pan de maíz — cornbread!"},{e:"Guiso",n:"Stew",x:"Un guiso caliente, like a slow-cooked pot."},{e:"Sazón",n:"Seasoning",x:"Necesita más sazón — it needs more seasoning!"},{e:"Manteca",n:"Lard/Fat",x:"Cocinado con manteca, like grandma did."},{e:"Quimbombó",n:"Okra",x:"Quimbombó — same word from West Africa."},{e:"Coco",n:"Coconut",x:"Arroz con coco — coconut rice, Garífuna style."}],
+"Neighborhood":[{e:"¡Pase adelante!",n:"Come on in!",x:"¡Pase adelante! Mi casa es su casa."},{e:"¿Qué cuenta?",n:"What's the news?",x:"¡Buenas, vecina! ¿Qué cuenta?"},{e:"Bienvenidos",n:"Welcome",x:"¡Bienvenidos a nuestra casa!"},{e:"¿Quiere café?",n:"Want coffee?",x:"¿Quiere un cafecito?"},{e:"Con gusto",n:"With pleasure",x:"Con gusto, para eso estamos."},{e:"Que Dios le bendiga",n:"God bless you",x:"Gracias, que Dios le bendiga."},{e:"Vecino/a",n:"Neighbor",x:"Mi vecina es muy amable."},{e:"Cuídese",n:"Take care",x:"Cuídese mucho. ¡Buenas noches!"}]
 };
 
 /* ===== USER PROFILE (Onboarding) ===== */
 let profile=JSON.parse(localStorage.getItem('v_profile')||'null');
 function showOnboard(){if(!profile)document.getElementById('onboard').style.display='block';}
-// Resets onboarding UI so "Edit Profile" always starts from clean defaults.
-function resetOnboardForm(){
-  document.getElementById('ob-name').value='';
-  document.getElementById('ob-child').value='';
-  document.querySelectorAll('#ob-ages .ob-opt').forEach((x,i)=>{x.style.borderColor='rgba(255,255,255,.2)';x.style.background='rgba(255,255,255,.05)';x.style.color='var(--w)';x.classList.remove('ob-sel');if(i===1){x.style.borderColor='var(--gold)';x.style.background='rgba(212,160,23,.15)';x.style.color='var(--gold)';x.classList.add('ob-sel');}});
-  document.querySelectorAll('#ob-levels .ob-lvl').forEach((x,i)=>{x.style.borderColor='rgba(255,255,255,.2)';x.style.background='rgba(255,255,255,.05)';x.style.color='var(--w)';x.classList.remove('ob-sel');if(i===0){x.style.borderColor='var(--gold)';x.style.background='rgba(212,160,23,.15)';x.style.color='var(--gold)';x.classList.add('ob-sel');}});
-}
 function saveOnboard(){
   const name=document.getElementById('ob-name').value.trim()||'Friend';
   const child=document.getElementById('ob-child').value.trim()||'Baby';
@@ -362,7 +355,6 @@ const TOYS=[
 {emoji:"🍌",es:"Guineo",en:"Banana",cat:"food"},{emoji:"🍎",es:"Manzana",en:"Apple",cat:"food"},{emoji:"🌮",es:"Baleada",en:"Baleada",cat:"food"},{emoji:"💧",es:"Agua",en:"Water",cat:"food"},{emoji:"🥛",es:"Leche",en:"Milk",cat:"food"},{emoji:"🍚",es:"Arroz",en:"Rice",cat:"food"},{emoji:"🧀",es:"Queso",en:"Cheese",cat:"food"},{emoji:"🍞",es:"Pan",en:"Bread",cat:"food"},
 {emoji:"🔴",es:"Rojo",en:"Red",cat:"colors"},{emoji:"🔵",es:"Azul",en:"Blue",cat:"colors"},{emoji:"🟢",es:"Verde",en:"Green",cat:"colors"},{emoji:"🟡",es:"Amarillo",en:"Yellow",cat:"colors"},{emoji:"⚫",es:"Negro",en:"Black",cat:"colors"},{emoji:"⚪",es:"Blanco",en:"White",cat:"colors"},{emoji:"🟠",es:"Naranja",en:"Orange",cat:"colors"},{emoji:"🟣",es:"Morado",en:"Purple",cat:"colors"},
 {emoji:"🖐️",es:"Mano",en:"Hand",cat:"body"},{emoji:"👃",es:"Nariz",en:"Nose",cat:"body"},{emoji:"👁️",es:"Ojo",en:"Eye",cat:"body"},{emoji:"👄",es:"Boca",en:"Mouth",cat:"body"},{emoji:"👂",es:"Oreja",en:"Ear",cat:"body"},{emoji:"🦶",es:"Pie",en:"Foot",cat:"body"},{emoji:"🦵",es:"Rodilla",en:"Knee",cat:"body"},{emoji:"💪",es:"Brazo",en:"Arm",cat:"body"},
-{emoji:"1️⃣",es:"Uno",en:"One",cat:"count"},{emoji:"2️⃣",es:"Dos",en:"Two",cat:"count"},{emoji:"3️⃣",es:"Tres",en:"Three",cat:"count"},{emoji:"4️⃣",es:"Cuatro",en:"Four",cat:"count"},{emoji:"5️⃣",es:"Cinco",en:"Five",cat:"count"},{emoji:"6️⃣",es:"Seis",en:"Six",cat:"count"},{emoji:"7️⃣",es:"Siete",en:"Seven",cat:"count"},{emoji:"8️⃣",es:"Ocho",en:"Eight",cat:"count"},
 {emoji:"☀️",es:"Sol",en:"Sun",cat:"nature"},{emoji:"🌙",es:"Luna",en:"Moon",cat:"nature"},{emoji:"⭐",es:"Estrella",en:"Star",cat:"nature"},{emoji:"🌊",es:"Mar",en:"Sea",cat:"nature"},{emoji:"🌴",es:"Palma",en:"Palm tree",cat:"nature"},{emoji:"🌺",es:"Flor",en:"Flower",cat:"nature"},{emoji:"🌧️",es:"Lluvia",en:"Rain",cat:"nature"},{emoji:"☁️",es:"Nube",en:"Cloud",cat:"nature"}
 ];
 const NUMS=["","Uno","Dos","Tres","Cuatro","Cinco","Seis","Siete","Ocho","Nueve","Diez"];
@@ -460,33 +452,206 @@ const CU=[
 ]}
 ]}
 ]},
-{p:"Phase 2 — Daily Life",g:"Months 4–6",c:"t2",desc:"Narrate your entire day in Spanish. Learn food, weather, clothing, and routine vocabulary. Your toddler starts responding in Spanish.",ms:[
-{t:"Month 4: Food, Body & Verbs",ws:[
-{t:"Week 13–14: Food & Cooking",done:false,steps:[{h:"🍳 This Month's Focus",p:'Narrate every meal. Learn present tense verbs: comer (eat), beber (drink), cocinar (cook), querer (want). Cook a simple recipe in Spanish with your toddler — try baleadas (recipe in Honduran section). YouTube: search "Dreaming Spanish Beginner" — 10 min/day.'}]},
-{t:"Week 15–16: Body & Health",done:false,steps:[{h:"🏥 Body Parts & Feelings",p:'Sing "Cabeza Hombros Rodillas Pies" 3x daily. Learn to describe how you feel: "Me duele la cabeza" (my head hurts), "Tengo hambre" (I\'m hungry). At the pediatrician, practice: "Mi hijo tiene fiebre" (my child has a fever).'}]}
+{p:"Phase 2 — Florida Neighborhood",g:"Months 4–6",c:"t2",desc:"Narrate your entire day. Learn food, weather, animals, and community vocab. Your toddler starts responding in Spanish. Video partners: Aprende Peque + Bluey en Español.",ms:[
+{t:"Month 4: Food, Cooking & Verbs",ws:[
+{t:"Week 13: Present Tense Verbs",done:false,steps:[
+{h:"🎧 Language Transfer ep. 40–44",p:"You're learning verb conjugation patterns. Focus on: yo como (I eat), yo quiero (I want), yo tengo (I have). One episode per day during nap time."},
+{h:"🍳 Kitchen Verbs",p:'Practice these while cooking with your toddler:',phrases:["Cocinar|koh-see-NAR|To cook","Comer|koh-MEHR|To eat","Beber|beh-BEHR|To drink","Cortar|kor-TAR|To cut","Mezclar|mehs-KLAR|To mix"]},
+{h:"📺 Aprende Peque: Food Video",p:'YouTube → search <b>"Aprende Peque frutas y verduras"</b>. Watch together at 10 AM. Right after, open Toddler Mode → Food category and let your child tap the foods they just saw.'},
+{h:"🌮 Cook Baleadas Together",p:'Follow the recipe in the Honduran section (More → 🇭🇳). Narrate every step: "Primero, calentamos la tortilla. Ahora ponemos los frijoles. ¿Quieres queso?" Your toddler stirs, you narrate.'}
 ]},
-{t:"Month 5: Weather, Clothing & Routines",ws:[
-{t:"Week 17–18: Weather & Getting Dressed",done:false,steps:[{h:"🌤️ Florida Weather",p:'Every morning: look outside together. "Hace calor" (it\'s hot — you\'ll say this a lot in Florida!), "Está lloviendo" (it\'s raining), "Hace sol" (it\'s sunny). Name clothes as you dress: "Tu camisa, tus zapatos, tu sombrero."'}]},
-{t:"Week 19–20: Full Routine Narration",done:false,steps:[{h:"📋 Narrate Everything",p:'Your goal: narrate your entire morning routine in Spanish. "Despiértate. Vamos a lavarnos los dientes. Ponte la camisa. Vamos a comer. ¿Quieres leche?" Start "News in Slow Spanish" podcast (Spotify — Latin American edition).'}]}
+{t:"Week 14: Body Parts Deep Dive",done:false,steps:[
+{h:"🎧 Language Transfer ep. 45–48",p:"Continue daily. You're building real conjugation muscle now."},
+{h:"🏥 Body + Health Phrases",p:'These are essential for doctor visits and daily life:',phrases:["Me duele|meh DWEH-leh|It hurts me","Tengo fiebre|TEHN-goh fee-EH-breh|I have a fever","Tiene hambre|tee-EH-neh AHM-breh|He/she is hungry","Está enfermo|ehs-TAH ehn-FEHR-moh|He/she is sick"]},
+{h:"📺 Spanish with Liz: Body Parts",p:'Search <b>"Spanish with Liz body parts"</b> on YouTube for a structured lesson. Take notes on any words you don\'t know.'},
+{h:"🎵 Body Song 3x Daily",p:'Keep singing "Cabeza Hombros Rodillas Pies" with motions. By now your toddler should be touching the right body parts when you say the words.'}
 ]},
-{t:"Month 6: Questions & Descriptions",ws:[
-{t:"Week 21–24: Conversation Skills",done:false,steps:[{h:"🗣️ Ask & Describe",p:'Learn all question words. Practice prepositions with hide-and-seek. Describe everything: "El perro grande está debajo de la mesa roja." Finish Language Transfer if you haven\'t. Start watching Plaza Sésamo (Sesame Street Latin America) with your toddler — you\'re BOTH learning from it now.'}]}
+{t:"Week 15: Mealtime Mastery",done:false,steps:[
+{h:"🍽️ Full Mealtime Script",p:'Use this EVERY meal. Print it out if you need to:',phrases:["Vamos a comer|VAH-mohs ah koh-MEHR|Let's eat","¿Qué quieres?|keh key-EH-rehs|What do you want?","¿Más?|mahs|More?","Está caliente|ehs-TAH kah-lee-EHN-teh|It's hot","¡Qué rico!|keh REE-koh|Yummy!","Todo|TOH-doh|All done"]},
+{h:"📺 Bluey Challenge #4",p:'Watch one episode of <b>Bluey en Español</b> (Disney+ → Audio → Español). This month\'s challenge: spot the words "jugar" (play), "comer" (eat), and "dormir" (sleep).'},
+{h:"🌴 Florida Quest",p:'Visit a fruit stand or Latin market. Point at things with your toddler: "¡Mira! Plátanos. ¿Quieres uno?"'}
+]},
+{t:"Week 16: Kitchen Soul Vocabulary",done:false,steps:[
+{h:"🍚 Shared Food Heritage",p:'This week focuses on foods shared between Southern and Caribbean cooking. Use the Kitchen Soul flashcard deck! Key words:',phrases:["Arroz|ah-ROHS|Rice","Frijoles|free-HOH-lehs|Beans","Plátano|PLAH-tah-noh|Plantain","Yuca|YOO-kah|Cassava","Quimbombó|keem-bohm-BOH|Okra","Maíz|mah-EES|Corn"]},
+{h:"📺 El Ramos Family Video",p:'YouTube → search <b>"El Ramos cocina"</b> or any cooking video. Watch how a real family uses Spanish in the kitchen. Note 3 new words.'},
+{h:"🎉 Month 4 Done!",p:'You can now narrate meals, name body parts, and use present tense verbs. Your toddler recognizes 50+ words and says several food/body words.'}
 ]}
 ]},
-{p:"Phase 3 — Conversations",g:"Months 7–9",c:"t3",desc:"Past tense, feelings, opinions, and real-world practice. You start having actual conversations.",ms:[
-{t:"Month 7–8: Past Tense & Feelings",ws:[
-{t:"Week 25–32: Storytelling",done:false,steps:[{h:"📖 Tell Stories",p:'Learn past tense: fui (I went), comí (I ate), jugué (I played). Every bedtime: "Hoy fuimos al parque. Comiste pollo. Vimos un perro grande." Learn emotions: contento, triste, enojado, cansado. Make a feelings chart with your toddler. Restart Language Transfer from episode 1 — the second pass will transform your understanding.'}]}
+{t:"Month 5: Weather, Clothing & Florida Nature",ws:[
+{t:"Week 17: Weather Every Day",done:false,steps:[
+{h:"🌤️ Morning Weather Ritual",p:'Every morning, look outside together. This is Florida so you\'ll say "hace calor" a lot!',phrases:["Hace calor|AH-seh kah-LOR|It's hot","Hace sol|AH-seh sohl|It's sunny","Está lloviendo|ehs-TAH yoh-vee-EHN-doh|It's raining","Está nublado|ehs-TAH noo-BLAH-doh|It's cloudy","Hace viento|AH-seh vee-EHN-toh|It's windy"]},
+{h:"📺 Aprende Peque: Weather",p:'YouTube → <b>"Aprende Peque el clima"</b> or weather video. Watch at 10 AM, then do the weather check ritual together.'},
+{h:"🎧 Language Transfer ep. 49–52",p:"Keep going daily. You're now past the halfway mark!"}
 ]},
-{t:"Month 9: Real World Practice",ws:[
-{t:"Week 33–36: Shopping & Going Out",done:false,steps:[{h:"🛒 Practice IRL",p:'Go to a Latin restaurant or tienda in Fort Myers/Cape Coral. Order in Spanish: "Una baleada, por favor. ¿Cuánto cuesta?" Set up a pretend store at home. Do a treasure hunt with Spanish directions. Cook together narrating every step. Your HelloTalk partner should now be a weekly conversation.'}]}
+{t:"Week 18: Getting Dressed",done:false,steps:[
+{h:"👕 Clothing Narration",p:'Name EVERY piece of clothing as you dress your child each morning:',phrases:["Camisa|kah-MEE-sah|Shirt","Pantalones|pahn-tah-LOH-nehs|Pants","Zapatos|sah-PAH-tohs|Shoes","Calcetines|kahl-seh-TEE-nehs|Socks","Sombrero|sohm-BREH-roh|Hat","Pañal|pah-NYAHL|Diaper"]},
+{h:"🎵 New Songs",p:'YouTube → <b>"Estrellita ¿Dónde Estás?"</b> and <b>"Arroz con Leche"</b>. Add to your rotation.'},
+{h:"📓 Journal",p:'Write 3 sentences about today\'s weather and what you wore: "Hoy hace calor. Mi hijo tiene una camisa azul. Yo tengo zapatos negros."'}
+]},
+{t:"Week 19: Florida Animals",done:false,steps:[
+{h:"🦎 Florida Nature Vocab",p:'Cape Coral wildlife in Spanish! Use these on walks:',phrases:["Iguana|ee-GWAH-nah|Iguana","Pelícano|peh-LEE-kah-noh|Pelican","Manatí|mah-nah-TEE|Manatee","Lagarto|lah-GAR-toh|Alligator","Tortuga|tor-TOO-gah|Turtle","Cangrejo|kahn-GREH-hoh|Crab"]},
+{h:"🌴 Nature Walk: Four Mile Cove",p:'Take a walk at Four Mile Cove Ecological Preserve. Label everything: "¡Mira! Un pelícano. El agua es azul. Veo un árbol grande." Count animals in Spanish.'},
+{h:"📺 Bluey Challenge #5",p:'Bluey en Español. Spot: "agua" (water), "afuera" (outside), "animal."'}
+]},
+{t:"Week 20: Daily Routines Full Narration",done:false,steps:[
+{h:"📋 Narrate Your Whole Morning",p:'Goal: narrate from wakeup to breakfast entirely in Spanish:',phrases:["Despiértate|dehs-pee-EHR-tah-teh|Wake up","Vamos al baño|VAH-mohs ahl BAH-nyoh|Let's go to the bathroom","Lávate las manos|LAH-vah-teh lahs MAH-nohs|Wash your hands","Ponte la camisa|POHN-teh lah kah-MEE-sah|Put on your shirt","¿Tienes hambre?|tee-EH-nehs AHM-breh|Are you hungry?"]},
+{h:"🎧 News in Slow Spanish",p:'Start listening! Spotify → search "News in Slow Spanish Latin American." Listen 10 min while driving or cooking. You won\'t understand everything — that\'s fine. Your ear is training.'},
+{h:"🎉 Month 5 Halfway!",p:'You can narrate getting dressed, describe the weather, name Florida animals, and run your morning routine in Spanish. Your toddler follows multi-step commands in Spanish.'}
 ]}
 ]},
-{p:"Phase 4 — Fluency Push",g:"Months 10–12",c:"t4",desc:"Subjunctive basics, Honduran slang mastery, 10-minute conversations. Your toddler is bilingual-in-progress.",ms:[
-{t:"Month 10–11: Extended Conversations",ws:[
-{t:"Week 37–44: Going Deep",done:false,steps:[{h:"🎯 Fluency Goals",p:'Hold 5→10 minute conversations 2–3x/week via HelloTalk. Start a "Spanish Hour" — one hour daily where ONLY Spanish is spoken at home. Watch movies in Spanish with Spanish subtitles. Learn subjunctive basics: "Quiero que…" (I want you to…). Deep-dive Honduran slang: maje, cipote, puchica, va pues. Listen to Guillermo Anderson and punta music. Join "Hondureños en Florida" Facebook groups.'}]}
+{t:"Month 6: Questions, Descriptions & Playground",ws:[
+{t:"Week 21: Question Words",done:false,steps:[
+{h:"❓ The Power Questions",p:'These unlock real conversations:',phrases:["¿Qué es eso?|keh ehs EH-soh|What is that?","¿Dónde está?|DOHN-deh ehs-TAH|Where is it?","¿Quién es?|kee-EHN ehs|Who is it?","¿Por qué?|por KEH|Why?","¿Cuántos hay?|KWAHN-tohs eye|How many are there?"]},
+{h:"📺 Aprende Peque: Questions",p:'Search <b>"Aprende Peque preguntas"</b> or any Q&A style video. Practice asking your toddler questions even if they answer in English.'},
+{h:"🎧 Language Transfer ep. 53–56",p:"You're learning question formation — this week's episodes match perfectly."}
 ]},
-{t:"Month 12: Celebration!",ws:[
-{t:"Week 45–48: You Did It!",done:false,steps:[{h:"🎉 CELEBRATE",p:'Record your final 3-minute voice diary. Play your Week 4 recording. Cry happy tears at how far you\'ve come. You can hold a 10-minute conversation. Your toddler (now ~3) knows 200+ Spanish words and uses 3–4 word phrases. Visit a Latin American community event in SW Florida. Plan Year 2: bilingual preschool? Trip to Honduras? Keep going — you\'ve built something beautiful together.'}]}
+{t:"Week 22: Playground Spanish",done:false,steps:[
+{h:"🛝 At the Park",p:'Use these at any Cape Coral playground:',phrases:["Columpio|koh-LOOM-pee-oh|Swing","Tobogán|toh-boh-GAHN|Slide","Sube|SOO-beh|Go up","Baja|BAH-hah|Go down","Corre|KOH-rreh|Run","¡Más alto!|mahs AHL-toh|Higher!"]},
+{h:"🌴 Florida Quest: Playground",p:'Go to a local park. Use ONLY Spanish for directions: "Vamos al columpio. ¡Sube! ¡Más alto! Ahora el tobogán. ¡Baja!" Your toddler will associate the words with the actions instantly.'}
+]},
+{t:"Week 23: Describing Everything",done:false,steps:[
+{h:"📝 Adjectives After Nouns",p:'In Spanish, adjectives come AFTER the noun. Practice:',phrases:["El perro grande|The big dog","La pelota roja|The red ball","El agua fría|The cold water","La casa bonita|The pretty house","El sol caliente|The hot sun"]},
+{h:"📺 Bluey Challenge #6",p:'Bluey en Español. Try to describe what\'s happening: "Bluey está jugando. Bingo está triste. Papá es grande."'},
+{h:"🎧 Finish Language Transfer!",p:'Push through episodes 57–90 over this month. If you finish early, START FROM EPISODE 1. The second pass will transform everything.'}
+]},
+{t:"Week 24: Phase 2 Complete!",done:false,steps:[
+{h:"🎤 Record Yourself",p:'Record a 2-minute voice memo describing your morning, the weather, and what you ate. Compare to your Month 1 recording — massive improvement.'},
+{h:"📱 HelloTalk Check-In",p:'You should have a conversation partner by now. Send them a voice message describing your day. If you don\'t have one yet: HelloTalk → filter Honduras → send "¡Buenas! Estoy aprendiendo español. ¿Puedes ayudarme?"'},
+{h:"🎉 PHASE 2 DONE!",p:'You can narrate your entire day, describe weather/clothing/food/animals, ask questions, give playground commands, and describe things. Your toddler follows complex commands and says 15+ Spanish words. Make tajadas to celebrate!'}
+]}
+]}
+]},
+{p:"Phase 3 — Conversations & Stories",g:"Months 7–9",c:"t3",desc:"Past tense, feelings, opinions, real-world practice. You start having actual conversations. Your toddler begins combining words. Video partners: El Ramos + Spanish with Liz.",ms:[
+{t:"Month 7: Past Tense & Storytelling",ws:[
+{t:"Week 25: Simple Past Tense",done:false,steps:[
+{h:"🎧 RESTART Language Transfer from Ep. 1",p:"This is the single best thing you can do right now. The second pass will be a revelation — you'll understand EVERYTHING you missed the first time. Do 2 episodes per day."},
+{h:"🗣️ Past Tense Basics",p:'Focus on these essential past forms:',phrases:["Fui|fwee|I went","Comí|koh-MEE|I ate","Jugué|hoo-GEH|I played","Dormí|dor-MEE|I slept","Vi|vee|I saw","Hice|EE-seh|I did/made"]},
+{h:"📺 El Ramos: Daily Vlog",p:'Watch any <b>El Ramos</b> family vlog. Listen for past tense: "Fuimos al parque" (we went to the park). Note 3 past tense phrases you hear.'}
+]},
+{t:"Week 26: Bedtime Story Recaps",done:false,steps:[
+{h:"🌙 Nightly Recap",p:'Every bedtime, tell your child about their day IN SPANISH: "Hoy fuimos al parque. Comiste pollo y arroz. Jugaste con la pelota. Vimos un perro grande. Ahora es hora de dormir."'},
+{h:"🎤 Daily Voice Diary",p:'Record 1 minute on your phone describing yesterday. Play it back. Don\'t judge — just build the habit.'},
+{h:"📺 Aprende Peque: Routines",p:'Search <b>"Aprende Peque rutina"</b> for daily routine vocabulary. Watch together, then use Toddler Mode to reinforce.'}
+]},
+{t:"Week 27: Irregular Past Verbs",done:false,steps:[
+{h:"🎧 Language Transfer 2nd pass ep. 15–25",p:"These episodes cover past tense patterns. It all clicks on the second listen."},
+{h:"🗣️ Key Irregular Verbs",p:'The most common irregular past tense verbs:',phrases:["Fue|fweh|He/she went, it was","Dijo|DEE-hoh|He/she said","Hizo|EE-soh|He/she did/made","Tuvo|TOO-voh|He/she had","Pudo|POO-doh|He/she could"]},
+{h:"📺 Bluey Challenge #7",p:'Bluey en Español. After the episode, recap what happened in past tense: "Bluey jugó con Bingo. Papá se cayó. Fue muy divertido."'}
+]},
+{t:"Week 28: Telling Stories",done:false,steps:[
+{h:"📖 Make Up Stories Together",p:'Use stuffed animals to create tiny stories in Spanish: "El oso fue a la tienda. Compró un guineo. Lo comió. ¡Qué rico! Fin." Act it out with voices. Your toddler LOVES this.'},
+{h:"🎧 2 HelloTalk Conversations This Week",p:'Text or voice message your partner. Describe what you did this weekend in past tense. They\'ll correct you — that\'s the best learning.'},
+{h:"🎉 Month 7 Done!",p:'You can tell stories about your day in past tense! Record a 2-minute recap and save it. Your toddler now combines 2 words in Spanish: "más agua," "quiero jugar."'}
+]}
+]},
+{t:"Month 8: Feelings, Opinions & Self-Expression",ws:[
+{t:"Week 29: Emotions Vocabulary",done:false,steps:[
+{h:"😊 Feelings Words",p:'Use these ALL DAY — label emotions as they happen:',phrases:["Contento|kohn-TEHN-toh|Happy","Triste|TREES-teh|Sad","Enojado|eh-noh-HAH-doh|Angry","Cansado|kahn-SAH-doh|Tired","Asustado|ah-soo-STAH-doh|Scared","Emocionado|eh-moh-see-oh-NAH-doh|Excited"]},
+{h:"🎨 Make a Feelings Chart",p:'Draw emoji faces on paper with your toddler. Label each in Spanish. Tape it to the fridge. Every morning ask: "¿Cómo te sientes?" (How do you feel?) and let them point.'},
+{h:"📺 El Ramos: Emotions",p:'Search <b>"El Ramos sentimientos"</b> or any emotional family moment. Notice how they express feelings naturally.'}
+]},
+{t:"Week 30: Opinions & Preferences",done:false,steps:[
+{h:"💬 Express What You Think",p:'Start giving opinions in Spanish:',phrases:["Me gusta|meh GOO-stah|I like","No me gusta|noh meh GOO-stah|I don't like","Creo que|KREH-oh keh|I think that","Es divertido|ehs dee-vehr-TEE-doh|It's fun","Es aburrido|ehs ah-boo-RREE-doh|It's boring"]},
+{h:"🎮 Preference Game with Toddler",p:'Hold up two things: "¿Cuál te gusta más — la manzana o el guineo?" (Which do you like more?) Let them choose. Even if they answer in English, YOU ask in Spanish.'},
+{h:"📺 Spanish with Liz: Opinions",p:'Search <b>"Spanish with Liz expresar opiniones"</b> for a structured lesson on giving opinions.'}
+]},
+{t:"Week 31: Connectors & Reasons",done:false,steps:[
+{h:"🔗 Glue Words",p:'These make your Spanish sound natural:',phrases:["Porque|por-KEH|Because","Pero|PEH-roh|But","También|tahm-bee-EHN|Also","Entonces|ehn-TOHN-sehs|So/Then","Después|dehs-PWEHS|After/Later"]},
+{h:"📓 Journal: Opinions + Reasons",p:'Write 5 sentences: "Me gusta el arroz PORQUE es rico." "No me gusta la lluvia PERO me gusta el arcoíris." Use a connector in every sentence.'},
+{h:"🎵 Latin Music Dance Party",p:'Play cumbia, reggaetón (clean), or punta on Spotify. Dance with your toddler. Sing along to choruses. Music = memory supercharger.'}
+]},
+{t:"Week 32: Feelings in Action",done:false,steps:[
+{h:"🗣️ Describe Everyone's Feelings",p:'Narrate emotions you see: "Papá está cansado. El bebé está contento. El perro está emocionado." Practice at the park watching other kids.'},
+{h:"📺 Bluey Challenge #8",p:'Bluey en Español. Describe how each character feels during the episode. "Bluey está triste porque Bingo no quiere jugar."'},
+{h:"🎉 Month 8 Done!",p:'You can express feelings, give opinions with reasons, and use connectors. Your toddler says "contento" or "triste" and tells you preferences. 3 HelloTalk conversations this month!'}
+]}
+]},
+{t:"Month 9: Real World — Shopping, Restaurants, Directions",ws:[
+{t:"Week 33: Shopping Vocabulary",done:false,steps:[
+{h:"🛒 At the Store",p:'Practice these before your next shopping trip:',phrases:["¿Cuánto cuesta?|KWAHN-toh KWEHS-tah|How much?","Necesito|neh-seh-SEE-toh|I need","¿Tiene?|tee-EH-neh|Do you have?","La cuenta|lah KWEHN-tah|The check/bill","Efectivo|eh-fehk-TEE-voh|Cash","Tarjeta|tar-HEH-tah|Card"]},
+{h:"🏠 Pretend Store at Home",p:'Set up toys/food as "products." Practice with your toddler: "¿Cuánto cuesta el guineo?" "Dos pesos." "Aquí tiene." "Gracias." Switch roles!'}
+]},
+{t:"Week 34: Restaurant Practice",done:false,steps:[
+{h:"🍽️ Ordering Script",p:'Memorize this for your next restaurant visit:',phrases:["Una mesa para dos|OO-nah MEH-sah PAH-rah dohs|A table for two","¿Qué me recomienda?|keh meh reh-koh-mee-EHN-dah|What do you recommend?","Quiero la baleada|key-EH-roh lah bah-leh-AH-dah|I want the baleada","La cuenta, por favor|lah KWEHN-tah por fah-VOR|The check, please"]},
+{h:"🌴 Florida Quest: EAT OUT IN SPANISH",p:'Go to a Latin restaurant on Pine Island Rd or in Fort Myers. Order entirely in Spanish. Even if it\'s just "Una baleada, por favor." You CAN do this.'},
+{h:"📺 El Ramos: Restaurant",p:'Watch any El Ramos eating out video. Notice the casual ordering phrases.'}
+]},
+{t:"Week 35: Directions",done:false,steps:[
+{h:"🧭 Giving Directions",p:'Use these on walks and in the car:',phrases:["Derecha|deh-REH-chah|Right","Izquierda|ees-kee-EHR-dah|Left","Derecho|deh-REH-choh|Straight","Para|PAH-rah|Stop","La esquina|lah ehs-KEE-nah|The corner","Allí|ah-YEE|There"]},
+{h:"🏠 Treasure Hunt",p:'Hide a toy. Give your toddler directions in Spanish to find it: "Camina derecho. Gira a la izquierda. Mira debajo de la silla. ¡Lo encontraste!" They\'ll understand more than you expect.'}
+]},
+{t:"Week 36: Phase 3 Complete!",done:false,steps:[
+{h:"🎤 Record 3-Minute Story",p:'Tell a story about your week entirely in past tense. Use emotions, opinions, and connectors. Compare to your Week 4 recording.'},
+{h:"📱 HelloTalk Milestone",p:'Hold a 5-minute voice conversation with your partner. You can do this now. Talk about your weekend, your child, your food — anything.'},
+{h:"🎉 PHASE 3 DONE!",p:'You can have real conversations — past tense, feelings, opinions, shopping, restaurants, directions. Your toddler says 2-3 word phrases: "quiero agua," "mira mamá," "pelota roja." You\'re halfway to fluent. Cook sopa de caracol to celebrate!'}
+]}
+]}
+]},
+{p:"Phase 4 — Fluency & Identity",g:"Months 10–12",c:"t4",desc:"Extended conversations, Honduran culture deep dive, subjunctive basics, and Afro-Latino pride. Your toddler is becoming bilingual. Video partners: all creators + independent listening.",ms:[
+{t:"Month 10: Extended Conversations & Culture",ws:[
+{t:"Week 37: Conversation Connectors",done:false,steps:[
+{h:"🗣️ Sound More Natural",p:'These make you sound fluent:',phrases:["En realidad|ehn reh-ah-lee-DAHD|Actually","Sin embargo|seen ehm-BAR-goh|However","Además|ah-deh-MAHS|Besides/Also","Por eso|por EH-soh|That's why","O sea|oh SEH-ah|I mean"]},
+{h:"🎯 5-Minute Conversations 2x/Week",p:'HelloTalk voice calls. Target: 5 unscripted minutes. Talk about your week, your child, Florida weather, food — anything. Mistakes are growth.'},
+{h:"📺 Spanish with Liz: Intermediate",p:'Search <b>"Spanish with Liz intermediate"</b> for structured lessons that match your current level.'}
+]},
+{t:"Week 38: Honduran Culture Deep Dive",done:false,steps:[
+{h:"🇭🇳 Honduran Slang Mastery",p:'You already know the basics. Now use them in conversation:',phrases:["¡Púchica, mirá vos!|poo-CHEE-kah mee-RAH vohs|Wow, look at that!","¿Qué onda, maje?|keh OHN-dah MAH-heh|What's up, dude?","Está bien cheque|ehs-TAH bee-EHN CHEH-keh|It's all good","No tengo pisto|noh TEHN-goh PEES-toh|I don't have money","Los cipotes están jugando|lohs see-POH-tehs|The kids are playing"]},
+{h:"🎵 Guillermo Anderson Music",p:'Spotify/YouTube → <b>"Guillermo Anderson En Mi País"</b>. This beloved Honduran songwriter will make you fall in love with Honduras. Also try Banda Blanca "Sopa de Caracol" for punta music.'},
+{h:"🍳 Cook Pan de Coco Together",p:'Search "Pan de coco hondureño receta fácil" on YouTube. This is a Garífuna staple. Narrate the whole process in Spanish with your toddler.'}
+]},
+{t:"Week 39: The Spanish Hour",done:false,steps:[
+{h:"⏰ ONE HOUR, ONLY SPANISH",p:'Pick dinnertime through bath time. NO ENGLISH for one hour. When you don\'t know a word, describe it: "La cosa para abrir la puerta" (the thing to open the door = key). This builds circumlocution — essential for real fluency.'},
+{h:"📺 Bluey Challenge #10",p:'Watch Bluey en Español. Try to understand 50%+ without reading subtitles. You\'re closer than you think.'},
+{h:"📓 Journal: Half Page",p:'Write a full half-page journal entry about your week. Use past tense, connectors, and opinions. Read it aloud.'}
+]},
+{t:"Week 40: Month 10 Milestone",done:false,steps:[
+{h:"🎤 7-Minute Conversation",p:'HelloTalk voice call. 7 unscripted minutes. Talk about Honduras, your child\'s progress, what you cooked this week.'},
+{h:"📱 Join Hondureño Community",p:'Facebook → search "Hondureños en Florida" or "Catrachos en Cape Coral." Post: "Estoy aprendiendo español con mi hijo. ¡Soy nuevo/a pero me encanta la cultura hondureña!" People will be incredibly welcoming.'},
+{h:"🎉 Month 10!",p:'You hold 7-minute conversations. Your toddler speaks in 2-3 word phrases consistently. The Spanish Hour is becoming natural. You\'re using Honduran slang with confidence.'}
+]}
+]},
+{t:"Month 11: Grammar Polish & Confidence",ws:[
+{t:"Week 41: Subjunctive Introduction",done:false,steps:[
+{h:"🎧 Language Transfer — Subjunctive Episodes",p:'Revisit the subjunctive episodes (around ep. 65–80). Just the most common uses:',phrases:["Quiero que|key-EH-roh keh|I want you to...","Es importante que|ehs eem-por-TAHN-teh keh|It's important that...","Espero que|ehs-PEH-roh keh|I hope that...","Ojalá que|oh-hah-LAH keh|Hopefully..."]},
+{h:"🗣️ Use It With Your Child",p:'"Quiero que te sientes" (I want you to sit down). "Espero que duermas bien" (I hope you sleep well). You\'re using subjunctive in parenting — the most natural context!'}
+]},
+{t:"Week 42: Real-Time Narration",done:false,steps:[
+{h:"🚗 Narrate While Driving",p:'Alone in the car? Describe everything in Spanish: "Hay un carro rojo. La señora está caminando con su perro. Está nublado. Voy al supermercado porque necesito leche."'},
+{h:"📺 Watch a Full Movie in Spanish",p:'Pick one your toddler knows in English: Coco, Moana, or Encanto. Switch audio to Spanish, subtitles to Spanish. You\'ll understand 60-70% — that\'s amazing!'},
+{h:"📱 Conversation Group",p:'ConversationExchange.com → find a free online group or schedule weekly calls. 3 conversations this week.'}
+]},
+{t:"Week 43: Storytelling & Creative Spanish",done:false,steps:[
+{h:"📖 Tell a 3-Minute Story From Memory",p:'Pick any memory — a vacation, a funny moment, your child\'s first steps. Tell it entirely in Spanish. Record it.'},
+{h:"🎨 Art + Spanish",p:'Draw with your toddler. Describe what you\'re both drawing: "Estoy dibujando un sol amarillo. ¿Qué estás dibujando tú? ¡Un perro! ¡Qué bonito!"'},
+{h:"📺 Spanish with Liz: Advanced",p:'Search for her intermediate/advanced content. You\'re ready for it.'}
+]},
+{t:"Week 44: Month 11 Assessment",done:false,steps:[
+{h:"📋 What Can You Do?",p:'Check yourself: ✅ Present tense narration ✅ Past tense stories ✅ Questions and answers ✅ Feelings and opinions with reasons ✅ Shopping, restaurants, directions ✅ Honduran slang ✅ Subjunctive basics ✅ 8+ minute conversations. If anything feels weak, revisit that Phase.'},
+{h:"🎤 Voice Call: 10 Minutes",p:'Your goal: a 10-minute unscripted conversation with your HelloTalk partner. Talk about anything. You\'re ready.'},
+{h:"🎉 Almost There!",p:'Your toddler names objects spontaneously in Spanish. They\'re forming 3-4 word sentences. You\'re using subjunctive with your child. ONE MORE MONTH.'}
+]}
+]},
+{t:"Month 12: Celebration & Future",ws:[
+{t:"Week 45: 10-Minute Conversations",done:false,steps:[
+{h:"🗣️ The Final Push",p:'10-minute conversations 2-3x this week. Talk about: your learning journey, Honduras, your family, your dreams for your child\'s bilingualism.'},
+{h:"📺 Full Movie Night",p:'Watch Coco in Spanish with your toddler. Spanish audio + Spanish subtitles. Enjoy it — you understand this!'},
+{h:"📓 One-Page Journal",p:'Write a full page in Spanish about your 12-month journey. What you learned. What surprised you. What your child can do now.'}
+]},
+{t:"Week 46: Share Your Knowledge",done:false,steps:[
+{h:"👩‍🏫 Teach Someone",p:'Teach a friend or family member 5 Spanish phrases. Teaching is the deepest form of learning. Explain WHY the words work the way they do.'},
+{h:"🌴 Florida Quest: Community Event",p:'Attend a Latin American community event, festival, or church service in Spanish in SW Florida. Bring your child. Immerse together.'},
+{h:"📤 Share Your Streak",p:'Use the Share button to text your partner your final streak number. You made it.'}
+]},
+{t:"Week 47: The Time Capsule",done:false,steps:[
+{h:"🎤 Record Your Final Voice Diary",p:'3 minutes. Tell the story of your year in Spanish. Then play your Week 4 recording from 11 months ago. The difference will make you emotional.'},
+{h:"📖 Read a Spanish Book",p:'Get a Level 1 Spanish board book (Spanish with Liz recommends great ones). Read it to your child WITHOUT looking at the English translation. You can do this.'},
+{h:"📺 Watch Your Child",p:'Just watch your toddler (now 3) for a day. Count how many Spanish words they use spontaneously. Write them all down. This is your proof.'}
+]},
+{t:"Week 48: ¡LO LOGRASTE! You Did It!",done:false,steps:[
+{h:"🎉🎉🎉 CELEBRATION",p:'You started with ZERO Spanish. After 12 months, you can hold a 10-minute conversation, tell stories, express opinions, navigate restaurants and stores, use Honduran slang, and read a children\'s book. Your child knows 200+ words and speaks in phrases. You built this TOGETHER.'},
+{h:"🔮 Plan Year 2",p:'What\'s next? Options: bilingual preschool, a trip to Honduras (Roatán is beautiful and close from Florida), Spanish Saturday school, more advanced courses, or just keep doing what you\'re doing — the habit is built. ¡Va pues!'},
+{h:"❤️ A Note",p:'Every word you learned was a gift to your child. Every song you sang, every meal you narrated, every awkward conversation you pushed through — that was love in action. Your child will carry this language for life. ¡Muchas felicidades, familia!'}
+]}
 ]}
 ]}
 ];
@@ -508,8 +673,6 @@ function speak(t){if(!('speechSynthesis' in window))return;speechSynthesis.cance
 if('speechSynthesis' in window)speechSynthesis.getVoices();
 function spB(t){return `<button class="spk" data-speak="${t.replace(/"/g,'&quot;')}">🔊</button>`;}
 function sh(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=0|Math.random()*(i+1);[b[i],b[j]]=[b[j],b[i]];}return b;}
-// Helper keeps YouTube search URLs safely encoded.
-function ytSearchUrl(q){return 'https://www.youtube.com/results?search_query='+encodeURIComponent(q);}
 
 /* ===== PHONETICS MAP ===== */
 const PH={"Hola":"OH-lah","Adiós":"ah-dee-OHS","Buenos días":"BWEH-nohs DEE-ahs","¡Buenas!":"BWEH-nahs","Por favor":"por fah-VOR","Gracias":"GRAH-see-ahs","De nada":"deh NAH-dah","¿Cómo estás?":"KOH-moh ehs-TAHS","Estoy bien":"ehs-TOY bee-EHN","Me llamo":"meh YAH-moh","Mucho gusto":"MOO-choh GOO-stoh","Rojo":"ROH-hoh","Azul":"ah-SOOL","Verde":"VEHR-deh","Amarillo":"ah-mah-REE-yoh","Blanco":"BLAHN-koh","Negro":"NEH-groh","Mamá":"mah-MAH","Papá":"pah-PAH","Bebé":"beh-BEH","Abuelo":"ah-BWEH-loh","Abuela":"ah-BWEH-lah","Agua":"AH-gwah","Leche":"LEH-cheh","Pollo":"POH-yoh","Arroz":"ah-ROHS","Frijoles":"free-HOH-lehs","Huevo":"WEH-voh","Baleada":"bah-leh-AH-dah","Guineo":"gee-NEH-oh","Tajadas":"tah-HAH-dahs","Tortilla":"tor-TEE-yah","Queso":"KEH-soh","Cabeza":"kah-BEH-sah","Ojos":"OH-hohs","Nariz":"nah-REES","Boca":"BOH-kah","Manos":"MAH-nohs","Pies":"pee-EHS","Barriga":"bah-REE-gah","Pelo":"PEH-loh","Ven aquí":"vehn ah-KEE","Mira":"MEE-rah","Siéntate":"see-EHN-tah-teh","Dame":"DAH-meh","Vamos":"VAH-mohs","Espera":"ehs-PEH-rah","No se pega":"noh seh PEH-gah","Cuidado":"kwee-DAH-doh","Despacito":"dehs-pah-SEE-toh","Contento":"kohn-TEHN-toh","Triste":"TREES-teh","Enojado":"eh-noh-HAH-doh","Cansado":"kahn-SAH-doh","Hambre":"AHM-breh","Catracho":"kah-TRAH-choh","Pisto":"PEES-toh","Cipote":"see-POH-teh","Maje":"MAH-heh","Puchica":"poo-CHEE-kah","Cheque":"CHEH-keh","¡Va pues!":"vah PWEHS","Alero":"ah-LEH-roh","Quimbombó":"keem-bohm-BOH","Yuca":"YOO-kah","Sazón":"sah-SOHN","Coco":"KOH-koh","¡Pase adelante!":"PAH-seh ah-deh-LAHN-teh","¿Qué cuenta?":"keh KWEHN-tah","Bienvenidos":"bee-ehn-veh-NEE-dohs","Vecino":"veh-SEE-noh","Cuídese":"KWEE-deh-seh","Comparte":"kohm-PAR-teh","Te quiero mucho":"teh key-EH-roh MOO-choh"};
@@ -518,56 +681,13 @@ const PH={"Hola":"OH-lah","Adiós":"ah-dee-OHS","Buenos días":"BWEH-nohs DEE-ah
 document.addEventListener('click',function(e){
   const sp=e.target.closest('[data-speak]');
   if(sp){e.stopPropagation();speak(sp.dataset.speak);return;}
-  const colorBtn=e.target.closest('[data-color]');
-  if(colorBtn){checkColor(colorBtn.dataset.color);}
 });
 
 /* ===== CONFETTI ===== */
-const confettiState={raf:0,frame:0,parts:[]};
-function sizeConfettiCanvas(){const c=document.getElementById('confetti');c.width=innerWidth;c.height=innerHeight;}
-function confetti(){
-  const c=document.getElementById('confetti'),x=c.getContext('2d');
-  // Cancel previous run to prevent stacked/conflicting animations.
-  if(confettiState.raf)cancelAnimationFrame(confettiState.raf);
-  sizeConfettiCanvas();
-  confettiState.parts=Array.from({length:60},()=>({x:Math.random()*c.width,y:c.height+10,c:['#FFC107','#008080','#D35400','#FFFFFF'][0|Math.random()*4],vx:(Math.random()-.5)*4,vy:-(Math.random()*6+6),s:Math.random()*6+4}));
-  confettiState.frame=0;
-  function d(){
-    x.clearRect(0,0,c.width,c.height);
-    confettiState.parts.forEach(q=>{x.fillStyle=q.c;x.fillRect(q.x,q.y,q.s,q.s);q.x+=q.vx;q.y+=q.vy;q.vy+=.15;});
-    confettiState.frame++;
-    if(confettiState.frame<90)confettiState.raf=requestAnimationFrame(d);
-    else{x.clearRect(0,0,c.width,c.height);confettiState.raf=0;}
-  }
-  d();
-}
-window.addEventListener('resize',sizeConfettiCanvas);
-window.addEventListener('orientationchange',sizeConfettiCanvas);
+function confetti(){const c=document.getElementById('confetti'),x=c.getContext('2d');c.width=innerWidth;c.height=innerHeight;let p=Array.from({length:60},()=>({x:Math.random()*c.width,y:c.height+10,c:['#FFC107','#008080','#D35400','#FFFFFF'][0|Math.random()*4],vx:(Math.random()-.5)*4,vy:-(Math.random()*6+6),s:Math.random()*6+4}));let f=0;function d(){x.clearRect(0,0,c.width,c.height);p.forEach(q=>{x.fillStyle=q.c;x.fillRect(q.x,q.y,q.s,q.s);q.x+=q.vx;q.y+=q.vy;q.vy+=.15;});f++;if(f<90)requestAnimationFrame(d);else x.clearRect(0,0,c.width,c.height);}d();}
 
 /* ===== DRUM ===== */
-// Reuse one AudioContext to avoid creating a new context on every tap.
-let drumCtx=null;
-function getDrumCtx(){
-  if(drumCtx)return drumCtx;
-  const Ctx=window.AudioContext||window.webkitAudioContext;
-  if(!Ctx)return null;
-  drumCtx=new Ctx();
-  return drumCtx;
-}
-function playDrum(t){
-  if(typeof navigator.vibrate==='function')navigator.vibrate(t==='hi'?30:t==='mid'?50:70);
-  try{
-    const a=getDrumCtx();if(!a)return;
-    if(a.state==='suspended')a.resume();
-    const o=a.createOscillator(),g=a.createGain();
-    o.connect(g);g.connect(a.destination);
-    o.frequency.value=t==='hi'?400:t==='mid'?220:100;
-    o.type=t==='mid'?'square':'triangle';
-    g.gain.setValueAtTime(.4,a.currentTime);
-    g.gain.exponentialRampToValueAtTime(.001,a.currentTime+.2);
-    o.start();o.stop(a.currentTime+.2);
-  }catch(e){}
-}
+function playDrum(t){if(navigator.vibrate)navigator.vibrate(t==='hi'?30:t==='mid'?50:70);try{const a=new AudioContext(),o=a.createOscillator(),g=a.createGain();o.connect(g);g.connect(a.destination);o.frequency.value=t==='hi'?400:t==='mid'?220:100;o.type=t==='mid'?'square':'triangle';g.gain.setValueAtTime(.4,a.currentTime);g.gain.exponentialRampToValueAtTime(.001,a.currentTime+.2);o.start();o.stop(a.currentTime+.2);}catch(e){}}
 
 /* ===== TODDLER MODE ===== */
 function toggleTM(){const tm=document.getElementById('tmode');tm.classList.toggle('act');if(profile)document.getElementById('tm-greeting').textContent='¡Hola '+profile.child+'!';}
@@ -585,13 +705,10 @@ function updCount(){document.getElementById('count-display').textContent=countN;
 function speakCount(){speak(NUMS[countN]);}
 function startColorGame(){
   const pool=sh([...COLORS_GAME]);colorTarget=pool[0];
-  // Build 4 guaranteed-unique options and always include target.
-  const opts=[colorTarget];
-  for(const c of pool){if(opts.length===4)break;if(!opts.find(o=>o.es===c.es))opts.push(c);}
   document.getElementById('color-prompt').innerHTML=`Toca <b>${colorTarget.es}</b>`;
   speak('Toca '+colorTarget.es);
   document.getElementById('color-result').textContent='';
-  document.getElementById('color-dots').innerHTML=sh(opts).map(c=>`<button data-color="${c.es}" style="width:100%;height:80px;border-radius:16px;background:${c.hex};border:4px solid var(--ink);box-shadow:0 6px 0 var(--ink);" data-speak="${c.es}"></button>`).join('');
+  document.getElementById('color-dots').innerHTML=pool.slice(0,4).map(c=>`<button onclick="checkColor('${c.es}')" style="width:100%;height:80px;border-radius:16px;background:${c.hex};border:4px solid var(--ink);box-shadow:0 6px 0 var(--ink);" data-speak="${c.es}"></button>`).join('');
 }
 function checkColor(picked){
   const res=document.getElementById('color-result');
@@ -706,8 +823,8 @@ h+=`<div class="msec act" id="m-sc"><div class="card hl-teal"><h3>⏰ 45 min/day
 
 h+=`<div class="msec" id="m-rs">${[
 ['📱 Apps',[['Duolingo','Latin American Spanish, free tier','https://www.duolingo.com'],['HelloTalk','Filter for Honduran partners','https://www.hellotalk.com'],['Tandem','Conversation partners','https://www.tandem.net'],['Libby','Free w/ library card','https://www.overdrive.com/apps/libby']]],
-['🎧 Audio',[['Language Transfer','90 eps — THE #1 resource',ytSearchUrl('language transfer complete spanish episode 1')],['Dreaming Spanish','Best listening practice',ytSearchUrl('dreaming spanish superbeginner')],['News in Slow Spanish','Weekly, LatAm edition','https://www.newsinslowspanish.com'],['Hoy Hablamos','Daily 10-min Spanish','https://www.hoyhablamos.com']]],
-['📺 Toddler YouTube',[['Canticos','Bilingual nursery rhymes',ytSearchUrl('canticos nursery rhymes spanish')],['El Reino Infantil','Huge song library','https://www.youtube.com/@reinoinfantil'],['Peppa Pig en Español','Familiar stories',ytSearchUrl('peppa pig español latino episodio')],['Pocoyó','Originally Spanish',ytSearchUrl('pocoyo español episodio completo')]],
+['🎧 Audio',[['Language Transfer','90 eps — THE #1 resource','https://www.youtube.com/results?search_query=language+transfer+complete+spanish+episode+1'],['Dreaming Spanish','Best listening practice','https://www.youtube.com/results?search_query=dreaming+spanish+superbeginner'],['News in Slow Spanish','Weekly, LatAm edition','https://www.newsinslowspanish.com'],['Hoy Hablamos','Daily 10-min Spanish','https://www.hoyhablamos.com']]],
+['📺 Toddler YouTube',[['Canticos','Bilingual nursery rhymes','https://www.youtube.com/results?search_query=canticos+nursery+rhymes+spanish'],['El Reino Infantil','Huge song library','https://www.youtube.com/@reinoinfantil'],['Peppa Pig en Español','Familiar stories','https://www.youtube.com/results?search_query=peppa+pig+español+latino+episodio'],['Pocoyó','Originally Spanish','https://www.youtube.com/results?search_query=pocoyo+español+episodio+completo']]],
 ['📺 Parent YouTube',[['Spanish with Paul','Clear grammar','https://www.youtube.com/@SpanishWithPaul'],['Español con Juan','1001 palabras','https://www.youtube.com/@EspanolconJuan'],['Destinos','Free 52-ep telenovela','https://www.learner.org/series/destinos-an-introduction-to-spanish/'],['SpanishDict','Best dictionary','https://www.spanishdict.com']]],
 ['🌐 Community',[['ConversationExchange','Free partners','https://www.conversationexchange.com'],['BBC Mundo','News in Spanish','https://www.bbc.com/mundo'],['Hondureños en Florida','Facebook group','https://www.facebook.com/search/groups/?q=hondureños%20en%20florida'],['FL Library (Lee County)','Bilingual events','https://www.leelibrary.net']]]
 ].map(([cat,items])=>`<div style="margin-bottom:16px"><h3 style="font-family:'Baloo 2';font-size:15px;margin-bottom:8px">${cat}</h3>${items.map(([n,d,url])=>`<a href="${url}" target="_blank" rel="noopener" style="text-decoration:none;display:block;"><div class="card" style="padding:12px;margin-bottom:6px;display:flex;align-items:center;gap:10px;"><div style="flex:1"><b style="font-size:13px;color:var(--ink)">${n}</b><br><span style="font-size:11px;color:var(--gr)">${d}</span></div><span style="color:var(--teal);font-size:18px;">→</span></div></a>`).join('')}</div>`).join('')}</div>`;
@@ -720,15 +837,15 @@ h+=`<div class="msec" id="m-hn"><div class="card hl-gold"><h3>🇭🇳 Honduran 
 <div class="card"><h3>🎵 Honduran Music</h3><ul><li><b>Guillermo Anderson</b> — "En Mi País," "Ceibeño"</li><li><b>Punta music</b> — Banda Blanca, Kazzabe</li><li><b>Polache</b> — comedian/singer</li></ul></div></div>`;
 
 h+=`<div class="msec" id="m-sg"><div class="card"><h3>🎵 Songs — Tap ▶️ to Watch</h3><p style="font-size:12px;color:var(--gr);margin-bottom:8px;">Links open YouTube. Save these to a playlist!</p>${[
-["Buenos Días","Mo 1",ytSearchUrl('buenos dias cancion infantil español')],
-["Los Pollitos Dicen","Mo 1",ytSearchUrl('los pollitos dicen canticos')],
-["Cabeza Hombros Rodillas Pies","Mo 2",ytSearchUrl('cabeza hombros rodillas pies cancion infantil')],
-["Pin Pon","Mo 2",ytSearchUrl('pin pon es un muñeco cancion')],
-["Estrellita ¿Dónde Estás?","Mo 3",ytSearchUrl('estrellita donde estas español cancion infantil')],
-["Arroz con Leche","Mo 4",ytSearchUrl('arroz con leche cancion infantil')],
-["La Vaca Lola","Mo 5",ytSearchUrl('la vaca lola cancion')],
-["Un Elefante Se Balanceaba","Mo 6",ytSearchUrl('un elefante se balanceaba cancion')],
-["De Colores","Mo 7+",ytSearchUrl('de colores cancion tradicional español')]
+["Buenos Días","Mo 1","https://www.youtube.com/results?search_query=buenos+dias+cancion+infantil+español"],
+["Los Pollitos Dicen","Mo 1","https://www.youtube.com/results?search_query=los+pollitos+dicen+canticos"],
+["Cabeza Hombros Rodillas Pies","Mo 2","https://www.youtube.com/results?search_query=cabeza+hombros+rodillas+pies+cancion+infantil"],
+["Pin Pon","Mo 2","https://www.youtube.com/results?search_query=pin+pon+es+un+muñeco+cancion"],
+["Estrellita ¿Dónde Estás?","Mo 3","https://www.youtube.com/results?search_query=estrellita+donde+estas+español+cancion+infantil"],
+["Arroz con Leche","Mo 4","https://www.youtube.com/results?search_query=arroz+con+leche+cancion+infantil"],
+["La Vaca Lola","Mo 5","https://www.youtube.com/results?search_query=la+vaca+lola+cancion"],
+["Un Elefante Se Balanceaba","Mo 6","https://www.youtube.com/results?search_query=un+elefante+se+balanceaba+cancion"],
+["De Colores","Mo 7+","https://www.youtube.com/results?search_query=de+colores+cancion+tradicional+español"]
 ].map(([n,w,url])=>`<div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--grl)"><a href="${url}" target="_blank" rel="noopener" style="text-decoration:none;display:flex;align-items:center;justify-content:center;width:40px;height:40px;background:var(--terra);color:var(--w);border-radius:10px;font-size:16px;flex-shrink:0;">▶️</a><div style="flex:1"><b style="font-size:13px">${n}</b> ${spB(n)}<br><span style="font-size:11px;color:var(--gr)">${w}</span></div></div>`).join('')}</div></div>`;
 
 h+=`<div class="msec" id="m-cg"><div class="card hl-gold"><h3>🔗 Bilingual Bonus: Cognates</h3><p>These words sound similar in English and Spanish — you already know more than you think! Honduras's Caribbean coast has English-Creole influence, making these even more familiar.</p></div>
@@ -741,9 +858,9 @@ h+=`<div class="msec" id="m-st"><div class="card"><h3>⚙️ Your Profile</h3>
 <div style="background:var(--grl);padding:14px;border-radius:var(--rs);margin-bottom:8px;"><b>Child:</b> ${profile?profile.child:'Not set'}</div>
 <div style="background:var(--grl);padding:14px;border-radius:var(--rs);margin-bottom:8px;"><b>Child's age:</b> ${profile?profile.age+' years':'Not set'}</div>
 <div style="background:var(--grl);padding:14px;border-radius:var(--rs);margin-bottom:8px;"><b>Spanish level:</b> ${profile?['🌱 Zero','🌿 A little','🌳 Some'][profile.level]:'Not set'}</div>
-<button onclick="localStorage.removeItem('v_profile');profile=null;resetOnboardForm();document.getElementById('onboard').style.display='block';" style="width:100%;padding:12px;border-radius:50px;background:var(--terra-aa);color:var(--w);font-weight:700;font-size:14px;margin-top:12px;">Edit Profile</button>
+<button onclick="localStorage.removeItem('v_profile');profile=null;document.getElementById('onboard').style.display='block';" style="width:100%;padding:12px;border-radius:50px;background:var(--terra);color:var(--w);font-weight:700;font-size:14px;margin-top:12px;">Edit Profile</button>
 </div>
-<div class="card hl-gold"><h3>📊 Reset Progress</h3><p style="margin-bottom:8px;">Start completely fresh. This cannot be undone.</p><button onclick="if(confirm('Reset ALL progress?')){localStorage.clear();location.reload();}" style="padding:10px 20px;border-radius:50px;background:var(--terra-aa);color:var(--w);font-weight:700;font-size:13px;">Reset Everything</button></div></div>`;
+<div class="card hl-gold"><h3>📊 Reset Progress</h3><p style="margin-bottom:8px;">Start completely fresh. This cannot be undone.</p><button onclick="if(confirm('Reset ALL progress?')){localStorage.clear();location.reload();}" style="padding:10px 20px;border-radius:50px;background:var(--terra);color:var(--w);font-weight:700;font-size:13px;">Reset Everything</button></div></div>`;
 document.getElementById('p-more').innerHTML=h;}
 function sM(id,b){document.querySelectorAll('.msec').forEach(s=>s.classList.remove('act'));document.getElementById('m-'+id).classList.add('act');b.parentElement.querySelectorAll('.st').forEach(x=>x.classList.remove('act'));b.classList.add('act');}
 
