@@ -293,9 +293,20 @@ A free 12-month Spanish learning program built for you and your toddler. You'll 
 Yes — automatically. Everything saves to your phone. Add this to your home screen for the best experience (instructions are inside the app after setup).
 </div>
 
+<div style="background:rgba(212,160,23,.1);padding:14px;border-radius:12px;border:1px solid rgba(212,160,23,.3);margin-bottom:10px;">
+<b style="color:var(--gold);font-size:15px;">🗣 Try Your First Words!</b><br><br>
+Tap 🔊 to hear each word. The phonetic guide shows you exactly how to say it:<br><br>
+<div style="background:rgba(255,255,255,.1);padding:10px;border-radius:10px;margin:8px 0;display:flex;align-items:center;gap:8px;flex-wrap:wrap;"><button class="spk" data-speak="Hola" style="background:var(--gold);border-color:var(--gold);color:var(--ink);">🔊</button><b style="font-size:18px;color:var(--gold);">Hola</b><span style="color:#F59E0B;font-size:13px;font-weight:700;">🗣 OH-lah</span><span style="color:#CBD5E1;font-size:12px;margin-left:4px;">(Hello)</span></div>
+<div style="background:rgba(255,255,255,.1);padding:10px;border-radius:10px;margin:8px 0;display:flex;align-items:center;gap:8px;flex-wrap:wrap;"><button class="spk" data-speak="Gracias" style="background:var(--gold);border-color:var(--gold);color:var(--ink);">🔊</button><b style="font-size:18px;color:var(--gold);">Gracias</b><span style="color:#F59E0B;font-size:13px;font-weight:700;">🗣 GRAH-see-ahs</span><span style="color:#CBD5E1;font-size:12px;margin-left:4px;">(Thank you)</span></div>
+<div style="background:rgba(255,255,255,.1);padding:10px;border-radius:10px;margin:8px 0;display:flex;align-items:center;gap:8px;flex-wrap:wrap;"><button class="spk" data-speak="Buenos días" style="background:var(--gold);border-color:var(--gold);color:var(--ink);">🔊</button><b style="font-size:18px;color:var(--gold);">Buenos días</b><span style="color:#F59E0B;font-size:13px;font-weight:700;">🗣 BWEH-nohs DEE-ahs</span><span style="color:#CBD5E1;font-size:12px;margin-left:4px;">(Good morning)</span></div>
+<div style="background:rgba(255,255,255,.1);padding:10px;border-radius:10px;margin:8px 0;display:flex;align-items:center;gap:8px;flex-wrap:wrap;"><button class="spk" data-speak="Te quiero mucho" style="background:var(--gold);border-color:var(--gold);color:var(--ink);">🔊</button><b style="font-size:18px;color:var(--gold);">Te quiero mucho</b><span style="color:#F59E0B;font-size:13px;font-weight:700;">🗣 teh key-EH-roh MOO-choh</span><span style="color:#CBD5E1;font-size:12px;margin-left:4px;">(I love you so much)</span></div>
+<div style="background:rgba(255,255,255,.1);padding:10px;border-radius:10px;margin:8px 0;display:flex;align-items:center;gap:8px;flex-wrap:wrap;"><button class="spk" data-speak="¡Va pues!" style="background:var(--gold);border-color:var(--gold);color:var(--ink);">🔊</button><b style="font-size:18px;color:var(--gold);">¡Va pues!</b><span style="color:#F59E0B;font-size:13px;font-weight:700;">🗣 vah PWEHS</span><span style="color:#CBD5E1;font-size:12px;margin-left:4px;">(Alright! — Honduran)</span></div>
+<br><span style="font-size:12px;opacity:.7;">Every Spanish word in this app has pronunciation like this. 👆</span>
+</div>
+
 <div style="background:rgba(212,160,23,.1);padding:14px;border-radius:12px;border:1px solid rgba(212,160,23,.3);">
 <b style="color:var(--gold);font-size:15px;">👇 Ready?</b><br><br>
-Fill in your info below and tap ¡Vamos! to start. You can always find the full Getting Started guide inside the app under More → 🚀 Getting Started.
+Fill in your info below and tap ¡Vamos! <span style="font-size:11px;opacity:.7;">(VAH-mohs)</span> to start. You can always find the full Getting Started guide inside the app under More → 🚀 Getting Started.
 </div>
 
 </div>
@@ -323,6 +334,7 @@ Fill in your info below and tap ¡Vamos! to start. You can always find the full 
 </div>
 </div>
 <button onclick="saveOnboard()" style="width:100%;padding:16px;border-radius:50px;background:var(--gold);color:var(--ink);font-family:'Baloo 2',cursive;font-size:18px;font-weight:800;border:none;box-shadow:0 4px 16px rgba(212,160,23,.4);">¡Vamos! Let's Start →</button>
+<p style="font-size:12px;opacity:.6;margin-top:4px;">VAH-mohs · Let's go!</p>
 <p style="font-size:11px;opacity:.5;margin-top:12px;">You can change this later in Settings</p>
 </div>
 </div>
@@ -764,7 +776,14 @@ const CU=[
 ];
 
 /* ===== MOTIVATIONAL ===== */
-const MO=['"Poco a poco se va lejos." — Little by little you go far.','"La práctica hace al maestro." — Practice makes the master.','"Querer es poder." — Where there\'s a will, there\'s a way.','"Cada día un poco más."','"Tu hijo aprende contigo." — Your child learns with you.','"¡Va pues! Let\'s go!"'];
+const MO=[
+{es:'Poco a poco se va lejos.',ph:'POH-koh ah POH-koh seh vah LEH-hohs',en:'Little by little you go far.'},
+{es:'La práctica hace al maestro.',ph:'lah PRAHK-tee-kah AH-seh ahl mah-EHS-troh',en:'Practice makes the master.'},
+{es:'Querer es poder.',ph:'keh-REHR ehs poh-DEHR',en:'Where there\'s a will, there\'s a way.'},
+{es:'Cada día un poco más.',ph:'KAH-dah DEE-ah oon POH-koh mahs',en:'A little more each day.'},
+{es:'Tu hijo aprende contigo.',ph:'too EE-hoh ah-PREHN-deh kohn-TEE-goh',en:'Your child learns with you.'},
+{es:'¡Va pues!',ph:'vah PWEHS',en:'Let\'s go! (Honduran)'}
+];
 
 /* ===== STATE ===== */
 const L={g(k,d){try{const v=localStorage.getItem('v_'+k);return v?JSON.parse(v):d}catch{return d}},s(k,v){try{localStorage.setItem('v_'+k,JSON.stringify(v))}catch{}}};
@@ -871,7 +890,7 @@ let h=`
 <button onclick="goMore('rs')" style="background:var(--w);border:1px solid var(--bd);border-radius:12px;padding:10px 14px;min-width:90px;text-align:center;box-shadow:var(--sh);flex-shrink:0;"><span style="font-size:22px;display:block;">📚</span><span style="font-size:11px;font-weight:700;color:var(--ink);">Resources</span></button>
 <button onclick="goMore('cg')" style="background:var(--w);border:1px solid var(--bd);border-radius:12px;padding:10px 14px;min-width:90px;text-align:center;box-shadow:var(--sh);flex-shrink:0;"><span style="font-size:22px;display:block;">🔗</span><span style="font-size:11px;font-weight:700;color:var(--ink);">Cognates</span></button>
 </div>
-</div><div class="hero"><h2>${spB('Buenos días')} ¡Buenos días${profile?' '+profile.name:''}!</h2><div class="dt2">${dn}, ${ds}${profile?' · '+profile.child+'\'s learning day':''}</div><div class="mot">${spB(mo.split(' — ')[0].replace(/"/g,''))} ${mo}</div></div>
+</div><div class="hero"><h2>${spB('Buenos días')} ¡Buenos días${profile?' '+profile.name:''}!</h2><div style="font-size:12px;color:rgba(255,255,255,.5);margin-top:2px;">🗣 BWEH-nohs DEE-ahs · Good morning!</div><div class="dt2" style="margin-top:8px;">${dn}, ${ds}${profile?' · '+profile.child+'\'s learning day':''}</div><div class="mot">${spB(mo.es)} <b>"${mo.es}"</b><br><span style="color:#F59E0B;font-size:12px;font-weight:700;">🗣 ${mo.ph}</span><br><span style="font-style:normal;opacity:.7;">${mo.en}</span></div></div>
 <div class="cls ${homeSec.help?'':'cp'}" style="background:var(--ink);color:var(--w);border:2px solid var(--gold);">
 <button onclick="tgHomeSec('help')" class="clh tg" style="border:none;justify-content:center;">
 <span style="font-size:16px;">🆘 HELP ME — Emergency Phrases</span><span class="clx">${homeSec.help?'−':'+'}</span>
@@ -1051,15 +1070,15 @@ function goMore(id){
 
 
 const WALK_STEPS=[
-  {emoji:'👋',title:'Welcome to ¡Vamos!',body:'This is your 12-month Spanish learning app for you and your toddler. Let me show you around — it takes 30 seconds.',btn:'Show me →'},
+  {emoji:'👋',title:'Welcome to ¡Vamos!',body:'<div style="font-size:11px;color:#9CA3AF;margin-bottom:8px;">VAH-mohs · Let\'s go!</div>This is your 12-month Spanish learning app for you and your toddler. Let me show you around — it takes 30 seconds.',btn:'Show me →'},
   {emoji:'📋',title:'These are your daily tasks',body:'Every day you get 8 small activities. Tap any task to see instructions and Spanish phrases you can hear spoken. Check them off as you go.',btn:'Next →',action:function(){document.querySelector('[data-p="home"]').click();}},
   {emoji:'📖',title:'Your 48-week curriculum',body:'Tap Learn at the bottom. Open Phase 1 → Week 1 for step-by-step lessons. Each week tells you exactly what to do — which videos, phrases, and songs.',btn:'Next →',action:function(){document.querySelector('[data-p="learn"]').click();}},
   {emoji:'🃏',title:'Flashcards & Quiz',body:'Cards has 12 vocabulary decks — tap to flip, tap 🔊 to hear. Quiz tests you with 10 random questions. Both track your progress.',btn:'Next →',action:function(){document.querySelector('[data-p="cards"]').click();}},
   {emoji:'👶',title:'Toddler Mode',body:'See the gold TODDLER button? Tap it anytime to let your child play. They tap pictures to hear Spanish words, play counting and color games, and bang on punta drums. The exit button requires a 3-second hold so they can\'t escape.',btn:'Next →',action:function(){document.querySelector('[data-p="home"]').click();}},
   {emoji:'🧰',title:'Quick Tools',body:'This scrollable strip has shortcuts to the Schedule, Honduran Guide, Songs, Resources, and more. You don\'t have to dig for anything — it\'s all right here.',btn:'Next →'},
-  {emoji:'🔊',title:'Tap 🔊 to hear any word',body:'Everywhere you see a gold 🔊 button, tap it to hear the Spanish word spoken out loud. The gold boxes show phonetic pronunciation so you know exactly how to say it.',btn:'Next →'},
+  {emoji:'🔊',title:'Tap 🔊 to hear any word',body:'Everywhere you see a gold 🔊 button, tap it to hear the Spanish word spoken out loud. The <span style="color:#D4A017;font-weight:700;">gold boxes</span> show phonetic pronunciation (like <span style="color:#C75B39;font-weight:700;">OH-lah</span>) so you know exactly how to say it.',btn:'Next →'},
   {emoji:'💾',title:'Your progress saves automatically',body:'Every task you check, every week you complete, every flashcard you flip — it all saves to your phone. You\'ll see a ✓ Saved notification each time. Just keep using the same phone.',btn:'Next →'},
-  {emoji:'🚀',title:'You\'re ready!',body:'Start with the Today tab. Check off tasks as you do them. Open Learn → Phase 1 → Week 1 when you\'re ready to dive in. ¡Va pues!',btn:'¡Vamos! Let\'s go! 🇭🇳'}
+  {emoji:'🚀',title:'You\'re ready!',body:'Start with the Today tab. Check off tasks as you do them. Open Learn → Phase 1 → Week 1 when you\'re ready to dive in.<div style="margin-top:10px;padding:8px 12px;background:#FFF8E1;border-radius:10px;border:1px solid #FFE082;text-align:center;"><b style="font-size:18px;color:#1A1B4B;">¡Va pues!</b><br><span style="font-size:12px;color:#C75B39;font-weight:700;">vah PWEHS</span> <span style="font-size:11px;color:#6B7280;">(Alright! — Honduran)</span></div>',btn:'¡Vamos! Let\'s go! 🇭🇳'}
 ];
 
 function showWalk(){
