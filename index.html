@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="¡Vamos!">
+<meta name="theme-color" content="#1A1B4B">
+<meta property="og:image" content="https://vamos-spanish.vercel.app/icons/og-image.png">
+<meta property="og:title" content="¡Vamos! — Learn Spanish Together">
+<meta property="og:description" content="Free 12-month Spanish program for parents and toddlers. Honduran Spanish. Fort Myers, FL.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://vamos-spanish.vercel.app">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://vamos-spanish.vercel.app/icons/og-image.png">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%231A1B4B'/%3E%3Ccircle cx='32' cy='32' r='22' fill='%23D4A017'/%3E%3Ctext x='32' y='39' text-anchor='middle' font-family='Arial,sans-serif' font-size='22' font-weight='700' fill='%231A1B4B'%3E%C2%A1V!%3C/text%3E%3C/svg%3E">
+<link rel="manifest" href="/manifest.webmanifest">
+<title>¡Vamos! — Learn Spanish Together</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Playfair+Display:wght@700;900&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --gold:#D4A017;--goldd:#B8860B;--goldl:#FFF8E1;
+  --ink:#1A1B4B;--ink2:#2D2E5E;
+  --teal:#008080;--teall:#E0F2F1;--teald:#006666;
+  --terra:#C75B39;--terral:#FDEEE8;
+  --w:#FFFFFF;--sand:#F5EDE0;
+  --gr:#6B7280;--gr2:#9CA3AF;--grl:#F3F4F6;--bd:#D5CFC5;
+  --r:16px;--rs:10px;
+  --sh:0 3px 10px rgba(0,0,0,.1);--shl:0 8px 24px rgba(0,0,0,.15);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Quicksand',sans-serif;background:var(--sand);color:var(--ink);line-height:1.65;-webkit-font-smoothing:antialiased;padding-bottom:82px;overflow-x:hidden;}
+button{font-family:'Quicksand',sans-serif;border:none;cursor:pointer;-webkit-tap-highlight-color:transparent;}
+button,.cb,.wkc,.spk,.splg{min-width:44px;min-height:44px;}
+
+/* HEADER */
+.hdr{background:var(--ink);color:var(--gold);padding:calc(env(safe-area-inset-top,20px)+28px) 24px 28px;text-align:center;border-bottom:5px solid var(--gold);position:relative;}
+.hdr h1{font-family:'Baloo 2',cursive;font-size:34px;font-weight:800;line-height:1.1;}
+.hdr p{font-size:13px;font-weight:700;color:var(--w);opacity:.8;margin-top:4px;}
+
+/* TODDLER MODE FLOAT */
+.tm-float{position:fixed;top:calc(env(safe-area-inset-top,12px)+12px);right:14px;background:var(--gold);color:var(--ink);padding:8px 14px;border-radius:50px;font-size:12px;font-weight:800;box-shadow:var(--shl);z-index:90;display:flex;align-items:center;gap:5px;animation:pulse 2.5s ease infinite;}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+
+/* BOTTOM NAV */
+.bnav{position:fixed;bottom:0;left:0;right:0;background:var(--ink);border-top:3px solid var(--gold);display:flex;justify-content:space-around;padding:6px 0 max(6px,env(safe-area-inset-bottom));z-index:100;}
+.nb{display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 12px;background:none;font-size:9.5px;font-weight:700;color:#D1D5DB;transition:color .2s;}
+.nb svg{width:22px;height:22px;}
+.nb.act{color:var(--gold);}
+
+/* PAGES */
+.pg{display:none;padding:18px 16px 24px;max-width:620px;margin:0 auto;animation:fu .3s ease;}
+.pg.act{display:block;}
+@keyframes fu{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+.pt{font-family:'Baloo 2',cursive;font-size:24px;font-weight:800;color:var(--ink);margin-bottom:4px;}
+.ps{font-size:13px;color:var(--gr);margin-bottom:16px;}
+
+/* CARDS */
+.card{background:var(--w);border-radius:var(--r);padding:18px;margin-bottom:14px;border:1px solid var(--bd);box-shadow:var(--sh);}
+.card h3{font-family:'Baloo 2',cursive;font-size:16px;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:8px;}
+.card p,.card li{font-size:13px;color:#374151;}
+.card ul{padding-left:16px;margin:6px 0;}
+.card li{margin-bottom:4px;}
+.hl-gold{border-left:4px solid var(--gold);background:var(--goldl);}
+.hl-teal{border-left:4px solid var(--teal);background:var(--teall);}
+.hl-rust{border-left:4px solid var(--terra);background:var(--terral);}
+
+/* HERO */
+.hero{background:var(--ink);color:var(--w);border-radius:var(--r);padding:22px;margin-bottom:16px;position:relative;overflow:hidden;box-shadow:var(--shl);border:2px solid var(--gold);}
+.hero::before{content:'';position:absolute;width:140px;height:140px;border-radius:50%;background:rgba(255,193,7,.06);top:-40px;right:-30px;}
+.hero h2{font-family:'Baloo 2',cursive;font-size:24px;font-weight:800;color:var(--gold);position:relative;z-index:1;}
+.hero .dt2{font-size:13px;opacity:.7;position:relative;z-index:1;}
+.hero .mot{font-size:13px;margin-top:12px;padding:10px 14px;background:rgba(255,193,7,.1);border-radius:var(--rs);font-style:italic;border:1px solid rgba(255,193,7,.2);position:relative;z-index:1;}
+
+/* PROGRESS RING */
+.rc{display:flex;flex-direction:column;align-items:center;margin:8px 0 16px;}
+.rw{position:relative;width:120px;height:120px;}
+.rw svg{-webkit-transform:rotate(-90deg);transform:rotate(-90deg);width:120px;height:120px;}
+.rcn{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+.rpct{font-family:'Playfair Display',serif;font-size:28px;font-weight:900;color:var(--gold);}
+.rlb{font-size:10px;color:var(--gr);font-weight:600;text-transform:uppercase;}
+
+/* STATS */
+.srow{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:16px;}
+.sc2{background:var(--w);border-radius:var(--r);padding:12px 6px;text-align:center;border:1px solid var(--bd);}
+.sn{font-family:'Playfair Display',serif;font-size:20px;font-weight:900;}
+.sn.cg{color:var(--teal);}.sn.cy{color:var(--goldd);}.sn.cc{color:var(--terra);}.sn.cs{color:var(--teald);}
+.sl2{font-size:9px;color:var(--gr);font-weight:700;text-transform:uppercase;margin-top:2px;}
+
+/* CHECKLIST */
+.cls{background:var(--w);border-radius:var(--r);border:1px solid var(--bd);overflow:hidden;margin-bottom:16px;}
+.clh{padding:14px 16px;font-weight:700;font-size:14px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--bd);background:var(--ink);color:var(--gold);}
+.clh.tg{cursor:pointer;width:100%;display:flex;text-align:left;background:var(--ink);color:var(--gold);appearance:none;-webkit-appearance:none;border:none;border-radius:0;}
+.clh.tg{cursor:pointer;}
+.clc{font-size:11px;background:rgba(255,193,7,.2);padding:2px 8px;border-radius:50px;}
+.clx{font-size:14px;font-weight:900;color:var(--gold);margin-left:10px;}
+.cls.cp .clh{border-bottom:none;}
+.cls.cp .cls-bd{display:none;}
+.ci{display:flex;align-items:flex-start;gap:12px;padding:12px 16px;border-bottom:1px solid #F5F5F5;}
+.ci:last-child{border-bottom:none;}
+.cb{width:28px;height:28px;min-width:28px;border:3px solid var(--bd);border-radius:8px;display:flex;align-items:center;justify-content:center;transition:all .25s;margin-top:2px;font-size:14px;color:transparent;}
+.ci.dn .cb{background:var(--teal);border-color:var(--teal);color:var(--w);}
+.ci.dn .ct{text-decoration:line-through;color:var(--gr2);}
+.ct{font-size:14px;font-weight:700;}
+.csub{font-size:11px;color:var(--gr);font-weight:600;margin-top:2px;}
+.ci-exp{color:var(--teal);font-size:11px;font-weight:700;margin-top:3px;}
+.ci-det{font-size:12.5px;color:#374151;line-height:1.65;margin-top:8px;padding:10px 12px;background:var(--teall);border-radius:var(--rs);border:1px solid #B2DFDB;display:none;}
+.ci.exp .ci-det{display:block;animation:fu .2s ease;}
+.cat-badge{font-size:9px;font-weight:800;padding:2px 7px;border-radius:50px;text-transform:uppercase;}
+.cat-daily{background:var(--teall);color:var(--teald);}
+.cat-florida{background:#FFF3E0;color:#E65100;}
+.cat-parent{background:#F3E5F5;color:#7B1FA2;}
+.cat-culture{background:var(--goldl);color:var(--goldd);}
+
+/* SPEAK */
+.spk{display:inline-flex;align-items:center;gap:3px;background:var(--goldl);border:1px solid #FFE082;color:var(--ink);padding:3px 9px;border-radius:50px;font-size:11px;font-weight:700;cursor:pointer;vertical-align:middle;}
+.spk:active{transform:scale(.92);}
+
+/* CURRICULUM */
+.phase-card{background:var(--w);border-radius:var(--r);border:1px solid var(--bd);margin-bottom:12px;overflow:hidden;}
+.phase-hd{padding:16px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;}
+.phase-hd h3{font-family:'Baloo 2',cursive;font-size:14px;font-weight:700;display:flex;align-items:center;gap:8px;}
+.ptag{font-size:10px;font-weight:700;padding:3px 9px;border-radius:50px;text-transform:uppercase;}
+.t1{background:var(--teall);color:var(--teald);}
+.t2{background:#E3F2FD;color:#1565C0;}
+.t3{background:var(--goldl);color:var(--goldd);}
+.t4{background:var(--terral);color:var(--terra);}
+.pchev{color:var(--gr2);transition:transform .3s;}
+.phase-card.op .pchev{transform:rotate(180deg);}
+.phase-bd{max-height:0;overflow:hidden;transition:max-height .5s ease;}
+.phase-card.op .phase-bd{max-height:50000px;}
+.phase-ct{padding:0 16px 16px;border-top:1px solid var(--bd);}
+
+.lesson{margin-top:14px;background:var(--grl);border-radius:var(--rs);padding:16px;border:1px solid var(--bd);}
+.lesson h4{font-family:'Baloo 2',cursive;font-size:14px;font-weight:700;margin-bottom:6px;display:flex;justify-content:space-between;align-items:center;}
+.lesson-step{background:var(--w);border-radius:8px;padding:12px;margin-top:8px;border:1px solid var(--bd);}
+.lesson-step h5{font-size:13px;font-weight:700;color:var(--teal);margin-bottom:4px;}
+.lesson-step p{font-size:12.5px;}
+.lesson-step .phrase{display:flex;align-items:flex-start;gap:6px;background:var(--goldl);padding:8px 10px;border-radius:8px;margin:6px 0;font-weight:700;font-size:14px;border:1px solid #FFE082;flex-wrap:wrap;}
+.wkc{width:22px;height:22px;border:2px solid var(--bd);border-radius:6px;background:var(--w);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:11px;color:transparent;transition:all .25s;}
+.wkc.dn{background:var(--teal);border-color:var(--teal);color:var(--w);}
+
+/* FLASHCARDS */
+.dkp{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;}
+.dkb{padding:7px 12px;border-radius:50px;border:2px solid var(--bd);background:var(--w);font-size:12px;font-weight:600;}
+.dkb.act{background:var(--ink);color:var(--gold);border-color:var(--ink);}
+.fca{display:flex;flex-direction:column;align-items:center;margin:12px 0;}
+.fcc{width:100%;max-width:320px;height:210px;-webkit-perspective:1000px;perspective:1000px;cursor:pointer;margin-bottom:12px;}
+.fc{width:100%;height:100%;position:relative;-webkit-transform-style:preserve-3d;transform-style:preserve-3d;transition:transform .5s cubic-bezier(.4,.2,.2,1);}
+.fc.fl{-webkit-transform:rotateY(180deg);transform:rotateY(180deg);}
+.ff{position:absolute;inset:0;border-radius:var(--r);display:flex;flex-direction:column;align-items:center;justify-content:center;-webkit-backface-visibility:hidden;backface-visibility:hidden;padding:24px;text-align:center;-webkit-transform:translateZ(0);transform:translateZ(0);}
+.ffr{background:var(--ink);color:var(--gold);box-shadow:var(--shl);border:3px solid var(--gold);}
+.ffr .fw{font-family:'Baloo 2',cursive;font-size:32px;font-weight:800;}
+.ffr .fh{font-size:12px;color:var(--w);opacity:.5;margin-top:8px;}
+.fbk{background:var(--w);border:3px solid var(--teal);-webkit-transform:rotateY(180deg);transform:rotateY(180deg);}
+.fbk .fw{font-family:'Baloo 2',cursive;font-size:26px;font-weight:700;color:var(--ink);}
+.fbk .ft{font-size:15px;color:var(--gr);margin-top:4px;font-weight:600;}
+.fbk .fe{font-size:12px;margin-top:10px;font-style:italic;padding-top:10px;border-top:1px solid var(--bd);}
+.fcl{display:flex;gap:10px;margin-top:14px;}
+.fcb{padding:12px 26px;border-radius:50px;font-size:13px;font-weight:700;}
+.fcb:active{transform:scale(.94);}
+.bk{background:var(--teal);color:var(--w);}.ba{background:var(--terral);color:var(--terra);}
+.fpg{text-align:center;font-size:12px;color:var(--gr);font-weight:600;margin-bottom:6px;}
+.splg{width:48px;height:48px;border-radius:50%;border:2px solid var(--gold);background:var(--goldl);display:flex;align-items:center;justify-content:center;font-size:20px;}
+.splg:active{transform:scale(.9);}
+
+/* QUIZ */
+.qc2{background:var(--w);border-radius:var(--r);padding:24px;border:1px solid var(--bd);text-align:center;margin-bottom:16px;}
+.qw{font-family:'Baloo 2',cursive;font-size:30px;font-weight:800;color:var(--ink);margin-bottom:20px;display:flex;align-items:center;justify-content:center;gap:8px;}
+.qo{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.qob{padding:14px 10px;border-radius:var(--rs);border:2px solid var(--bd);background:var(--w);font-size:14px;font-weight:600;}
+.qob:active{transform:scale(.97);}
+.qob.ok{border-color:var(--teal);background:var(--teall);color:var(--teald);animation:pop .3s;}
+.qob.no{border-color:var(--terra);background:var(--terral);color:var(--terra);animation:shk .35s;}
+@keyframes pop{50%{transform:scale(1.05)}}
+@keyframes shk{20%{transform:translateX(-4px)}40%{transform:translateX(4px)}60%{transform:translateX(-3px)}80%{transform:translateX(3px)}}
+.qrb{padding:12px 32px;border-radius:50px;background:var(--teal);color:var(--w);font-size:15px;font-weight:700;margin-top:14px;}
+.qbg{font-family:'Playfair Display',serif;font-size:48px;font-weight:900;color:var(--teal);margin:8px 0;}
+.qpb{width:100%;height:6px;background:var(--grl);border-radius:3px;overflow:hidden;margin-top:4px;}
+.qpf{height:100%;background:linear-gradient(90deg,var(--teal),var(--gold));border-radius:3px;transition:width .4s;}
+
+/* MORE */
+.more-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;}
+.more-card{background:var(--w);border:1px solid var(--bd);border-radius:var(--r);padding:14px;box-shadow:var(--sh);text-align:left;}
+.more-card h3{margin:6px 0 4px;font-size:14px;}
+.more-card p{font-size:12px;color:#374151;line-height:1.45;}
+.more-ico{font-size:24px;line-height:1;}
+.subpg{display:none;}.subpg.act{display:block;animation:fu .2s ease;}
+.back-btn{display:inline-flex;align-items:center;gap:6px;padding:9px 12px;border-radius:50px;background:var(--ink);color:var(--gold);font-size:12px;font-weight:800;margin-bottom:12px;}
+.song-item{padding:10px 0;border-bottom:1px solid var(--grl);}
+.song-row{display:flex;align-items:center;gap:10px;}
+.song-play{width:40px;height:40px;border-radius:10px;background:var(--ink);color:var(--gold);font-size:16px;display:flex;align-items:center;justify-content:center;}
+.song-close{margin-top:8px;padding:8px 12px;border-radius:50px;background:var(--terra);color:var(--w);font-size:12px;font-weight:700;}
+.song-frame{width:100%;aspect-ratio:16/9;border:0;border-radius:12px;margin-top:8px;}
+
+.vp{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--grl);align-items:center;}
+.vp:last-child{border-bottom:none;}
+.ve{font-weight:700;color:var(--ink);font-size:14px;display:flex;align-items:center;gap:4px;}
+.vn{color:var(--gr);font-size:12px;text-align:right;max-width:50%;}
+
+/* TODDLER OVERLAY */
+#tmode{display:none;position:fixed;inset:0;background:var(--gold);z-index:2000;padding:calc(env(safe-area-inset-top,20px)+20px) 20px 40px;text-align:center;overflow-y:auto;overscroll-behavior:contain;}
+#tmode.act{display:block;}
+.toy-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:24px;}
+.toy-btn{background:var(--w);border:5px solid var(--ink);border-radius:24px;padding:24px 10px;font-size:48px;box-shadow:0 8px 0 var(--ink);transition:all .1s;}
+.toy-btn:active{transform:translateY(5px);box-shadow:0 3px 0 var(--ink);}
+.toy-lbl{font-family:'Baloo 2',cursive;font-size:18px;font-weight:800;display:block;color:var(--ink);margin-top:6px;}
+.punta-pad{background:var(--ink);color:var(--gold);padding:20px;border-radius:var(--r);margin-top:24px;border:3px solid var(--gold);}
+.drum-row{display:flex;justify-content:center;gap:16px;margin-top:12px;}
+.drum{width:64px;height:64px;background:var(--w);border-radius:50%;border:4px solid var(--gold);display:flex;align-items:center;justify-content:center;font-size:28px;}
+.drum:active{transform:scale(.9);}
+.tt-tab{padding:8px 14px;border-radius:50px;background:var(--w);color:var(--ink);font-size:12px;font-weight:800;border:3px solid var(--ink);}
+.tt-tab.act{background:var(--ink);color:var(--gold);}
+.tm-exit{position:fixed;top:calc(env(safe-area-inset-top,12px)+12px);left:14px;font-size:16px;font-weight:800;background:var(--ink);color:var(--gold);padding:8px 16px;border-radius:50px;z-index:2001;}
+
+/* CONFETTI */
+#confetti{position:fixed;inset:0;pointer-events:none;z-index:3000;}
+#toast{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 86px);transform:translateX(-50%) translateY(20px);background:var(--ink);color:var(--gold);padding:10px 16px;border-radius:999px;font-size:13px;font-weight:800;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:4000;border:1px solid var(--gold);}
+#toast.sh{opacity:1;transform:translateX(-50%) translateY(0);}
+
+/* SCHED/RESOURCE helpers */
+.sbl{background:var(--w);border-radius:var(--r);border:1px solid var(--bd);margin-bottom:10px;overflow:hidden;}
+.sbh{padding:11px 16px;font-weight:700;font-size:13px;background:var(--ink);color:var(--gold);border-bottom:1px solid var(--bd);}
+.sr{display:flex;gap:10px;padding:9px 16px;border-bottom:1px solid #F5F5F5;align-items:flex-start;}
+.sr:last-child{border-bottom:none;}
+.stm{font-size:11px;font-weight:700;color:var(--teal);min-width:48px;}
+.sac{font-size:12px;flex:1;}
+
+@media(max-width:380px){.srow{grid-template-columns:repeat(2,1fr);}.qo{grid-template-columns:1fr;}.toy-grid{gap:10px;}.toy-btn{padding:18px 8px;font-size:40px;}}
+
+.walk-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:8000;display:flex;align-items:flex-end;justify-content:center;padding:20px;animation:fu .3s ease;}
+.walk-card{background:var(--w);border-radius:20px;padding:24px;max-width:360px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.3);text-align:center;margin-bottom:env(safe-area-inset-bottom,20px);}
+.walk-card h3{font-family:'Baloo 2',cursive;font-size:20px;color:var(--ink);margin-bottom:8px;}
+.walk-card p{font-size:13px;color:#374151;line-height:1.6;margin-bottom:16px;}
+.walk-card .walk-emoji{font-size:48px;margin-bottom:8px;}
+.walk-btns{display:flex;gap:8px;justify-content:center;}
+.walk-next{padding:12px 28px;border-radius:50px;background:var(--teal);color:var(--w);font-size:14px;font-weight:700;}
+.walk-skip{padding:12px 20px;border-radius:50px;background:var(--grl);color:var(--gr);font-size:13px;font-weight:600;}
+.walk-dots{display:flex;gap:6px;justify-content:center;margin-top:12px;}
+.walk-dot{width:8px;height:8px;border-radius:50%;background:var(--bd);}
+.walk-dot.act{background:var(--teal);} 
+</style>
+</head>
+<body>
+<canvas id="confetti"></canvas>
+<div id="toast">✓ Saved</div>
+
+<!-- ONBOARDING -->
+<div id="onboard" style="display:none;position:fixed;inset:0;background:var(--ink);z-index:5000;overflow-y:auto;padding:40px 24px;">
+<div style="max-width:400px;margin:0 auto;text-align:center;color:var(--w);">
+<h1 style="font-family:'Baloo 2',cursive;font-size:32px;color:var(--gold);margin-bottom:4px;">¡Bienvenidos! <button class="spk" data-speak="Bienvenidos" style="background:var(--gold);border-color:var(--gold);color:var(--ink);font-size:13px;">🔊</button></h1>
+<p style="font-size:14px;opacity:.8;margin-bottom:4px;">bee-ehn-veh-NEE-dohs · Welcome!</p>
+<p style="font-size:14px;opacity:.8;margin-bottom:28px;">Let's personalize your learning journey.</p>
+<div style="margin-bottom:20px;">
+<button id="ob-guide-btn" onclick="document.getElementById('ob-guide').style.display=document.getElementById('ob-guide').style.display==='block'?'none':'block';this.textContent=document.getElementById('ob-guide').style.display==='block'?'▲ Hide guide':'📖 What is this app? Tap to learn more'" style="width:100%;padding:12px;border-radius:12px;background:rgba(212,160,23,.15);border:2px solid var(--gold);color:var(--gold);font-family:'Quicksand';font-size:14px;font-weight:700;cursor:pointer;">📖 What is this app? Tap to learn more</button>
+<div id="ob-guide" style="display:none;margin-top:12px;text-align:left;color:var(--w);font-size:13px;line-height:1.7;">
+
+<div style="background:rgba(255,255,255,.08);padding:14px;border-radius:12px;margin-bottom:10px;">
+<b style="color:var(--gold);font-size:15px;">🇭🇳 What is ¡Vamos!?</b><br><br>
+A free 12-month Spanish learning program built for you and your toddler. You'll learn conversational Honduran Spanish together — just 45 minutes a day, broken into small chunks around naps and meals. No experience needed.
+</div>
+
+<div style="background:rgba(255,255,255,.08);padding:14px;border-radius:12px;margin-bottom:10px;">
+<b style="color:var(--gold);font-size:15px;">📱 What's inside?</b><br><br>
+- <b>48 weekly lessons</b> that tell you exactly what to do step by step<br>
+- <b>Flashcards</b> with 120+ words and pronunciation audio<br>
+- <b>Toddler Mode</b> — hand your phone to your child and let them tap to learn<br>
+- <b>Daily tasks</b> to build a consistent habit<br>
+- <b>Honduran culture guide</b> — slang, food, music, recipes<br>
+- <b>Fort Myers field trips</b> — practice Spanish at local markets and parks
+</div>
+
+<div style="background:rgba(255,255,255,.08);padding:14px;border-radius:12px;margin-bottom:10px;">
+<b style="color:var(--gold);font-size:15px;">⏰ How much time does it take?</b><br><br>
+45 minutes a day, split up like this:<br>
+- Morning song + getting dressed (5 min)<br>
+- Meals — narrate in Spanish (5 min)<br>
+- Video together (10 min)<br>
+- Play activity (10 min)<br>
+- Solo study during nap time (15 min)<br>
+- Bedtime routine in Spanish (5 min)<br><br>
+5 out of 7 days is success. No perfection needed.
+</div>
+
+<div style="background:rgba(255,255,255,.08);padding:14px;border-radius:12px;margin-bottom:10px;">
+<b style="color:var(--gold);font-size:15px;">💾 Does it save my progress?</b><br><br>
+Yes — automatically. Everything saves to your phone. Add this to your home screen for the best experience (instructions are inside the app after setup).
+</div>
+
+<div style="background:rgba(212,160,23,.1);padding:14px;border-radius:12px;border:1px solid rgba(212,160,23,.3);">
+<b style="color:var(--gold);font-size:15px;">👇 Ready?</b><br><br>
+Fill in your info below and tap ¡Vamos! to start. You can always find the full Getting Started guide inside the app under More → 🚀 Getting Started.
+</div>
+
+</div>
+</div>
+<div style="text-align:left;">
+<label style="font-size:12px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.5px;">Your name</label>
+<input id="ob-name" type="text" placeholder="e.g. Maria" style="width:100%;padding:14px;border-radius:12px;border:2px solid rgba(255,255,255,.2);background:rgba(255,255,255,.08);color:var(--w);font-family:'Quicksand';font-size:16px;font-weight:600;margin:6px 0 16px;outline:none;">
+
+<label style="font-size:12px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.5px;">Child's name</label>
+<input id="ob-child" type="text" placeholder="e.g. Junior" style="width:100%;padding:14px;border-radius:12px;border:2px solid rgba(255,255,255,.2);background:rgba(255,255,255,.08);color:var(--w);font-family:'Quicksand';font-size:16px;font-weight:600;margin:6px 0 16px;outline:none;">
+
+<label style="font-size:12px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.5px;">Child's age</label>
+<div style="display:flex;gap:8px;margin:6px 0 16px;" id="ob-ages">
+<button class="ob-opt" data-age="1" style="flex:1;padding:12px;border-radius:12px;border:2px solid rgba(255,255,255,.2);background:rgba(255,255,255,.05);color:var(--w);font-family:'Quicksand';font-size:15px;font-weight:700;">1 yr</button>
+<button class="ob-opt" data-age="2" style="flex:1;padding:12px;border-radius:12px;border:2px solid var(--gold);background:rgba(212,160,23,.15);color:var(--gold);font-family:'Quicksand';font-size:15px;font-weight:700;">2 yr</button>
+<button class="ob-opt" data-age="3" style="flex:1;padding:12px;border-radius:12px;border:2px solid rgba(255,255,255,.2);background:rgba(255,255,255,.05);color:var(--w);font-family:'Quicksand';font-size:15px;font-weight:700;">3 yr</button>
+<button class="ob-opt" data-age="4" style="flex:1;padding:12px;border-radius:12px;border:2px solid rgba(255,255,255,.2);background:rgba(255,255,255,.05);color:var(--w);font-family:'Quicksand';font-size:15px;font-weight:700;">4 yr</button>
+</div>
+
+<label style="font-size:12px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.5px;">Your Spanish level</label>
+<div style="display:flex;flex-direction:column;gap:8px;margin:6px 0 24px;" id="ob-levels">
+<button class="ob-lvl" data-lvl="0" style="padding:14px;border-radius:12px;border:2px solid var(--gold);background:rgba(212,160,23,.15);color:var(--gold);font-family:'Quicksand';font-size:14px;font-weight:700;text-align:left;">🌱 <b>Zero</b> — I don't know any Spanish</button>
+<button class="ob-lvl" data-lvl="1" style="padding:14px;border-radius:12px;border:2px solid rgba(255,255,255,.2);background:rgba(255,255,255,.05);color:var(--w);font-family:'Quicksand';font-size:14px;font-weight:700;text-align:left;">🌿 <b>A little</b> — I know some words (hola, gracias)</button>
+<button class="ob-lvl" data-lvl="2" style="padding:14px;border-radius:12px;border:2px solid rgba(255,255,255,.2);background:rgba(255,255,255,.05);color:var(--w);font-family:'Quicksand';font-size:14px;font-weight:700;text-align:left;">🌳 <b>Some</b> — I can say basic sentences</button>
+</div>
+</div>
+<button onclick="saveOnboard()" style="width:100%;padding:16px;border-radius:50px;background:var(--gold);color:var(--ink);font-family:'Baloo 2',cursive;font-size:18px;font-weight:800;border:none;box-shadow:0 4px 16px rgba(212,160,23,.4);">¡Vamos! Let's Start →</button>
+<p style="font-size:11px;opacity:.5;margin-top:12px;">You can change this later in Settings</p>
+</div>
+</div>
+<button class="tm-float" onclick="toggleTM()">👶 TODDLER</button>
+
+<div id="tmode">
+<button class="tm-exit" id="tm-lock-exit">🔒 Hold to Exit</button>
+<img src="/icons/toddler-splash.png" style="width:100%;max-width:400px;border-radius:16px;margin:0 auto 12px;display:block;" alt="¡Hola!">
+<h2 id="tm-greeting" style="font-family:'Baloo 2';font-size:30px;color:var(--ink);margin-top:30px;">¡Hola Bebé!</h2>
+<p style="font-size:14px;font-weight:700;color:var(--ink2);">Tap the pictures to hear the words!</p>
+
+<!-- Toddler Category Tabs -->
+<div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-top:16px;" id="ttabs">
+<button class="tt-tab act" onclick="setTCat('all',this)">🌟 All</button>
+<button class="tt-tab" onclick="setTCat('animals',this)">🐾 Animals</button>
+<button class="tt-tab" onclick="setTCat('food',this)">🍎 Food</button>
+<button class="tt-tab" onclick="setTCat('colors',this)">🎨 Colors</button>
+<button class="tt-tab" onclick="setTCat('body',this)">🖐️ Body</button>
+<button class="tt-tab" onclick="setTCat('count',this)">🔢 Count</button>
+<button class="tt-tab" onclick="setTCat('nature',this)">🌴 Nature</button>
+</div>
+
+<div class="toy-grid" id="toyGrid"></div>
+
+<!-- Counting Game -->
+<div id="count-game" style="display:none;margin-top:24px;background:var(--w);border-radius:20px;padding:24px;border:4px solid var(--ink);">
+<h3 style="font-family:'Baloo 2';font-size:22px;text-align:center;">🔢 ¡Vamos a Contar!</h3>
+<div id="count-display" style="font-size:80px;text-align:center;margin:16px 0;font-family:'Baloo 2';color:var(--ink);">1</div>
+<div id="count-word" style="font-size:24px;text-align:center;font-family:'Baloo 2';color:var(--terra);margin-bottom:16px;">UNO</div>
+<div style="display:flex;gap:12px;justify-content:center;">
+<button onclick="countNav(-1)" style="width:60px;height:60px;border-radius:50%;background:var(--ink);color:var(--gold);font-size:28px;font-weight:800;border:3px solid var(--gold);">←</button>
+<button onclick="speakCount()" style="width:60px;height:60px;border-radius:50%;background:var(--gold);color:var(--ink);font-size:28px;border:3px solid var(--ink);">🔊</button>
+<button onclick="countNav(1)" style="width:60px;height:60px;border-radius:50%;background:var(--ink);color:var(--gold);font-size:28px;font-weight:800;border:3px solid var(--gold);">→</button>
+</div>
+</div>
+
+<!-- Color Match Game -->
+<div id="color-game" style="display:none;margin-top:24px;background:var(--w);border-radius:20px;padding:24px;border:4px solid var(--ink);">
+<h3 style="font-family:'Baloo 2';font-size:22px;text-align:center;">🎨 ¡Toca el Color!</h3>
+<div id="color-prompt" style="font-family:'Baloo 2';font-size:26px;text-align:center;margin:12px 0;color:var(--ink);">Toca ROJO</div>
+<div id="color-dots" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px;"></div>
+<div id="color-result" style="font-family:'Baloo 2';font-size:24px;text-align:center;margin-top:12px;min-height:36px;"></div>
+</div>
+
+<div class="punta-pad">
+<p style="font-weight:800;font-size:16px;">🥁 PUNTA DRUMS</p>
+<p style="font-size:12px;opacity:.8;">Tap the drums! ¡Baila punta!</p>
+<div class="drum-row">
+<button class="drum" onclick="playDrum('hi')">🪘</button>
+<button class="drum" onclick="playDrum('mid')">🥁</button>
+<button class="drum" onclick="playDrum('lo')">🪘</button>
+</div>
+</div>
+</div>
+
+<div class="hdr">
+<h1>¡Vamos!</h1>
+<p>Honduran Spanish · Parent + Toddler · Florida Life</p>
+</div>
+
+<div class="pg act" id="p-home"></div>
+<div class="pg" id="p-learn"></div>
+<div class="pg" id="p-cards"></div>
+<div class="pg" id="p-quiz"></div>
+<div class="pg" id="p-more"></div>
+
+<nav class="bnav">
+<button class="nb act" data-p="home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Today</button>
+<button class="nb" data-p="learn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>Learn</button>
+<button class="nb" data-p="cards"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="14" height="16" rx="2"/><path d="M18 8h2a2 2 0 012 2v8a2 2 0 01-2 2h-2"/></svg>Cards</button>
+<button class="nb" data-p="quiz"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 2v4m0 12v4m-7.07-15.07l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83"/></svg>Quiz</button>
+<button class="nb" data-p="more"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>More</button>
+</nav>
+
+<script>
+/* ===== VOCABULARY (all decks + new ones) ===== */
+const V={
+"Greetings":[{e:"Hola",n:"Hello",x:"¡Hola! ¿Cómo estás?"},{e:"Adiós",n:"Goodbye",x:"Adiós, nos vemos."},{e:"Buenos días",n:"Good morning",x:"Buenos días."},{e:"¡Buenas!",n:"Hi! (Honduran)",x:"¡Buenas! ¿Qué onda?"},{e:"Por favor",n:"Please",x:"Más agua, por favor."},{e:"Gracias",n:"Thank you",x:"Muchas gracias."},{e:"De nada",n:"You're welcome",x:"De nada."},{e:"¿Cómo estás?",n:"How are you?",x:"¿Cómo estás hoy?"},{e:"Estoy bien",n:"I'm fine",x:"Estoy bien, gracias."},{e:"Me llamo",n:"My name is",x:"Me llamo Juan."},{e:"Mucho gusto",n:"Nice to meet you",x:"Mucho gusto, señora."},{e:"¿Y usted?",n:"And you? (formal)",x:"Bien, ¿y usted?"}],
+"Numbers":[{e:"Uno",n:"One",x:"Tengo uno."},{e:"Dos",n:"Two",x:"Dame dos."},{e:"Tres",n:"Three",x:"Tres gatos."},{e:"Cuatro",n:"Four",x:"Cuatro sillas."},{e:"Cinco",n:"Five",x:"Cinco dedos."},{e:"Seis",n:"Six",x:"Seis años."},{e:"Siete",n:"Seven",x:"Siete días."},{e:"Ocho",n:"Eight",x:"Son las ocho."},{e:"Nueve",n:"Nine",x:"Faltan nueve."},{e:"Diez",n:"Ten",x:"Cuenta hasta diez."}],
+"Colors":[{e:"Rojo",n:"Red",x:"El carro rojo."},{e:"Azul",n:"Blue",x:"El cielo azul."},{e:"Verde",n:"Green",x:"Hierba verde."},{e:"Amarillo",n:"Yellow",x:"Sol amarillo."},{e:"Blanco",n:"White",x:"Leche blanca."},{e:"Negro",n:"Black",x:"Gato negro."},{e:"Rosado",n:"Pink",x:"Flores rosadas."},{e:"Morado",n:"Purple",x:"Uva morada."},{e:"Naranja",n:"Orange",x:"Una naranja."},{e:"Café",n:"Brown",x:"Perro café."}],
+"Family":[{e:"Mamá",n:"Mom",x:"Mi mamá."},{e:"Papá",n:"Dad",x:"Papá está aquí."},{e:"Bebé",n:"Baby",x:"El bebé duerme."},{e:"Hermano",n:"Brother",x:"Mi hermano."},{e:"Hermana",n:"Sister",x:"Mi hermana."},{e:"Abuelo",n:"Grandpa",x:"Mi abuelo."},{e:"Abuela",n:"Grandma",x:"La abuela."},{e:"Hijo",n:"Son",x:"Mi hijo."},{e:"Hija",n:"Daughter",x:"Mi hija."},{e:"Familia",n:"Family",x:"Mi familia."}],
+"Food":[{e:"Agua",n:"Water",x:"Quiero agua."},{e:"Leche",n:"Milk",x:"Vaso de leche."},{e:"Pollo",n:"Chicken",x:"Pollo con arroz."},{e:"Arroz",n:"Rice",x:"Arroz con frijoles."},{e:"Frijoles",n:"Beans",x:"Frijoles ricos."},{e:"Huevo",n:"Egg",x:"Dos huevos."},{e:"Pan de coco",n:"Coconut bread (HN)",x:"Pan de coco con café."},{e:"Baleada",n:"Stuffed tortilla (HN)",x:"Una baleada con todo."},{e:"Guineo",n:"Banana (Costeño)",x:"Dame un guineo."},{e:"Tajadas",n:"Fried plantains",x:"Tajadas con pollo."},{e:"Tortilla",n:"Tortilla",x:"Tortillas de maíz."},{e:"Queso",n:"Cheese",x:"Queso con tortilla."}],
+"Body":[{e:"Cabeza",n:"Head",x:"Me duele la cabeza."},{e:"Ojos",n:"Eyes",x:"Ojos bonitos."},{e:"Nariz",n:"Nose",x:"Toca tu nariz."},{e:"Boca",n:"Mouth",x:"Abre la boca."},{e:"Manos",n:"Hands",x:"Lávate las manos."},{e:"Pies",n:"Feet",x:"Los pies."},{e:"Barriga",n:"Belly",x:"Mi barriga."},{e:"Dedos",n:"Fingers",x:"Diez dedos."},{e:"Pelo",n:"Hair",x:"Pelo bonito."},{e:"Rodillas",n:"Knees",x:"Toca tus rodillas."}],
+"Commands":[{e:"Ven aquí",n:"Come here",x:"Ven aquí, mi amor."},{e:"Mira",n:"Look",x:"¡Mira, un pájaro!"},{e:"Siéntate",n:"Sit down",x:"Siéntate a comer."},{e:"Dame",n:"Give me",x:"Dame la mano."},{e:"Vamos",n:"Let's go",x:"¡Vamos al parque!"},{e:"Espera",n:"Wait",x:"Espera un momento."},{e:"Para",n:"Stop",x:"Para, por favor."},{e:"No se pega",n:"No hitting",x:"No se pega, mi amor."},{e:"Cuidado",n:"Be careful",x:"¡Cuidado, está caliente!"},{e:"Despacito",n:"Slowly/gently",x:"Despacito, con cuidado."}],
+"Feelings":[{e:"Contento",n:"Happy",x:"Estoy contento."},{e:"Triste",n:"Sad",x:"Está triste."},{e:"Enojado",n:"Angry",x:"No estoy enojado."},{e:"Cansado",n:"Tired",x:"Estoy cansado."},{e:"Asustado",n:"Scared",x:"No tengas miedo."},{e:"Emocionado",n:"Excited",x:"¡Estoy emocionado!"},{e:"Hambre",n:"Hungry",x:"Tengo hambre."},{e:"Sed",n:"Thirsty",x:"Tengo sed."}],
+"Honduran":[{e:"¡Qué onda!",n:"What's up!",x:"¡Qué onda, maje!"},{e:"Catracho",n:"Honduran person",x:"Soy catracho."},{e:"Pisto",n:"Money",x:"No tengo pisto."},{e:"Cipote",n:"Kid",x:"Los cipotes."},{e:"Maje",n:"Dude (informal)",x:"¿Qué tal, maje?"},{e:"Puchica",n:"Wow/dang",x:"¡Puchica!"},{e:"Cheque",n:"Okay/sure",x:"Está cheque."},{e:"¡Va pues!",n:"Alright!",x:"¡Va pues, vamos!"},{e:"Baleada",n:"Stuffed tortilla",x:"Una baleada con todo."},{e:"Alero",n:"Close friend",x:"Mi alero."},{e:"Jalar",n:"To leave",x:"Me voy a jalar."},{e:"¡Ideay!",n:"So?/Well?",x:"¡Ideay! ¿Qué pasó?"}],
+"Parenting":[{e:"No se pega",n:"No hitting",x:"No se pega. Usamos las manos con cariño."},{e:"Usa tus palabras",n:"Use your words",x:"Usa tus palabras, mi amor."},{e:"¿Necesitas ayuda?",n:"Do you need help?",x:"¿Necesitas ayuda con eso?"},{e:"Muy bien hecho",n:"Well done!",x:"¡Muy bien hecho, mi amor!"},{e:"Es hora de dormir",n:"Time for bed",x:"Es hora de dormir. Buenas noches."},{e:"Comparte",n:"Share",x:"Comparte con tu amigo."},{e:"Vamos a limpiar",n:"Let's clean up",x:"Vamos a limpiar los juguetes."},{e:"Te quiero mucho",n:"I love you so much",x:"Te quiero mucho, mi bebé."}],
+"Kitchen Soul":[{e:"Arroz",n:"Rice",x:"Arroz con frijoles — just like rice and beans."},{e:"Frijoles",n:"Beans",x:"Frijoles negros, like black-eyed peas."},{e:"Plátano",n:"Plantain",x:"Plátano frito — fried plantain, like a sweet side."},{e:"Yuca",n:"Cassava/Yuca",x:"Yuca frita, crispy like fries."},{e:"Maíz",n:"Corn",x:"Pan de maíz — cornbread!"},{e:"Guiso",n:"Stew",x:"Un guiso caliente, like a slow-cooked pot."},{e:"Sazón",n:"Seasoning",x:"Necesita más sazón — it needs more seasoning!"},{e:"Manteca",n:"Lard/Fat",x:"Cocinado con manteca, like grandma did."},{e:"Quimbombó",n:"Okra",x:"Quimbombó — same word from West Africa."},{e:"Coco",n:"Coconut",x:"Arroz con coco — coconut rice, Garífuna style."}],
+"Neighborhood":[{e:"¡Pase adelante!",n:"Come on in!",x:"¡Pase adelante! Mi casa es su casa."},{e:"¿Qué cuenta?",n:"What's the news?",x:"¡Buenas, vecina! ¿Qué cuenta?"},{e:"Bienvenidos",n:"Welcome",x:"¡Bienvenidos a nuestra casa!"},{e:"¿Quiere café?",n:"Want coffee?",x:"¿Quiere un cafecito?"},{e:"Con gusto",n:"With pleasure",x:"Con gusto, para eso estamos."},{e:"Que Dios le bendiga",n:"God bless you",x:"Gracias, que Dios le bendiga."},{e:"Vecino/a",n:"Neighbor",x:"Mi vecina es muy amable."},{e:"Cuídese",n:"Take care",x:"Cuídese mucho. ¡Buenas noches!"}]
+};
+
+/* ===== USER PROFILE (Onboarding) ===== */
+let profile=JSON.parse(localStorage.getItem('v_profile')||'null');
+function showOnboard(){if(!profile)document.getElementById('onboard').style.display='block';}
+function resetOnboardForm(){
+  document.getElementById('ob-name').value='';
+  document.getElementById('ob-child').value='';
+  document.querySelectorAll('#ob-ages .ob-opt').forEach((b,i)=>{
+    const on=i===1;
+    b.style.borderColor=on?'var(--gold)':'rgba(255,255,255,.2)';
+    b.style.background=on?'rgba(212,160,23,.15)':'rgba(255,255,255,.05)';
+    b.style.color=on?'var(--gold)':'var(--w)';
+    b.classList.toggle('ob-sel',on);
+  });
+  document.querySelectorAll('#ob-levels .ob-lvl').forEach((b,i)=>{
+    const on=i===0;
+    b.style.borderColor=on?'var(--gold)':'rgba(255,255,255,.2)';
+    b.style.background=on?'rgba(212,160,23,.15)':'rgba(255,255,255,.05)';
+    b.style.color=on?'var(--gold)':'var(--w)';
+    b.classList.toggle('ob-sel',on);
+  });
+}
+function editProfile(){localStorage.removeItem('v_profile');profile=null;resetOnboardForm();document.getElementById('onboard').style.display='block';}
+function saveOnboard(){
+  const name=document.getElementById('ob-name').value.trim()||'Friend';
+  const child=document.getElementById('ob-child').value.trim()||'Baby';
+  const ageEl=document.querySelector('#ob-ages .ob-sel');
+  const lvlEl=document.querySelector('#ob-levels .ob-sel');
+  profile={name,child,age:ageEl?+ageEl.dataset.age:2,level:lvlEl?+lvlEl.dataset.lvl:0};
+  localStorage.setItem('v_profile',JSON.stringify(profile));
+  document.getElementById('onboard').style.display='none';
+  rH();rL();
+  walkStep=0;walkActive=true;setTimeout(showWalk,500);
+}
+document.querySelectorAll('#ob-ages .ob-opt').forEach(b=>b.addEventListener('click',function(){
+  document.querySelectorAll('#ob-ages .ob-opt').forEach(x=>{x.style.borderColor='rgba(255,255,255,.2)';x.style.background='rgba(255,255,255,.05)';x.style.color='var(--w)';x.classList.remove('ob-sel');});
+  this.style.borderColor='var(--gold)';this.style.background='rgba(212,160,23,.15)';this.style.color='var(--gold)';this.classList.add('ob-sel');
+}));
+document.querySelectorAll('#ob-levels .ob-lvl').forEach(b=>b.addEventListener('click',function(){
+  document.querySelectorAll('#ob-levels .ob-lvl').forEach(x=>{x.style.borderColor='rgba(255,255,255,.2)';x.style.background='rgba(255,255,255,.05)';x.style.color='var(--w)';x.classList.remove('ob-sel');});
+  this.style.borderColor='var(--gold)';this.style.background='rgba(212,160,23,.15)';this.style.color='var(--gold)';this.classList.add('ob-sel');
+}));
+
+/* ===== TODDLER BUTTONS ===== */
+const TOYS=[
+{emoji:"🐄",es:"Vaca",en:"Cow",cat:"animals"},{emoji:"🐔",es:"Pollo",en:"Chicken",cat:"animals"},{emoji:"🐕",es:"Perro",en:"Dog",cat:"animals"},{emoji:"🐱",es:"Gato",en:"Cat",cat:"animals"},{emoji:"🐟",es:"Pez",en:"Fish",cat:"animals"},{emoji:"🐢",es:"Tortuga",en:"Turtle",cat:"animals"},{emoji:"🦜",es:"Pájaro",en:"Bird",cat:"animals"},{emoji:"🐸",es:"Rana",en:"Frog",cat:"animals"},
+{emoji:"🍌",es:"Guineo",en:"Banana",cat:"food"},{emoji:"🍎",es:"Manzana",en:"Apple",cat:"food"},{emoji:"🌮",es:"Baleada",en:"Baleada",cat:"food"},{emoji:"💧",es:"Agua",en:"Water",cat:"food"},{emoji:"🥛",es:"Leche",en:"Milk",cat:"food"},{emoji:"🍚",es:"Arroz",en:"Rice",cat:"food"},{emoji:"🧀",es:"Queso",en:"Cheese",cat:"food"},{emoji:"🍞",es:"Pan",en:"Bread",cat:"food"},
+{emoji:"🔴",es:"Rojo",en:"Red",cat:"colors"},{emoji:"🔵",es:"Azul",en:"Blue",cat:"colors"},{emoji:"🟢",es:"Verde",en:"Green",cat:"colors"},{emoji:"🟡",es:"Amarillo",en:"Yellow",cat:"colors"},{emoji:"⚫",es:"Negro",en:"Black",cat:"colors"},{emoji:"⚪",es:"Blanco",en:"White",cat:"colors"},{emoji:"🟠",es:"Naranja",en:"Orange",cat:"colors"},{emoji:"🟣",es:"Morado",en:"Purple",cat:"colors"},
+{emoji:"🖐️",es:"Mano",en:"Hand",cat:"body"},{emoji:"👃",es:"Nariz",en:"Nose",cat:"body"},{emoji:"👁️",es:"Ojo",en:"Eye",cat:"body"},{emoji:"👄",es:"Boca",en:"Mouth",cat:"body"},{emoji:"👂",es:"Oreja",en:"Ear",cat:"body"},{emoji:"🦶",es:"Pie",en:"Foot",cat:"body"},{emoji:"🦵",es:"Rodilla",en:"Knee",cat:"body"},{emoji:"💪",es:"Brazo",en:"Arm",cat:"body"},
+{emoji:"☀️",es:"Sol",en:"Sun",cat:"nature"},{emoji:"🌙",es:"Luna",en:"Moon",cat:"nature"},{emoji:"⭐",es:"Estrella",en:"Star",cat:"nature"},{emoji:"🌊",es:"Mar",en:"Sea",cat:"nature"},{emoji:"🌴",es:"Palma",en:"Palm tree",cat:"nature"},{emoji:"🌺",es:"Flor",en:"Flower",cat:"nature"},{emoji:"🌧️",es:"Lluvia",en:"Rain",cat:"nature"},{emoji:"☁️",es:"Nube",en:"Cloud",cat:"nature"}
+];
+const NUMS=["","Uno","Dos","Tres","Cuatro","Cinco","Seis","Siete","Ocho","Nueve","Diez"];
+const COLORS_GAME=[{es:"Rojo",hex:"#E53E3E"},{es:"Azul",hex:"#3182CE"},{es:"Verde",hex:"#38A169"},{es:"Amarillo",hex:"#ECC94B"},{es:"Naranja",hex:"#DD6B20"},{es:"Morado",hex:"#805AD5"}];
+let tCat='all',countN=1,colorTarget=null;
+
+/* ===== DAILY TASKS (with Florida + parenting) ===== */
+const TK=[
+{id:'ms',t:'Morning Song: Buenos Días',s:'7:00 AM · 5 min',w:'t',cat:'daily',d:'Sing "Buenos días a ti, buenos días a ti, buenos días querido/a, buenos días a ti" to the tune of Happy Birthday every morning while getting your child up. Name each clothing item: "Tu camisa roja, tus pantalones azules." This takes 30 seconds and anchors the whole habit.',phrases:["Buenos días a ti|BWEH-nohs DEE-ahs ah tee|Good morning to you","Tu camisa|too kah-MEE-sah|Your shirt","Tus pantalones|toos pahn-tah-LOH-nehs|Your pants"]},
+{id:'mn',t:'Narrate a meal in Spanish',s:'Mealtime · 5 min',w:'t',cat:'daily',d:'Label food: "Aquí está tu leche. ¿Quieres más? Muy bien, estás comiendo." Key words: agua (water), leche (milk), más (more), rico (yummy), cuchara (spoon), todo (all done). Don\'t worry about mistakes.',phrases:["Aquí está tu leche|ah-KEE ehs-TAH too LEH-cheh|Here is your milk","¿Quieres más?|key-EH-rehs mahs|Do you want more?","Muy bien|moo-ee bee-EHN|Very good","Rico|REE-koh|Yummy","Cuchara|koo-CHAH-rah|Spoon","Todo|TOH-doh|All done"]},
+{id:'yt',t:'Spanish song or video together',s:'9:00 AM · 10 min',w:'t',cat:'daily',d:'Open YouTube → search "Canticos nursery rhymes" or "El Reino Infantil." Watch 1–2 songs and do the motions. This week: "Los Pollitos Dicen" and "Cabeza Hombros Rodillas Pies." Repeat the same songs daily — toddlers love repetition.',phrases:["Los Pollitos Dicen|lohs poh-YEE-tohs DEE-sehn|The Little Chicks Say","Cabeza Hombros Rodillas Pies|kah-BEH-sah OHM-brohs roh-DEE-yahs pee-EHS|Head Shoulders Knees Feet"]},
+{id:'pl',t:'Play activity in Spanish',s:'10:00 AM · 10 min',w:'t',cat:'daily',d:'Pick one: 🔸 Color hunt — "¿Dónde está algo rojo?" 🔸 Simón Dice with body parts 🔸 Count snacks in Spanish 🔸 Pretend store/kitchen in Spanish. Even 3 minutes counts.',phrases:["¿Dónde está algo rojo?|DOHN-deh ehs-TAH AHL-goh ROH-hoh|Where is something red?","Simón dice|see-MOHN DEE-seh|Simon says","Toca tu nariz|TOH-kah too nah-REES|Touch your nose"]},
+{id:'st',t:'Solo study — Language Transfer / Duolingo',s:'Nap time · 15 min',w:'s',cat:'daily',d:'Pick ONE: 🔸 Open Spotify or YouTube → search "Language Transfer Complete Spanish Episode 1" (5–12 min audio) 🔸 Open Duolingo app → do 1 lesson 🔸 YouTube → search "Dreaming Spanish Superbeginner" (watch 10 min). Rotate daily — don\'t try all four.'},
+{id:'bt',t:'Bath/bedtime in Spanish',s:'6:30 PM · 5 min',w:'t',cat:'daily',d:'Bath: name body parts — "manos, pies, barriga, pelo." Count toys. Bedtime: recap the day — "Hoy jugamos en el parque. Comiste pollo." End with "Buenas noches, te quiero."',phrases:["Manos|MAH-nohs|Hands","Pies|pee-EHS|Feet","Barriga|bah-REE-gah|Belly","Pelo|PEH-loh|Hair","Buenas noches|BWEH-nahs NOH-chehs|Good night","Te quiero|teh key-EH-roh|I love you"]},
+{id:'fl',t:'🌴 Florida Field Trip',s:'Weekend · 20 min',w:'t',cat:'florida',d:'Visit a local Latin market, panadería, or taquería near Fort Myers. Let your toddler point at things: "¡Mira! Plátanos." Try ordering one thing in Spanish: "Una baleada, por favor." Fort Myers — try Metro Pkwy, Daniels Pkwy, or Cleveland Ave for Latin markets and restaurants.',phrases:["¡Mira!|MEE-rah|Look!","Plátanos|PLAH-tah-nohs|Plantains","Una baleada, por favor|OO-nah bah-leh-AH-dah por fah-VOR|One baleada, please"]},
+{id:'pr',t:'Parenting phrase of the day',s:'Anytime · 1 min',w:'t',cat:'parent',d:'Replace one English parenting phrase with Spanish today. Start with: "Ven aquí" (come here), "Siéntate" (sit down), "No se pega" (no hitting), "Cuidado" (careful), or "Despacito" (gently/slowly). Use it EVERY time the situation comes up.',phrases:["Ven aquí|vehn ah-KEE|Come here","Siéntate|see-EHN-tah-teh|Sit down","No se pega|noh seh PEH-gah|No hitting","Cuidado|kwee-DAH-doh|Be careful","Despacito|dehs-pah-SEE-toh|Slowly/gently"]}
+];
+
+/* ===== CURRICULUM (detailed beginner lessons) ===== */
+const CU=[
+{p:"Phase 1 — Foundation",g:"Months 1–3",c:"t1",desc:"You'll learn the sounds of Spanish, basic survival phrases, and start building a daily habit with your child. Every lesson tells you EXACTLY what to do.",ms:[
+{t:"Month 1: Your First Words",ws:[
+{t:"Week 1: Getting Started",done:false,steps:[
+{h:"📱 Step 1: Set Up Your Tools (10 min, do this once)",p:"Download these free apps on your phone right now: <b>Duolingo</b> (App Store → search Duolingo → install → select Spanish → choose 'I'm new'). <b>HelloTalk</b> (for later — you'll use it in Month 3 to chat with native speakers)."},
+{h:"🎧 Step 2: Your First Audio Lesson (12 min)",p:"Open YouTube or Spotify → search <b>\"Language Transfer Complete Spanish Episode 1\"</b> → listen with headphones during nap time. This man will teach you how Spanish works — not memorization, but understanding. Do 1 episode per day this week (episodes 1–4)."},
+{h:"🗣️ Step 3: Learn These 5 Phrases",p:'Practice saying each one out loud 5 times. Tap 🔊 to hear the pronunciation:',phrases:["Hola","Adiós","Por favor","Gracias","Buenos días"]},
+{h:"🔢 Step 4: Numbers 1–5 with Your Toddler",p:"Count everything together in Spanish: fingers, toes, crackers, stairs. Just 1–5 this week:",phrases:["Uno","Dos","Tres","Cuatro","Cinco"]},
+{h:"🎵 Step 5: The Morning Song (start this TODAY)",p:'Every morning when you get your child up, sing to the tune of Happy Birthday: <b>"Buenos días a ti, buenos días a ti, buenos días querido/a, buenos días a ti."</b> Do this EVERY morning. Your child will know it by heart within a week.'},
+{h:"📺 Step 6: Toddler Video Time (10 min/day)",p:'Open YouTube → search <b>"Canticos Los Pollitos"</b> → play it for your toddler. Watch it together and do the hand motions. Play the same video every day this week. Repetition is everything at age 2.'}
+]},
+{t:"Week 2: Colors & Greetings",done:false,steps:[
+{h:"🎧 Audio Lesson (Language Transfer ep. 5–8)",p:"Continue 1 episode per day during nap time. You're now learning how to BUILD Spanish sentences, not just memorize them. This is the most important resource in the whole program."},
+{h:"🗣️ Learn These Phrases",p:'These are your conversation starters. Practice each one out loud:',phrases:["¿Cómo estás?","Estoy bien","Me llamo ___","¡Buenas!","Sí","No"]},
+{h:"🎨 Colors with Your Toddler",p:'Walk around the house and point at things: "¡Mira! Esto es ROJO." Don\'t quiz them — just name colors as you see them:',phrases:["Rojo","Azul","Verde","Amarillo","Blanco","Negro"]},
+{h:"🔍 Color Scavenger Hunt",p:'Play this game: say "¿Dónde está algo AZUL?" (Where is something blue?) then walk around together finding blue things. Clap and cheer when you find one: "¡Sí! ¡Azul!" Do 3 colors per day.'},
+{h:"📺 Add a New Song",p:'YouTube → search <b>"Cabeza Hombros Rodillas Pies"</b> (Head Shoulders Knees and Toes in Spanish). Do the motions together. Play it 2–3 times a day — it teaches body parts automatically.'}
+]},
+{t:"Week 3: Family & Naming Things",done:false,steps:[
+{h:"🎧 Language Transfer ep. 9–12",p:"Keep going — one per day. You're learning verb patterns now. It's okay if it feels fast — you'll do a second pass later and it'll all click."},
+{h:"👨‍👩‍👧 Family Words",p:'Point at family members (or photos) and name them. Your toddler will start repeating these:',phrases:["Mamá","Papá","Bebé","Hermano","Hermana","Abuelo","Abuela"]},
+{h:"📋 Label Your House",p:'Get masking tape or sticky notes. Label 10 objects: puerta (door), ventana (window), mesa (table), silla (chair), cama (bed), agua (water), leche (milk), luz (light), baño (bathroom), cocina (kitchen). Point and say them 3x daily.'},
+{h:"❓ The Magic Question",p:'Start asking this about EVERYTHING: <b>"¿Qué es esto?"</b> (What is this?) Point at objects and answer yourself: "¡Es una mesa!" Your toddler will start pointing and looking at you for the answer.',phrases:["¿Qué es esto?","Esto es una mesa","Esto es agua"]}
+]},
+{t:"Week 4: Commands You'll Use Every Day",done:false,steps:[
+{h:"🎧 Language Transfer ep. 13–16",p:"One per day. You're now learning querer (to want), tener (to have), and poder (to be able to). These are power verbs — you'll use them 50 times a day."},
+{h:"🏠 Commands for Daily Life",p:'These are the phrases you\'ll use most. Start using them TODAY instead of English:',phrases:["Ven aquí","Mira","Siéntate","Dame","Vamos","Espera","No se pega","Cuidado"]},
+{h:"🎮 Play Simón Dice",p:'Play Simon Says in Spanish! "Simón dice… toca tu nariz" (touch your nose), "Simón dice… salta" (jump), "Simón dice… siéntate" (sit down). Your toddler won\'t get the "rules" yet but they\'ll follow your motions and learn the words.'},
+{h:"🎉 Week 4 Celebration",p:"You finished Month 1! Record a 30-second voice memo of yourself saying your 5 best Spanish phrases. Save it — you'll compare it to Month 12 and be amazed. Your toddler probably says 'hola' and 'adiós' by now!"}
+]}
+]},
+{t:"Month 2: Building Sentences",ws:[
+{t:"Week 5: Numbers & Counting",done:false,steps:[
+{h:"🎧 Language Transfer ep. 17–20",p:"You're learning past tense foundations. Keep going — one per day."},
+{h:"🔢 Numbers 6–20",p:'Count stairs, crackers, blocks, toes — always in Spanish:',phrases:["Seis","Siete","Ocho","Nueve","Diez","Once","Doce","Veinte"]},
+{h:"🔵 Shapes (Bonus)",p:'During play: "Esto es un círculo" (circle), "cuadrado" (square), "triángulo" (triangle), "estrella" (star). Find shapes around the house.',phrases:["Círculo","Cuadrado","Triángulo","Estrella"]},
+{h:"📺 New Resource: Dreaming Spanish",p:'YouTube → search <b>"Dreaming Spanish Superbeginner"</b>. These videos are ENTIRELY in Spanish but use pictures so you understand. Watch 5–10 min/day. This trains your ear faster than anything.'}
+]},
+{t:"Week 6: Wants & Needs",done:false,steps:[
+{h:"🎧 Language Transfer ep. 21–24",p:"Keep going! You now know enough grammar to build real sentences."},
+{h:"🗣️ Survival Phrases",p:'These are the phrases that make daily life work. Use them at EVERY meal and activity:',phrases:["Quiero ___","No quiero","Tengo ___","Dame ___","Más, por favor","Todo (all done)","Toma (here you go)"]},
+{h:"🍽️ Mealtime Narration Script",p:'Here\'s exactly what to say at meals: "Vamos a comer" (let\'s eat). "¿Quieres pollo o arroz?" (chicken or rice?). "Aquí está tu cuchara" (here\'s your spoon). "¿Quieres más?" (more?). "Muy bien, estás comiendo" (good, you\'re eating). "¿Todo?" (all done?). Say these EVERY meal.'}
+]},
+{t:"Week 7: Daily Routines",done:false,steps:[
+{h:"🎧 Language Transfer ep. 25–28",p:"One per day during nap time."},
+{h:"⏰ Routine Phrases",p:'Narrate your day: "Es hora de ___" (it\'s time to ___). "Primero… luego…" (first… then…):',phrases:["Es hora de comer","Es hora de dormir","Es hora de bañarse","Primero comemos, luego jugamos","¿Estás listo?"]},
+{h:"📺 Add Songs",p:'YouTube: "Pin Pon es un muñeco" and "Arroz con Leche." These are classics across Latin America.'}
+]},
+{t:"Week 8: Putting It All Together",done:false,steps:[
+{h:"🎧 Language Transfer ep. 29–32",p:"You're now building multi-word sentences!"},
+{h:"🔗 Combo Practice",p:'String your phrases together: "Ven aquí, vamos a comer." "Dame el libro azul, por favor." "¿Quieres más leche?" Practice 5 combos per day.',phrases:["Ven aquí, siéntate","Dame el libro azul","Quiero más leche, por favor","Vamos al parque","Es hora de dormir, buenas noches"]},
+{h:"🎉 Month 2 Done!",p:'Your toddler now responds to "ven aquí," "siéntate," and "dame." You can describe your wants, give commands, and narrate meals. You\'re ahead of most Spanish 101 students.'}
+]}
+]},
+{t:"Month 3: Real Conversations",ws:[
+{t:"Week 9: Questions",done:false,steps:[
+{h:"🎧 Language Transfer ep. 33–40",p:"Push through — do 2 per day if you can. You're learning question formation."},
+{h:"❓ Question Words",p:'Learn to ask about everything:',phrases:["¿Qué?|What?","¿Quién?|Who?","¿Dónde?|Where?","¿Cuándo?|When?","¿Por qué?|Why?","¿Cómo?|How?","¿Cuántos?|How many?"]},
+{h:"📓 Start Journaling",p:'Open your Notes app. Write 3 sentences in Spanish every day. Example: "Hoy fui al parque. Mi hijo comió pollo. Hace calor." It doesn\'t matter if it\'s wrong — just write.'},
+{h:"📱 Get a Conversation Partner",p:'Download HelloTalk (free). Create a profile. Filter for Spanish speakers from Honduras or Central America. Send a message: "¡Hola! Estoy aprendiendo español. ¿Puedes ayudarme?" Many Hondurans want to practice English and will happily exchange.'}
+]},
+{t:"Week 10: Describing Things",done:false,steps:[
+{h:"🎧 Language Transfer ep. 41–48",p:"You're learning adjective placement — adjectives come AFTER the noun in Spanish."},
+{h:"📝 Describe Everything",p:'Practice: "El perro es grande" (the dog is big), "La pelota es roja" (the ball is red). Key adjectives:',phrases:["Grande|Big","Pequeño|Small","Bonito|Pretty","Caliente|Hot","Frío|Cold","Nuevo|New","Rico|Delicious"]},
+{h:"📺 Switch to Peppa Pig en Español",p:'YouTube → search "Peppa Pig español latino." Your child probably knows the English episodes — the Spanish version gives them context clues. Watch 1 episode/day together.'}
+]},
+{t:"Week 11: Prepositions & Locations",done:false,steps:[
+{h:"🎧 Language Transfer ep. 49–55",p:"Keep going — you're building real fluency foundations."},
+{h:"📍 Where Is It?",p:'Play hide-and-seek with a toy: "¿Dónde está el oso? ¡Está DEBAJO de la mesa!"',phrases:["En|In/on","Sobre|On top of","Debajo de|Under","Al lado de|Next to","Detrás de|Behind","Dentro de|Inside"]},
+{h:"🌴 Florida Task: Label the Outdoors",p:'On a walk: árbol (tree), flor (flower), pájaro (bird), cielo (sky), agua (water), sol (sun), nube (cloud). Fort Myers has great nature trails — Six Mile Cypress Slough Preserve is perfect for a Spanish labeling walk.'}
+]},
+{t:"Week 12: Phase 1 Complete!",done:false,steps:[
+{h:"🎧 Finish Language Transfer",p:"Episodes 56–90 over the next weeks. If you finish early, START OVER from episode 1. The second pass is a revelation."},
+{h:"🎤 Record Yourself",p:'Record a 1-minute voice memo describing your day in Spanish. Save it. Compare it to your Week 4 recording — you\'ll hear massive improvement.'},
+{h:"🎉 CELEBRATE!",p:'You finished Phase 1! You can: introduce yourself, count to 20, name colors/body parts/family, give commands, describe things, ask questions, and narrate meals. Your toddler understands 30–50 Spanish words and probably says several. Make baleadas together to celebrate — the recipe is in the Honduran section.'}
+]}
+]}
+]},
+{p:"Phase 2 — Florida Neighborhood",g:"Months 4–6",c:"t2",desc:"Narrate your entire day. Learn food, weather, animals, and community vocab. Your toddler starts responding in Spanish. Video partners: Aprende Peque + Bluey en Español.",ms:[
+{t:"Month 4: Food, Cooking & Verbs",ws:[
+{t:"Week 13: Present Tense Verbs",done:false,steps:[
+{h:"🎧 Language Transfer ep. 40–44",p:"You're learning verb conjugation patterns. Focus on: yo como (I eat), yo quiero (I want), yo tengo (I have). One episode per day during nap time."},
+{h:"🍳 Kitchen Verbs",p:'Practice these while cooking with your toddler:',phrases:["Cocinar|koh-see-NAR|To cook","Comer|koh-MEHR|To eat","Beber|beh-BEHR|To drink","Cortar|kor-TAR|To cut","Mezclar|mehs-KLAR|To mix"]},
+{h:"📺 Aprende Peque: Food Video",p:'YouTube → search <b>"Aprende Peque frutas y verduras"</b>. Watch together at 10 AM. Right after, open Toddler Mode → Food category and let your child tap the foods they just saw.'},
+{h:"🌮 Cook Baleadas Together",p:'Follow the recipe in the Honduran section (More → 🇭🇳). Narrate every step: "Primero, calentamos la tortilla. Ahora ponemos los frijoles. ¿Quieres queso?" Your toddler stirs, you narrate.'}
+]},
+{t:"Week 14: Body Parts Deep Dive",done:false,steps:[
+{h:"🎧 Language Transfer ep. 45–48",p:"Continue daily. You're building real conjugation muscle now."},
+{h:"🏥 Body + Health Phrases",p:'These are essential for doctor visits and daily life:',phrases:["Me duele|meh DWEH-leh|It hurts me","Tengo fiebre|TEHN-goh fee-EH-breh|I have a fever","Tiene hambre|tee-EH-neh AHM-breh|He/she is hungry","Está enfermo|ehs-TAH ehn-FEHR-moh|He/she is sick"]},
+{h:"📺 Spanish with Liz: Body Parts",p:'Search <b>"Spanish with Liz body parts"</b> on YouTube for a structured lesson. Take notes on any words you don\'t know.'},
+{h:"🎵 Body Song 3x Daily",p:'Keep singing "Cabeza Hombros Rodillas Pies" with motions. By now your toddler should be touching the right body parts when you say the words.'}
+]},
+{t:"Week 15: Mealtime Mastery",done:false,steps:[
+{h:"🍽️ Full Mealtime Script",p:'Use this EVERY meal. Print it out if you need to:',phrases:["Vamos a comer|VAH-mohs ah koh-MEHR|Let's eat","¿Qué quieres?|keh key-EH-rehs|What do you want?","¿Más?|mahs|More?","Está caliente|ehs-TAH kah-lee-EHN-teh|It's hot","¡Qué rico!|keh REE-koh|Yummy!","Todo|TOH-doh|All done"]},
+{h:"📺 Bluey Challenge #4",p:'Watch one episode of <b>Bluey en Español</b> (Disney+ → Audio → Español). This month\'s challenge: spot the words "jugar" (play), "comer" (eat), and "dormir" (sleep).'},
+{h:"🌴 Florida Quest",p:'Visit a fruit stand or Latin market. Point at things with your toddler: "¡Mira! Plátanos. ¿Quieres uno?"'}
+]},
+{t:"Week 16: Kitchen Soul Vocabulary",done:false,steps:[
+{h:"🍚 Shared Food Heritage",p:'This week focuses on foods shared between Southern and Caribbean cooking. Use the Kitchen Soul flashcard deck! Key words:',phrases:["Arroz|ah-ROHS|Rice","Frijoles|free-HOH-lehs|Beans","Plátano|PLAH-tah-noh|Plantain","Yuca|YOO-kah|Cassava","Quimbombó|keem-bohm-BOH|Okra","Maíz|mah-EES|Corn"]},
+{h:"📺 El Ramos Family Video",p:'YouTube → search <b>"El Ramos cocina"</b> or any cooking video. Watch how a real family uses Spanish in the kitchen. Note 3 new words.'},
+{h:"🎉 Month 4 Done!",p:'You can now narrate meals, name body parts, and use present tense verbs. Your toddler recognizes 50+ words and says several food/body words.'}
+]}
+]},
+{t:"Month 5: Weather, Clothing & Florida Nature",ws:[
+{t:"Week 17: Weather Every Day",done:false,steps:[
+{h:"🌤️ Morning Weather Ritual",p:'Every morning, look outside together. This is Florida so you\'ll say "hace calor" a lot!',phrases:["Hace calor|AH-seh kah-LOR|It's hot","Hace sol|AH-seh sohl|It's sunny","Está lloviendo|ehs-TAH yoh-vee-EHN-doh|It's raining","Está nublado|ehs-TAH noo-BLAH-doh|It's cloudy","Hace viento|AH-seh vee-EHN-toh|It's windy"]},
+{h:"📺 Aprende Peque: Weather",p:'YouTube → <b>"Aprende Peque el clima"</b> or weather video. Watch at 10 AM, then do the weather check ritual together.'},
+{h:"🎧 Language Transfer ep. 49–52",p:"Keep going daily. You're now past the halfway mark!"}
+]},
+{t:"Week 18: Getting Dressed",done:false,steps:[
+{h:"👕 Clothing Narration",p:'Name EVERY piece of clothing as you dress your child each morning:',phrases:["Camisa|kah-MEE-sah|Shirt","Pantalones|pahn-tah-LOH-nehs|Pants","Zapatos|sah-PAH-tohs|Shoes","Calcetines|kahl-seh-TEE-nehs|Socks","Sombrero|sohm-BREH-roh|Hat","Pañal|pah-NYAHL|Diaper"]},
+{h:"🎵 New Songs",p:'YouTube → <b>"Estrellita ¿Dónde Estás?"</b> and <b>"Arroz con Leche"</b>. Add to your rotation.'},
+{h:"📓 Journal",p:'Write 3 sentences about today\'s weather and what you wore: "Hoy hace calor. Mi hijo tiene una camisa azul. Yo tengo zapatos negros."'}
+]},
+{t:"Week 19: Florida Animals",done:false,steps:[
+{h:"🦎 Florida Nature Vocab",p:'Southwest Florida wildlife in Spanish! Use these on walks:',phrases:["Iguana|ee-GWAH-nah|Iguana","Pelícano|peh-LEE-kah-noh|Pelican","Manatí|mah-nah-TEE|Manatee","Lagarto|lah-GAR-toh|Alligator","Tortuga|tor-TOO-gah|Turtle","Cangrejo|kahn-GREH-hoh|Crab"]},
+{h:"🌴 Nature Walk: Six Mile Cypress Slough Preserve",p:'Take a walk at Six Mile Cypress Slough Preserve. Label everything: "¡Mira! Un pelícano. El agua es azul. Veo un árbol grande." Count animals in Spanish.'},
+{h:"📺 Bluey Challenge #5",p:'Bluey en Español. Spot: "agua" (water), "afuera" (outside), "animal."'}
+]},
+{t:"Week 20: Daily Routines Full Narration",done:false,steps:[
+{h:"📋 Narrate Your Whole Morning",p:'Goal: narrate from wakeup to breakfast entirely in Spanish:',phrases:["Despiértate|dehs-pee-EHR-tah-teh|Wake up","Vamos al baño|VAH-mohs ahl BAH-nyoh|Let's go to the bathroom","Lávate las manos|LAH-vah-teh lahs MAH-nohs|Wash your hands","Ponte la camisa|POHN-teh lah kah-MEE-sah|Put on your shirt","¿Tienes hambre?|tee-EH-nehs AHM-breh|Are you hungry?"]},
+{h:"🎧 News in Slow Spanish",p:'Start listening! Spotify → search "News in Slow Spanish Latin American." Listen 10 min while driving or cooking. You won\'t understand everything — that\'s fine. Your ear is training.'},
+{h:"🎉 Month 5 Halfway!",p:'You can narrate getting dressed, describe the weather, name Florida animals, and run your morning routine in Spanish. Your toddler follows multi-step commands in Spanish.'}
+]}
+]},
+{t:"Month 6: Questions, Descriptions & Playground",ws:[
+{t:"Week 21: Question Words",done:false,steps:[
+{h:"❓ The Power Questions",p:'These unlock real conversations:',phrases:["¿Qué es eso?|keh ehs EH-soh|What is that?","¿Dónde está?|DOHN-deh ehs-TAH|Where is it?","¿Quién es?|kee-EHN ehs|Who is it?","¿Por qué?|por KEH|Why?","¿Cuántos hay?|KWAHN-tohs eye|How many are there?"]},
+{h:"📺 Aprende Peque: Questions",p:'Search <b>"Aprende Peque preguntas"</b> or any Q&A style video. Practice asking your toddler questions even if they answer in English.'},
+{h:"🎧 Language Transfer ep. 53–56",p:"You're learning question formation — this week's episodes match perfectly."}
+]},
+{t:"Week 22: Playground Spanish",done:false,steps:[
+{h:"🛝 At the Park",p:'Use these at any Fort Myers playground:',phrases:["Columpio|koh-LOOM-pee-oh|Swing","Tobogán|toh-boh-GAHN|Slide","Sube|SOO-beh|Go up","Baja|BAH-hah|Go down","Corre|KOH-rreh|Run","¡Más alto!|mahs AHL-toh|Higher!"]},
+{h:"🌴 Florida Quest: Playground",p:'Go to a local park. Use ONLY Spanish for directions: "Vamos al columpio. ¡Sube! ¡Más alto! Ahora el tobogán. ¡Baja!" Your toddler will associate the words with the actions instantly.'}
+]},
+{t:"Week 23: Describing Everything",done:false,steps:[
+{h:"📝 Adjectives After Nouns",p:'In Spanish, adjectives come AFTER the noun. Practice:',phrases:["El perro grande|The big dog","La pelota roja|The red ball","El agua fría|The cold water","La casa bonita|The pretty house","El sol caliente|The hot sun"]},
+{h:"📺 Bluey Challenge #6",p:'Bluey en Español. Try to describe what\'s happening: "Bluey está jugando. Bingo está triste. Papá es grande."'},
+{h:"🎧 Finish Language Transfer!",p:'Push through episodes 57–90 over this month. If you finish early, START FROM EPISODE 1. The second pass will transform everything.'}
+]},
+{t:"Week 24: Phase 2 Complete!",done:false,steps:[
+{h:"🎤 Record Yourself",p:'Record a 2-minute voice memo describing your morning, the weather, and what you ate. Compare to your Month 1 recording — massive improvement.'},
+{h:"📱 HelloTalk Check-In",p:'You should have a conversation partner by now. Send them a voice message describing your day. If you don\'t have one yet: HelloTalk → filter Honduras → send "¡Buenas! Estoy aprendiendo español. ¿Puedes ayudarme?"'},
+{h:"🎉 PHASE 2 DONE!",p:'You can narrate your entire day, describe weather/clothing/food/animals, ask questions, give playground commands, and describe things. Your toddler follows complex commands and says 15+ Spanish words. Make tajadas to celebrate!'}
+]}
+]}
+]},
+{p:"Phase 3 — Conversations & Stories",g:"Months 7–9",c:"t3",desc:"Past tense, feelings, opinions, real-world practice. You start having actual conversations. Your toddler begins combining words. Video partners: El Ramos + Spanish with Liz.",ms:[
+{t:"Month 7: Past Tense & Storytelling",ws:[
+{t:"Week 25: Simple Past Tense",done:false,steps:[
+{h:"🎧 RESTART Language Transfer from Ep. 1",p:"This is the single best thing you can do right now. The second pass will be a revelation — you'll understand EVERYTHING you missed the first time. Do 2 episodes per day."},
+{h:"🗣️ Past Tense Basics",p:'Focus on these essential past forms:',phrases:["Fui|fwee|I went","Comí|koh-MEE|I ate","Jugué|hoo-GEH|I played","Dormí|dor-MEE|I slept","Vi|vee|I saw","Hice|EE-seh|I did/made"]},
+{h:"📺 El Ramos: Daily Vlog",p:'Watch any <b>El Ramos</b> family vlog. Listen for past tense: "Fuimos al parque" (we went to the park). Note 3 past tense phrases you hear.'}
+]},
+{t:"Week 26: Bedtime Story Recaps",done:false,steps:[
+{h:"🌙 Nightly Recap",p:'Every bedtime, tell your child about their day IN SPANISH: "Hoy fuimos al parque. Comiste pollo y arroz. Jugaste con la pelota. Vimos un perro grande. Ahora es hora de dormir."'},
+{h:"🎤 Daily Voice Diary",p:'Record 1 minute on your phone describing yesterday. Play it back. Don\'t judge — just build the habit.'},
+{h:"📺 Aprende Peque: Routines",p:'Search <b>"Aprende Peque rutina"</b> for daily routine vocabulary. Watch together, then use Toddler Mode to reinforce.'}
+]},
+{t:"Week 27: Irregular Past Verbs",done:false,steps:[
+{h:"🎧 Language Transfer 2nd pass ep. 15–25",p:"These episodes cover past tense patterns. It all clicks on the second listen."},
+{h:"🗣️ Key Irregular Verbs",p:'The most common irregular past tense verbs:',phrases:["Fue|fweh|He/she went, it was","Dijo|DEE-hoh|He/she said","Hizo|EE-soh|He/she did/made","Tuvo|TOO-voh|He/she had","Pudo|POO-doh|He/she could"]},
+{h:"📺 Bluey Challenge #7",p:'Bluey en Español. After the episode, recap what happened in past tense: "Bluey jugó con Bingo. Papá se cayó. Fue muy divertido."'}
+]},
+{t:"Week 28: Telling Stories",done:false,steps:[
+{h:"📖 Make Up Stories Together",p:'Use stuffed animals to create tiny stories in Spanish: "El oso fue a la tienda. Compró un guineo. Lo comió. ¡Qué rico! Fin." Act it out with voices. Your toddler LOVES this.'},
+{h:"🎧 2 HelloTalk Conversations This Week",p:'Text or voice message your partner. Describe what you did this weekend in past tense. They\'ll correct you — that\'s the best learning.'},
+{h:"🎉 Month 7 Done!",p:'You can tell stories about your day in past tense! Record a 2-minute recap and save it. Your toddler now combines 2 words in Spanish: "más agua," "quiero jugar."'}
+]}
+]},
+{t:"Month 8: Feelings, Opinions & Self-Expression",ws:[
+{t:"Week 29: Emotions Vocabulary",done:false,steps:[
+{h:"😊 Feelings Words",p:'Use these ALL DAY — label emotions as they happen:',phrases:["Contento|kohn-TEHN-toh|Happy","Triste|TREES-teh|Sad","Enojado|eh-noh-HAH-doh|Angry","Cansado|kahn-SAH-doh|Tired","Asustado|ah-soo-STAH-doh|Scared","Emocionado|eh-moh-see-oh-NAH-doh|Excited"]},
+{h:"🎨 Make a Feelings Chart",p:'Draw emoji faces on paper with your toddler. Label each in Spanish. Tape it to the fridge. Every morning ask: "¿Cómo te sientes?" (How do you feel?) and let them point.'},
+{h:"📺 El Ramos: Emotions",p:'Search <b>"El Ramos sentimientos"</b> or any emotional family moment. Notice how they express feelings naturally.'}
+]},
+{t:"Week 30: Opinions & Preferences",done:false,steps:[
+{h:"💬 Express What You Think",p:'Start giving opinions in Spanish:',phrases:["Me gusta|meh GOO-stah|I like","No me gusta|noh meh GOO-stah|I don't like","Creo que|KREH-oh keh|I think that","Es divertido|ehs dee-vehr-TEE-doh|It's fun","Es aburrido|ehs ah-boo-RREE-doh|It's boring"]},
+{h:"🎮 Preference Game with Toddler",p:'Hold up two things: "¿Cuál te gusta más — la manzana o el guineo?" (Which do you like more?) Let them choose. Even if they answer in English, YOU ask in Spanish.'},
+{h:"📺 Spanish with Liz: Opinions",p:'Search <b>"Spanish with Liz expresar opiniones"</b> for a structured lesson on giving opinions.'}
+]},
+{t:"Week 31: Connectors & Reasons",done:false,steps:[
+{h:"🔗 Glue Words",p:'These make your Spanish sound natural:',phrases:["Porque|por-KEH|Because","Pero|PEH-roh|But","También|tahm-bee-EHN|Also","Entonces|ehn-TOHN-sehs|So/Then","Después|dehs-PWEHS|After/Later"]},
+{h:"📓 Journal: Opinions + Reasons",p:'Write 5 sentences: "Me gusta el arroz PORQUE es rico." "No me gusta la lluvia PERO me gusta el arcoíris." Use a connector in every sentence.'},
+{h:"🎵 Latin Music Dance Party",p:'Play cumbia, reggaetón (clean), or punta on Spotify. Dance with your toddler. Sing along to choruses. Music = memory supercharger.'}
+]},
+{t:"Week 32: Feelings in Action",done:false,steps:[
+{h:"🗣️ Describe Everyone's Feelings",p:'Narrate emotions you see: "Papá está cansado. El bebé está contento. El perro está emocionado." Practice at the park watching other kids.'},
+{h:"📺 Bluey Challenge #8",p:'Bluey en Español. Describe how each character feels during the episode. "Bluey está triste porque Bingo no quiere jugar."'},
+{h:"🎉 Month 8 Done!",p:'You can express feelings, give opinions with reasons, and use connectors. Your toddler says "contento" or "triste" and tells you preferences. 3 HelloTalk conversations this month!'}
+]}
+]},
+{t:"Month 9: Real World — Shopping, Restaurants, Directions",ws:[
+{t:"Week 33: Shopping Vocabulary",done:false,steps:[
+{h:"🛒 At the Store",p:'Practice these before your next shopping trip:',phrases:["¿Cuánto cuesta?|KWAHN-toh KWEHS-tah|How much?","Necesito|neh-seh-SEE-toh|I need","¿Tiene?|tee-EH-neh|Do you have?","La cuenta|lah KWEHN-tah|The check/bill","Efectivo|eh-fehk-TEE-voh|Cash","Tarjeta|tar-HEH-tah|Card"]},
+{h:"🏠 Pretend Store at Home",p:'Set up toys/food as "products." Practice with your toddler: "¿Cuánto cuesta el guineo?" "Dos pesos." "Aquí tiene." "Gracias." Switch roles!'}
+]},
+{t:"Week 34: Restaurant Practice",done:false,steps:[
+{h:"🍽️ Ordering Script",p:'Memorize this for your next restaurant visit:',phrases:["Una mesa para dos|OO-nah MEH-sah PAH-rah dohs|A table for two","¿Qué me recomienda?|keh meh reh-koh-mee-EHN-dah|What do you recommend?","Quiero la baleada|key-EH-roh lah bah-leh-AH-dah|I want the baleada","La cuenta, por favor|lah KWEHN-tah por fah-VOR|The check, please"]},
+{h:"🌴 Florida Quest: EAT OUT IN SPANISH",p:'Go to a Latin restaurant in the Daniels Pkwy area or in Fort Myers. Order entirely in Spanish. Even if it\'s just "Una baleada, por favor." You CAN do this.'},
+{h:"📺 El Ramos: Restaurant",p:'Watch any El Ramos eating out video. Notice the casual ordering phrases.'}
+]},
+{t:"Week 35: Directions",done:false,steps:[
+{h:"🧭 Giving Directions",p:'Use these on walks and in the car:',phrases:["Derecha|deh-REH-chah|Right","Izquierda|ees-kee-EHR-dah|Left","Derecho|deh-REH-choh|Straight","Para|PAH-rah|Stop","La esquina|lah ehs-KEE-nah|The corner","Allí|ah-YEE|There"]},
+{h:"🏠 Treasure Hunt",p:'Hide a toy. Give your toddler directions in Spanish to find it: "Camina derecho. Gira a la izquierda. Mira debajo de la silla. ¡Lo encontraste!" They\'ll understand more than you expect.'}
+]},
+{t:"Week 36: Phase 3 Complete!",done:false,steps:[
+{h:"🎤 Record 3-Minute Story",p:'Tell a story about your week entirely in past tense. Use emotions, opinions, and connectors. Compare to your Week 4 recording.'},
+{h:"📱 HelloTalk Milestone",p:'Hold a 5-minute voice conversation with your partner. You can do this now. Talk about your weekend, your child, your food — anything.'},
+{h:"🎉 PHASE 3 DONE!",p:'You can have real conversations — past tense, feelings, opinions, shopping, restaurants, directions. Your toddler says 2-3 word phrases: "quiero agua," "mira mamá," "pelota roja." You\'re halfway to fluent. Cook sopa de caracol to celebrate!'}
+]}
+]}
+]},
+{p:"Phase 4 — Fluency & Identity",g:"Months 10–12",c:"t4",desc:"Extended conversations, Honduran culture deep dive, subjunctive basics, and Afro-Latino pride. Your toddler is becoming bilingual. Video partners: all creators + independent listening.",ms:[
+{t:"Month 10: Extended Conversations & Culture",ws:[
+{t:"Week 37: Conversation Connectors",done:false,steps:[
+{h:"🗣️ Sound More Natural",p:'These make you sound fluent:',phrases:["En realidad|ehn reh-ah-lee-DAHD|Actually","Sin embargo|seen ehm-BAR-goh|However","Además|ah-deh-MAHS|Besides/Also","Por eso|por EH-soh|That's why","O sea|oh SEH-ah|I mean"]},
+{h:"🎯 5-Minute Conversations 2x/Week",p:'HelloTalk voice calls. Target: 5 unscripted minutes. Talk about your week, your child, Florida weather, food — anything. Mistakes are growth.'},
+{h:"📺 Spanish with Liz: Intermediate",p:'Search <b>"Spanish with Liz intermediate"</b> for structured lessons that match your current level.'}
+]},
+{t:"Week 38: Honduran Culture Deep Dive",done:false,steps:[
+{h:"🇭🇳 Honduran Slang Mastery",p:'You already know the basics. Now use them in conversation:',phrases:["¡Púchica, mirá vos!|poo-CHEE-kah mee-RAH vohs|Wow, look at that!","¿Qué onda, maje?|keh OHN-dah MAH-heh|What's up, dude?","Está bien cheque|ehs-TAH bee-EHN CHEH-keh|It's all good","No tengo pisto|noh TEHN-goh PEES-toh|I don't have money","Los cipotes están jugando|lohs see-POH-tehs|The kids are playing"]},
+{h:"🎵 Guillermo Anderson Music",p:'Spotify/YouTube → <b>"Guillermo Anderson En Mi País"</b>. This beloved Honduran songwriter will make you fall in love with Honduras. Also try Banda Blanca "Sopa de Caracol" for punta music.'},
+{h:"🍳 Cook Pan de Coco Together",p:'Search "Pan de coco hondureño receta fácil" on YouTube. This is a Garífuna staple. Narrate the whole process in Spanish with your toddler.'}
+]},
+{t:"Week 39: The Spanish Hour",done:false,steps:[
+{h:"⏰ ONE HOUR, ONLY SPANISH",p:'Pick dinnertime through bath time. NO ENGLISH for one hour. When you don\'t know a word, describe it: "La cosa para abrir la puerta" (the thing to open the door = key). This builds circumlocution — essential for real fluency.'},
+{h:"📺 Bluey Challenge #10",p:'Watch Bluey en Español. Try to understand 50%+ without reading subtitles. You\'re closer than you think.'},
+{h:"📓 Journal: Half Page",p:'Write a full half-page journal entry about your week. Use past tense, connectors, and opinions. Read it aloud.'}
+]},
+{t:"Week 40: Month 10 Milestone",done:false,steps:[
+{h:"🎤 7-Minute Conversation",p:'HelloTalk voice call. 7 unscripted minutes. Talk about Honduras, your child\'s progress, what you cooked this week.'},
+{h:"📱 Join Hondureño Community",p:'Facebook → search "Hondureños en Florida" or "Catrachos en Fort Myers." Post: "Estoy aprendiendo español con mi hijo. ¡Soy nuevo/a pero me encanta la cultura hondureña!" People will be incredibly welcoming.'},
+{h:"🎉 Month 10!",p:'You hold 7-minute conversations. Your toddler speaks in 2-3 word phrases consistently. The Spanish Hour is becoming natural. You\'re using Honduran slang with confidence.'}
+]}
+]},
+{t:"Month 11: Grammar Polish & Confidence",ws:[
+{t:"Week 41: Subjunctive Introduction",done:false,steps:[
+{h:"🎧 Language Transfer — Subjunctive Episodes",p:'Revisit the subjunctive episodes (around ep. 65–80). Just the most common uses:',phrases:["Quiero que|key-EH-roh keh|I want you to...","Es importante que|ehs eem-por-TAHN-teh keh|It's important that...","Espero que|ehs-PEH-roh keh|I hope that...","Ojalá que|oh-hah-LAH keh|Hopefully..."]},
+{h:"🗣️ Use It With Your Child",p:'"Quiero que te sientes" (I want you to sit down). "Espero que duermas bien" (I hope you sleep well). You\'re using subjunctive in parenting — the most natural context!'}
+]},
+{t:"Week 42: Real-Time Narration",done:false,steps:[
+{h:"🚗 Narrate While Driving",p:'Alone in the car? Describe everything in Spanish: "Hay un carro rojo. La señora está caminando con su perro. Está nublado. Voy al supermercado porque necesito leche."'},
+{h:"📺 Watch a Full Movie in Spanish",p:'Pick one your toddler knows in English: Coco, Moana, or Encanto. Switch audio to Spanish, subtitles to Spanish. You\'ll understand 60-70% — that\'s amazing!'},
+{h:"📱 Conversation Group",p:'ConversationExchange.com → find a free online group or schedule weekly calls. 3 conversations this week.'}
+]},
+{t:"Week 43: Storytelling & Creative Spanish",done:false,steps:[
+{h:"📖 Tell a 3-Minute Story From Memory",p:'Pick any memory — a vacation, a funny moment, your child\'s first steps. Tell it entirely in Spanish. Record it.'},
+{h:"🎨 Art + Spanish",p:'Draw with your toddler. Describe what you\'re both drawing: "Estoy dibujando un sol amarillo. ¿Qué estás dibujando tú? ¡Un perro! ¡Qué bonito!"'},
+{h:"📺 Spanish with Liz: Advanced",p:'Search for her intermediate/advanced content. You\'re ready for it.'}
+]},
+{t:"Week 44: Month 11 Assessment",done:false,steps:[
+{h:"📋 What Can You Do?",p:'Check yourself: ✅ Present tense narration ✅ Past tense stories ✅ Questions and answers ✅ Feelings and opinions with reasons ✅ Shopping, restaurants, directions ✅ Honduran slang ✅ Subjunctive basics ✅ 8+ minute conversations. If anything feels weak, revisit that Phase.'},
+{h:"🎤 Voice Call: 10 Minutes",p:'Your goal: a 10-minute unscripted conversation with your HelloTalk partner. Talk about anything. You\'re ready.'},
+{h:"🎉 Almost There!",p:'Your toddler names objects spontaneously in Spanish. They\'re forming 3-4 word sentences. You\'re using subjunctive with your child. ONE MORE MONTH.'}
+]}
+]},
+{t:"Month 12: Celebration & Future",ws:[
+{t:"Week 45: 10-Minute Conversations",done:false,steps:[
+{h:"🗣️ The Final Push",p:'10-minute conversations 2-3x this week. Talk about: your learning journey, Honduras, your family, your dreams for your child\'s bilingualism.'},
+{h:"📺 Full Movie Night",p:'Watch Coco in Spanish with your toddler. Spanish audio + Spanish subtitles. Enjoy it — you understand this!'},
+{h:"📓 One-Page Journal",p:'Write a full page in Spanish about your 12-month journey. What you learned. What surprised you. What your child can do now.'}
+]},
+{t:"Week 46: Share Your Knowledge",done:false,steps:[
+{h:"👩‍🏫 Teach Someone",p:'Teach a friend or family member 5 Spanish phrases. Teaching is the deepest form of learning. Explain WHY the words work the way they do.'},
+{h:"🌴 Florida Quest: Community Event",p:'Attend a Latin American community event, festival, or church service in Spanish in SW Florida. Bring your child. Immerse together.'},
+{h:"📤 Share Your Streak",p:'Use the Share button to text your partner your final streak number. You made it.'}
+]},
+{t:"Week 47: The Time Capsule",done:false,steps:[
+{h:"🎤 Record Your Final Voice Diary",p:'3 minutes. Tell the story of your year in Spanish. Then play your Week 4 recording from 11 months ago. The difference will make you emotional.'},
+{h:"📖 Read a Spanish Book",p:'Get a Level 1 Spanish board book (Spanish with Liz recommends great ones). Read it to your child WITHOUT looking at the English translation. You can do this.'},
+{h:"📺 Watch Your Child",p:'Just watch your toddler (now 3) for a day. Count how many Spanish words they use spontaneously. Write them all down. This is your proof.'}
+]},
+{t:"Week 48: ¡LO LOGRASTE! You Did It!",done:false,steps:[
+{h:"🎉🎉🎉 CELEBRATION",p:'You started with ZERO Spanish. After 12 months, you can hold a 10-minute conversation, tell stories, express opinions, navigate restaurants and stores, use Honduran slang, and read a children\'s book. Your child knows 200+ words and speaks in phrases. You built this TOGETHER.'},
+{h:"🔮 Plan Year 2",p:'What\'s next? Options: bilingual preschool, a trip to Honduras (Roatán is beautiful and close from Florida), Spanish Saturday school, more advanced courses, or just keep doing what you\'re doing — the habit is built. ¡Va pues!'},
+{h:"❤️ A Note",p:'Every word you learned was a gift to your child. Every song you sang, every meal you narrated, every awkward conversation you pushed through — that was love in action. Your child will carry this language for life. ¡Muchas felicidades, familia!'}
+]}
+]}
+]}
+];
+
+/* ===== MOTIVATIONAL ===== */
+const MO=['"Poco a poco se va lejos." — Little by little you go far.','"La práctica hace al maestro." — Practice makes the master.','"Querer es poder." — Where there\'s a will, there\'s a way.','"Cada día un poco más."','"Tu hijo aprende contigo." — Your child learns with you.','"¡Va pues! Let\'s go!"'];
+
+/* ===== STATE ===== */
+const L={g(k,d){try{const v=localStorage.getItem('v_'+k);return v?JSON.parse(v):d}catch{return d}},s(k,v){try{localStorage.setItem('v_'+k,JSON.stringify(v))}catch{}}};
+function localDay(){return new Date().toLocaleDateString('en-CA');} // YYYY-MM-DD in local tz
+let S={sk:L.g('sk',0),la:L.g('la',''),dc:L.g('dc',{}),dd:L.g('dd',''),wd:L.g('wd',{}),fk:L.g('fk',{}),qt:L.g('qt',0),qc:L.g('qc',0),fq:L.g('fq',{})};
+let expTask=null;
+let homeSec={tasks:true,fq:false,help:false};
+let toastTimer=null;
+let morePage='grid';
+let walkStep=0;
+let walkActive=false;
+function sv(){for(const[k,v]of Object.entries({sk:S.sk,la:S.la,dc:S.dc,dd:S.dd,wd:S.wd,fk:S.fk,qt:S.qt,qc:S.qc,fq:S.fq}))L.s(k,v);}
+function us(){const t=localDay();if(S.la===t)return;const prev=new Date(S.la),curr=new Date(t),diff=Math.round((curr-prev)/(864e5));S.sk=(diff===1)?S.sk+1:1;S.la=t;sv();}
+function showSaved(){const t=document.getElementById('toast');if(!t)return;t.classList.add('sh');if(toastTimer)clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove('sh'),1500);}
+function rd(){if(S.dd!==localDay()){S.dc={};S.dd=localDay();sv();}}
+
+/* ===== SPEECH ===== */
+function speak(t){if(!('speechSynthesis' in window))return;speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang='es-MX';u.rate=.8;const vs=speechSynthesis.getVoices(),v=vs.find(x=>x.lang.startsWith('es-MX'))||vs.find(x=>x.lang.startsWith('es'));if(v)u.voice=v;speechSynthesis.speak(u);}
+if('speechSynthesis' in window)speechSynthesis.getVoices();
+function spB(t){return `<button class="spk" data-speak="${t.replace(/"/g,'&quot;')}">🔊</button>`;}
+function sh(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=0|Math.random()*(i+1);[b[i],b[j]]=[b[j],b[i]];}return b;}
+
+/* ===== PHONETICS MAP ===== */
+const PH={"Hola":"OH-lah","Adiós":"ah-dee-OHS","Buenos días":"BWEH-nohs DEE-ahs","¡Buenas!":"BWEH-nahs","Por favor":"por fah-VOR","Gracias":"GRAH-see-ahs","De nada":"deh NAH-dah","¿Cómo estás?":"KOH-moh ehs-TAHS","Estoy bien":"ehs-TOY bee-EHN","Me llamo":"meh YAH-moh","Mucho gusto":"MOO-choh GOO-stoh","Rojo":"ROH-hoh","Azul":"ah-SOOL","Verde":"VEHR-deh","Amarillo":"ah-mah-REE-yoh","Blanco":"BLAHN-koh","Negro":"NEH-groh","Mamá":"mah-MAH","Papá":"pah-PAH","Bebé":"beh-BEH","Abuelo":"ah-BWEH-loh","Abuela":"ah-BWEH-lah","Agua":"AH-gwah","Leche":"LEH-cheh","Pollo":"POH-yoh","Arroz":"ah-ROHS","Frijoles":"free-HOH-lehs","Huevo":"WEH-voh","Baleada":"bah-leh-AH-dah","Guineo":"gee-NEH-oh","Tajadas":"tah-HAH-dahs","Tortilla":"tor-TEE-yah","Queso":"KEH-soh","Cabeza":"kah-BEH-sah","Ojos":"OH-hohs","Nariz":"nah-REES","Boca":"BOH-kah","Manos":"MAH-nohs","Pies":"pee-EHS","Barriga":"bah-REE-gah","Pelo":"PEH-loh","Ven aquí":"vehn ah-KEE","Mira":"MEE-rah","Siéntate":"see-EHN-tah-teh","Dame":"DAH-meh","Vamos":"VAH-mohs","Espera":"ehs-PEH-rah","No se pega":"noh seh PEH-gah","Cuidado":"kwee-DAH-doh","Despacito":"dehs-pah-SEE-toh","Contento":"kohn-TEHN-toh","Triste":"TREES-teh","Enojado":"eh-noh-HAH-doh","Cansado":"kahn-SAH-doh","Hambre":"AHM-breh","Catracho":"kah-TRAH-choh","Pisto":"PEES-toh","Cipote":"see-POH-teh","Maje":"MAH-heh","Puchica":"poo-CHEE-kah","Cheque":"CHEH-keh","¡Va pues!":"vah PWEHS","Alero":"ah-LEH-roh","Quimbombó":"keem-bohm-BOH","Yuca":"YOO-kah","Sazón":"sah-SOHN","Coco":"KOH-koh","¡Pase adelante!":"PAH-seh ah-deh-LAHN-teh","¿Qué cuenta?":"keh KWEHN-tah","Bienvenidos":"bee-ehn-veh-NEE-dohs","Vecino":"veh-SEE-noh","Cuídese":"KWEE-deh-seh","Comparte":"kohm-PAR-teh","Te quiero mucho":"teh key-EH-roh MOO-choh"};
+
+/* ===== DELEGATED EVENTS (Codex XSS fix) ===== */
+document.addEventListener('click',function(e){
+  const sp=e.target.closest('[data-speak]');
+  if(sp){e.stopPropagation();speak(sp.dataset.speak);return;}
+});
+
+/* ===== CONFETTI ===== */
+let confettiRAF=0;
+function confetti(){const c=document.getElementById('confetti'),x=c.getContext('2d');if(confettiRAF)cancelAnimationFrame(confettiRAF);c.width=innerWidth;c.height=innerHeight;let p=Array.from({length:60},()=>({x:Math.random()*c.width,y:c.height+10,c:['#FFC107','#008080','#D35400','#FFFFFF'][0|Math.random()*4],vx:(Math.random()-.5)*4,vy:-(Math.random()*6+6),s:Math.random()*6+4}));let f=0;function d(){x.clearRect(0,0,c.width,c.height);p.forEach(q=>{x.fillStyle=q.c;x.fillRect(q.x,q.y,q.s,q.s);q.x+=q.vx;q.y+=q.vy;q.vy+=.15;});f++;if(f<90)confettiRAF=requestAnimationFrame(d);else{x.clearRect(0,0,c.width,c.height);confettiRAF=0;}}d();}
+
+/* ===== DRUM ===== */
+let drumAudioCtx=null;
+async function playDrum(t){
+  if(navigator.vibrate)navigator.vibrate(t==='hi'?30:t==='mid'?50:70);
+  try{
+    if(!drumAudioCtx)drumAudioCtx=new (window.AudioContext||window.webkitAudioContext)();
+    if(drumAudioCtx.state!=='running')await drumAudioCtx.resume();
+    const a=drumAudioCtx,o=a.createOscillator(),g=a.createGain();
+    o.connect(g);g.connect(a.destination);
+    o.frequency.value=t==='hi'?400:t==='mid'?220:100;
+    o.type=t==='mid'?'square':'triangle';
+    g.gain.setValueAtTime(.4,a.currentTime);
+    g.gain.exponentialRampToValueAtTime(.001,a.currentTime+.2);
+    o.start();
+    o.stop(a.currentTime+.2);
+  }catch(e){}
+}
+
+/* ===== TODDLER MODE ===== */
+function toggleTM(){const tm=document.getElementById('tmode');tm.classList.toggle('act');if(document.getElementById('tmode').classList.contains('act')){try{document.documentElement.requestFullscreen?.();}catch(e){}}else{try{document.exitFullscreen?.();}catch(e){}}if(profile)document.getElementById('tm-greeting').textContent='¡Hola '+profile.child+'!';}
+let exitTimer=null;let exitCount=3;
+const exitBtn=document.getElementById('tm-lock-exit');
+function startExit(){if(!exitBtn)return;exitCount=3;exitBtn.textContent='Exiting 3...';exitTimer=setInterval(()=>{exitCount--;if(exitCount<=0){clearInterval(exitTimer);exitTimer=null;exitBtn.textContent='🔒 Hold to Exit';toggleTM();}else{exitBtn.textContent='Exiting '+exitCount+'...';}},1000);}
+function cancelExit(){if(exitTimer){clearInterval(exitTimer);exitTimer=null;}if(exitBtn)exitBtn.textContent='🔒 Hold to Exit';}
+if(exitBtn){exitBtn.addEventListener('mousedown',startExit);exitBtn.addEventListener('mouseup',cancelExit);exitBtn.addEventListener('mouseleave',cancelExit);
+exitBtn.addEventListener('touchstart',e=>{e.preventDefault();startExit();});exitBtn.addEventListener('touchend',cancelExit);exitBtn.addEventListener('touchcancel',cancelExit);}
+function renderToys(){
+  const items=tCat==='all'?sh(TOYS).slice(0,12):TOYS.filter(t=>t.cat===tCat);
+  document.getElementById('toyGrid').innerHTML=items.map(t=>`<button class="toy-btn" data-speak="${t.es}">${t.emoji}<span class="toy-lbl">${t.es}</span></button>`).join('');
+  document.getElementById('count-game').style.display=tCat==='count'?'block':'none';
+  document.getElementById('color-game').style.display=tCat==='colors'?'block':'none';
+  if(tCat==='colors')startColorGame();
+  if(tCat==='count')updCount();
+}
+function setTCat(c,btn){tCat=c;document.querySelectorAll('.tt-tab').forEach(t=>{t.classList.remove('act');});btn.classList.add('act');renderToys();}
+function countNav(dir){countN=Math.max(1,Math.min(10,countN+dir));updCount();}
+function updCount(){document.getElementById('count-display').textContent=countN;document.getElementById('count-word').textContent=NUMS[countN];speak(NUMS[countN]);}
+function speakCount(){speak(NUMS[countN]);}
+function startColorGame(){
+  const pool=sh([...COLORS_GAME]);colorTarget=pool[0];
+  document.getElementById('color-prompt').innerHTML=`Toca <b>${colorTarget.es}</b>`;
+  speak('Toca '+colorTarget.es);
+  document.getElementById('color-result').textContent='';
+  document.getElementById('color-dots').innerHTML=pool.slice(0,4).map(c=>`<button style="width:100%;height:80px;border-radius:16px;background:${c.hex};border:4px solid var(--ink);box-shadow:0 6px 0 var(--ink);" data-color="${c.es}" data-speak="${c.es}"></button>`).join('');
+}
+function checkColor(picked){
+  const res=document.getElementById('color-result');
+  if(picked===colorTarget.es){res.textContent='🎉 ¡Sí! ¡'+colorTarget.es+'!';res.style.color='var(--teal)';confetti();speak('¡Muy bien! '+colorTarget.es);setTimeout(startColorGame,2000);}
+  else{res.textContent='🔄 ¡Otra vez!';res.style.color='var(--terra)';speak('No, otra vez');}
+}
+
+/* ===== NAV ===== */
+document.querySelectorAll('.nb').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.nb').forEach(x=>x.classList.remove('act'));document.querySelectorAll('.pg').forEach(p=>p.classList.remove('act'));b.classList.add('act');document.getElementById('p-'+b.dataset.p).classList.add('act');}));
+
+/* ===== STATS ===== */
+function cs(){const tw=48,dw=Object.values(S.wd).filter(Boolean).length,p=Math.round(dw/tw*100),kw=Object.keys(S.fk).filter(k=>S.fk[k]).length;return{dw,p,kw};}
+
+/* ===== HOME ===== */
+function rH(){rd();us();const{dw,p,kw}=cs();const d=new Date(),dn=d.toLocaleDateString('en-US',{weekday:'long'}),ds=d.toLocaleDateString('en-US',{month:'long',day:'numeric'});const mo=MO[0|Math.random()*MO.length];const cc=Object.values(S.dc).filter(Boolean).length;
+const catCls={daily:'cat-daily',florida:'cat-florida',parent:'cat-parent',culture:'cat-culture'};
+let h=`
+<div style="margin-bottom:16px;">
+<div style="font-weight:700;font-size:13px;color:var(--gr);margin-bottom:8px;">🧰 Quick Tools</div>
+<div style="display:flex;gap:10px;overflow-x:auto;padding:4px 0 12px;-webkit-overflow-scrolling:touch;">
+<button onclick="goMore('gs')" style="background:var(--w);border:1px solid var(--bd);border-radius:12px;padding:10px 14px;min-width:90px;text-align:center;box-shadow:var(--sh);flex-shrink:0;"><span style="font-size:22px;display:block;">🚀</span><span style="font-size:11px;font-weight:700;color:var(--ink);">Start</span></button>
+<button onclick="goMore('sc')" style="background:var(--w);border:1px solid var(--bd);border-radius:12px;padding:10px 14px;min-width:90px;text-align:center;box-shadow:var(--sh);flex-shrink:0;"><span style="font-size:22px;display:block;">📅</span><span style="font-size:11px;font-weight:700;color:var(--ink);">Schedule</span></button>
+<button onclick="goMore('hn')" style="background:var(--w);border:1px solid var(--bd);border-radius:12px;padding:10px 14px;min-width:90px;text-align:center;box-shadow:var(--sh);flex-shrink:0;"><span style="font-size:22px;display:block;">🇭🇳</span><span style="font-size:11px;font-weight:700;color:var(--ink);">Honduran</span></button>
+<button onclick="goMore('sg')" style="background:var(--w);border:1px solid var(--bd);border-radius:12px;padding:10px 14px;min-width:90px;text-align:center;box-shadow:var(--sh);flex-shrink:0;"><span style="font-size:22px;display:block;">🎵</span><span style="font-size:11px;font-weight:700;color:var(--ink);">Songs</span></button>
+<button onclick="goMore('rs')" style="background:var(--w);border:1px solid var(--bd);border-radius:12px;padding:10px 14px;min-width:90px;text-align:center;box-shadow:var(--sh);flex-shrink:0;"><span style="font-size:22px;display:block;">📚</span><span style="font-size:11px;font-weight:700;color:var(--ink);">Resources</span></button>
+<button onclick="goMore('cg')" style="background:var(--w);border:1px solid var(--bd);border-radius:12px;padding:10px 14px;min-width:90px;text-align:center;box-shadow:var(--sh);flex-shrink:0;"><span style="font-size:22px;display:block;">🔗</span><span style="font-size:11px;font-weight:700;color:var(--ink);">Cognates</span></button>
+</div>
+</div><div class="hero"><h2>${spB('Buenos días')} ¡Buenos días${profile?' '+profile.name:''}!</h2><div class="dt2">${dn}, ${ds}${profile?' · '+profile.child+'\'s learning day':''}</div><div class="mot">${spB(mo.split(' — ')[0].replace(/"/g,''))} ${mo}</div></div>
+<div class="cls ${homeSec.help?'':'cp'}" style="background:var(--ink);color:var(--w);border:2px solid var(--gold);">
+<button onclick="tgHomeSec('help')" class="clh tg" style="border:none;justify-content:center;">
+<span style="font-size:16px;">🆘 HELP ME — Emergency Phrases</span><span class="clx">${homeSec.help?'−':'+'}</span>
+</button>
+<div id="helpme" class="cls-bd" style="padding:12px 16px;">
+<p style="text-align:center;font-size:12px;color:#CBD5E1;margin-bottom:10px;">Toddler meltdown? Tap for instant phrases.</p>
+<div style="background:rgba(212,160,23,.1);border:1px solid rgba(212,160,23,.2);padding:12px;border-radius:12px;margin-bottom:8px;display:flex;align-items:center;gap:10px;"><button class="spk" data-speak="Cálmate mi amor" style="background:var(--gold);border-color:var(--gold);color:var(--ink);">🔊</button><div><b style="font-size:18px;color:var(--gold);">Cálmate</b><br><span style="font-size:12px;color:#C8C8DA;">KAL-mah-teh · Calm down</span></div></div>
+<div style="background:rgba(212,160,23,.1);border:1px solid rgba(212,160,23,.2);padding:12px;border-radius:12px;margin-bottom:8px;display:flex;align-items:center;gap:10px;"><button class="spk" data-speak="Usa tus palabras" style="background:var(--gold);border-color:var(--gold);color:var(--ink);">🔊</button><div><b style="font-size:18px;color:var(--gold);">Usa tus palabras</b><br><span style="font-size:12px;color:#C8C8DA;">OO-sah toos pah-LAH-brahs · Use your words</span></div></div>
+<div style="background:rgba(212,160,23,.1);border:1px solid rgba(212,160,23,.2);padding:12px;border-radius:12px;margin-bottom:8px;display:flex;align-items:center;gap:10px;"><button class="spk" data-speak="Respira" style="background:var(--gold);border-color:var(--gold);color:var(--ink);">🔊</button><div><b style="font-size:18px;color:var(--gold);">Respira</b><br><span style="font-size:12px;color:#C8C8DA;">reh-SPEE-rah · Breathe</span></div></div>
+<div style="background:rgba(212,160,23,.1);border:1px solid rgba(212,160,23,.2);padding:12px;border-radius:12px;display:flex;align-items:center;gap:10px;"><button class="spk" data-speak="Te quiero mucho" style="background:var(--gold);border-color:var(--gold);color:var(--ink);">🔊</button><div><b style="font-size:18px;color:var(--gold);">Te quiero mucho</b><br><span style="font-size:12px;color:#C8C8DA;">teh key-EH-roh MOO-choh · I love you so much</span></div></div>
+</div></div>
+<div class="rc"><div class="rw"><svg width="120" height="120"><circle cx="60" cy="60" r="52" fill="none" stroke="var(--grl)" stroke-width="8"/><circle cx="60" cy="60" r="52" fill="none" stroke="url(#rg)" stroke-width="8" stroke-dasharray="326.7" stroke-dashoffset="${326.7-(326.7*p/100)}" stroke-linecap="round"/><defs><linearGradient id="rg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="var(--teal)"/><stop offset="100%" stop-color="var(--gold)"/></linearGradient></defs></svg><div class="rcn"><div class="rpct">${p}%</div><div class="rlb">Complete</div></div></div><div style="font-size:12px;color:var(--gr);font-weight:600;">${dw} of 48 weeks</div></div>
+<div class="srow"><div class="sc2"><div class="sn cc">🔥 ${S.sk}</div><div class="sl2">Streak</div></div><div class="sc2"><div class="sn cy">${kw}</div><div class="sl2">Words</div></div><div class="sc2"><div class="sn cs">${S.qc}</div><div class="sl2">Quiz ✓</div></div><div class="sc2"><div class="sn cg">${dw}</div><div class="sl2">Weeks</div></div></div>
+<div class="cls ${homeSec.tasks?'':'cp'}"><button class="clh tg" onclick="tgHomeSec('tasks')"><span>📋 Today's Tasks</span><span><span class="clc">${cc}/${TK.length}</span><span class="clx">${homeSec.tasks?'−':'+'}</span></span></button><div class="cls-bd">${TK.map(t=>{const dn2=S.dc[t.id];const ex=expTask===t.id;return`<div class="ci ${dn2?'dn':''} ${ex?'exp':''}"><div class="cb" onclick="event.stopPropagation();tgD('${t.id}')">${dn2?'✓':''}</div><div style="flex:1;cursor:pointer;" onclick="tgE('${t.id}')"><div class="ct">${t.t}</div><div class="csub">${t.s} <span class="cat-badge ${catCls[t.cat]||'cat-daily'}">${t.cat}</span></div><div class="ci-exp">${ex?'▲ Hide':'▼ Tap for instructions'}</div><div class="ci-det">${t.d}${t.phrases?t.phrases.map(p2=>{const parts=p2.split('|');const es=parts[0];const ph=parts.length===3?parts[1]:'';const en=parts.length===3?parts[2]:(parts[1]||'');return '<div style="display:flex;align-items:flex-start;gap:6px;background:var(--goldl);padding:8px 10px;border-radius:8px;margin:6px 0;font-weight:700;font-size:14px;border:1px solid #FFE082;flex-wrap:wrap;">'+spB(es)+' <span>'+es+'</span>'+(ph?' <span style="color:var(--terra);font-size:12px;font-weight:700;">🗣 '+ph+'</span>':'')+(en?' <span style="color:var(--gr);font-weight:500;margin-left:8px;">('+en+')</span>':'')+'</div>';}).join(''):''}</div></div></div>`}).join('')}</div></div>
+
+<div class="cls ${homeSec.fq?'':'cp'}"><button class="clh tg" onclick="tgHomeSec('fq')"><span>🌴 Florida Quest — Fort Myers</span><span><span class="clc">${Object.values(S.fq||{}).filter(Boolean).length}/${FQ.length}</span><span class="clx">${homeSec.fq?'−':'+'}</span></span></button><div class="cls-bd">${FQ.map(q=>{const dn3=S.fq&&S.fq[q.id];return`<div class="ci ${dn3?'dn':''}" style="cursor:pointer;"><div class="cb" onclick="event.stopPropagation();tgFQ('${q.id}')">${dn3?'✓':''}</div><div style="flex:1;"><div class="ct" style="font-size:13px;">${q.t}</div><div class="csub">${q.d}</div>${q.phrases?q.phrases.map(p2=>{const parts=p2.split('|');const es=parts[0];const ph=parts.length===3?parts[1]:'';const en=parts.length===3?parts[2]:(parts[1]||'');return '<div style="display:flex;align-items:flex-start;gap:6px;background:var(--goldl);padding:6px 10px;border-radius:8px;margin:4px 0;font-weight:700;font-size:13px;border:1px solid #FFE082;flex-wrap:wrap;">'+spB(es)+' <span>'+es+'</span>'+(ph?' <span style="color:var(--terra);font-size:11px;font-weight:700;">🗣 '+ph+'</span>':'')+(en?' <span style="color:var(--gr);font-weight:500;margin-left:6px;font-size:11px;">('+en+')</span>':'')+'</div>';}).join(''):''}</div></div>`}).join('')}</div></div>
+
+${profile?`<button onclick="shareStreak()" style="width:100%;padding:14px;border-radius:50px;background:var(--ink);color:var(--gold);font-weight:700;font-size:14px;border:2px solid var(--gold);margin-bottom:16px;">📤 Share ${S.sk}-Day Streak with Partner</button>`:''}`;
+document.getElementById('p-home').innerHTML=h;}
+function tgHomeSec(id){homeSec[id]=!homeSec[id];rH();}
+function tgD(id){S.dc[id]=!S.dc[id];if(S.dc[id])confetti();sv();showSaved();us();rH();}
+function tgE(id){expTask=expTask===id?null:id;rH();}
+function tgFQ(id){if(!S.fq)S.fq={};S.fq[id]=!S.fq[id];if(S.fq[id])confetti();sv();showSaved();rH();}
+function shareStreak(){const name=profile?profile.child:'our child';const msg=encodeURIComponent(`We hit a ${S.sk}-day Spanish streak today! 🔥🇭🇳 Ask ${name} where the "pelota" is when you get home! — from ¡Vamos! app`);window.open('sms:&body='+msg);}
+
+/* ===== FLORIDA QUEST DATA ===== */
+const FQ=[
+{id:'fq1',t:'Visit a Latin market',d:'Find 3 fruits and say their names:',phrases:["Plátanos|PLAH-tah-nohs|Plantains","Mangos|MAHN-gohs|Mangos","Aguacates|ah-gwah-KAH-tehs|Avocados"]},
+{id:'fq2',t:'Order in Spanish at a restaurant',d:'Try one of these:',phrases:["Una baleada, por favor|OO-nah bah-leh-AH-dah por fah-VOR|One baleada, please","Un jugo de naranja|oon HOO-goh deh nah-RAHN-hah|An orange juice"]},
+{id:'fq3',t:'Gulf Coast Town Center or Daniels Marketplace',d:'Point at things with your toddler:',phrases:["¡Mira!|MEE-rah|Look!","Plátanos|PLAH-tah-nohs|Plantains","Mangos|MAHN-gohs|Mangos"]},
+{id:'fq4',t:'Nature walk at Six Mile Cypress Slough',d:'Label 5 things on your walk:',phrases:["Árbol|AR-bohl|Tree","Pájaro|PAH-hah-roh|Bird","Agua|AH-gwah|Water","Sol|sohl|Sun","Flor|flohr|Flower"]},
+{id:'fq5',t:'Find a sign in Spanish in your neighborhood',d:'Look for these words:',phrases:["Abierto|ah-bee-EHR-toh|Open","Cerrado|seh-RRAH-doh|Closed","Salida|sah-LEE-dah|Exit","Entrada|ehn-TRAH-dah|Entrance"]},
+{id:'fq6',t:'Visit a panadería (bakery)',d:'Try asking:',phrases:["Panadería|pah-nah-deh-REE-ah|Bakery","¿Tiene pan de coco?|tee-EH-neh pahn deh KOH-koh|Do you have coconut bread?","¿Qué me recomienda?|keh meh reh-koh-mee-EHN-dah|What do you recommend?"]},
+{id:'fq7',t:'Attend a Spanish-language church service',d:'Even 15 minutes of immersion is powerful.'},
+{id:'fq8',t:'Cook baleadas at home together',d:'Narrate every step:',phrases:["Vamos a cocinar|VAH-mohs ah koh-see-NAR|Let\'s cook","Baleadas|bah-leh-AH-dahs|Stuffed tortillas","Frijoles|free-HOH-lehs|Beans"]},
+{id:'fq9',t:'Watch Bluey en Español together',d:'Disney+ → Audio → Español. Spot 3 words from this month\'s vocab.'},
+{id:'fq10',t:'Say hi to a Spanish speaker in public',d:'Just one word at a store, restaurant, or park:',phrases:["¡Buenas!|BWEH-nahs|Hi!","¡Hola!|OH-lah|Hello!","Gracias|GRAH-see-ahs|Thank you"]}
+];
+
+/* ===== LEARN ===== */
+const PHASE_ICONS={t1:'/icons/phase-1-foundation.png',t2:'/icons/phase-2-neighborhood.png',t3:'/icons/phase-3-conversations.png',t4:'/icons/phase-4-fluency.png'};
+function rL(){let wIdx=0;let h=`<div class="pt">📖 Curriculum</div><p class="ps">Your complete 12-month roadmap. Each week tells you exactly what to do — no guessing.</p>`;
+CU.forEach((ph,pi)=>{
+h+=`<div class="phase-card ${pi===0?'op':''}" id="ph${pi}"><div class="phase-hd" onclick="document.getElementById('ph${pi}').classList.toggle('op')"><h3><img src="${PHASE_ICONS[ph.c]||''}" alt="${ph.p}" style="width:28px;height:28px;border-radius:50%;object-fit:cover;flex-shrink:0;"><span class="ptag ${ph.c}">${ph.g}</span> ${ph.p}</h3><svg class="pchev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div><div class="phase-bd"><div class="phase-ct">`;
+if(ph.desc)h+=`<p style="font-size:13px;color:var(--gr);margin-top:12px;padding:10px;background:var(--grl);border-radius:var(--rs);">${ph.desc}</p>`;
+ph.ms.forEach(m=>{
+h+=`<h4 style="margin-top:16px;font-family:'Baloo 2',cursive;font-size:15px;">${m.t}</h4>`;
+m.ws.forEach(w=>{
+wIdx++;const wk='w'+wIdx,dn=S.wd[wk];
+h+=`<div class="lesson"><h4>${w.t} <div class="wkc ${dn?'dn':''}" onclick="tgW('${wk}')">${dn?'✓':''}</div></h4>`;
+if(w.steps)w.steps.forEach(s=>{
+h+=`<div class="lesson-step"><h5>${s.h}</h5><p>${s.p}</p>`;
+if(s.phrases)s.phrases.forEach(p2=>{
+const parts=p2.split('|');const es=parts[0];
+const ph=parts.length===3?parts[1]:'';
+const en=parts.length===3?parts[2]:(parts[1]||'');
+h+=`<div class="phrase">${spB(es)} <span>${es}</span>${ph?` <span style="color:var(--terra);font-size:12px;font-weight:700;">🗣 ${ph}</span>`:''}${en?` <span style="color:var(--gr);font-weight:500;margin-left:8px;">(${en})</span>`:''}</div>`;
+});
+h+=`</div>`;
+});
+h+=`</div>`;
+});});
+h+=`</div></div></div>`;
+});
+document.getElementById('p-learn').innerHTML=h;}
+function tgW(k){S.wd[k]=!S.wd[k];if(S.wd[k])confetti();sv();showSaved();rL();rH();}
+
+/* ===== FLASHCARDS ===== */
+let cD="Greetings",cI=0,dk=[],fK=0,fA=0,fl=false;
+function sD(n){cD=n;dk=sh([...V[n]]);cI=0;fK=0;fA=0;fl=false;rC();}
+function rC(){const ds=Object.keys(V);let h=`<div class="pt">🃏 Flashcards</div><p class="ps">Tap to flip · 🔊 for pronunciation</p><div class="dkp">${ds.map(d=>`<button class="dkb ${d===cD?'act':''}" onclick="sD('${d}')">${d}</button>`).join('')}</div>`;
+if(!dk.length){sD(cD);return;}
+if(cI>=dk.length){h+=`<div class="card" style="text-align:center;padding:30px;"><h3 style="justify-content:center;">Deck Complete! 🎉</h3><div class="qbg">${fK}/${dk.length}</div><p style="color:var(--gr);">Know: <b style="color:var(--teal)">${fK}</b> · Again: <b style="color:var(--terra)">${fA}</b></p><button class="qrb" onclick="sD('${cD}')">Shuffle & Retry</button></div>`;document.getElementById('p-cards').innerHTML=h;return;}
+const c=dk[cI];h+=`<div class="fpg">${cI+1} of ${dk.length}</div><div style="display:flex;gap:14px;justify-content:center;font-size:12px;font-weight:700;margin-bottom:10px;"><span style="color:var(--teal)">✓ ${fK}</span><span style="color:var(--terra)">✗ ${fA}</span></div><div class="fca"><div class="fcc" onclick="fl=!fl;rC()"><div class="fc ${fl?'fl':''}"><div class="ff ffr"><div class="fw">${c.e}</div><div class="fh">Tap to reveal</div></div><div class="ff fbk"><div class="fw">${c.e}</div><div class="ft">${c.n}</div>${PH[c.e]?`<div style="font-size:12px;color:var(--terra);font-weight:700;margin-top:4px;">🗣 ${PH[c.e]}</div>`:''}${c.x?`<div class="fe">"${c.x}"</div>`:''}</div></div></div><button class="splg" data-speak="${c.e.replace(/"/g,'&quot;')}">🔊</button>${fl?`<div class="fcl"><button class="fcb ba" onclick="fR(0)">🔄 Again</button><button class="fcb bk" onclick="fR(1)">✓ Know it</button></div>`:''}</div>`;
+document.getElementById('p-cards').innerHTML=h;}
+function fR(k){const c=dk[cI];if(k){fK++;S.fk[c.e]=true;}else{fA++;S.fk[c.e]=false;}sv();cI++;fl=false;rC();}
+
+/* ===== QUIZ ===== */
+let qQ=[],qI=0,qS=0,qA=false;
+function gQ(){const all=Object.values(V).flat(),s=sh([...all]);qQ=s.slice(0,10).map(q=>{const pool=sh(all.filter(w=>w.n!==q.n).map(w=>w.n));const opts=[q.n];for(const it of pool){if(!opts.includes(it))opts.push(it);if(opts.length===4)break;}return{...q,o:sh(opts)};}).filter(q=>q.o.length===4);qI=0;qS=0;qA=false;rQ();}
+function rQ(){let h=`<div class="pt">🧩 Quiz</div>`;
+if(!qQ.length){h+=`<div class="card" style="text-align:center;padding:30px;"><h3 style="justify-content:center;">Ready to test yourself?</h3><p style="margin:8px 0 16px;font-size:13px;color:var(--gr);">10 random questions from all decks</p><button class="qrb" onclick="gQ()">Start Quiz</button></div>`;document.getElementById('p-quiz').innerHTML=h;return;}
+if(qI>=qQ.length){const pc=Math.round(qS/qQ.length*100),mg=pc>=80?"¡Excelente! 🌟":pc>=50?"¡Muy bien! 💪":"¡Sigue! 📚";h+=`<div class="card" style="text-align:center;padding:30px;"><h3 style="justify-content:center;">${mg}</h3><div class="qbg">${qS}/${qQ.length}</div><p style="color:var(--gr)">${pc}%</p><button class="qrb" onclick="gQ()">New Quiz</button></div>`;document.getElementById('p-quiz').innerHTML=h;return;}
+const q=qQ[qI];h+=`<div style="margin-bottom:14px;"><div style="display:flex;justify-content:space-between;font-size:12px;font-weight:600;color:var(--gr);margin-bottom:4px;"><span>Q ${qI+1}/10</span><span>Score: ${qS}</span></div><div class="qpb"><div class="qpf" style="width:${qI/qQ.length*100}%"></div></div></div><div class="qc2"><div style="font-size:13px;color:var(--gr);font-weight:600;">What does this mean?</div><div class="qw">${q.e} <button class="splg" style="width:34px;height:34px;" data-speak="${q.e.replace(/"/g,'&quot;')}">🔊</button></div><div class="qo">${q.o.map((o,i)=>`<button class="qob" id="q${i}" data-qi="${i}" data-qa="${o.replace(/"/g,'&quot;')}">${o}</button>`).join('')}</div></div>`;
+document.getElementById('p-quiz').innerHTML=h;
+document.querySelectorAll('[data-qi]').forEach(b=>b.addEventListener('click',function(){
+if(qA)return;qA=true;const idx=+this.dataset.qi,ans=this.dataset.qa,q2=qQ[qI],ok=ans===q2.n;
+if(ok){qS++;S.qc++;}S.qt++;sv();
+this.classList.add(ok?'ok':'no');
+if(!ok)document.querySelectorAll('[data-qi]').forEach(x=>{if(x.dataset.qa===q2.n)x.classList.add('ok');});
+if(ok)confetti();
+setTimeout(()=>{qI++;qA=false;rQ();},ok?700:1400);
+}));}
+
+/* ===== MORE ===== */
+function rM(){let h=`<div class="pt">📋 More</div>`;
+h+=`<div class="subpg ${morePage==='grid'?'act':''}" id="m-grid"><div class="more-grid">${[
+['gs','🚀','Getting Started','Everything you need to know to use this app.'],
+['sc','📅','Schedule','Daily and weekly learning rhythm.'],
+['rs','📚','Resources','Apps, YouTube, podcasts, and community.'],
+['hn','🇭🇳','Honduran Guide','Pronunciation, slang, food, and recipes.'],
+['sg','🎵','Songs','Spanish songs with YouTube search links.'],
+['cg','🔗','Cognates','Bilingual bonus words you already know.'],
+['st','⚙️','Settings','Profile updates and reset progress tools.']
+].map(([id,ico,title,desc])=>`<button class="more-card" onclick="openMore('${id}')"><div class="more-ico">${ico}</div><h3>${title}</h3><p>${desc}</p></button>`).join('')}</div></div>`;
+
+h+=`<div class="subpg ${morePage==='gs'?'act':''}" id="m-gs"><button class="back-btn" onclick="openMore('grid')">← Back to More</button>
+<div class="card"><h3>👋 Welcome to ¡Vamos!</h3><p style="font-size:13px;">This is your free 12-month Spanish learning program for you and your toddler. You'll learn conversational Honduran Spanish together — just 45 minutes a day. No experience needed. Everything you need is inside this app.</p></div>
+<div class="card hl-teal"><h3>📱 Install on Your Phone</h3><p style="font-size:13px;">For the best experience, add this to your home screen:<br><br><b>iPhone:</b> Tap the share button (⬆️) at the bottom of Safari → scroll down → tap "Add to Home Screen"<br><b>Android:</b> Tap the three dots (⋮) → tap "Add to Home Screen"<br><br>This makes it open like a real app with no browser bar. Your progress saves automatically.</p></div>
+<div class="card"><h3>🏠 The Today Tab</h3><p style="font-size:13px;">This is your daily home base. Here's what you'll see:<br><br>- <b>First-time banner</b> — If you're new (0 weeks completed), a teal banner at the top links you right to this guide<br>- <b>Help Me button</b> — Tap for emergency parenting phrases in Spanish (for toddler meltdowns). It's collapsible — tap the header to expand<br>- <b>Progress ring</b> — Shows how far through the 48-week program you are<br>- <b>Stats row</b> — Your streak, words learned, quiz score, and weeks completed<br>- <b>Quick Tools strip</b> — A scrollable row of shortcuts to Getting Started, Schedule, Honduran Guide, Songs, Resources, and Cognates. Tap any to jump there instantly<br>- <b>Today's Tasks</b> — 8 daily activities. Tap any task for detailed instructions. Check them off as you go<br>- <b>Florida Quest</b> — 10 real-world activities around Fort Myers. These don't reset daily — check them off as you complete them over time</p></div>
+<div class="card"><h3>📖 The Learn Tab</h3><p style="font-size:13px;">Your 48-week curriculum organized into 4 phases. Open Phase 1 → Week 1 and follow each step. Every week tells you exactly what to do — which video to watch, which phrases to practice, which songs to sing. Check off weeks as you finish them.</p></div>
+<div class="card"><h3>🃏 Cards & Quiz Tabs</h3><p style="font-size:13px;"><b>Cards:</b> 12 flashcard decks with 120+ words. Tap to flip, tap 🔊 to hear pronunciation. Includes Honduran slang, parenting phrases, and kitchen vocabulary.<br><br><b>Quiz:</b> 10 random questions from all decks. Multiple choice with instant feedback and confetti. Great for a quick 2-minute practice.</p></div>
+<div class="card"><h3>📋 The More Tab</h3><p style="font-size:13px;">Tap More at the bottom for: this Getting Started guide, daily/weekend schedule, resources (apps, YouTube, podcasts), Honduran guide (slang, food, recipes, music), songs, cognates (words you already know), and settings.</p></div>
+<div class="card hl-gold"><h3>👶 Toddler Mode</h3><p style="font-size:13px;">Tap the gold TODDLER button in the top right corner. This opens a full-screen play area for your child:<br><br>- Tap any picture to hear the Spanish word<br>- 7 category tabs: Animals, Food, Colors, Body, Count, Nature<br>- Counting Game — numbers 1-10 with tap navigation<br>- Color Matching Game — "Toca ROJO!" with confetti rewards<br>- Punta Drums — 3 drums with sound and vibration<br><br><b>The exit button requires holding for 3 seconds</b> so your toddler can't accidentally leave. For even stronger protection, use Guided Access (iPhone) or Screen Pinning (Android) — see the Lock section below.</p></div>
+<div class="card hl-teal"><h3>🔒 Lock Your Phone for Toddler Mode</h3><p style="font-size:13px;">When you hand your phone to your child, lock them in so they can't leave:<br><br><b>iPhone (Guided Access):</b><br>- Settings → Accessibility → Guided Access → turn ON<br>- Set a passcode<br>- Open ¡Vamos! → enter Toddler Mode<br>- Triple-click the side button → tap Start<br>- To unlock: triple-click → enter passcode → tap End<br><br><b>Android (Screen Pinning):</b><br>- Settings → Security → Screen Pinning → turn ON<br>- Open ¡Vamos! → enter Toddler Mode<br>- Open Recent Apps → tap the app icon → tap Pin<br>- To unpin: hold Back + Overview buttons together</p></div>
+<div class="card hl-gold"><h3>⏰ Your Daily Routine</h3><p style="font-size:13px;">45 minutes total, split across the day:<br><br>- Morning song + getting dressed (5 min)<br>- Breakfast narration (5 min)<br>- Spanish video together (10 min)<br>- Play activity or Toddler Mode (10 min)<br>- Solo study during nap — Language Transfer (15 min)<br>- Bath/bedtime in Spanish (5 min)<br><br>5 out of 7 days is success. No perfection needed.</p></div>
+<div class="card"><h3>🎧 The #1 Resource: Language Transfer</h3><p style="font-size:13px;">Free, 90 episodes, on YouTube and Spotify. Search "Language Transfer Complete Spanish Episode 1." Listen during nap time — one episode per day. The curriculum tells you which episodes each week. Do the whole series twice — the second pass is a revelation.</p></div>
+<div class="card hl-teal"><h3>💾 Saving & Progress</h3><p style="font-size:13px;">Everything saves automatically to your phone. You'll see a "✓ Saved" toast each time. Your streak, tasks, weeks, flashcards, quiz scores, and profile all persist.<br><br>Progress is on THIS device only. Keep using the same phone and don't clear your browser data. Installing to your home screen protects your data.</p></div>
+<div class="card"><h3>🔊 Sound Not Working?</h3><p style="font-size:13px;">The 🔊 buttons use your phone's text-to-speech. If silent:<br>- Check your phone isn't muted<br>- Turn up media volume (not just ringer)<br>- iPhone: Settings → Siri & Search → check Spanish voice<br>- Try closing and reopening the app</p></div>
+<div class="card hl-gold"><h3>✅ Week 1 Checklist</h3><p style="font-size:13px;">1. Fill out onboarding (your name, child's name, age, level)<br>2. Read this guide (you're almost done!)<br>3. Go to Learn → Phase 1 → Week 1<br>4. Follow each step<br>5. Check off daily tasks on the Today tab<br>6. Let your toddler play in Toddler Mode<br>7. Listen to Language Transfer Episode 1 during nap time<br>8. Come back tomorrow and keep your streak going!</p></div>
+<div class="card hl-rust"><h3>❤️ A Note</h3><p style="font-size:13px;">Every word you learn is a gift to your child. You don't need to be perfect — just consistent. Your toddler doesn't judge your accent. They just hear their parent trying, and that's the most powerful thing in the world. ¡Va pues! 🇭🇳</p></div></div>`;
+
+h+=`<div class="subpg ${morePage==='sc'?'act':''}" id="m-sc"><button class="back-btn" onclick="openMore('grid')">← Back to More</button><div class="card hl-teal"><h3>⏰ 45 min/day</h3><p>Small blocks around naps & meals. 5/7 days = success.</p></div>
+<div class="sbl"><div class="sbh">📅 Weekday</div>${[['7:00','Morning song + dress narration','5m'],['7:30','Breakfast narration','5m'],['9:00','Songs + video together','10m'],['10:00','Play activity in Spanish','10m'],['1:00','Solo study (nap time)','15m'],['6:30','Bath/bedtime routine','5m']].map(([t,a,d])=>`<div class="sr"><span class="stm">${t}</span><div class="sac">${a}</div><span style="font-size:10px;color:var(--gr);font-weight:700;">${d}</span></div>`).join('')}</div>
+<div class="sbl"><div class="sbh">🌴 Weekend Bonus</div>${[['AM','Florida field trip or extended play','20m'],['Nap','Extra study or HelloTalk chat','25m'],['PM','Spanish show together','20m']].map(([t,a,d])=>`<div class="sr"><span class="stm">${t}</span><div class="sac">${a}</div><span style="font-size:10px;color:var(--gr);font-weight:700;">${d}</span></div>`).join('')}</div></div>`;
+
+h+=`<div class="subpg ${morePage==='rs'?'act':''}" id="m-rs"><button class="back-btn" onclick="openMore('grid')">← Back to More</button>${[
+['📱 Apps',[['Duolingo','Latin American Spanish, free tier','https://www.duolingo.com'],['HelloTalk','Filter for Honduran partners','https://www.hellotalk.com'],['Tandem','Conversation partners','https://www.tandem.net'],['Libby','Free w/ library card','https://www.overdrive.com/apps/libby']]],
+['🎧 Audio',[['Language Transfer','90 eps — THE #1 resource','https://www.youtube.com/results?search_query=language+transfer+complete+spanish+episode+1'],['Dreaming Spanish','Best listening practice','https://www.youtube.com/results?search_query=dreaming+spanish+superbeginner'],['News in Slow Spanish','Weekly, LatAm edition','https://www.newsinslowspanish.com'],['Hoy Hablamos','Daily 10-min Spanish','https://www.hoyhablamos.com']]],
+['📺 Toddler YouTube',[['Canticos','Bilingual nursery rhymes','https://www.youtube.com/results?search_query=canticos+nursery+rhymes+spanish'],['El Reino Infantil','Huge song library','https://www.youtube.com/@reinoinfantil'],['Peppa Pig en Español','Familiar stories','https://www.youtube.com/results?search_query=peppa+pig+español+latino+episodio'],['Pocoyó','Originally Spanish','https://www.youtube.com/results?search_query=pocoyo+español+episodio+completo']]],
+['📺 Parent YouTube',[['Spanish with Paul','Clear grammar','https://www.youtube.com/@SpanishWithPaul'],['Español con Juan','1001 palabras','https://www.youtube.com/@EspanolconJuan'],['Destinos','Free 52-ep telenovela','https://www.learner.org/series/destinos-an-introduction-to-spanish/'],['SpanishDict','Best dictionary','https://www.spanishdict.com']]],
+['🌐 Community',[['ConversationExchange','Free partners','https://www.conversationexchange.com'],['BBC Mundo','News in Spanish','https://www.bbc.com/mundo'],['Hondureños en Florida','Facebook group','https://www.facebook.com/search/groups/?q=hondureños%20en%20florida'],['FL Library (Lee County)','Bilingual events','https://www.leelibrary.net']]]
+].map(([cat,items])=>`<div style="margin-bottom:16px"><h3 style="font-family:'Baloo 2';font-size:15px;margin-bottom:8px">${cat}</h3>${items.map(([n,d,url])=>`<a href="${url}" target="_blank" rel="noopener" style="text-decoration:none;display:block;"><div class="card" style="padding:12px;margin-bottom:6px;display:flex;align-items:center;gap:10px;"><div style="flex:1"><b style="font-size:13px;color:var(--ink)">${n}</b><br><span style="font-size:11px;color:var(--gr)">${d}</span></div><span style="color:var(--teal);font-size:18px;">→</span></div></a>`).join('')}</div>`).join('')}</div>`;
+
+h+=`<div class="subpg ${morePage==='hn'?'act':''}" id="m-hn"><button class="back-btn" onclick="openMore('grid')">← Back to More</button><div class="card hl-gold"><h3>🇭🇳 Honduran Spanish</h3><p>Very close to standard LatAm. Add these local flavors.</p></div>
+<div class="card"><h3>🗣 Pronunciation</h3><ul><li><b>Vos instead of Tú:</b> hablar → vos hablás, comer → vos comés</li><li><b>S-aspiration:</b> "Estamos" sounds like "ehtamoh"</li><li><b>No "th" sound:</b> Gracias = grah-see-ahs</li></ul></div>
+<div class="card"><h3>🇭🇳 Key Expressions</h3>${[["¡Buenas!","Hi!"],["¡Qué onda!","What's up!"],["Catracho/a","Honduran person"],["Pisto","Money"],["Cipote/a","Kid/child"],["Maje","Dude (casual)"],["Puchica","Wow/dang"],["Está cheque","It's all good"],["¡Va pues!","Alright, let's go!"],["Alero/a","Close friend"],["Jalar","To leave"],["¡Ideay!","So?/Well?"]].map(([a,b])=>`<div class="vp"><span class="ve">${a} ${spB(a)}</span><span class="vn">${b}</span></div>`).join('')}</div>
+<div class="card"><h3>🍳 Honduran Food</h3>${[["Baleada","Flour tortilla + beans + cheese + cream"],["Pan de coco","Coconut bread (Garífuna)"],["Tajadas","Fried green plantain slices"],["Sopa de caracol","Conch soup"],["Atol de elote","Sweet corn drink"],["Guineo","Banana (Costeño term)"]].map(([a,b])=>`<div class="vp"><span class="ve">${a} ${spB(a)}</span><span class="vn">${b}</span></div>`).join('')}</div>
+<div class="card hl-rust"><h3>🍳 Make Baleadas Together!</h3><p style="font-size:13px;"><b>Ingredients:</b> Flour tortillas, canned refried beans, shredded cheese, sour cream (or crema).<br><b>Steps:</b> 1) Warm tortilla on a skillet. 2) Spread beans on one half. 3) Add cheese and crema. 4) Fold. 5) ¡Buen provecho!<br><b>Say while cooking:</b> "Vamos a cocinar. Necesitamos tortillas, frijoles, y queso. Primero, calentamos la tortilla…"</p></div>
+<div class="card"><h3>🎵 Honduran Music</h3><ul><li><b>Guillermo Anderson</b> — "En Mi País," "Ceibeño"</li><li><b>Punta music</b> — Banda Blanca, Kazzabe</li><li><b>Polache</b> — comedian/singer</li></ul></div></div>`;
+
+h+=`<div class="subpg ${morePage==='sg'?'act':''}" id="m-sg"><button class="back-btn" onclick="openMore('grid')">← Back to More</button><div class="card"><h3>🎵 Songs — Tap to Open YouTube</h3><p style="font-size:12px;color:#4B5563;margin-bottom:8px;">Tap ▶️ to open YouTube search results in a new tab.</p>${[
+["Buenos Días","Mo 1","buenos dias cancion infantil español"],
+["Los Pollitos Dicen","Mo 1","los pollitos dicen canticos"],
+["Cabeza Hombros Rodillas Pies","Mo 2","cabeza hombros rodillas pies cancion infantil"],
+["Pin Pon","Mo 2","pin pon es un muñeco cancion"],
+["Estrellita ¿Dónde Estás?","Mo 3","estrellita donde estas español cancion infantil"],
+["Arroz con Leche","Mo 4","arroz con leche cancion infantil"],
+["La Vaca Lola","Mo 5","la vaca lola cancion"],
+["Un Elefante Se Balanceaba","Mo 6","un elefante se balanceaba cancion"],
+["De Colores","Mo 7+","de colores cancion tradicional español"]
+].map(([n,w,q])=>`<div class="song-item"><div class="song-row"><button class="song-play" onclick="openSong('${encodeURIComponent(q)}')">▶️</button><div style="flex:1"><button onclick="openSong('${encodeURIComponent(q)}')" style="background:none;text-align:left;width:100%;"><b style="font-size:13px;color:var(--ink)">${n}</b></button><div>${spB(n)} <span style="font-size:11px;color:var(--gr)">${w}</span></div></div></div></div>`).join('')}</div></div>`;
+
+h+=`<div class="subpg ${morePage==='cg'?'act':''}" id="m-cg"><button class="back-btn" onclick="openMore('grid')">← Back to More</button><div class="card hl-gold"><h3>🔗 Bilingual Bonus: Cognates</h3><p>These words sound similar in English and Spanish — you already know more than you think! Honduras's Caribbean coast has English-Creole influence, making these even more familiar.</p></div>
+<div class="card"><h3>Words You Already Know</h3>${[["Chocolate","Chocolate — from Nahuatl, same word!"],["Hospital","Hospital — identical"],["Familia","Family — sounds similar"],["Música","Music — add an accent"],["Animal","Animal — exactly the same"],["Teléfono","Telephone — easy cognate"],["Banana / Guineo","Banana — Caribbean English root"],["Limón","Lemon — close enough"],["Importante","Important — just add -e"],["Información","Information — swap the ending"],["Natural","Natural — identical"],["Tropical","Tropical — same in Florida!"]].map(([a,b])=>`<div class="vp"><span class="ve">${a.split('/')[0].trim()} ${spB(a.split('/')[0].trim())}</span><span class="vn">${b}</span></div>`).join('')}</div>
+<div class="card hl-teal"><h3>💡 The -tion → -ción Cheat Code</h3><p>Almost ANY English word ending in "-tion" becomes Spanish by changing it to "-ción": nation→nación, education→educación, information→información, celebration→celebración, communication→comunicación. You just unlocked hundreds of words!</p></div></div>`;
+
+h+=`<div class="subpg ${morePage==='st'?'act':''}" id="m-st"><button class="back-btn" onclick="openMore('grid')">← Back to More</button><div class="card"><h3>⚙️ Your Profile</h3>
+<p style="margin-bottom:12px;">Tap to update your info.</p>
+<div style="background:var(--grl);padding:14px;border-radius:var(--rs);margin-bottom:8px;"><b>Name:</b> ${profile?profile.name:'Not set'}</div>
+<div style="background:var(--grl);padding:14px;border-radius:var(--rs);margin-bottom:8px;"><b>Child:</b> ${profile?profile.child:'Not set'}</div>
+<div style="background:var(--grl);padding:14px;border-radius:var(--rs);margin-bottom:8px;"><b>Child's age:</b> ${profile?profile.age+' years':'Not set'}</div>
+<div style="background:var(--grl);padding:14px;border-radius:var(--rs);margin-bottom:8px;"><b>Spanish level:</b> ${profile?['🌱 Zero','🌿 A little','🌳 Some'][profile.level]:'Not set'}</div>
+<button onclick="editProfile()" style="width:100%;padding:12px;border-radius:50px;background:var(--terra);color:var(--w);font-weight:700;font-size:14px;margin-top:12px;">Edit Profile</button>
+</div>
+<div class="card"><h3>🎓 App Tour</h3><p style="margin-bottom:8px;">Watch the walkthrough again to learn how the app works.</p><button onclick="walkStep=0;walkActive=true;L.s('walkDone',false);showWalk();" style="padding:10px 20px;border-radius:50px;background:var(--teal);color:var(--w);font-weight:700;font-size:13px;">Replay Tour</button></div>
+<div class="card hl-gold"><h3>📊 Reset Progress</h3><p style="margin-bottom:8px;">Start completely fresh. This cannot be undone.</p><button onclick="if(confirm('Reset ALL progress?')){localStorage.clear();location.reload();}" style="padding:10px 20px;border-radius:50px;background:var(--terra);color:var(--w);font-weight:700;font-size:13px;">Reset Everything</button></div></div>`;
+document.getElementById('p-more').innerHTML=h;}
+function openMore(id){morePage=id;rM();}
+function goMore(id){
+  document.querySelectorAll('.nb').forEach(x=>x.classList.remove('act'));
+  document.querySelectorAll('.pg').forEach(p=>p.classList.remove('act'));
+  document.querySelector('[data-p="more"]').classList.add('act');
+  document.getElementById('p-more').classList.add('act');
+  openMore(id);
+}
+
+
+const WALK_STEPS=[
+  {emoji:'👋',title:'Welcome to ¡Vamos!',body:'This is your 12-month Spanish learning app for you and your toddler. Let me show you around — it takes 30 seconds.',btn:'Show me →'},
+  {emoji:'📋',title:'These are your daily tasks',body:'Every day you get 8 small activities. Tap any task to see instructions and Spanish phrases you can hear spoken. Check them off as you go.',btn:'Next →',action:function(){document.querySelector('[data-p="home"]').click();}},
+  {emoji:'📖',title:'Your 48-week curriculum',body:'Tap Learn at the bottom. Open Phase 1 → Week 1 for step-by-step lessons. Each week tells you exactly what to do — which videos, phrases, and songs.',btn:'Next →',action:function(){document.querySelector('[data-p="learn"]').click();}},
+  {emoji:'🃏',title:'Flashcards & Quiz',body:'Cards has 12 vocabulary decks — tap to flip, tap 🔊 to hear. Quiz tests you with 10 random questions. Both track your progress.',btn:'Next →',action:function(){document.querySelector('[data-p="cards"]').click();}},
+  {emoji:'👶',title:'Toddler Mode',body:'See the gold TODDLER button? Tap it anytime to let your child play. They tap pictures to hear Spanish words, play counting and color games, and bang on punta drums. The exit button requires a 3-second hold so they can\'t escape.',btn:'Next →',action:function(){document.querySelector('[data-p="home"]').click();}},
+  {emoji:'🧰',title:'Quick Tools',body:'This scrollable strip has shortcuts to the Schedule, Honduran Guide, Songs, Resources, and more. You don\'t have to dig for anything — it\'s all right here.',btn:'Next →'},
+  {emoji:'🔊',title:'Tap 🔊 to hear any word',body:'Everywhere you see a gold 🔊 button, tap it to hear the Spanish word spoken out loud. The gold boxes show phonetic pronunciation so you know exactly how to say it.',btn:'Next →'},
+  {emoji:'💾',title:'Your progress saves automatically',body:'Every task you check, every week you complete, every flashcard you flip — it all saves to your phone. You\'ll see a ✓ Saved notification each time. Just keep using the same phone.',btn:'Next →'},
+  {emoji:'🚀',title:'You\'re ready!',body:'Start with the Today tab. Check off tasks as you do them. Open Learn → Phase 1 → Week 1 when you\'re ready to dive in. ¡Va pues!',btn:'¡Vamos! Let\'s go! 🇭🇳'}
+];
+
+function showWalk(){
+  if(!walkActive)return;
+  const step=WALK_STEPS[walkStep];
+  if(!step){endWalk();return;}
+  if(step.action)step.action();
+  const dots=WALK_STEPS.map((_,i)=>`<div class="walk-dot ${i===walkStep?'act':''}"></div>`).join('');
+  const isLast=walkStep===WALK_STEPS.length-1;
+  let overlay=document.getElementById('walk-overlay');
+  if(!overlay){overlay=document.createElement('div');overlay.id='walk-overlay';overlay.className='walk-overlay';document.body.appendChild(overlay);}
+  overlay.innerHTML=`<div class="walk-card"><div class="walk-emoji">${step.emoji}</div><h3>${step.title}</h3><p>${step.body}</p><div class="walk-btns">${!isLast?'<button class="walk-skip" onclick="endWalk()">Skip tour</button>':''}<button class="walk-next" onclick="${isLast?'endWalk()':'nextWalk()'}">${step.btn}</button></div><div class="walk-dots">${dots}</div></div>`;
+  overlay.style.display='flex';
+}
+
+function nextWalk(){walkStep++;showWalk();}
+
+function endWalk(){
+  walkActive=false;
+  L.s('walkDone',true);
+  const overlay=document.getElementById('walk-overlay');
+  if(overlay)overlay.style.display='none';
+  document.querySelector('[data-p="home"]').click();
+}
+
+function openSong(query){ window.open('https://www.youtube.com/results?search_query=' + query, '_blank'); }
+document.getElementById('color-dots').addEventListener('click',e=>{const b=e.target.closest('[data-color]');if(!b)return;checkColor(b.dataset.color);});
+
+/* ===== INIT ===== */
+showOnboard();
+rH();rL();dk=sh([...V[cD]]);rC();rQ();rM();renderToys();
+</script>
+</body>
+</html>
