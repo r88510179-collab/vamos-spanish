@@ -355,6 +355,9 @@ Fill in your info below and tap ¡Vamos! <span style="font-size:11px;opacity:.7;
 <button class="tt-tab" onclick="setTCat('body',this)">🖐️ Body</button>
 <button class="tt-tab" onclick="setTCat('count',this)">🔢 Count</button>
 <button class="tt-tab" onclick="setTCat('nature',this)">🌴 Nature</button>
+<button class="tt-tab" onclick="setTCat('bubbles',this)">🫧 Bubbles</button>
+<button class="tt-tab" onclick="setTCat('memory',this)">🧠 Memory</button>
+<button class="tt-tab" onclick="setTCat('paint',this)">🎨 Paint</button>
 </div>
 
 <div class="toy-grid" id="toyGrid"></div>
@@ -385,6 +388,31 @@ Fill in your info below and tap ¡Vamos! <span style="font-size:11px;opacity:.7;
 <div id="color-prompt" style="font-family:'Baloo 2';font-size:26px;text-align:center;margin:12px 0;color:var(--ink);">Toca ROJO</div>
 <div id="color-dots" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px;"></div>
 <div id="color-result" style="font-family:'Baloo 2';font-size:24px;text-align:center;margin-top:12px;min-height:36px;"></div>
+</div>
+
+<!-- Bubble Pop Game -->
+<div id="bubble-game" style="display:none;margin-top:24px;background:var(--w);border-radius:20px;padding:16px;border:4px solid var(--ink);position:relative;overflow:hidden;min-height:400px;">
+<h3 style="font-family:'Baloo 2';font-size:22px;text-align:center;">🫧 ¡Revienta las Burbujas!</h3>
+<p style="text-align:center;font-size:13px;color:var(--gr);margin-bottom:8px;">Tap the bubbles!</p>
+<div id="bubble-score" style="text-align:center;font-family:'Baloo 2';font-size:18px;color:var(--teal);">⭐ 0</div>
+<div id="bubble-area" style="position:relative;width:100%;height:320px;overflow:hidden;border-radius:16px;background:linear-gradient(180deg,#E0F7FA,#B2EBF2);margin-top:8px;"></div>
+</div>
+
+<!-- Memory Match Game -->
+<div id="memory-game" style="display:none;margin-top:24px;background:var(--w);border-radius:20px;padding:24px;border:4px solid var(--ink);">
+<h3 style="font-family:'Baloo 2';font-size:22px;text-align:center;">🧠 ¡Memoria!</h3>
+<p style="text-align:center;font-size:13px;color:var(--gr);">Find the matching pairs!</p>
+<div id="mem-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px;"></div>
+<div id="mem-result" style="font-family:'Baloo 2';font-size:22px;text-align:center;margin-top:12px;min-height:32px;"></div>
+<button onclick="startMemory()" style="display:block;margin:12px auto 0;padding:10px 24px;border-radius:50px;background:var(--ink);color:var(--gold);font-weight:800;font-size:14px;border:3px solid var(--gold);">🔄 New Game</button>
+</div>
+
+<!-- Finger Paint Game -->
+<div id="paint-game" style="display:none;margin-top:24px;background:var(--w);border-radius:20px;padding:16px;border:4px solid var(--ink);">
+<h3 style="font-family:'Baloo 2';font-size:22px;text-align:center;">🎨 ¡Vamos a Pintar!</h3>
+<canvas id="paint-canvas" style="width:100%;height:300px;border-radius:16px;border:3px solid var(--bd);background:#FFFDE7;touch-action:none;"></canvas>
+<div style="display:flex;gap:8px;justify-content:center;margin-top:12px;flex-wrap:wrap;" id="paint-colors"></div>
+<button onclick="clearPaint()" style="display:block;margin:10px auto 0;padding:10px 24px;border-radius:50px;background:var(--ink);color:var(--gold);font-weight:800;font-size:14px;border:3px solid var(--gold);">🗑️ Borrar</button>
 </div>
 
 <div class="punta-pad">
@@ -855,16 +883,23 @@ function cancelExit(){if(exitTimer){clearInterval(exitTimer);exitTimer=null;}if(
 if(exitBtn){exitBtn.addEventListener('mousedown',startExit);exitBtn.addEventListener('mouseup',cancelExit);exitBtn.addEventListener('mouseleave',cancelExit);
 exitBtn.addEventListener('touchstart',e=>{e.preventDefault();startExit();});exitBtn.addEventListener('touchend',cancelExit);exitBtn.addEventListener('touchcancel',cancelExit);}
 function renderToys(){
-  const items=tCat==='all'?sh(TOYS).slice(0,12):TOYS.filter(t=>t.cat===tCat);
+  const gameCats=['bubbles','memory','paint'];
+  const items=tCat==='all'?sh(TOYS).slice(0,12):gameCats.includes(tCat)?[]:TOYS.filter(t=>t.cat===tCat);
   const lblKey=appLang==='en'?'en':'es';const spkKey=appLang==='en'?'en':'es';
   document.getElementById('toyGrid').innerHTML=items.map(t=>`<button class="toy-btn" data-speak="${t[spkKey]}">${t.emoji}<span class="toy-lbl">${t[lblKey]}</span></button>`).join('');
   document.getElementById('count-game').style.display=tCat==='count'?'block':'none';
   document.getElementById('color-game').style.display=tCat==='colors'?'block':'none';
+  document.getElementById('bubble-game').style.display=tCat==='bubbles'?'block':'none';
+  document.getElementById('memory-game').style.display=tCat==='memory'?'block':'none';
+  document.getElementById('paint-game').style.display=tCat==='paint'?'block':'none';
   const matchCats=['animals','food','body','nature'];
   document.getElementById('match-game').style.display=matchCats.includes(tCat)?'block':'none';
   if(tCat==='colors')startColorGame();
   if(tCat==='count')updCount();
   if(matchCats.includes(tCat))startMatchGame(tCat);
+  if(tCat==='bubbles')setTimeout(startBubbles,100);
+  if(tCat==='memory')startMemory();
+  if(tCat==='paint')setTimeout(initPaint,100);
 }
 const MATCH_TITLES={animals:'🐾 ¡Toca el Animal!',food:'🍎 ¡Toca la Comida!',body:'🖐️ ¡Toca!',nature:'🌴 ¡Toca!'};
 let matchTarget=null;
@@ -900,6 +935,151 @@ function checkColor(picked){
   const res=document.getElementById('color-result');
   if(picked===colorTarget.es){res.textContent='🎉 ¡Sí! ¡'+colorTarget.es+'!';res.style.color='var(--teal)';confetti();speak('¡Muy bien! '+colorTarget.es);setTimeout(startColorGame,2000);}
   else{res.textContent='🔄 ¡Otra vez!';res.style.color='var(--terra)';speak('No, otra vez');}
+}
+
+/* ===== BUBBLE POP GAME ===== */
+let bubbleRAF=0,bubbleScore=0,bubbles=[];
+function startBubbles(){
+  bubbleScore=0;document.getElementById('bubble-score').textContent='⭐ 0';
+  bubbles=[];if(bubbleRAF)cancelAnimationFrame(bubbleRAF);
+  const area=document.getElementById('bubble-area');
+  area.innerHTML='';
+  spawnBubble();spawnBubble();spawnBubble();
+  animateBubbles();
+}
+function spawnBubble(){
+  const area=document.getElementById('bubble-area');
+  if(!area||!area.offsetWidth)return;
+  const pool=sh([...TOYS]);const t=pool[0];
+  const lblKey=appLang==='en'?'en':'es';
+  const b=document.createElement('button');
+  b.style.cssText='position:absolute;border:none;background:rgba(255,255,255,0.85);border-radius:50%;width:72px;height:72px;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(0,0,0,0.15);font-size:32px;transition:transform 0.1s;cursor:pointer;z-index:1;';
+  b.style.left=Math.random()*(area.offsetWidth-72)+'px';
+  b.style.bottom='-80px';
+  b.innerHTML=t.emoji+'<span style="font-size:10px;font-family:Baloo 2;font-weight:700;color:#1A1B4B;margin-top:-2px;">'+t[lblKey]+'</span>';
+  b.dataset.word=t[lblKey];
+  b.dataset.speed=(1+Math.random()*1.5).toFixed(1);
+  b.addEventListener('click',function(e){
+    e.stopPropagation();
+    speak(this.dataset.word);
+    bubbleScore++;
+    document.getElementById('bubble-score').textContent='⭐ '+bubbleScore;
+    this.style.transform='scale(1.5)';this.style.opacity='0';
+    if(bubbleScore%5===0)confetti();
+    setTimeout(()=>{this.remove();spawnBubble();},300);
+  });
+  area.appendChild(b);
+  bubbles.push(b);
+}
+function animateBubbles(){
+  const area=document.getElementById('bubble-area');
+  if(!area||tCat!=='bubbles'){bubbleRAF=0;return;}
+  bubbles=bubbles.filter(b=>b.parentElement);
+  bubbles.forEach(b=>{
+    const cur=parseFloat(b.style.bottom)||0;
+    const spd=parseFloat(b.dataset.speed)||1;
+    b.style.bottom=(cur+spd)+'px';
+    if(cur>area.offsetHeight+80){b.remove();spawnBubble();}
+  });
+  bubbleRAF=requestAnimationFrame(animateBubbles);
+}
+
+/* ===== MEMORY MATCH GAME ===== */
+let memCards=[],memFlipped=[],memMatched=0,memLocked=false;
+function startMemory(){
+  memFlipped=[];memMatched=0;memLocked=false;
+  document.getElementById('mem-result').textContent='';
+  const pool=sh([...TOYS]).slice(0,4);
+  const lblKey=appLang==='en'?'en':'es';
+  const pairs=[...pool,...pool];
+  memCards=sh(pairs);
+  const grid=document.getElementById('mem-grid');
+  grid.style.gridTemplateColumns=memCards.length>6?'repeat(4,1fr)':'repeat(3,1fr)';
+  grid.innerHTML=memCards.map((c,i)=>`<button id="mc${i}" onclick="flipMem(${i})" style="height:80px;border-radius:16px;border:4px solid var(--ink);background:var(--ink);color:var(--gold);font-size:36px;box-shadow:0 4px 0 #0d0d2e;display:flex;align-items:center;justify-content:center;font-family:Baloo 2;font-weight:800;">?</button>`).join('');
+}
+function flipMem(i){
+  if(memLocked)return;
+  const btn=document.getElementById('mc'+i);
+  if(!btn||btn.dataset.matched||memFlipped.includes(i))return;
+  const c=memCards[i];
+  const lblKey=appLang==='en'?'en':'es';
+  btn.textContent=c.emoji;
+  btn.style.background='var(--w)';btn.style.color='var(--ink)';
+  speak(c[lblKey]);
+  memFlipped.push(i);
+  if(memFlipped.length===2){
+    memLocked=true;
+    const[a,b]=memFlipped;
+    if(memCards[a].es===memCards[b].es){
+      document.getElementById('mc'+a).dataset.matched='1';
+      document.getElementById('mc'+b).dataset.matched='1';
+      document.getElementById('mc'+a).style.background='var(--teall)';
+      document.getElementById('mc'+a).style.borderColor='var(--teal)';
+      document.getElementById('mc'+b).style.background='var(--teall)';
+      document.getElementById('mc'+b).style.borderColor='var(--teal)';
+      memMatched++;confetti();
+      if(memMatched>=memCards.length/2){
+        document.getElementById('mem-result').textContent='🎉 ¡Ganaste!';
+        speak('¡Muy bien! ¡Ganaste!');
+      }
+      memFlipped=[];memLocked=false;
+    }else{
+      setTimeout(()=>{
+        document.getElementById('mc'+a).textContent='?';
+        document.getElementById('mc'+a).style.background='var(--ink)';document.getElementById('mc'+a).style.color='var(--gold)';
+        document.getElementById('mc'+b).textContent='?';
+        document.getElementById('mc'+b).style.background='var(--ink)';document.getElementById('mc'+b).style.color='var(--gold)';
+        memFlipped=[];memLocked=false;
+      },800);
+    }
+  }
+}
+
+/* ===== FINGER PAINT GAME ===== */
+let paintCtx=null,paintColor='#E53E3E',paintInit=false;
+const PAINT_COLORS=[
+  {hex:'#E53E3E',es:'Rojo',en:'Red'},
+  {hex:'#3182CE',es:'Azul',en:'Blue'},
+  {hex:'#38A169',es:'Verde',en:'Green'},
+  {hex:'#ECC94B',es:'Amarillo',en:'Yellow'},
+  {hex:'#DD6B20',es:'Naranja',en:'Orange'},
+  {hex:'#805AD5',es:'Morado',en:'Purple'},
+  {hex:'#D53F8C',es:'Rosado',en:'Pink'},
+  {hex:'#1A1B4B',es:'Negro',en:'Black'}
+];
+function initPaint(){
+  const canvas=document.getElementById('paint-canvas');
+  if(!canvas)return;
+  canvas.width=canvas.offsetWidth*2;canvas.height=canvas.offsetHeight*2;
+  canvas.style.width=canvas.offsetWidth+'px';canvas.style.height=canvas.offsetHeight+'px';
+  paintCtx=canvas.getContext('2d');
+  paintCtx.scale(2,2);
+  paintCtx.lineCap='round';paintCtx.lineJoin='round';paintCtx.lineWidth=8;
+  clearPaint();
+  if(!paintInit){
+    paintInit=true;
+    let drawing=false;
+    function getPos(e){
+      const r=canvas.getBoundingClientRect();
+      const t=e.touches?e.touches[0]:e;
+      return{x:t.clientX-r.left,y:t.clientY-r.top};
+    }
+    canvas.addEventListener('touchstart',e=>{e.preventDefault();drawing=true;const p=getPos(e);paintCtx.beginPath();paintCtx.moveTo(p.x,p.y);},{passive:false});
+    canvas.addEventListener('touchmove',e=>{e.preventDefault();if(!drawing)return;const p=getPos(e);paintCtx.strokeStyle=paintColor;paintCtx.lineTo(p.x,p.y);paintCtx.stroke();},{passive:false});
+    canvas.addEventListener('touchend',()=>{drawing=false;});
+    canvas.addEventListener('mousedown',e=>{drawing=true;const p=getPos(e);paintCtx.beginPath();paintCtx.moveTo(p.x,p.y);});
+    canvas.addEventListener('mousemove',e=>{if(!drawing)return;const p=getPos(e);paintCtx.strokeStyle=paintColor;paintCtx.lineTo(p.x,p.y);paintCtx.stroke();});
+    canvas.addEventListener('mouseup',()=>{drawing=false;});
+  }
+  const lblKey=appLang==='en'?'en':'es';
+  document.getElementById('paint-colors').innerHTML=PAINT_COLORS.map(c=>`<button onclick="setPaintColor('${c.hex}','${c[lblKey]}')" style="width:40px;height:40px;border-radius:50%;background:${c.hex};border:3px solid ${c.hex==='#ECC94B'?'#B7791F':'var(--ink)'};box-shadow:0 3px 0 rgba(0,0,0,0.2);"></button>`).join('');
+}
+function setPaintColor(hex,name){paintColor=hex;speak(name);}
+function clearPaint(){
+  if(!paintCtx)return;
+  const canvas=document.getElementById('paint-canvas');
+  paintCtx.clearRect(0,0,canvas.width,canvas.height);
+  speak('Borrar');
 }
 
 /* ===== NAV ===== */
