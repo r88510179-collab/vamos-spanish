@@ -1155,7 +1155,8 @@ function toggleSong(i,vid){
   if(wrap.style.display==='block'){wrap.style.display='none';iframe.src='';return;}
   document.querySelectorAll('[id^="sf"]').forEach(el=>{el.style.display='none';const f=el.querySelector('iframe');if(f)f.src='';});
   wrap.style.display='block';
-  iframe.src='https://www.youtube-nocookie.com/embed/'+vid+'?autoplay=1&rel=0';
+  iframe.src='https://www.youtube.com/embed/'+vid+'?autoplay=1&rel=0';
+  iframe.style.height='215px';iframe.style.width='100%';
   wrap.scrollIntoView({behavior:'smooth',block:'nearest'});
 }
 document.getElementById('color-dots').addEventListener('click',e=>{const b=e.target.closest('[data-color]');if(!b)return;checkColor(b.dataset.color);});
