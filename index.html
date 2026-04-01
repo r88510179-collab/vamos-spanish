@@ -371,6 +371,14 @@ Fill in your info below and tap ¡Vamos! <span style="font-size:11px;opacity:.7;
 </div>
 </div>
 
+<!-- Match Game (all categories) -->
+<div id="match-game" style="display:none;margin-top:24px;background:var(--w);border-radius:20px;padding:24px;border:4px solid var(--ink);">
+<h3 id="match-title" style="font-family:'Baloo 2';font-size:22px;text-align:center;">🎯 ¡Toca!</h3>
+<div id="match-prompt" style="font-family:'Baloo 2';font-size:26px;text-align:center;margin:12px 0;color:var(--ink);"></div>
+<div id="match-opts" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px;"></div>
+<div id="match-result" style="font-family:'Baloo 2';font-size:24px;text-align:center;margin-top:12px;min-height:36px;"></div>
+</div>
+
 <!-- Color Match Game -->
 <div id="color-game" style="display:none;margin-top:24px;background:var(--w);border-radius:20px;padding:24px;border:4px solid var(--ink);">
 <h3 style="font-family:'Baloo 2';font-size:22px;text-align:center;">🎨 ¡Toca el Color!</h3>
@@ -852,8 +860,30 @@ function renderToys(){
   document.getElementById('toyGrid').innerHTML=items.map(t=>`<button class="toy-btn" data-speak="${t[spkKey]}">${t.emoji}<span class="toy-lbl">${t[lblKey]}</span></button>`).join('');
   document.getElementById('count-game').style.display=tCat==='count'?'block':'none';
   document.getElementById('color-game').style.display=tCat==='colors'?'block':'none';
+  const matchCats=['animals','food','body','nature'];
+  document.getElementById('match-game').style.display=matchCats.includes(tCat)?'block':'none';
   if(tCat==='colors')startColorGame();
   if(tCat==='count')updCount();
+  if(matchCats.includes(tCat))startMatchGame(tCat);
+}
+const MATCH_TITLES={animals:'🐾 ¡Toca el Animal!',food:'🍎 ¡Toca la Comida!',body:'🖐️ ¡Toca!',nature:'🌴 ¡Toca!'};
+let matchTarget=null;
+function startMatchGame(cat){
+  const pool=sh(TOYS.filter(t=>t.cat===cat));
+  if(pool.length<4)return;
+  matchTarget=pool[0];
+  const lblKey=appLang==='en'?'en':'es';
+  document.getElementById('match-title').textContent=MATCH_TITLES[cat]||'🎯 ¡Toca!';
+  document.getElementById('match-prompt').innerHTML=`Toca <b>${matchTarget[lblKey]}</b>`;
+  speak('Toca '+matchTarget[lblKey]);
+  document.getElementById('match-result').textContent='';
+  document.getElementById('match-opts').innerHTML=pool.slice(0,4).map(t=>`<button style="background:var(--w);border:5px solid var(--ink);border-radius:20px;padding:18px 10px;font-size:44px;box-shadow:0 6px 0 var(--ink);text-align:center;" data-match="${t[lblKey]}" onclick="checkMatch('${t[lblKey].replace(/'/g,"\\'")}')">${t.emoji}<span style="display:block;font-family:'Baloo 2';font-size:14px;color:var(--ink);margin-top:4px;">${t[lblKey]}</span></button>`).join('');
+}
+function checkMatch(picked){
+  const res=document.getElementById('match-result');
+  const lblKey=appLang==='en'?'en':'es';
+  if(picked===matchTarget[lblKey]){res.textContent='🎉 ¡Sí! ¡'+matchTarget[lblKey]+'!';res.style.color='var(--teal)';confetti();speak('¡Muy bien! '+matchTarget[lblKey]);setTimeout(()=>startMatchGame(matchTarget.cat),2000);}
+  else{res.textContent='🔄 ¡Otra vez!';res.style.color='var(--terra)';speak('No, otra vez');}
 }
 function setTCat(c,btn){tCat=c;document.querySelectorAll('.tt-tab').forEach(t=>{t.classList.remove('act');});btn.classList.add('act');renderToys();}
 function countNav(dir){countN=Math.max(1,Math.min(10,countN+dir));updCount();}
