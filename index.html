@@ -838,7 +838,7 @@ async function playDrum(t){
 }
 
 /* ===== TODDLER MODE ===== */
-function toggleTM(){const tm=document.getElementById('tmode');const entering=!tm.classList.contains('act');tm.classList.toggle('act');if(entering){try{document.documentElement.requestFullscreen?.();}catch(e){}for(let i=0;i<5;i++)history.pushState({toddler:true},'');window.addEventListener('popstate',tmPopTrap);}else{try{document.exitFullscreen?.();}catch(e){}window.removeEventListener('popstate',tmPopTrap);}if(profile)document.getElementById('tm-greeting').textContent='¡Hola '+profile.child+'!';}
+function toggleTM(){const tm=document.getElementById('tmode');const entering=!tm.classList.contains('act');tm.classList.toggle('act');if(entering){try{document.documentElement.requestFullscreen?.();}catch(e){}for(let i=0;i<5;i++)history.pushState({toddler:true},'');window.addEventListener('popstate',tmPopTrap);}else{try{document.exitFullscreen?.();}catch(e){}window.removeEventListener('popstate',tmPopTrap);history.replaceState({},'');}if(profile)document.getElementById('tm-greeting').textContent='¡Hola '+profile.child+'!';}
 function tmPopTrap(e){if(document.getElementById('tmode').classList.contains('act')){history.pushState({toddler:true},'');}}
 let exitTimer=null;let exitCount=3;
 const exitBtn=document.getElementById('tm-lock-exit');
