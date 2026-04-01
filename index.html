@@ -809,7 +809,7 @@ function showSaved(){const t=document.getElementById('toast');if(!t)return;t.cla
 function rd(){if(S.dd!==localDay()){S.dc={};S.dd=localDay();sv();}}
 
 /* ===== SPEECH ===== */
-function speak(t){if(!('speechSynthesis' in window))return;speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang=appLang==='en'?'en-US':'es-MX';u.rate=.85;u.pitch=1.2;const vs=speechSynthesis.getVoices(),v=vs.find(x=>x.lang.startsWith(appLang==='en'?'en-US':'es-MX'))||vs.find(x=>x.lang.startsWith(appLang==='en'?'en':'es'));if(v)u.voice=v;speechSynthesis.speak(u);}
+function speak(t){if(!('speechSynthesis' in window))return;speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang=appLang==='en'?'en-US':'es-MX';const inTM=document.getElementById('tmode').classList.contains('act');u.rate=inTM?1.05:.85;u.pitch=inTM?1.6:1.2;const vs=speechSynthesis.getVoices(),v=vs.find(x=>x.lang.startsWith(appLang==='en'?'en-US':'es-MX'))||vs.find(x=>x.lang.startsWith(appLang==='en'?'en':'es'));if(v)u.voice=v;speechSynthesis.speak(u);}
 if('speechSynthesis' in window)speechSynthesis.getVoices();
 function spB(t){return `<button class="spk" data-speak="${t.replace(/"/g,'&quot;')}">🔊</button>`;}
 function sh(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=0|Math.random()*(i+1);[b[i],b[j]]=[b[j],b[i]];}return b;}
