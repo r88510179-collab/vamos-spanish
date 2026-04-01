@@ -801,7 +801,7 @@ function showSaved(){const t=document.getElementById('toast');if(!t)return;t.cla
 function rd(){if(S.dd!==localDay()){S.dc={};S.dd=localDay();sv();}}
 
 /* ===== SPEECH ===== */
-function speak(t){if(!('speechSynthesis' in window))return;speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang='es-MX';u.rate=.8;const vs=speechSynthesis.getVoices(),v=vs.find(x=>x.lang.startsWith('es-MX'))||vs.find(x=>x.lang.startsWith('es'));if(v)u.voice=v;speechSynthesis.speak(u);}
+function speak(t){if(!('speechSynthesis' in window))return;speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang=appLang==='en'?'en-US':'es-MX';u.rate=.85;u.pitch=1.2;const vs=speechSynthesis.getVoices(),v=vs.find(x=>x.lang.startsWith(appLang==='en'?'en-US':'es-MX'))||vs.find(x=>x.lang.startsWith(appLang==='en'?'en':'es'));if(v)u.voice=v;speechSynthesis.speak(u);}
 if('speechSynthesis' in window)speechSynthesis.getVoices();
 function spB(t){return `<button class="spk" data-speak="${t.replace(/"/g,'&quot;')}">🔊</button>`;}
 function sh(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=0|Math.random()*(i+1);[b[i],b[j]]=[b[j],b[i]];}return b;}
@@ -838,7 +838,8 @@ async function playDrum(t){
 }
 
 /* ===== TODDLER MODE ===== */
-function toggleTM(){const tm=document.getElementById('tmode');tm.classList.toggle('act');if(document.getElementById('tmode').classList.contains('act')){try{document.documentElement.requestFullscreen?.();}catch(e){}}else{try{document.exitFullscreen?.();}catch(e){}}if(profile)document.getElementById('tm-greeting').textContent='¡Hola '+profile.child+'!';}
+function toggleTM(){const tm=document.getElementById('tmode');const entering=!tm.classList.contains('act');tm.classList.toggle('act');if(entering){try{document.documentElement.requestFullscreen?.();}catch(e){}for(let i=0;i<5;i++)history.pushState({toddler:true},'');window.addEventListener('popstate',tmPopTrap);}else{try{document.exitFullscreen?.();}catch(e){}window.removeEventListener('popstate',tmPopTrap);}if(profile)document.getElementById('tm-greeting').textContent='¡Hola '+profile.child+'!';}
+function tmPopTrap(e){if(document.getElementById('tmode').classList.contains('act')){history.pushState({toddler:true},'');}}
 let exitTimer=null;let exitCount=3;
 const exitBtn=document.getElementById('tm-lock-exit');
 function startExit(){if(!exitBtn)return;exitCount=3;exitBtn.textContent='Exiting 3...';exitTimer=setInterval(()=>{exitCount--;if(exitCount<=0){clearInterval(exitTimer);exitTimer=null;exitBtn.textContent='🔒 Hold to Exit';toggleTM();}else{exitBtn.textContent='Exiting '+exitCount+'...';}},1000);}
@@ -847,7 +848,8 @@ if(exitBtn){exitBtn.addEventListener('mousedown',startExit);exitBtn.addEventList
 exitBtn.addEventListener('touchstart',e=>{e.preventDefault();startExit();});exitBtn.addEventListener('touchend',cancelExit);exitBtn.addEventListener('touchcancel',cancelExit);}
 function renderToys(){
   const items=tCat==='all'?sh(TOYS).slice(0,12):TOYS.filter(t=>t.cat===tCat);
-  document.getElementById('toyGrid').innerHTML=items.map(t=>`<button class="toy-btn" data-speak="${t.es}">${t.emoji}<span class="toy-lbl">${t.es}</span></button>`).join('');
+  const lblKey=appLang==='en'?'en':'es';const spkKey=appLang==='en'?'en':'es';
+  document.getElementById('toyGrid').innerHTML=items.map(t=>`<button class="toy-btn" data-speak="${t[spkKey]}">${t.emoji}<span class="toy-lbl">${t[lblKey]}</span></button>`).join('');
   document.getElementById('count-game').style.display=tCat==='count'?'block':'none';
   document.getElementById('color-game').style.display=tCat==='colors'?'block':'none';
   if(tCat==='colors')startColorGame();
@@ -963,28 +965,29 @@ function tgS(k){S.sd[k]=!S.sd[k];if(S.sd[k])confetti();sv();showSaved();rL();}
 /* ===== FLASHCARDS ===== */
 let cD="Greetings",cI=0,dk=[],fK=0,fA=0,fl=false;
 let vocabLevel=0;
+let appLang=L.g('appLang','es');
 const LVL={1:'🌱 Beginner',2:'🌿 Growing',3:'🌳 Confident'};
 function sD(n){cD=n;dk=sh([...V[n]].filter(c=>vocabLevel===0||c.lv===vocabLevel));cI=0;fK=0;fA=0;fl=false;rC();}
 function rC(){const ds=Object.keys(V);const allCount=V[cD].length;const filtCount=V[cD].filter(c=>vocabLevel===0||c.lv===vocabLevel).length;let h=`<div class="pt">🃏 Flashcards</div><p class="ps">Tap to flip · 🔊 for pronunciation</p><div style="display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap;"><button onclick="vocabLevel=0;sD('${cD}')" class="dkb ${vocabLevel===0?'act':''}">All</button><button onclick="vocabLevel=1;sD('${cD}')" class="dkb ${vocabLevel===1?'act':''}" style="${vocabLevel!==1?'border-color:var(--teal);color:var(--teal);':''}">🌱 Beginner</button><button onclick="vocabLevel=2;sD('${cD}')" class="dkb ${vocabLevel===2?'act':''}" style="${vocabLevel!==2?'border-color:var(--goldd);color:var(--goldd);':''}">🌿 Growing</button><button onclick="vocabLevel=3;sD('${cD}')" class="dkb ${vocabLevel===3?'act':''}" style="${vocabLevel!==3?'border-color:var(--terra);color:var(--terra);':''}">🌳 Confident</button></div><div style="font-size:11px;color:var(--gr);margin-bottom:10px;">${filtCount} of ${allCount} cards${vocabLevel?' at this level':''}</div><div class="dkp">${ds.map(d=>`<button class="dkb ${d===cD?'act':''}" onclick="sD('${d}')">${d}</button>`).join('')}</div>`;
 if(!dk.length){sD(cD);return;}
 if(cI>=dk.length){h+=`<div class="card" style="text-align:center;padding:30px;"><h3 style="justify-content:center;">Deck Complete! 🎉</h3><div class="qbg">${fK}/${dk.length}</div><p style="color:var(--gr);">Know: <b style="color:var(--teal)">${fK}</b> · Again: <b style="color:var(--terra)">${fA}</b></p><button class="qrb" onclick="sD('${cD}')">Shuffle & Retry</button></div>`;document.getElementById('p-cards').innerHTML=h;return;}
-const c=dk[cI];h+=`<div class="fpg">${cI+1} of ${dk.length}</div><div style="display:flex;gap:14px;justify-content:center;font-size:12px;font-weight:700;margin-bottom:10px;"><span style="color:var(--teal)">✓ ${fK}</span><span style="color:var(--terra)">✗ ${fA}</span></div><div class="fca"><div class="fcc" onclick="fl=!fl;rC()"><div class="fc ${fl?'fl':''}"><div class="ff ffr"><div class="fw">${c.e}</div><div class="fh">${LVL[c.lv]||''}</div><div class="fh">Tap to reveal</div></div><div class="ff fbk"><div class="fw">${c.e}</div><div class="ft">${c.n}</div>${PH[c.e]?`<div style="font-size:12px;color:var(--terra);font-weight:700;margin-top:4px;">🗣 ${PH[c.e]}</div>`:''}${c.x?`<div class="fe">"${c.x}"</div>`:''}</div></div></div><button class="splg" data-speak="${c.e.replace(/"/g,'&quot;')}">🔊</button>${fl?`<div class="fcl"><button class="fcb ba" onclick="fR(0)">🔄 Again</button><button class="fcb bk" onclick="fR(1)">✓ Know it</button></div>`:''}</div>`;
+const c=dk[cI];const cFront=appLang==='en'?c.n:c.e;const cBack=appLang==='en'?c.e:c.n;const cSpeak=appLang==='en'?c.n:c.e;h+=`<div class="fpg">${cI+1} of ${dk.length}</div><div style="display:flex;gap:14px;justify-content:center;font-size:12px;font-weight:700;margin-bottom:10px;"><span style="color:var(--teal)">✓ ${fK}</span><span style="color:var(--terra)">✗ ${fA}</span></div><div class="fca"><div class="fcc" onclick="fl=!fl;rC()"><div class="fc ${fl?'fl':''}"><div class="ff ffr"><div class="fw">${cFront}</div><div class="fh">${LVL[c.lv]||''}</div><div class="fh">Tap to reveal</div></div><div class="ff fbk"><div class="fw">${cBack}</div><div class="ft">${cFront}</div>${PH[c.e]?`<div style="font-size:12px;color:var(--terra);font-weight:700;margin-top:4px;">🗣 ${PH[c.e]}</div>`:''}${c.x?`<div class="fe">"${c.x}"</div>`:''}</div></div></div><button class="splg" data-speak="${cSpeak.replace(/"/g,'&quot;')}">🔊</button>${fl?`<div class="fcl"><button class="fcb ba" onclick="fR(0)">🔄 Again</button><button class="fcb bk" onclick="fR(1)">✓ Know it</button></div>`:''}</div>`;
 document.getElementById('p-cards').innerHTML=h;}
 function fR(k){const c=dk[cI];if(k){fK++;S.fk[c.e]=true;}else{fA++;S.fk[c.e]=false;}sv();cI++;fl=false;rC();}
 
 /* ===== QUIZ ===== */
 let qQ=[],qI=0,qS=0,qA=false;
-function gQ(){const raw=Object.values(V).flat(),all=raw.filter(c=>vocabLevel===0||c.lv===vocabLevel),s=sh([...all]);qQ=s.slice(0,10).map(q=>{const pool=sh(raw.filter(w=>w.n!==q.n).map(w=>w.n));const opts=[q.n];for(const it of pool){if(!opts.includes(it))opts.push(it);if(opts.length===4)break;}return{...q,o:sh(opts)};}).filter(q=>q.o.length===4);qI=0;qS=0;qA=false;rQ();}
+function gQ(){const raw=Object.values(V).flat(),all=raw.filter(c=>vocabLevel===0||c.lv===vocabLevel),s=sh([...all]);qQ=s.slice(0,10).map(q=>{const aKey=appLang==='en'?'e':'n';const pool=sh(raw.filter(w=>w[aKey]!==q[aKey]).map(w=>w[aKey]));const opts=[q[aKey]];for(const it of pool){if(!opts.includes(it))opts.push(it);if(opts.length===4)break;}return{...q,o:sh(opts),aKey};}).filter(q=>q.o.length===4);qI=0;qS=0;qA=false;rQ();}
 function rQ(){let h=`<div class="pt">🧩 Quiz</div>`;
 if(!qQ.length){h+=`<div class="card" style="text-align:center;padding:30px;"><h3 style="justify-content:center;">Ready to test yourself?</h3><p style="margin:8px 0 12px;font-size:13px;color:var(--gr);">10 random questions${vocabLevel?' at '+LVL[vocabLevel]+' level':' from all levels'}</p><div style="display:flex;gap:6px;justify-content:center;margin-bottom:16px;flex-wrap:wrap;"><button onclick="vocabLevel=0;rQ()" class="dkb ${vocabLevel===0?'act':''}">All</button><button onclick="vocabLevel=1;rQ()" class="dkb ${vocabLevel===1?'act':''}" style="${vocabLevel!==1?'border-color:var(--teal);color:var(--teal);':''}">🌱</button><button onclick="vocabLevel=2;rQ()" class="dkb ${vocabLevel===2?'act':''}" style="${vocabLevel!==2?'border-color:var(--goldd);color:var(--goldd);':''}">🌿</button><button onclick="vocabLevel=3;rQ()" class="dkb ${vocabLevel===3?'act':''}" style="${vocabLevel!==3?'border-color:var(--terra);color:var(--terra);':''}">🌳</button></div><button class="qrb" onclick="gQ()">Start Quiz</button></div>`;document.getElementById('p-quiz').innerHTML=h;return;}
 if(qI>=qQ.length){const pc=Math.round(qS/qQ.length*100),mg=pc>=80?"¡Excelente! 🌟":pc>=50?"¡Muy bien! 💪":"¡Sigue! 📚";h+=`<div class="card" style="text-align:center;padding:30px;"><h3 style="justify-content:center;">${mg}</h3><div class="qbg">${qS}/${qQ.length}</div><p style="color:var(--gr)">${pc}%</p><button class="qrb" onclick="gQ()">New Quiz</button></div>`;document.getElementById('p-quiz').innerHTML=h;return;}
-const q=qQ[qI];h+=`<div style="margin-bottom:14px;"><div style="display:flex;justify-content:space-between;font-size:12px;font-weight:600;color:var(--gr);margin-bottom:4px;"><span>Q ${qI+1}/10</span><span>Score: ${qS}</span></div><div class="qpb"><div class="qpf" style="width:${qI/qQ.length*100}%"></div></div></div><div class="qc2"><div style="font-size:13px;color:var(--gr);font-weight:600;">What does this mean?</div><div class="qw">${q.e} <button class="splg" style="width:34px;height:34px;" data-speak="${q.e.replace(/"/g,'&quot;')}">🔊</button></div><div class="qo">${q.o.map((o,i)=>`<button class="qob" id="q${i}" data-qi="${i}" data-qa="${o.replace(/"/g,'&quot;')}">${o}</button>`).join('')}</div></div>`;
+const q=qQ[qI];const qWord=appLang==='en'?q.n:q.e;const qSpeak=appLang==='en'?q.n:q.e;h+=`<div style="margin-bottom:14px;"><div style="display:flex;justify-content:space-between;font-size:12px;font-weight:600;color:var(--gr);margin-bottom:4px;"><span>Q ${qI+1}/10</span><span>Score: ${qS}</span></div><div class="qpb"><div class="qpf" style="width:${qI/qQ.length*100}%"></div></div></div><div class="qc2"><div style="font-size:13px;color:var(--gr);font-weight:600;">${appLang==='en'?'How do you say this in Spanish?':'What does this mean?'}</div><div class="qw">${qWord} <button class="splg" style="width:34px;height:34px;" data-speak="${qSpeak.replace(/"/g,'&quot;')}">🔊</button></div><div class="qo">${q.o.map((o,i)=>`<button class="qob" id="q${i}" data-qi="${i}" data-qa="${o.replace(/"/g,'&quot;')}">${o}</button>`).join('')}</div></div>`;
 document.getElementById('p-quiz').innerHTML=h;
 document.querySelectorAll('[data-qi]').forEach(b=>b.addEventListener('click',function(){
-if(qA)return;qA=true;const idx=+this.dataset.qi,ans=this.dataset.qa,q2=qQ[qI],ok=ans===q2.n;
+if(qA)return;qA=true;const idx=+this.dataset.qi,ans=this.dataset.qa,q2=qQ[qI],ok=ans===q2[q2.aKey];
 if(ok){qS++;S.qc++;}S.qt++;sv();
 this.classList.add(ok?'ok':'no');
-if(!ok)document.querySelectorAll('[data-qi]').forEach(x=>{if(x.dataset.qa===q2.n)x.classList.add('ok');});
+if(!ok)document.querySelectorAll('[data-qi]').forEach(x=>{if(x.dataset.qa===q2[q2.aKey])x.classList.add('ok');});
 if(ok)confetti();
 setTimeout(()=>{qI++;qA=false;rQ();},ok?700:1400);
 }));}
@@ -1060,10 +1063,17 @@ h+=`<div class="subpg ${morePage==='st'?'act':''}" id="m-st"><button class="back
 <div style="background:var(--grl);padding:14px;border-radius:var(--rs);margin-bottom:8px;"><b>Spanish level:</b> ${profile?['🌱 Zero','🌿 A little','🌳 Some'][profile.level]:'Not set'}</div>
 <button onclick="editProfile()" style="width:100%;padding:12px;border-radius:50px;background:var(--terra);color:var(--w);font-weight:700;font-size:14px;margin-top:12px;">Edit Profile</button>
 </div>
+<div class="card hl-teal"><h3>🌐 Learning Mode</h3>
+<p style="margin-bottom:12px;font-size:13px;">Switch what you're learning. Cards, Quiz, and Toddler Mode all follow this setting.</p>
+<div style="display:flex;gap:8px;">
+<button onclick="setLang('es')" style="flex:1;padding:14px;border-radius:12px;border:3px solid ${appLang==='es'?'var(--teal)':'var(--bd)'};background:${appLang==='es'?'var(--teall)':'var(--w)'};font-weight:700;font-size:14px;color:var(--ink);">🇪🇸 Learn Spanish<br><span style="font-size:11px;font-weight:500;color:var(--gr);">I speak English</span></button>
+<button onclick="setLang('en')" style="flex:1;padding:14px;border-radius:12px;border:3px solid ${appLang==='en'?'var(--teal)':'var(--bd)'};background:${appLang==='en'?'var(--teall)':'var(--w)'};font-weight:700;font-size:14px;color:var(--ink);">🇺🇸 Learn English<br><span style="font-size:11px;font-weight:500;color:var(--gr);">Hablo español</span></button>
+</div></div>
 <div class="card"><h3>🎓 App Tour</h3><p style="margin-bottom:8px;">Watch the walkthrough again to learn how the app works.</p><button onclick="walkStep=0;walkActive=true;L.s('walkDone',false);showWalk();" style="padding:10px 20px;border-radius:50px;background:var(--teal);color:var(--w);font-weight:700;font-size:13px;">Replay Tour</button></div>
 <div class="card hl-gold"><h3>📊 Reset Progress</h3><p style="margin-bottom:8px;">Start completely fresh. This cannot be undone.</p><button onclick="if(confirm('Reset ALL progress?')){localStorage.clear();location.reload();}" style="padding:10px 20px;border-radius:50px;background:var(--terra);color:var(--w);font-weight:700;font-size:13px;">Reset Everything</button></div></div>`;
 document.getElementById('p-more').innerHTML=h;}
 function openMore(id){morePage=id;rM();}
+function setLang(lang){appLang=lang;L.s('appLang',lang);rC();rQ();rM();renderToys();showSaved();}
 function goMore(id){
   document.querySelectorAll('.nb').forEach(x=>x.classList.remove('act'));
   document.querySelectorAll('.pg').forEach(p=>p.classList.remove('act'));
