@@ -788,14 +788,14 @@ const MO=[
 /* ===== STATE ===== */
 const L={g(k,d){try{const v=localStorage.getItem('v_'+k);return v?JSON.parse(v):d}catch{return d}},s(k,v){try{localStorage.setItem('v_'+k,JSON.stringify(v))}catch{}}};
 function localDay(){return new Date().toLocaleDateString('en-CA');} // YYYY-MM-DD in local tz
-let S={sk:L.g('sk',0),la:L.g('la',''),dc:L.g('dc',{}),dd:L.g('dd',''),wd:L.g('wd',{}),fk:L.g('fk',{}),qt:L.g('qt',0),qc:L.g('qc',0),fq:L.g('fq',{})};
+let S={sk:L.g('sk',0),la:L.g('la',''),dc:L.g('dc',{}),dd:L.g('dd',''),wd:L.g('wd',{}),fk:L.g('fk',{}),qt:L.g('qt',0),qc:L.g('qc',0),fq:L.g('fq',{}),sd:L.g('sd',{})};
 let expTask=null;
 let homeSec={tasks:true,fq:false,help:false};
 let toastTimer=null;
 let morePage='grid';
 let walkStep=0;
 let walkActive=false;
-function sv(){for(const[k,v]of Object.entries({sk:S.sk,la:S.la,dc:S.dc,dd:S.dd,wd:S.wd,fk:S.fk,qt:S.qt,qc:S.qc,fq:S.fq}))L.s(k,v);}
+function sv(){for(const[k,v]of Object.entries({sk:S.sk,la:S.la,dc:S.dc,dd:S.dd,wd:S.wd,fk:S.fk,qt:S.qt,qc:S.qc,fq:S.fq,sd:S.sd}))L.s(k,v);}
 function us(){const t=localDay();if(S.la===t)return;const prev=new Date(S.la),curr=new Date(t),diff=Math.round((curr-prev)/(864e5));S.sk=(diff===1)?S.sk+1:1;S.la=t;sv();}
 function showSaved(){const t=document.getElementById('toast');if(!t)return;t.classList.add('sh');if(toastTimer)clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove('sh'),1500);}
 function rd(){if(S.dd!==localDay()){S.dc={};S.dd=localDay();sv();}}
@@ -941,8 +941,9 @@ h+=`<h4 style="margin-top:16px;font-family:'Baloo 2',cursive;font-size:15px;">${
 m.ws.forEach(w=>{
 wIdx++;const wk='w'+wIdx,dn=S.wd[wk];
 h+=`<div class="lesson"><h4>${w.t} <div class="wkc ${dn?'dn':''}" onclick="tgW('${wk}')">${dn?'✓':''}</div></h4>`;
-if(w.steps)w.steps.forEach(s=>{
-h+=`<div class="lesson-step"><h5>${s.h}</h5><p>${s.p}</p>`;
+if(w.steps){let sIdx=0;w.steps.forEach(s=>{
+sIdx++;const sk=wk+'s'+sIdx,sd=S.sd[sk];
+h+=`<div class="lesson-step" style="${sd?'border-color:var(--teal);background:var(--teall);':''}"><div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;"><h5 style="flex:1;${sd?'text-decoration:line-through;opacity:.6;':''}">${s.h}</h5><div class="wkc ${sd?'dn':''}" onclick="tgS('${sk}')" style="flex-shrink:0;">${sd?'✓':''}</div></div><p${sd?' style="opacity:.5;"':''}>${s.p}</p>`;
 if(s.phrases)s.phrases.forEach(p2=>{
 const parts=p2.split('|');const es=parts[0];
 const ph=parts.length===3?parts[1]:'';
@@ -950,13 +951,14 @@ const en=parts.length===3?parts[2]:(parts[1]||'');
 h+=`<div class="phrase">${spB(es)} <span>${es}</span>${ph?` <span style="color:var(--terra);font-size:12px;font-weight:700;">🗣 ${ph}</span>`:''}${en?` <span style="color:var(--gr);font-weight:500;margin-left:8px;">(${en})</span>`:''}</div>`;
 });
 h+=`</div>`;
-});
+});}
 h+=`</div>`;
 });});
 h+=`</div></div></div>`;
 });
 document.getElementById('p-learn').innerHTML=h;}
 function tgW(k){S.wd[k]=!S.wd[k];if(S.wd[k])confetti();sv();showSaved();rL();rH();}
+function tgS(k){S.sd[k]=!S.sd[k];if(S.sd[k])confetti();sv();showSaved();rL();}
 
 /* ===== FLASHCARDS ===== */
 let cD="Greetings",cI=0,dk=[],fK=0,fA=0,fl=false;
