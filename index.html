@@ -1069,7 +1069,7 @@ h+=`<div class="subpg ${morePage==='hn'?'act':''}" id="m-hn"><button class="back
 <div class="card hl-rust"><h3>🍳 Make Baleadas Together!</h3><p style="font-size:13px;"><b>Ingredients:</b> Flour tortillas, canned refried beans, shredded cheese, sour cream (or crema).<br><b>Steps:</b> 1) Warm tortilla on a skillet. 2) Spread beans on one half. 3) Add cheese and crema. 4) Fold. 5) ¡Buen provecho!<br><b>Say while cooking:</b> "Vamos a cocinar. Necesitamos tortillas, frijoles, y queso. Primero, calentamos la tortilla…"</p></div>
 <div class="card"><h3>🎵 Honduran Music</h3><ul><li><b>Guillermo Anderson</b> — "En Mi País," "Ceibeño"</li><li><b>Punta music</b> — Banda Blanca, Kazzabe</li><li><b>Polache</b> — comedian/singer</li></ul></div></div>`;
 
-h+=`<div class="subpg ${morePage==='sg'?'act':''}" id="m-sg"><button class="back-btn" onclick="openMore('grid')">← Back to More</button><div class="card"><h3>🎵 Songs — Tap to Open YouTube</h3><p style="font-size:12px;color:#4B5563;margin-bottom:8px;">Tap ▶️ to open YouTube search results in a new tab.</p>${[
+h+=`<div class="subpg ${morePage==='sg'?'act':''}" id="m-sg"><button class="back-btn" onclick="openMore('grid')">← Back to More</button><div class="card"><h3>🎵 Songs — Tap ▶️ to Play</h3><p style="font-size:12px;color:#4B5563;margin-bottom:8px;">Videos play right here in the app. Tap again to close.</p>${[
 ["Buenos Días","Mo 1","buenos dias cancion infantil español"],
 ["Los Pollitos Dicen","Mo 1","los pollitos dicen canticos"],
 ["Cabeza Hombros Rodillas Pies","Mo 2","cabeza hombros rodillas pies cancion infantil"],
@@ -1079,7 +1079,7 @@ h+=`<div class="subpg ${morePage==='sg'?'act':''}" id="m-sg"><button class="back
 ["La Vaca Lola","Mo 5","la vaca lola cancion"],
 ["Un Elefante Se Balanceaba","Mo 6","un elefante se balanceaba cancion"],
 ["De Colores","Mo 7+","de colores cancion tradicional español"]
-].map(([n,w,q])=>`<div class="song-item"><div class="song-row"><button class="song-play" onclick="openSong('${encodeURIComponent(q)}')">▶️</button><div style="flex:1"><button onclick="openSong('${encodeURIComponent(q)}')" style="background:none;text-align:left;width:100%;"><b style="font-size:13px;color:var(--ink)">${n}</b></button><div>${spB(n)} <span style="font-size:11px;color:var(--gr)">${w}</span></div></div></div></div>`).join('')}</div></div>`;
+].map(([n,w,q],i)=>`<div class="song-item" id="si${i}"><div class="song-row"><button class="song-play" onclick="toggleSong(${i},'${encodeURIComponent(q)}')">▶️</button><div style="flex:1"><b style="font-size:13px;color:var(--ink)">${n}</b><div>${spB(n)} <span style="font-size:11px;color:var(--gr)">${w}</span></div></div></div><div id="sf${i}" style="display:none;margin-top:8px;"><iframe id="sfi${i}" class="song-frame" src="" allow="autoplay;encrypted-media" allowfullscreen loading="lazy"></iframe><div style="display:flex;gap:8px;margin-top:6px;"><button onclick="toggleSong(${i},'')" style="padding:6px 14px;border-radius:50px;background:var(--terra);color:var(--w);font-size:11px;font-weight:700;">✕ Close</button><button onclick="window.open('https://www.youtube.com/results?search_query=${encodeURIComponent(q)}','_blank')" style="padding:6px 14px;border-radius:50px;background:var(--ink);color:var(--gold);font-size:11px;font-weight:700;">↗ Open in YouTube</button></div></div></div>`).join('')}</div></div>`;
 
 h+=`<div class="subpg ${morePage==='cg'?'act':''}" id="m-cg"><button class="back-btn" onclick="openMore('grid')">← Back to More</button><div class="card hl-gold"><h3>🔗 Bilingual Bonus: Cognates</h3><p>These words sound similar in English and Spanish — you already know more than you think! Honduras's Caribbean coast has English-Creole influence, making these even more familiar.</p></div>
 <div class="card"><h3>Words You Already Know</h3>${[["Chocolate","Chocolate — from Nahuatl, same word!"],["Hospital","Hospital — identical"],["Familia","Family — sounds similar"],["Música","Music — add an accent"],["Animal","Animal — exactly the same"],["Teléfono","Telephone — easy cognate"],["Banana / Guineo","Banana — Caribbean English root"],["Limón","Lemon — close enough"],["Importante","Important — just add -e"],["Información","Information — swap the ending"],["Natural","Natural — identical"],["Tropical","Tropical — same in Florida!"]].map(([a,b])=>`<div class="vp"><span class="ve">${a.split('/')[0].trim()} ${spB(a.split('/')[0].trim())}</span><span class="vn">${b}</span></div>`).join('')}</div>
@@ -1149,6 +1149,14 @@ function endWalk(){
 }
 
 function openSong(query){ window.open('https://www.youtube.com/results?search_query=' + query, '_blank'); }
+function toggleSong(i,q){
+  const wrap=document.getElementById('sf'+i);
+  const iframe=document.getElementById('sfi'+i);
+  if(wrap.style.display==='block'){wrap.style.display='none';iframe.src='';return;}
+  document.querySelectorAll('[id^="sf"]').forEach(el=>{el.style.display='none';const f=el.querySelector('iframe');if(f)f.src='';});
+  wrap.style.display='block';
+  iframe.src='https://www.youtube.com/embed?listType=search&list='+decodeURIComponent(q);
+}
 document.getElementById('color-dots').addEventListener('click',e=>{const b=e.target.closest('[data-color]');if(!b)return;checkColor(b.dataset.color);});
 
 /* ===== INIT ===== */
