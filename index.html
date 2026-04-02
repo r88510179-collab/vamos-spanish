@@ -2,8 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="description" content="Free 12-month Spanish program for parents and toddlers in Fort Myers, FL using Honduran Spanish.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="¡Vamos!">
@@ -14,16 +13,14 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://vamos-spanish.vercel.app">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="¡Vamos! — Learn Spanish Together">
-<meta name="twitter:description" content="Free 12-month Spanish program for parents and toddlers. Honduran Spanish. Fort Myers, FL.">
 <meta name="twitter:image" content="https://vamos-spanish.vercel.app/icons/og-image.png">
 <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%231A1B4B'/%3E%3Ccircle cx='32' cy='32' r='22' fill='%23D4A017'/%3E%3Ctext x='32' y='39' text-anchor='middle' font-family='Arial,sans-serif' font-size='22' font-weight='700' fill='%231A1B4B'%3E%C2%A1V!%3C/text%3E%3C/svg%3E">
 <link rel="manifest" href="/manifest.webmanifest">
 <title>¡Vamos! — Learn Spanish Together</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Playfair+Display:wght@700;900&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -1086,8 +1083,7 @@ function clearPaint(){
 }
 
 /* ===== NAV ===== */
-let moreRendered=false;
-document.querySelectorAll('.nb').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.nb').forEach(x=>x.classList.remove('act'));document.querySelectorAll('.pg').forEach(p=>p.classList.remove('act'));b.classList.add('act');const page=b.dataset.p;document.getElementById('p-'+page).classList.add('act');if(page==='more'&&!moreRendered){rM();moreRendered=true;}}));
+document.querySelectorAll('.nb').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.nb').forEach(x=>x.classList.remove('act'));document.querySelectorAll('.pg').forEach(p=>p.classList.remove('act'));b.classList.add('act');document.getElementById('p-'+b.dataset.p).classList.add('act');}));
 
 /* ===== STATS ===== */
 function cs(){const tw=48,dw=Object.values(S.wd).filter(Boolean).length,p=Math.round(dw/tw*100),kw=Object.keys(S.fk).filter(k=>S.fk[k]).length;return{dw,p,kw};}
@@ -1105,6 +1101,7 @@ let h=`
 <button onclick="goMore('sg')" style="background:var(--w);border:1px solid var(--bd);border-radius:12px;padding:10px 14px;min-width:90px;text-align:center;box-shadow:var(--sh);flex-shrink:0;"><span style="font-size:22px;display:block;">🎵</span><span style="font-size:11px;font-weight:700;color:var(--ink);">Songs</span></button>
 <button onclick="goMore('rs')" style="background:var(--w);border:1px solid var(--bd);border-radius:12px;padding:10px 14px;min-width:90px;text-align:center;box-shadow:var(--sh);flex-shrink:0;"><span style="font-size:22px;display:block;">📚</span><span style="font-size:11px;font-weight:700;color:var(--ink);">Resources</span></button>
 <button onclick="goMore('cg')" style="background:var(--w);border:1px solid var(--bd);border-radius:12px;padding:10px 14px;min-width:90px;text-align:center;box-shadow:var(--sh);flex-shrink:0;"><span style="font-size:22px;display:block;">🔗</span><span style="font-size:11px;font-weight:700;color:var(--ink);">Cognates</span></button>
+<button onclick="goMore('lb')" style="background:var(--w);border:1px solid var(--bd);border-radius:12px;padding:10px 14px;min-width:90px;text-align:center;box-shadow:var(--sh);flex-shrink:0;"><span style="font-size:22px;display:block;">🏛️</span><span style="font-size:11px;font-weight:700;color:var(--ink);">Library</span></button>
 </div>
 </div><div class="hero"><h2>${spB('Buenos días')} ¡Buenos días${profile?' '+profile.name:''}!</h2><div style="font-size:12px;color:rgba(255,255,255,.5);margin-top:2px;">🗣 BWEH-nohs DEE-ahs · Good morning!</div><div class="dt2" style="margin-top:8px;">${dn}, ${ds}${profile?' · '+profile.child+'\'s learning day':''}</div><div class="mot">${spB(mo.es)} <b>"${mo.es}"</b><br><span style="color:#F59E0B;font-size:12px;font-weight:700;">🗣 ${mo.ph}</span><br><span style="font-style:normal;opacity:.7;">${mo.en}</span></div></div>
 <div class="cls ${homeSec.help?'':'cp'}" style="background:var(--ink);color:var(--w);border:2px solid var(--gold);">
@@ -1207,6 +1204,53 @@ setTimeout(()=>{qI++;qA=false;rQ();},ok?700:1400);
 }));}
 
 /* ===== MORE ===== */
+function libPage(){
+var LB_CAL=[
+[1,"WRITING","Find two items that are similar but different sizes. Talk about big and little."],
+[2,"PLAYING","Teach letter sounds by playing I Spy. Say: I spy something that begins with S. Yes! A shoe!"],
+[3,"TALKING","Make a tent with sheets and furniture. Pretend you are camping. What do you see or hear?"],
+[4,"SINGING","Help develop fine motor skills by making a dot painting with cotton swabs."],
+[5,"COUNTING","Visit the library in person or online and check out books about spring."],
+[6,"READING","Cut a letter out of cardboard, place it under paper and have your child color over it to reveal the letter."],
+[7,"WRITING","Say a favorite rhyme but leave out the last word. Have your child finish it."],
+[8,"PLAYING","Cut out large shapes and place them on the floor. Take turns telling each other which shapes to step on."],
+[9,"TALKING","Experiment writing with pencils, crayons, markers, or chalk on paper or cardboard."],
+[10,"SINGING","Play the letter game. Find things starting with the first letter of your child\u0027s name."],
+[11,"COUNTING","Sing I Hear Thunder to the tune of Fr\u00e8re Jacques."],
+[12,"READING","Choose a word of the day and write it down. Use the word several times during the day."],
+[13,"WRITING","Write your child a note. Leave it where they will find it. Read it to them with excitement."],
+[14,"PLAYING","Play follow-the-leader and take turns performing actions."],
+[15,"TALKING","Use new describing words today. Say enormous instead of big, or wonderful instead of great."],
+[16,"SINGING","Sort blocks by color. Count how many there are of each color."],
+[17,"COUNTING","Make up a song about something that is familiar or interesting to your child."],
+[18,"READING","Play a questioning game by asking: Where are your toes? Where is your nose?"],
+[19,"WRITING","Say a favorite nursery rhyme, but change a word to something silly."],
+[20,"PLAYING","Sing Row, Row, Row Your Boat during bath time."],
+[21,"TALKING","Ask interactive questions while reading together. Where is the dog? Where is the cat?"],
+[22,"SINGING","Place objects on a table. Ask which is largest, heaviest or smallest."],
+[23,"COUNTING","Talk about spring and the seasons. Ask what happens in spring and what comes after."],
+[24,"READING","Has it been raining a lot? Sing Rain, Rain, Go Away."],
+[25,"WRITING","Count the pages in your child\u0027s favorite board book."],
+[26,"PLAYING","Read a book about flowers, plants or trees."],
+[27,"TALKING","Sing a song in a high voice; sing it in a low voice. Sing it slow; sing it fast."],
+[28,"SINGING","Cut a piece of toast in half. Say: Now we have two pieces the same size. Repeat to get 4."],
+[29,"COUNTING","Get caught reading a book. Show your child reading is important by reading yourself."],
+[30,"READING","Create a writing box with paper and crayons, decorate it, and keep it within easy reach."]
+];
+var colors={WRITING:"var(--terra)",PLAYING:"var(--teal)",TALKING:"var(--ink)",SINGING:"var(--goldd)",COUNTING:"#7B1FA2",READING:"#1565C0"};
+var bgs={WRITING:"var(--terral)",PLAYING:"var(--teall)",TALKING:"var(--grl)",SINGING:"var(--goldl)",COUNTING:"#F3E5F5",READING:"#E3F2FD"};
+var cal=LB_CAL.map(function(r){var d=r[0],cat=r[1],act=r[2];return '<div style="padding:10px 12px;border-bottom:1px solid var(--bd);display:flex;gap:10px;align-items:flex-start;"><div style="min-width:32px;height:32px;border-radius:50%;background:'+colors[cat]+';color:var(--w);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;">'+d+'</div><div style="flex:1;"><span style="font-size:10px;font-weight:800;text-transform:uppercase;color:'+colors[cat]+';background:'+bgs[cat]+';padding:2px 7px;border-radius:50px;">'+cat+'</span><p style="font-size:12.5px;margin-top:4px;color:#374151;">'+act+'</p></div></div>';}).join("");
+var books=[["When Spring Comes","Kevin Henkes"],["Little Blue Truck\u0027s Springtime","Alice Schertle"],["The Very Hungry Caterpillar","Eric Carle"],["Bear Came Along","Richard T. Morris"]].map(function(b){return '<div style="padding:8px 0;border-bottom:1px solid var(--bd);"><b style="font-size:13px;color:var(--ink);">'+b[0]+'</b><br><span style="font-size:11px;color:var(--gr);">by '+b[1]+'</span></div>';}).join("");
+var cn=profile?profile.child:"your child";
+return '<div class="subpg '+(morePage==="lb"?"act":"")+'" id="m-lb"><button class="back-btn" onclick="openMore(\'grid\')">← Back to More</button>'
++'<div class="card hl-teal"><h3>🏛️ Lee County Library — April Activities</h3><p style="font-size:13px;">Daily literacy activities from your local library! Do one each day alongside your Spanish practice. These build the same skills — talking, singing, counting, reading — in English, which supercharges bilingual learning.</p><a href="https://www.leegov.com/library/Documents/2026-04-EarlyLitSheet.pdf" target="_blank" rel="noopener" style="display:inline-block;margin-top:8px;padding:8px 16px;border-radius:50px;background:var(--teal);color:var(--w);font-size:12px;font-weight:700;text-decoration:none;">📄 View Original PDF ↗</a></div>'
++'<div class="card"><h3>📖 April Calendar</h3><p style="font-size:12px;color:var(--gr);margin-bottom:10px;">Each day has a theme: Writing, Playing, Talking, Singing, Counting, or Reading.</p>'+cal+'</div>'
++'<div class="card hl-gold"><h3>📚 Books to Read This Month</h3><p style="font-size:13px;">Available at Lee County Library or on Overdrive/hoopla. Ask a librarian!</p><div style="margin-top:8px;">'+books+'</div></div>'
++'<div class="card"><h3>🎵 Songs from the Calendar</h3>'
++'<div style="background:var(--goldl);padding:12px;border-radius:10px;margin:8px 0;border:1px solid #FFE082;"><b>I Hear Thunder</b> <span style="font-size:11px;color:var(--gr);">(tune: Frère Jacques)</span><br><br><span style="font-size:13px;">I hear thunder, I hear thunder <span style="font-size:11px;color:var(--gr);">(pound hands on lap)</span><br>Listen, don\u0027t you? Listen, don\u0027t you? <span style="font-size:11px;color:var(--gr);">(cup hand to ear)</span><br>Pitter patter raindrops, pitter patter raindrops <span style="font-size:11px;color:var(--gr);">(wiggle fingers)</span><br>I\u0027m wet through! <span style="font-size:11px;color:var(--gr);">(shake body)</span><br>So are you! <span style="font-size:11px;color:var(--gr);">(tickle your child)</span></span></div>'
++'<div style="background:var(--teall);padding:12px;border-radius:10px;margin:8px 0;border:1px solid #B2DFDB;"><b>Rain, Rain, Go Away</b><br><br><span style="font-size:13px;">Rain, rain, go away<br>Come again another day<br>Little <b>'+cn+'</b> wants to play<br>Rain, rain, go away!</span></div></div>'
++'<div class="card hl-teal"><h3>🏛️ 1,000 Books Before Kindergarten</h3><p style="font-size:13px;">Ask your librarian about this free program! Read any book — even the same book — and log it. Goal: 1,000 books before age 5. Visit any Lee County Library branch or go to <b>leelibrary.net</b></p><a href="https://www.leelibrary.net" target="_blank" rel="noopener" style="display:inline-block;margin-top:8px;padding:8px 16px;border-radius:50px;background:var(--teal);color:var(--w);font-size:12px;font-weight:700;text-decoration:none;">Visit Lee County Library ↗</a></div></div>';
+}
 function rM(){let h=`<div class="pt">📋 More</div>`;
 h+=`<div class="subpg ${morePage==='grid'?'act':''}" id="m-grid"><div class="more-grid">${[
 ['gs','🚀','Getting Started','Everything you need to know to use this app.'],
@@ -1214,6 +1258,7 @@ h+=`<div class="subpg ${morePage==='grid'?'act':''}" id="m-grid"><div class="mor
 ['rs','📚','Resources','Apps, YouTube, podcasts, and community.'],
 ['hn','🇭🇳','Honduran Guide','Pronunciation, slang, food, and recipes.'],
 ['sg','🎵','Songs','Spanish songs with YouTube search links.'],
+['lb','🏛️','Library','Lee County daily literacy activities.'],
 ['cg','🔗','Cognates','Bilingual bonus words you already know.'],
 ['st','⚙️','Settings','Profile updates and reset progress tools.']
 ].map(([id,ico,title,desc])=>`<button class="more-card" onclick="openMore('${id}')"><div class="more-ico">${ico}</div><h3>${title}</h3><p>${desc}</p></button>`).join('')}</div></div>`;
@@ -1265,6 +1310,8 @@ h+=`<div class="subpg ${morePage==='sg'?'act':''}" id="m-sg"><button class="back
 ["De Colores","Mo 7+","EuyCiz455vM"]
 ].map(([n,w,vid],i)=>`<div class="song-item"><div class="song-row"><button class="song-play" onclick="toggleSong(${i},'${vid}')">▶️</button><div style="flex:1"><b style="font-size:13px;color:var(--ink)">${n}</b><div>${spB(n)} <span style="font-size:11px;color:var(--gr)">${w}</span></div></div></div><div id="sf${i}" style="display:none;margin-top:8px;"><iframe id="sfi${i}" style="width:100%;height:215px;border:none;border-radius:12px;margin-top:8px;display:block;" src="about:blank" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture;web-share" allowfullscreen frameborder="0" loading="lazy"></iframe><a href="https://www.youtube.com/watch?v=${vid}" target="_blank" rel="noopener" style="display:block;text-align:center;margin-top:8px;font-size:12px;font-weight:700;color:var(--teal);">Video not loading? Tap here to watch on YouTube ↗</a><button onclick="toggleSong(${i},'')" style="margin-top:6px;padding:8px 16px;border-radius:50px;background:var(--terra);color:var(--w);font-size:12px;font-weight:700;">✕ Close Video</button></div></div>`).join('')}</div></div>`;
 
+h+=libPage();
+
 h+=`<div class="subpg ${morePage==='cg'?'act':''}" id="m-cg"><button class="back-btn" onclick="openMore('grid')">← Back to More</button><div class="card hl-gold"><h3>🔗 Bilingual Bonus: Cognates</h3><p>These words sound similar in English and Spanish — you already know more than you think! Honduras's Caribbean coast has English-Creole influence, making these even more familiar.</p></div>
 <div class="card"><h3>Words You Already Know</h3>${[["Chocolate","choh-koh-LAH-teh","From Nahuatl, same word!"],["Hospital","ohs-pee-TAHL","Identical"],["Familia","fah-MEE-lee-ah","Family — sounds similar"],["Música","MOO-see-kah","Music — add an accent"],["Animal","ah-nee-MAHL","Exactly the same"],["Teléfono","teh-LEH-foh-noh","Telephone — easy cognate"],["Guineo","gee-NEH-oh","Banana — Caribbean root"],["Limón","lee-MOHN","Lemon — close enough"],["Importante","eem-por-TAHN-teh","Important — just add -e"],["Información","een-for-mah-see-OHN","Information — swap the ending"],["Natural","nah-too-RAHL","Identical"],["Tropical","troh-pee-KAHL","Same in Florida!"]].map(([a,ph,b])=>`<div class="vp" style="flex-wrap:wrap;"><span class="ve">${a} ${spB(a)}</span><span style="color:var(--terra);font-size:11px;font-weight:700;width:100%;">🗣 ${ph} <span style="color:var(--gr);font-weight:500;">(${b})</span></span></div>`).join('')}</div>
 <div class="card hl-teal"><h3>💡 The -tion → -ción Cheat Code</h3><p>Almost ANY English word ending in "-tion" becomes Spanish by changing it to "-ción": nation→nación, education→educación, information→información, celebration→celebración, communication→comunicación. You just unlocked hundreds of words!</p></div></div>`;
@@ -1286,7 +1333,7 @@ h+=`<div class="subpg ${morePage==='st'?'act':''}" id="m-st"><button class="back
 <div class="card"><h3>🎓 App Tour</h3><p style="margin-bottom:8px;">Watch the walkthrough again to learn how the app works.</p><button onclick="walkStep=0;walkActive=true;L.s('walkDone',false);showWalk();" style="padding:10px 20px;border-radius:50px;background:var(--teal);color:var(--w);font-weight:700;font-size:13px;">Replay Tour</button></div>
 <div class="card hl-gold"><h3>📊 Reset Progress</h3><p style="margin-bottom:8px;">Start completely fresh. This cannot be undone.</p><button onclick="if(confirm('Reset ALL progress?')){localStorage.clear();location.reload();}" style="padding:10px 20px;border-radius:50px;background:var(--terra);color:var(--w);font-weight:700;font-size:13px;">Reset Everything</button></div></div>`;
 document.getElementById('p-more').innerHTML=h;}
-function openMore(id){morePage=id;rM();moreRendered=true;}
+function openMore(id){morePage=id;rM();}
 function setLang(lang){appLang=lang;L.s('appLang',lang);rC();rQ();rM();renderToys();showSaved();}
 function goMore(id){
   document.querySelectorAll('.nb').forEach(x=>x.classList.remove('act'));
@@ -1350,7 +1397,7 @@ document.getElementById('color-dots').addEventListener('click',e=>{const b=e.tar
 
 /* ===== INIT ===== */
 showOnboard();
-rH();rL();dk=sh([...V[cD]]);rC();rQ();renderToys();
+rH();rL();dk=sh([...V[cD]]);rC();rQ();rM();renderToys();
 </script>
 </body>
 </html>
