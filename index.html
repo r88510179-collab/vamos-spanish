@@ -1085,9 +1085,9 @@ function clearPaint(){
 
 /* ===== NAV ===== */
 let moreRendered=false;
-const navButtons=[...document.querySelectorAll('.nb')];
-const pages=[...document.querySelectorAll('.pg')];
-navButtons.forEach(b=>b.addEventListener('click',()=>{navButtons.forEach(x=>x.classList.remove('act'));pages.forEach(p=>p.classList.remove('act'));b.classList.add('act');const page=b.dataset.p;document.getElementById('p-'+page).classList.add('act');if(page==='more'&&!moreRendered){rM();moreRendered=true;}}));
+document.querySelectorAll('.nb').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.nb').forEach(x=>x.classList.remove('act'));document.querySelectorAll('.pg').forEach(p=>p.classList.remove('act'));b.classList.add('act');document.getElementById('p-'+b.dataset.p).classList.add('act');}));
+const moreNavBtn=document.querySelector('.nb[data-p="more"]');
+if(moreNavBtn)moreNavBtn.addEventListener('click',()=>{if(!moreRendered){rM();moreRendered=true;}});
 
 /* ===== STATS ===== */
 function cs(){const tw=48,dw=Object.values(S.wd).filter(Boolean).length,p=Math.round(dw/tw*100),kw=Object.keys(S.fk).filter(k=>S.fk[k]).length;return{dw,p,kw};}
@@ -1289,8 +1289,8 @@ document.getElementById('p-more').innerHTML=h;}
 function openMore(id){morePage=id;rM();moreRendered=true;}
 function setLang(lang){appLang=lang;L.s('appLang',lang);rC();rQ();if(moreRendered)rM();renderToys();showSaved();}
 function goMore(id){
-  navButtons.forEach(x=>x.classList.remove('act'));
-  pages.forEach(p=>p.classList.remove('act'));
+  document.querySelectorAll('.nb').forEach(x=>x.classList.remove('act'));
+  document.querySelectorAll('.pg').forEach(p=>p.classList.remove('act'));
   document.querySelector('[data-p="more"]').classList.add('act');
   document.getElementById('p-more').classList.add('act');
   openMore(id);
