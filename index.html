@@ -21,6 +21,7 @@
 <link rel="manifest" href="/manifest.webmanifest">
 <title>¡Vamos! — Learn Spanish Together</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Playfair+Display:wght@700;900&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -1083,7 +1084,8 @@ function clearPaint(){
 }
 
 /* ===== NAV ===== */
-document.querySelectorAll('.nb').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.nb').forEach(x=>x.classList.remove('act'));document.querySelectorAll('.pg').forEach(p=>p.classList.remove('act'));b.classList.add('act');document.getElementById('p-'+b.dataset.p).classList.add('act');}));
+let moreRendered=false;
+document.querySelectorAll('.nb').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.nb').forEach(x=>x.classList.remove('act'));document.querySelectorAll('.pg').forEach(p=>p.classList.remove('act'));b.classList.add('act');const page=b.dataset.p;document.getElementById('p-'+page).classList.add('act');if(page==='more'&&!moreRendered){rM();moreRendered=true;}}));
 
 /* ===== STATS ===== */
 function cs(){const tw=48,dw=Object.values(S.wd).filter(Boolean).length,p=Math.round(dw/tw*100),kw=Object.keys(S.fk).filter(k=>S.fk[k]).length;return{dw,p,kw};}
@@ -1282,7 +1284,7 @@ h+=`<div class="subpg ${morePage==='st'?'act':''}" id="m-st"><button class="back
 <div class="card"><h3>🎓 App Tour</h3><p style="margin-bottom:8px;">Watch the walkthrough again to learn how the app works.</p><button onclick="walkStep=0;walkActive=true;L.s('walkDone',false);showWalk();" style="padding:10px 20px;border-radius:50px;background:var(--teal);color:var(--w);font-weight:700;font-size:13px;">Replay Tour</button></div>
 <div class="card hl-gold"><h3>📊 Reset Progress</h3><p style="margin-bottom:8px;">Start completely fresh. This cannot be undone.</p><button onclick="if(confirm('Reset ALL progress?')){localStorage.clear();location.reload();}" style="padding:10px 20px;border-radius:50px;background:var(--terra);color:var(--w);font-weight:700;font-size:13px;">Reset Everything</button></div></div>`;
 document.getElementById('p-more').innerHTML=h;}
-function openMore(id){morePage=id;rM();}
+function openMore(id){morePage=id;rM();moreRendered=true;}
 function setLang(lang){appLang=lang;L.s('appLang',lang);rC();rQ();rM();renderToys();showSaved();}
 function goMore(id){
   document.querySelectorAll('.nb').forEach(x=>x.classList.remove('act'));
@@ -1346,7 +1348,7 @@ document.getElementById('color-dots').addEventListener('click',e=>{const b=e.tar
 
 /* ===== INIT ===== */
 showOnboard();
-rH();rL();dk=sh([...V[cD]]);rC();rQ();rM();renderToys();
+rH();rL();dk=sh([...V[cD]]);rC();rQ();renderToys();
 </script>
 </body>
 </html>
