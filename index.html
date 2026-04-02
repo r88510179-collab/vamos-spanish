@@ -15,7 +15,6 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://vamos-spanish.vercel.app/icons/og-image.png">
 <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
-<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%231A1B4B'/%3E%3Ccircle cx='32' cy='32' r='22' fill='%23D4A017'/%3E%3Ctext x='32' y='39' text-anchor='middle' font-family='Arial,sans-serif' font-size='22' font-weight='700' fill='%231A1B4B'%3E%C2%A1V!%3C/text%3E%3C/svg%3E">
 <link rel="manifest" href="/manifest.webmanifest">
@@ -1085,9 +1084,7 @@ function clearPaint(){
 
 /* ===== NAV ===== */
 let moreRendered=false;
-document.querySelectorAll('.nb').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.nb').forEach(x=>x.classList.remove('act'));document.querySelectorAll('.pg').forEach(p=>p.classList.remove('act'));b.classList.add('act');document.getElementById('p-'+b.dataset.p).classList.add('act');}));
-const moreNavBtn=document.querySelector('.nb[data-p="more"]');
-if(moreNavBtn)moreNavBtn.addEventListener('click',()=>{if(!moreRendered){rM();moreRendered=true;}});
+document.querySelectorAll('.nb').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.nb').forEach(x=>x.classList.remove('act'));document.querySelectorAll('.pg').forEach(p=>p.classList.remove('act'));b.classList.add('act');const page=b.dataset.p;document.getElementById('p-'+page).classList.add('act');if(page==='more'&&!moreRendered){rM();moreRendered=true;}}));
 
 /* ===== STATS ===== */
 function cs(){const tw=48,dw=Object.values(S.wd).filter(Boolean).length,p=Math.round(dw/tw*100),kw=Object.keys(S.fk).filter(k=>S.fk[k]).length;return{dw,p,kw};}
@@ -1287,7 +1284,7 @@ h+=`<div class="subpg ${morePage==='st'?'act':''}" id="m-st"><button class="back
 <div class="card hl-gold"><h3>📊 Reset Progress</h3><p style="margin-bottom:8px;">Start completely fresh. This cannot be undone.</p><button onclick="if(confirm('Reset ALL progress?')){localStorage.clear();location.reload();}" style="padding:10px 20px;border-radius:50px;background:var(--terra);color:var(--w);font-weight:700;font-size:13px;">Reset Everything</button></div></div>`;
 document.getElementById('p-more').innerHTML=h;}
 function openMore(id){morePage=id;rM();moreRendered=true;}
-function setLang(lang){appLang=lang;L.s('appLang',lang);rC();rQ();if(moreRendered)rM();renderToys();showSaved();}
+function setLang(lang){appLang=lang;L.s('appLang',lang);rC();rQ();rM();renderToys();showSaved();}
 function goMore(id){
   document.querySelectorAll('.nb').forEach(x=>x.classList.remove('act'));
   document.querySelectorAll('.pg').forEach(p=>p.classList.remove('act'));
