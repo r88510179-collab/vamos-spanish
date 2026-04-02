@@ -837,9 +837,9 @@ function showSaved(){const t=document.getElementById('toast');if(!t)return;t.cla
 function rd(){if(S.dd!==localDay()){S.dc={};S.dd=localDay();sv();}}
 
 /* ===== SPEECH ===== */
-function speak(t){if(!('speechSynthesis' in window))return;speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang=appLang==='en'?'en-US':'es-MX';const inTM=document.getElementById('tmode').classList.contains('act');u.rate=inTM?1.05:.85;u.pitch=inTM?1.6:1.2;const vs=speechSynthesis.getVoices(),v=vs.find(x=>x.lang.startsWith(appLang==='en'?'en-US':'es-MX'))||vs.find(x=>x.lang.startsWith(appLang==='en'?'en':'es'));if(v)u.voice=v;speechSynthesis.speak(u);}
+function speak(t,lang){if(!('speechSynthesis' in window))return;speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);const useLang=lang||'es';u.lang=useLang==='en'?'en-US':'es-MX';const inTM=document.getElementById('tmode').classList.contains('act');u.rate=inTM?1.05:.85;u.pitch=inTM?1.6:1.2;const vs=speechSynthesis.getVoices(),v=vs.find(x=>x.lang.startsWith(useLang==='en'?'en-US':'es-MX'))||vs.find(x=>x.lang.startsWith(useLang==='en'?'en':'es'));if(v)u.voice=v;speechSynthesis.speak(u);}
 if('speechSynthesis' in window)speechSynthesis.getVoices();
-function spB(t){return `<button class="spk" data-speak="${t.replace(/"/g,'&quot;')}">🔊</button>`;}
+function spB(t,lang){return `<button class="spk" data-speak="${t.replace(/"/g,'&quot;')}" data-lang="${lang||'es'}">🔊</button>`;}
 function sh(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=0|Math.random()*(i+1);[b[i],b[j]]=[b[j],b[i]];}return b;}
 
 /* ===== PHONETICS MAP ===== */
@@ -848,7 +848,7 @@ const PH={"Hola":"OH-lah","Adiós":"ah-dee-OHS","Buenos días":"BWEH-nohs DEE-ah
 /* ===== DELEGATED EVENTS (Codex XSS fix) ===== */
 document.addEventListener('click',function(e){
   const sp=e.target.closest('[data-speak]');
-  if(sp){e.stopPropagation();speak(sp.dataset.speak);return;}
+  if(sp){e.stopPropagation();speak(sp.dataset.speak,sp.dataset.lang||'es');return;}
 });
 
 /* ===== CONFETTI ===== */
@@ -886,7 +886,7 @@ function renderToys(){
   const gameCats=['bubbles','memory','paint'];
   const items=tCat==='all'?sh(TOYS).slice(0,12):gameCats.includes(tCat)?[]:TOYS.filter(t=>t.cat===tCat);
   const lblKey=appLang==='en'?'en':'es';const spkKey=appLang==='en'?'en':'es';
-  document.getElementById('toyGrid').innerHTML=items.map(t=>`<button class="toy-btn" data-speak="${t[spkKey]}">${t.emoji}<span class="toy-lbl">${t[lblKey]}</span></button>`).join('');
+  document.getElementById('toyGrid').innerHTML=items.map(t=>`<button class="toy-btn" data-speak="${t[spkKey]}" data-lang="${appLang}">${t.emoji}<span class="toy-lbl">${t[lblKey]}</span></button>`).join('');
   document.getElementById('count-game').style.display=tCat==='count'?'block':'none';
   document.getElementById('color-game').style.display=tCat==='colors'?'block':'none';
   document.getElementById('bubble-game').style.display=tCat==='bubbles'?'block':'none';
@@ -910,31 +910,31 @@ function startMatchGame(cat){
   const lblKey=appLang==='en'?'en':'es';
   document.getElementById('match-title').textContent=MATCH_TITLES[cat]||'🎯 ¡Toca!';
   document.getElementById('match-prompt').innerHTML=`Toca <b>${matchTarget[lblKey]}</b>`;
-  speak('Toca '+matchTarget[lblKey]);
+  speak('Toca '+matchTarget[lblKey],appLang);
   document.getElementById('match-result').textContent='';
   document.getElementById('match-opts').innerHTML=pool.slice(0,4).map(t=>`<button style="background:var(--w);border:5px solid var(--ink);border-radius:20px;padding:18px 10px;font-size:44px;box-shadow:0 6px 0 var(--ink);text-align:center;" data-match="${t[lblKey]}" onclick="checkMatch('${t[lblKey].replace(/'/g,"\\'")}')">${t.emoji}<span style="display:block;font-family:'Baloo 2';font-size:14px;color:var(--ink);margin-top:4px;">${t[lblKey]}</span></button>`).join('');
 }
 function checkMatch(picked){
   const res=document.getElementById('match-result');
   const lblKey=appLang==='en'?'en':'es';
-  if(picked===matchTarget[lblKey]){res.textContent='🎉 ¡Sí! ¡'+matchTarget[lblKey]+'!';res.style.color='var(--teal)';confetti();speak('¡Muy bien! '+matchTarget[lblKey]);setTimeout(()=>startMatchGame(matchTarget.cat),2000);}
-  else{res.textContent='🔄 ¡Otra vez!';res.style.color='var(--terra)';speak('No, otra vez');}
+  if(picked===matchTarget[lblKey]){res.textContent='🎉 ¡Sí! ¡'+matchTarget[lblKey]+'!';res.style.color='var(--teal)';confetti();speak('¡Muy bien! '+matchTarget[lblKey],appLang);setTimeout(()=>startMatchGame(matchTarget.cat),2000);}
+  else{res.textContent='🔄 ¡Otra vez!';res.style.color='var(--terra)';speak('No, otra vez','es');}
 }
 function setTCat(c,btn){tCat=c;document.querySelectorAll('.tt-tab').forEach(t=>{t.classList.remove('act');});btn.classList.add('act');renderToys();}
 function countNav(dir){countN=Math.max(1,Math.min(10,countN+dir));updCount();}
-function updCount(){document.getElementById('count-display').textContent=countN;document.getElementById('count-word').textContent=NUMS[countN];speak(NUMS[countN]);}
-function speakCount(){speak(NUMS[countN]);}
+function updCount(){document.getElementById('count-display').textContent=countN;document.getElementById('count-word').textContent=NUMS[countN];speak(NUMS[countN],'es');}
+function speakCount(){speak(NUMS[countN],'es');}
 function startColorGame(){
   const pool=sh([...COLORS_GAME]);colorTarget=pool[0];
   document.getElementById('color-prompt').innerHTML=`Toca <b>${colorTarget.es}</b>`;
-  speak('Toca '+colorTarget.es);
+  speak('Toca '+colorTarget.es,'es');
   document.getElementById('color-result').textContent='';
   document.getElementById('color-dots').innerHTML=pool.slice(0,4).map(c=>`<button style="width:100%;height:80px;border-radius:16px;background:${c.hex};border:4px solid var(--ink);box-shadow:0 6px 0 var(--ink);" data-color="${c.es}" data-speak="${c.es}"></button>`).join('');
 }
 function checkColor(picked){
   const res=document.getElementById('color-result');
-  if(picked===colorTarget.es){res.textContent='🎉 ¡Sí! ¡'+colorTarget.es+'!';res.style.color='var(--teal)';confetti();speak('¡Muy bien! '+colorTarget.es);setTimeout(startColorGame,2000);}
-  else{res.textContent='🔄 ¡Otra vez!';res.style.color='var(--terra)';speak('No, otra vez');}
+  if(picked===colorTarget.es){res.textContent='🎉 ¡Sí! ¡'+colorTarget.es+'!';res.style.color='var(--teal)';confetti();speak('¡Muy bien! '+colorTarget.es,'es');setTimeout(startColorGame,2000);}
+  else{res.textContent='🔄 ¡Otra vez!';res.style.color='var(--terra)';speak('No, otra vez','es');}
 }
 
 /* ===== BUBBLE POP GAME ===== */
@@ -961,7 +961,7 @@ function spawnBubble(){
   b.dataset.speed=(1+Math.random()*1.5).toFixed(1);
   b.addEventListener('click',function(e){
     e.stopPropagation();
-    speak(this.dataset.word);
+    speak(this.dataset.word,appLang);
     bubbleScore++;
     document.getElementById('bubble-score').textContent='⭐ '+bubbleScore;
     this.style.transform='scale(1.5)';this.style.opacity='0';
@@ -1005,7 +1005,7 @@ function flipMem(i){
   const lblKey=appLang==='en'?'en':'es';
   btn.textContent=c.emoji;
   btn.style.background='var(--w)';btn.style.color='var(--ink)';
-  speak(c[lblKey]);
+  speak(c[lblKey],appLang);
   memFlipped.push(i);
   if(memFlipped.length===2){
     memLocked=true;
@@ -1020,7 +1020,7 @@ function flipMem(i){
       memMatched++;confetti();
       if(memMatched>=memCards.length/2){
         document.getElementById('mem-result').textContent='🎉 ¡Ganaste!';
-        speak('¡Muy bien! ¡Ganaste!');
+        speak('¡Muy bien! ¡Ganaste!','es');
       }
       memFlipped=[];memLocked=false;
     }else{
@@ -1074,12 +1074,12 @@ function initPaint(){
   const lblKey=appLang==='en'?'en':'es';
   document.getElementById('paint-colors').innerHTML=PAINT_COLORS.map(c=>`<button onclick="setPaintColor('${c.hex}','${c[lblKey]}')" style="width:40px;height:40px;border-radius:50%;background:${c.hex};border:3px solid ${c.hex==='#ECC94B'?'#B7791F':'var(--ink)'};box-shadow:0 3px 0 rgba(0,0,0,0.2);"></button>`).join('');
 }
-function setPaintColor(hex,name){paintColor=hex;speak(name);}
+function setPaintColor(hex,name){paintColor=hex;speak(name,appLang);}
 function clearPaint(){
   if(!paintCtx)return;
   const canvas=document.getElementById('paint-canvas');
   paintCtx.clearRect(0,0,canvas.width,canvas.height);
-  speak('Borrar');
+  speak('Borrar','es');
 }
 
 /* ===== NAV ===== */
@@ -1181,7 +1181,7 @@ function sD(n){cD=n;dk=sh([...V[n]].filter(c=>vocabLevel===0||c.lv===vocabLevel)
 function rC(){const ds=Object.keys(V);const allCount=V[cD].length;const filtCount=V[cD].filter(c=>vocabLevel===0||c.lv===vocabLevel).length;let h=`<div class="pt">🃏 Flashcards</div><p class="ps">Tap to flip · 🔊 for pronunciation</p><div style="display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap;"><button onclick="vocabLevel=0;sD('${cD}')" class="dkb ${vocabLevel===0?'act':''}">All</button><button onclick="vocabLevel=1;sD('${cD}')" class="dkb ${vocabLevel===1?'act':''}" style="${vocabLevel!==1?'border-color:var(--teal);color:var(--teal);':''}">🌱 Beginner</button><button onclick="vocabLevel=2;sD('${cD}')" class="dkb ${vocabLevel===2?'act':''}" style="${vocabLevel!==2?'border-color:var(--goldd);color:var(--goldd);':''}">🌿 Growing</button><button onclick="vocabLevel=3;sD('${cD}')" class="dkb ${vocabLevel===3?'act':''}" style="${vocabLevel!==3?'border-color:var(--terra);color:var(--terra);':''}">🌳 Confident</button></div><div style="font-size:11px;color:var(--gr);margin-bottom:10px;">${filtCount} of ${allCount} cards${vocabLevel?' at this level':''}</div><div class="dkp">${ds.map(d=>`<button class="dkb ${d===cD?'act':''}" onclick="sD('${d}')">${d}</button>`).join('')}</div>`;
 if(!dk.length){sD(cD);return;}
 if(cI>=dk.length){h+=`<div class="card" style="text-align:center;padding:30px;"><h3 style="justify-content:center;">Deck Complete! 🎉</h3><div class="qbg">${fK}/${dk.length}</div><p style="color:var(--gr);">Know: <b style="color:var(--teal)">${fK}</b> · Again: <b style="color:var(--terra)">${fA}</b></p><button class="qrb" onclick="sD('${cD}')">Shuffle & Retry</button></div>`;document.getElementById('p-cards').innerHTML=h;return;}
-const c=dk[cI];const cFront=appLang==='en'?c.n:c.e;const cBack=appLang==='en'?c.e:c.n;const cSpeak=appLang==='en'?c.n:c.e;h+=`<div class="fpg">${cI+1} of ${dk.length}</div><div style="display:flex;gap:14px;justify-content:center;font-size:12px;font-weight:700;margin-bottom:10px;"><span style="color:var(--teal)">✓ ${fK}</span><span style="color:var(--terra)">✗ ${fA}</span></div><div class="fca"><div class="fcc" onclick="fl=!fl;rC()"><div class="fc ${fl?'fl':''}"><div class="ff ffr"><div class="fw">${cFront}</div><div class="fh">${LVL[c.lv]||''}</div><div class="fh">Tap to reveal</div></div><div class="ff fbk"><div class="fw">${cBack}</div><div class="ft">${cFront}</div>${PH[c.e]?`<div style="font-size:12px;color:var(--terra);font-weight:700;margin-top:4px;">🗣 ${PH[c.e]}</div>`:''}${c.x?`<div class="fe">"${c.x}"</div>`:''}</div></div></div><button class="splg" data-speak="${cSpeak.replace(/"/g,'&quot;')}">🔊</button>${fl?`<div class="fcl"><button class="fcb ba" onclick="fR(0)">🔄 Again</button><button class="fcb bk" onclick="fR(1)">✓ Know it</button></div>`:''}</div>`;
+const c=dk[cI];const cFront=appLang==='en'?c.n:c.e;const cBack=appLang==='en'?c.e:c.n;const cSpeak=appLang==='en'?c.n:c.e;h+=`<div class="fpg">${cI+1} of ${dk.length}</div><div style="display:flex;gap:14px;justify-content:center;font-size:12px;font-weight:700;margin-bottom:10px;"><span style="color:var(--teal)">✓ ${fK}</span><span style="color:var(--terra)">✗ ${fA}</span></div><div class="fca"><div class="fcc" onclick="fl=!fl;rC()"><div class="fc ${fl?'fl':''}"><div class="ff ffr"><div class="fw">${cFront}</div><div class="fh">${LVL[c.lv]||''}</div><div class="fh">Tap to reveal</div></div><div class="ff fbk"><div class="fw">${cBack}</div><div class="ft">${cFront}</div>${PH[c.e]?`<div style="font-size:12px;color:var(--terra);font-weight:700;margin-top:4px;">🗣 ${PH[c.e]}</div>`:''}${c.x?`<div class="fe">"${c.x}"</div>`:''}</div></div></div><button class="splg" data-speak="${cSpeak.replace(/"/g,'&quot;')}" data-lang="${appLang}">🔊</button>${fl?`<div class="fcl"><button class="fcb ba" onclick="fR(0)">🔄 Again</button><button class="fcb bk" onclick="fR(1)">✓ Know it</button></div>`:''}</div>`;
 document.getElementById('p-cards').innerHTML=h;}
 function fR(k){const c=dk[cI];if(k){fK++;S.fk[c.e]=true;}else{fA++;S.fk[c.e]=false;}sv();cI++;fl=false;rC();}
 
@@ -1191,7 +1191,7 @@ function gQ(){const raw=Object.values(V).flat(),all=raw.filter(c=>vocabLevel===0
 function rQ(){let h=`<div class="pt">🧩 Quiz</div>`;
 if(!qQ.length){h+=`<div class="card" style="text-align:center;padding:30px;"><h3 style="justify-content:center;">Ready to test yourself?</h3><p style="margin:8px 0 12px;font-size:13px;color:var(--gr);">10 random questions${vocabLevel?' at '+LVL[vocabLevel]+' level':' from all levels'}</p><div style="display:flex;gap:6px;justify-content:center;margin-bottom:16px;flex-wrap:wrap;"><button onclick="vocabLevel=0;rQ()" class="dkb ${vocabLevel===0?'act':''}">All</button><button onclick="vocabLevel=1;rQ()" class="dkb ${vocabLevel===1?'act':''}" style="${vocabLevel!==1?'border-color:var(--teal);color:var(--teal);':''}">🌱</button><button onclick="vocabLevel=2;rQ()" class="dkb ${vocabLevel===2?'act':''}" style="${vocabLevel!==2?'border-color:var(--goldd);color:var(--goldd);':''}">🌿</button><button onclick="vocabLevel=3;rQ()" class="dkb ${vocabLevel===3?'act':''}" style="${vocabLevel!==3?'border-color:var(--terra);color:var(--terra);':''}">🌳</button></div><button class="qrb" onclick="gQ()">Start Quiz</button></div>`;document.getElementById('p-quiz').innerHTML=h;return;}
 if(qI>=qQ.length){const pc=Math.round(qS/qQ.length*100),mg=pc>=80?"¡Excelente! 🌟":pc>=50?"¡Muy bien! 💪🏾":"¡Sigue! 📚";h+=`<div class="card" style="text-align:center;padding:30px;"><h3 style="justify-content:center;">${mg}</h3><div class="qbg">${qS}/${qQ.length}</div><p style="color:var(--gr)">${pc}%</p><button class="qrb" onclick="gQ()">New Quiz</button></div>`;document.getElementById('p-quiz').innerHTML=h;return;}
-const q=qQ[qI];const qWord=appLang==='en'?q.n:q.e;const qSpeak=appLang==='en'?q.n:q.e;h+=`<div style="margin-bottom:14px;"><div style="display:flex;justify-content:space-between;font-size:12px;font-weight:600;color:var(--gr);margin-bottom:4px;"><span>Q ${qI+1}/10</span><span>Score: ${qS}</span></div><div class="qpb"><div class="qpf" style="width:${qI/qQ.length*100}%"></div></div></div><div class="qc2"><div style="font-size:13px;color:var(--gr);font-weight:600;">${appLang==='en'?'How do you say this in Spanish?':'What does this mean?'}</div><div class="qw">${qWord} <button class="splg" style="width:34px;height:34px;" data-speak="${qSpeak.replace(/"/g,'&quot;')}">🔊</button></div><div class="qo">${q.o.map((o,i)=>`<button class="qob" id="q${i}" data-qi="${i}" data-qa="${o.replace(/"/g,'&quot;')}">${o}</button>`).join('')}</div></div>`;
+const q=qQ[qI];const qWord=appLang==='en'?q.n:q.e;const qSpeak=appLang==='en'?q.n:q.e;h+=`<div style="margin-bottom:14px;"><div style="display:flex;justify-content:space-between;font-size:12px;font-weight:600;color:var(--gr);margin-bottom:4px;"><span>Q ${qI+1}/10</span><span>Score: ${qS}</span></div><div class="qpb"><div class="qpf" style="width:${qI/qQ.length*100}%"></div></div></div><div class="qc2"><div style="font-size:13px;color:var(--gr);font-weight:600;">${appLang==='en'?'How do you say this in Spanish?':'What does this mean?'}</div><div class="qw">${qWord} <button class="splg" style="width:34px;height:34px;" data-speak="${qSpeak.replace(/"/g,'&quot;')}" data-lang="${appLang}">🔊</button></div><div class="qo">${q.o.map((o,i)=>`<button class="qob" id="q${i}" data-qi="${i}" data-qa="${o.replace(/"/g,'&quot;')}">${o}</button>`).join('')}</div></div>`;
 document.getElementById('p-quiz').innerHTML=h;
 document.querySelectorAll('[data-qi]').forEach(b=>b.addEventListener('click',function(){
 if(qA)return;qA=true;const idx=+this.dataset.qi,ans=this.dataset.qa,q2=qQ[qI],ok=ans===q2[q2.aKey];
