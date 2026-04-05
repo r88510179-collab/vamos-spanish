@@ -364,7 +364,7 @@ Fill in your info below and tap ¡Vamos! <span style="font-size:11px;opacity:.7;
 
 <!-- Counting Game -->
 <div id="count-game" style="display:none;margin-top:24px;background:var(--w);border-radius:20px;padding:24px;border:4px solid var(--ink);">
-<h3 style="font-family:'Baloo 2';font-size:22px;text-align:center;">🔢 ¡Vamos a Contar!</h3>
+<h3 style="font-family:'Baloo 2';font-size:22px;text-align:center;">🔢 ¡Vamos a Contar! (1-20)</h3>
 <div id="count-display" style="font-size:80px;text-align:center;margin:16px 0;font-family:'Baloo 2';color:var(--ink);">1</div>
 <div id="count-word" style="font-size:24px;text-align:center;font-family:'Baloo 2';color:var(--terra);margin-bottom:16px;">UNO</div>
 <div style="display:flex;gap:12px;justify-content:center;">
@@ -393,8 +393,9 @@ Fill in your info below and tap ¡Vamos! <span style="font-size:11px;opacity:.7;
 <!-- Bubble Pop Game -->
 <div id="bubble-game" style="display:none;margin-top:24px;background:var(--w);border-radius:20px;padding:16px;border:4px solid var(--ink);position:relative;overflow:hidden;min-height:400px;">
 <h3 style="font-family:'Baloo 2';font-size:22px;text-align:center;">🫧 ¡Revienta las Burbujas!</h3>
-<p style="text-align:center;font-size:13px;color:var(--gr);margin-bottom:8px;">Tap the bubbles!</p>
+<p style="text-align:center;font-size:13px;color:var(--gr);margin-bottom:4px;">Tap the bubbles!</p>
 <div id="bubble-score" style="text-align:center;font-family:'Baloo 2';font-size:18px;color:var(--teal);">⭐ 0</div>
+<div id="bubble-hunt" style="text-align:center;font-family:'Baloo 2';font-size:16px;color:var(--terra);min-height:24px;"></div>
 <div id="bubble-area" style="position:relative;width:100%;height:320px;overflow:hidden;border-radius:16px;background:linear-gradient(180deg,#E0F7FA,#B2EBF2);margin-top:8px;"></div>
 </div>
 
@@ -402,7 +403,14 @@ Fill in your info below and tap ¡Vamos! <span style="font-size:11px;opacity:.7;
 <div id="memory-game" style="display:none;margin-top:24px;background:var(--w);border-radius:20px;padding:24px;border:4px solid var(--ink);">
 <h3 style="font-family:'Baloo 2';font-size:22px;text-align:center;">🧠 ¡Memoria!</h3>
 <p style="text-align:center;font-size:13px;color:var(--gr);">Find the matching pairs!</p>
-<div id="mem-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px;"></div>
+<div style="display:flex;gap:6px;justify-content:center;margin:8px 0;">
+<button onclick="memLevel=3;startMemory()" style="padding:6px 12px;border-radius:50px;border:2px solid var(--teal);background:var(--teall);font-size:11px;font-weight:800;color:var(--teal);">Easy</button>
+<button onclick="memLevel=4;startMemory()" style="padding:6px 12px;border-radius:50px;border:2px solid var(--goldd);background:var(--goldl);font-size:11px;font-weight:800;color:var(--goldd);">Medium</button>
+<button onclick="memLevel=5;startMemory()" style="padding:6px 12px;border-radius:50px;border:2px solid var(--terra);background:var(--terral);font-size:11px;font-weight:800;color:var(--terra);">Medium+</button>
+<button onclick="memLevel=6;startMemory()" style="padding:6px 12px;border-radius:50px;border:2px solid #7B1FA2;background:#F3E5F5;font-size:11px;font-weight:800;color:#7B1FA2;">Hard</button>
+</div>
+<div id="mem-level" style="text-align:center;font-size:12px;margin-bottom:8px;"></div>
+<div id="mem-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:8px;"></div>
 <div id="mem-result" style="font-family:'Baloo 2';font-size:22px;text-align:center;margin-top:12px;min-height:32px;"></div>
 <button onclick="startMemory()" style="display:block;margin:12px auto 0;padding:10px 24px;border-radius:50px;background:var(--ink);color:var(--gold);font-weight:800;font-size:14px;border:3px solid var(--gold);">🔄 New Game</button>
 </div>
@@ -412,6 +420,7 @@ Fill in your info below and tap ¡Vamos! <span style="font-size:11px;opacity:.7;
 <h3 style="font-family:'Baloo 2';font-size:22px;text-align:center;">🎨 ¡Vamos a Pintar!</h3>
 <canvas id="paint-canvas" style="width:100%;height:300px;border-radius:16px;border:3px solid var(--bd);background:#FFFDE7;touch-action:none;"></canvas>
 <div style="display:flex;gap:8px;justify-content:center;margin-top:12px;flex-wrap:wrap;" id="paint-colors"></div>
+<div id="paint-tools"></div>
 <button onclick="clearPaint()" style="display:block;margin:10px auto 0;padding:10px 24px;border-radius:50px;background:var(--ink);color:var(--gold);font-weight:800;font-size:14px;border:3px solid var(--gold);">🗑️ Borrar</button>
 </div>
 
@@ -512,8 +521,8 @@ const TOYS=[
 {emoji:"🖐🏾",es:"Mano",en:"Hand",cat:"body"},{emoji:"👃🏾",es:"Nariz",en:"Nose",cat:"body"},{emoji:"👁️",es:"Ojo",en:"Eye",cat:"body"},{emoji:"👄",es:"Boca",en:"Mouth",cat:"body"},{emoji:"👂🏾",es:"Oreja",en:"Ear",cat:"body"},{emoji:"🦶🏾",es:"Pie",en:"Foot",cat:"body"},{emoji:"🦵🏾",es:"Rodilla",en:"Knee",cat:"body"},{emoji:"💪🏾",es:"Brazo",en:"Arm",cat:"body"},
 {emoji:"☀️",es:"Sol",en:"Sun",cat:"nature"},{emoji:"🌙",es:"Luna",en:"Moon",cat:"nature"},{emoji:"⭐",es:"Estrella",en:"Star",cat:"nature"},{emoji:"🌊",es:"Mar",en:"Sea",cat:"nature"},{emoji:"🌴",es:"Palma",en:"Palm tree",cat:"nature"},{emoji:"🌺",es:"Flor",en:"Flower",cat:"nature"},{emoji:"🌧️",es:"Lluvia",en:"Rain",cat:"nature"},{emoji:"☁️",es:"Nube",en:"Cloud",cat:"nature"}
 ];
-const NUMS=["","Uno","Dos","Tres","Cuatro","Cinco","Seis","Siete","Ocho","Nueve","Diez"];
-const COLORS_GAME=[{es:"Rojo",hex:"#E53E3E"},{es:"Azul",hex:"#3182CE"},{es:"Verde",hex:"#38A169"},{es:"Amarillo",hex:"#ECC94B"},{es:"Naranja",hex:"#DD6B20"},{es:"Morado",hex:"#805AD5"}];
+const NUMS=["","Uno","Dos","Tres","Cuatro","Cinco","Seis","Siete","Ocho","Nueve","Diez","Once","Doce","Trece","Catorce","Quince","Diecis\u00e9is","Diecisiete","Dieciocho","Diecinueve","Veinte"];
+const COLORS_GAME=[{es:"Rojo",hex:"#E53E3E"},{es:"Azul",hex:"#3182CE"},{es:"Verde",hex:"#38A169"},{es:"Amarillo",hex:"#ECC94B"},{es:"Naranja",hex:"#DD6B20"},{es:"Morado",hex:"#805AD5"},{es:"Rosado",hex:"#D53F8C"},{es:"Negro",hex:"#1A1B4B"},{es:"Blanco",hex:"#F5F5F5"},{es:"Caf\u00e9",hex:"#8B5E3C"}];
 let tCat='all',countN=1,colorTarget=null;
 
 /* ===== DAILY TASKS (with Florida + parenting) ===== */
@@ -837,7 +846,7 @@ function showSaved(){const t=document.getElementById('toast');if(!t)return;t.cla
 function rd(){if(S.dd!==localDay()){S.dc={};S.dd=localDay();sv();}}
 
 /* ===== SPEECH ===== */
-function speak(t,lang){if(!('speechSynthesis' in window))return;speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);const useLang=lang||'es';u.lang=useLang==='en'?'en-US':'es-MX';const inTM=document.getElementById('tmode').classList.contains('act');u.rate=inTM?1.05:.85;u.pitch=inTM?1.6:1.2;const vs=speechSynthesis.getVoices(),v=vs.find(x=>x.lang.startsWith(useLang==='en'?'en-US':'es-MX'))||vs.find(x=>x.lang.startsWith(useLang==='en'?'en':'es'));if(v)u.voice=v;speechSynthesis.speak(u);}
+function speak(t,lang){if(!('speechSynthesis' in window))return;speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);const useLang=lang||'es';const prefix=useLang==='en'?'en':'es';u.lang=useLang==='en'?'en-US':'es-MX';const inTM=document.getElementById('tmode').classList.contains('act');u.rate=inTM?1.05:.85;u.pitch=inTM?1.6:1.2;const vs=speechSynthesis.getVoices();const match=vs.filter(x=>x.lang.startsWith(prefix));const fem=match.find(x=>/female|paulina|monica|lupe|samantha|karen|fiona|zuzana|tessa/i.test(x.name))||match.find(x=>!/male|jorge|juan|diego|carlos|daniel|thomas|david/i.test(x.name));if(fem)u.voice=fem;else if(match.length)u.voice=match[0];speechSynthesis.speak(u);}
 if('speechSynthesis' in window)speechSynthesis.getVoices();
 function spB(t,lang){return `<button class="spk" data-speak="${t.replace(/"/g,'&quot;')}" data-lang="${lang||'es'}">🔊</button>`;}
 function sh(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=0|Math.random()*(i+1);[b[i],b[j]]=[b[j],b[i]];}return b;}
@@ -902,133 +911,165 @@ function renderToys(){
   if(tCat==='paint')setTimeout(initPaint,100);
 }
 const MATCH_TITLES={animals:'🐾 ¡Toca el Animal!',food:'🍎 ¡Toca la Comida!',body:'🖐🏾 ¡Toca!',nature:'🌴 ¡Toca!'};
-let matchTarget=null;
+let matchTarget=null,matchScore=0,matchStreak=0;
 function startMatchGame(cat){
   const pool=sh(TOYS.filter(t=>t.cat===cat));
   if(pool.length<4)return;
   matchTarget=pool[0];
   const lblKey=appLang==='en'?'en':'es';
-  document.getElementById('match-title').textContent=MATCH_TITLES[cat]||'🎯 ¡Toca!';
-  document.getElementById('match-prompt').innerHTML=`Toca <b>${matchTarget[lblKey]}</b>`;
+  document.getElementById('match-title').innerHTML=(MATCH_TITLES[cat]||'🎯 ¡Toca!')+'<div style="font-size:14px;color:var(--teal);margin-top:4px;">⭐ '+matchScore+(matchStreak>=3?' 🔥'+matchStreak:'')+'</div>';
+  document.getElementById('match-prompt').innerHTML='Toca <b>'+matchTarget[lblKey]+'</b>';
   speak('Toca '+matchTarget[lblKey],appLang);
   document.getElementById('match-result').textContent='';
-  document.getElementById('match-opts').innerHTML=pool.slice(0,4).map(t=>`<button style="background:var(--w);border:5px solid var(--ink);border-radius:20px;padding:18px 10px;font-size:44px;box-shadow:0 6px 0 var(--ink);text-align:center;" data-match="${t[lblKey]}" onclick="checkMatch('${t[lblKey].replace(/'/g,"\\'")}')">${t.emoji}<span style="display:block;font-family:'Baloo 2';font-size:14px;color:var(--ink);margin-top:4px;">${t[lblKey]}</span></button>`).join('');
+  var numOpts=matchScore>=10?6:4;
+  var opts=pool.slice(0,Math.min(numOpts,pool.length));
+  document.getElementById('match-opts').style.gridTemplateColumns=numOpts>4?'repeat(3,1fr)':'repeat(2,1fr)';
+  document.getElementById('match-opts').innerHTML=opts.map(function(t){return '<button style="background:var(--w);border:5px solid var(--ink);border-radius:20px;padding:18px 10px;font-size:44px;box-shadow:0 6px 0 var(--ink);text-align:center;" onclick="checkMatch(\''+t[lblKey].replace(/'/g,"\\'")+'\')">'+t.emoji+'<span style="display:block;font-family:Baloo 2;font-size:14px;color:var(--ink);margin-top:4px;">'+t[lblKey]+'</span></button>';}).join('');
 }
 function checkMatch(picked){
-  const res=document.getElementById('match-result');
-  const lblKey=appLang==='en'?'en':'es';
-  if(picked===matchTarget[lblKey]){res.textContent='🎉 ¡Sí! ¡'+matchTarget[lblKey]+'!';res.style.color='var(--teal)';confetti();speak('¡Muy bien! '+matchTarget[lblKey],appLang);setTimeout(()=>startMatchGame(matchTarget.cat),2000);}
-  else{res.textContent='🔄 ¡Otra vez!';res.style.color='var(--terra)';speak('No, otra vez','es');}
+  var res=document.getElementById('match-result');
+  var lblKey=appLang==='en'?'en':'es';
+  if(picked===matchTarget[lblKey]){matchScore++;matchStreak++;res.textContent='🎉 ¡Sí! ¡'+matchTarget[lblKey]+'!';res.style.color='var(--teal)';confetti();speak('¡Muy bien! '+matchTarget[lblKey],appLang);setTimeout(function(){startMatchGame(matchTarget.cat);},matchStreak>=5?1200:2000);}
+  else{matchStreak=0;res.textContent='🔄 ¡Otra vez!';res.style.color='var(--terra)';speak('No, otra vez','es');}
 }
-function setTCat(c,btn){tCat=c;document.querySelectorAll('.tt-tab').forEach(t=>{t.classList.remove('act');});btn.classList.add('act');renderToys();}
-function countNav(dir){countN=Math.max(1,Math.min(10,countN+dir));updCount();}
+function setTCat(c,btn){tCat=c;matchScore=0;matchStreak=0;document.querySelectorAll('.tt-tab').forEach(function(t){t.classList.remove('act');});btn.classList.add('act');renderToys();}
+function countNav(dir){countN=Math.max(1,Math.min(20,countN+dir));updCount();}
 function updCount(){document.getElementById('count-display').textContent=countN;document.getElementById('count-word').textContent=NUMS[countN];speak(NUMS[countN],'es');}
 function speakCount(){speak(NUMS[countN],'es');}
+var colorScore=0,colorCount=0;
 function startColorGame(){
-  const pool=sh([...COLORS_GAME]);colorTarget=pool[0];
-  document.getElementById('color-prompt').innerHTML=`Toca <b>${colorTarget.es}</b>`;
+  var numOpts=colorScore>=8?6:4;
+  var pool=sh([...COLORS_GAME]).slice(0,numOpts);
+  colorTarget=pool[0];
+  document.getElementById('color-prompt').innerHTML='Toca <b>'+colorTarget.es+'</b><div style="font-size:14px;color:var(--teal);margin-top:4px;">⭐ '+colorScore+'</div>';
   speak('Toca '+colorTarget.es,'es');
   document.getElementById('color-result').textContent='';
-  document.getElementById('color-dots').innerHTML=pool.slice(0,4).map(c=>`<button style="width:100%;height:80px;border-radius:16px;background:${c.hex};border:4px solid var(--ink);box-shadow:0 6px 0 var(--ink);" data-color="${c.es}" data-speak="${c.es}"></button>`).join('');
+  document.getElementById('color-dots').style.gridTemplateColumns=numOpts>4?'repeat(3,1fr)':'repeat(2,1fr)';
+  document.getElementById('color-dots').innerHTML=pool.map(function(c){return '<button style="width:100%;height:70px;border-radius:16px;background:'+c.hex+';border:4px solid var(--ink);box-shadow:0 6px 0 var(--ink);'+(c.hex==='#F5F5F5'?'border-color:#999;':'')+(c.hex==='#1A1B4B'?'':'color:var(--ink);')+'" data-color="'+c.es+'" data-speak="'+c.es+'"><span style="font-size:12px;font-weight:800;color:'+(c.hex==='#1A1B4B'||c.hex==='#805AD5'||c.hex==='#3182CE'?'#fff':'#1A1B4B')+';">'+c.es+'</span></button>';}).join('');
 }
 function checkColor(picked){
-  const res=document.getElementById('color-result');
-  if(picked===colorTarget.es){res.textContent='🎉 ¡Sí! ¡'+colorTarget.es+'!';res.style.color='var(--teal)';confetti();speak('¡Muy bien! '+colorTarget.es,'es');setTimeout(startColorGame,2000);}
+  var res=document.getElementById('color-result');
+  if(picked===colorTarget.es){colorScore++;colorCount++;res.textContent='🎉 ¡Sí! ¡'+colorTarget.es+'!';res.style.color='var(--teal)';confetti();speak('¡Muy bien! '+colorTarget.es,'es');setTimeout(startColorGame,1500);}
   else{res.textContent='🔄 ¡Otra vez!';res.style.color='var(--terra)';speak('No, otra vez','es');}
 }
 
 /* ===== BUBBLE POP GAME ===== */
-let bubbleRAF=0,bubbleScore=0,bubbles=[];
+let bubbleRAF=0,bubbleScore=0,bubbles=[],bubbleHunt=null;
 function startBubbles(){
-  bubbleScore=0;document.getElementById('bubble-score').textContent='⭐ 0';
+  bubbleScore=0;bubbleHunt=null;
+  document.getElementById('bubble-score').textContent='⭐ 0';
+  document.getElementById('bubble-hunt').textContent='';
   bubbles=[];if(bubbleRAF)cancelAnimationFrame(bubbleRAF);
-  const area=document.getElementById('bubble-area');
+  var area=document.getElementById('bubble-area');
   area.innerHTML='';
-  spawnBubble();spawnBubble();spawnBubble();
+  spawnBubble();spawnBubble();spawnBubble();spawnBubble();
   animateBubbles();
+  setHuntTarget();
+}
+function setHuntTarget(){
+  if(bubbleScore>=5&&Math.random()>0.3){
+    var t=sh([...TOYS])[0];
+    var lblKey=appLang==='en'?'en':'es';
+    bubbleHunt=t[lblKey];
+    document.getElementById('bubble-hunt').innerHTML='🎯 Find: <b>'+bubbleHunt+'</b>';
+    speak('Busca '+bubbleHunt,appLang);
+  }else{bubbleHunt=null;document.getElementById('bubble-hunt').textContent='';}
 }
 function spawnBubble(){
-  const area=document.getElementById('bubble-area');
+  var area=document.getElementById('bubble-area');
   if(!area||!area.offsetWidth)return;
-  const pool=sh([...TOYS]);const t=pool[0];
-  const lblKey=appLang==='en'?'en':'es';
-  const b=document.createElement('button');
-  b.style.cssText='position:absolute;border:none;background:rgba(255,255,255,0.85);border-radius:50%;width:72px;height:72px;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(0,0,0,0.15);font-size:32px;transition:transform 0.1s;cursor:pointer;z-index:1;';
-  b.style.left=Math.random()*(area.offsetWidth-72)+'px';
-  b.style.bottom='-80px';
-  b.innerHTML=t.emoji+'<span style="font-size:10px;font-family:Baloo 2;font-weight:700;color:#1A1B4B;margin-top:-2px;">'+t[lblKey]+'</span>';
+  var pool=sh([...TOYS]);var t=pool[0];
+  if(bubbleHunt){var hItem=TOYS.find(function(x){var k=appLang==='en'?'en':'es';return x[k]===bubbleHunt;});if(hItem&&Math.random()>0.6)t=hItem;}
+  var lblKey=appLang==='en'?'en':'es';
+  var speedBase=1+Math.min(bubbleScore*0.08,2.5);
+  var b=document.createElement('button');
+  var sz=60+Math.floor(Math.random()*24);
+  b.style.cssText='position:absolute;border:none;background:rgba(255,255,255,0.85);border-radius:50%;width:'+sz+'px;height:'+sz+'px;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(0,0,0,0.15);font-size:'+Math.floor(sz*0.45)+'px;transition:transform 0.1s;cursor:pointer;z-index:1;';
+  b.style.left=Math.random()*(area.offsetWidth-sz)+'px';
+  b.style.bottom='-'+(sz+10)+'px';
+  b.innerHTML=t.emoji+'<span style="font-size:9px;font-family:Baloo 2;font-weight:700;color:#1A1B4B;margin-top:-2px;">'+t[lblKey]+'</span>';
   b.dataset.word=t[lblKey];
-  b.dataset.speed=(1+Math.random()*1.5).toFixed(1);
+  b.dataset.speed=(speedBase+Math.random()*1.5).toFixed(1);
   b.addEventListener('click',function(e){
     e.stopPropagation();
-    speak(this.dataset.word,appLang);
+    var word=this.dataset.word;
+    if(bubbleHunt&&word!==bubbleHunt){this.style.transform='scale(0.8)';speak('No, busca '+bubbleHunt,appLang);setTimeout(function(){},200);return;}
+    speak(word,appLang);
     bubbleScore++;
     document.getElementById('bubble-score').textContent='⭐ '+bubbleScore;
     this.style.transform='scale(1.5)';this.style.opacity='0';
-    if(bubbleScore%5===0)confetti();
-    setTimeout(()=>{this.remove();spawnBubble();},300);
+    if(bubbleScore%5===0){confetti();setHuntTarget();}
+    setTimeout(function(){b.remove();spawnBubble();},300);
   });
   area.appendChild(b);
   bubbles.push(b);
 }
 function animateBubbles(){
-  const area=document.getElementById('bubble-area');
+  var area=document.getElementById('bubble-area');
   if(!area||tCat!=='bubbles'){bubbleRAF=0;return;}
-  bubbles=bubbles.filter(b=>b.parentElement);
-  bubbles.forEach(b=>{
-    const cur=parseFloat(b.style.bottom)||0;
-    const spd=parseFloat(b.dataset.speed)||1;
+  bubbles=bubbles.filter(function(b){return b.parentElement;});
+  bubbles.forEach(function(b){
+    var cur=parseFloat(b.style.bottom)||0;
+    var spd=parseFloat(b.dataset.speed)||1;
     b.style.bottom=(cur+spd)+'px';
     if(cur>area.offsetHeight+80){b.remove();spawnBubble();}
   });
+  if(bubbles.length<3+Math.floor(bubbleScore/8))spawnBubble();
   bubbleRAF=requestAnimationFrame(animateBubbles);
 }
 
 /* ===== MEMORY MATCH GAME ===== */
-let memCards=[],memFlipped=[],memMatched=0,memLocked=false;
+let memCards=[],memFlipped=[],memMatched=0,memLocked=false,memLevel=3;
 function startMemory(){
   memFlipped=[];memMatched=0;memLocked=false;
   document.getElementById('mem-result').textContent='';
-  const pool=sh([...TOYS]).slice(0,4);
-  const lblKey=appLang==='en'?'en':'es';
-  const pairs=[...pool,...pool];
+  var pool=sh([...TOYS]).slice(0,memLevel);
+  var pairs=[];pool.forEach(function(p){pairs.push(p);pairs.push(p);});
   memCards=sh(pairs);
-  const grid=document.getElementById('mem-grid');
-  grid.style.gridTemplateColumns=memCards.length>6?'repeat(4,1fr)':'repeat(3,1fr)';
-  grid.innerHTML=memCards.map((c,i)=>`<button id="mc${i}" onclick="flipMem(${i})" style="height:80px;border-radius:16px;border:4px solid var(--ink);background:var(--ink);color:var(--gold);font-size:36px;box-shadow:0 4px 0 #0d0d2e;display:flex;align-items:center;justify-content:center;font-family:Baloo 2;font-weight:800;">?</button>`).join('');
+  var grid=document.getElementById('mem-grid');
+  var cols=memLevel<=3?3:memLevel<=5?4:4;
+  grid.style.gridTemplateColumns='repeat('+cols+',1fr)';
+  grid.innerHTML=memCards.map(function(c,i){return '<button id="mc'+i+'" onclick="flipMem('+i+')" style="height:75px;border-radius:16px;border:4px solid var(--ink);background:var(--ink);color:var(--gold);font-size:32px;box-shadow:0 4px 0 #0d0d2e;display:flex;align-items:center;justify-content:center;font-family:Baloo 2;font-weight:800;">?</button>';}).join('');
+  document.getElementById('mem-level').innerHTML=['','','',
+    '<b style="color:var(--teal)">Easy</b> (3 pairs)',
+    '<b style="color:var(--goldd)">Medium</b> (4 pairs)',
+    '<b style="color:var(--terra)">Medium+</b> (5 pairs)',
+    '<b style="color:#7B1FA2">Hard</b> (6 pairs)'
+  ][memLevel]||'';
 }
 function flipMem(i){
   if(memLocked)return;
-  const btn=document.getElementById('mc'+i);
+  var btn=document.getElementById('mc'+i);
   if(!btn||btn.dataset.matched||memFlipped.includes(i))return;
-  const c=memCards[i];
-  const lblKey=appLang==='en'?'en':'es';
+  var c=memCards[i];
+  var lblKey=appLang==='en'?'en':'es';
   btn.textContent=c.emoji;
   btn.style.background='var(--w)';btn.style.color='var(--ink)';
   speak(c[lblKey],appLang);
   memFlipped.push(i);
   if(memFlipped.length===2){
     memLocked=true;
-    const[a,b]=memFlipped;
-    if(memCards[a].es===memCards[b].es){
+    var a=memFlipped[0],b2=memFlipped[1];
+    if(memCards[a].es===memCards[b2].es){
       document.getElementById('mc'+a).dataset.matched='1';
-      document.getElementById('mc'+b).dataset.matched='1';
+      document.getElementById('mc'+b2).dataset.matched='1';
       document.getElementById('mc'+a).style.background='var(--teall)';
       document.getElementById('mc'+a).style.borderColor='var(--teal)';
-      document.getElementById('mc'+b).style.background='var(--teall)';
-      document.getElementById('mc'+b).style.borderColor='var(--teal)';
+      document.getElementById('mc'+b2).style.background='var(--teall)';
+      document.getElementById('mc'+b2).style.borderColor='var(--teal)';
       memMatched++;confetti();
       if(memMatched>=memCards.length/2){
         document.getElementById('mem-result').textContent='🎉 ¡Ganaste!';
         speak('¡Muy bien! ¡Ganaste!','es');
+        if(memLevel<6){document.getElementById('mem-result').innerHTML+='<br><button onclick="memLevel++;startMemory()" style="margin-top:8px;padding:10px 20px;border-radius:50px;background:var(--gold);color:var(--ink);font-weight:800;font-size:14px;border:3px solid var(--ink);">Next Level ➜</button>';}
       }
       memFlipped=[];memLocked=false;
     }else{
-      setTimeout(()=>{
+      setTimeout(function(){
         document.getElementById('mc'+a).textContent='?';
         document.getElementById('mc'+a).style.background='var(--ink)';document.getElementById('mc'+a).style.color='var(--gold)';
-        document.getElementById('mc'+b).textContent='?';
-        document.getElementById('mc'+b).style.background='var(--ink)';document.getElementById('mc'+b).style.color='var(--gold)';
+        document.getElementById('mc'+b2).textContent='?';
+        document.getElementById('mc'+b2).style.background='var(--ink)';document.getElementById('mc'+b2).style.color='var(--gold)';
         memFlipped=[];memLocked=false;
       },800);
     }
@@ -1036,7 +1077,7 @@ function flipMem(i){
 }
 
 /* ===== FINGER PAINT GAME ===== */
-let paintCtx=null,paintColor='#E53E3E',paintInit=false;
+let paintCtx=null,paintColor='#E53E3E',paintInit=false,paintBrush=8;
 const PAINT_COLORS=[
   {hex:'#E53E3E',es:'Rojo',en:'Red'},
   {hex:'#3182CE',es:'Azul',en:'Blue'},
@@ -1045,39 +1086,55 @@ const PAINT_COLORS=[
   {hex:'#DD6B20',es:'Naranja',en:'Orange'},
   {hex:'#805AD5',es:'Morado',en:'Purple'},
   {hex:'#D53F8C',es:'Rosado',en:'Pink'},
-  {hex:'#1A1B4B',es:'Negro',en:'Black'}
+  {hex:'#1A1B4B',es:'Negro',en:'Black'},
+  {hex:'#FFFFFF',es:'Blanco',en:'White'}
 ];
+const STAMPS=['⭐','❤️','🌸','🐟','🦋','🌴','🐢','🎵'];
 function initPaint(){
-  const canvas=document.getElementById('paint-canvas');
+  var canvas=document.getElementById('paint-canvas');
   if(!canvas)return;
   canvas.width=canvas.offsetWidth*2;canvas.height=canvas.offsetHeight*2;
   canvas.style.width=canvas.offsetWidth+'px';canvas.style.height=canvas.offsetHeight+'px';
   paintCtx=canvas.getContext('2d');
   paintCtx.scale(2,2);
-  paintCtx.lineCap='round';paintCtx.lineJoin='round';paintCtx.lineWidth=8;
+  paintCtx.lineCap='round';paintCtx.lineJoin='round';paintCtx.lineWidth=paintBrush;
   clearPaint();
   if(!paintInit){
     paintInit=true;
-    let drawing=false;
+    var drawing=false;
     function getPos(e){
-      const r=canvas.getBoundingClientRect();
-      const t=e.touches?e.touches[0]:e;
+      var r=canvas.getBoundingClientRect();
+      var t=e.touches?e.touches[0]:e;
       return{x:t.clientX-r.left,y:t.clientY-r.top};
     }
-    canvas.addEventListener('touchstart',e=>{e.preventDefault();drawing=true;const p=getPos(e);paintCtx.beginPath();paintCtx.moveTo(p.x,p.y);},{passive:false});
-    canvas.addEventListener('touchmove',e=>{e.preventDefault();if(!drawing)return;const p=getPos(e);paintCtx.strokeStyle=paintColor;paintCtx.lineTo(p.x,p.y);paintCtx.stroke();},{passive:false});
-    canvas.addEventListener('touchend',()=>{drawing=false;});
-    canvas.addEventListener('mousedown',e=>{drawing=true;const p=getPos(e);paintCtx.beginPath();paintCtx.moveTo(p.x,p.y);});
-    canvas.addEventListener('mousemove',e=>{if(!drawing)return;const p=getPos(e);paintCtx.strokeStyle=paintColor;paintCtx.lineTo(p.x,p.y);paintCtx.stroke();});
-    canvas.addEventListener('mouseup',()=>{drawing=false;});
+    canvas.addEventListener('touchstart',function(e){e.preventDefault();drawing=true;var p=getPos(e);paintCtx.lineWidth=paintBrush;paintCtx.beginPath();paintCtx.moveTo(p.x,p.y);},{passive:false});
+    canvas.addEventListener('touchmove',function(e){e.preventDefault();if(!drawing)return;var p=getPos(e);paintCtx.strokeStyle=paintColor;paintCtx.lineTo(p.x,p.y);paintCtx.stroke();},{passive:false});
+    canvas.addEventListener('touchend',function(){drawing=false;});
+    canvas.addEventListener('mousedown',function(e){drawing=true;var p=getPos(e);paintCtx.lineWidth=paintBrush;paintCtx.beginPath();paintCtx.moveTo(p.x,p.y);});
+    canvas.addEventListener('mousemove',function(e){if(!drawing)return;var p=getPos(e);paintCtx.strokeStyle=paintColor;paintCtx.lineTo(p.x,p.y);paintCtx.stroke();});
+    canvas.addEventListener('mouseup',function(){drawing=false;});
   }
-  const lblKey=appLang==='en'?'en':'es';
-  document.getElementById('paint-colors').innerHTML=PAINT_COLORS.map(c=>`<button onclick="setPaintColor('${c.hex}','${c[lblKey]}')" style="width:40px;height:40px;border-radius:50%;background:${c.hex};border:3px solid ${c.hex==='#ECC94B'?'#B7791F':'var(--ink)'};box-shadow:0 3px 0 rgba(0,0,0,0.2);"></button>`).join('');
+  var lblKey=appLang==='en'?'en':'es';
+  document.getElementById('paint-colors').innerHTML=PAINT_COLORS.map(function(c){return '<button onclick="setPaintColor(\''+c.hex+'\',\''+c[lblKey]+'\')" style="width:36px;height:36px;border-radius:50%;background:'+c.hex+';border:3px solid '+(c.hex==='#ECC94B'||c.hex==='#FFFFFF'?'#999':'var(--ink)')+';box-shadow:0 3px 0 rgba(0,0,0,0.2);"></button>';}).join('');
+  document.getElementById('paint-tools').innerHTML='<div style="display:flex;gap:6px;justify-content:center;margin-top:8px;">'
+    +'<button onclick="paintBrush=4" style="width:32px;height:32px;border-radius:50%;border:2px solid var(--ink);background:var(--grl);font-size:10px;font-weight:800;">S</button>'
+    +'<button onclick="paintBrush=8" style="width:32px;height:32px;border-radius:50%;border:2px solid var(--ink);background:var(--grl);font-size:10px;font-weight:800;">M</button>'
+    +'<button onclick="paintBrush=16" style="width:32px;height:32px;border-radius:50%;border:2px solid var(--ink);background:var(--grl);font-size:10px;font-weight:800;">L</button>'
+    +'<button onclick="paintBrush=30" style="width:32px;height:32px;border-radius:50%;border:2px solid var(--ink);background:var(--grl);font-size:10px;font-weight:800;">XL</button>'
+    +'</div>'
+    +'<div style="display:flex;gap:8px;justify-content:center;margin-top:8px;">'+STAMPS.map(function(s){return '<button onclick="stampEmoji(\''+s+'\')" style="font-size:24px;background:none;border:none;padding:4px;">'+s+'</button>';}).join('')+'</div>';
 }
 function setPaintColor(hex,name){paintColor=hex;speak(name,appLang);}
+function stampEmoji(em){
+  if(!paintCtx)return;
+  var canvas=document.getElementById('paint-canvas');
+  var cx=canvas.offsetWidth/2,cy=canvas.offsetHeight/2;
+  paintCtx.font='40px serif';
+  paintCtx.fillText(em,cx-20+Math.random()*40,cy-20+Math.random()*40);
+}
 function clearPaint(){
   if(!paintCtx)return;
-  const canvas=document.getElementById('paint-canvas');
+  var canvas=document.getElementById('paint-canvas');
   paintCtx.clearRect(0,0,canvas.width,canvas.height);
   speak('Borrar','es');
 }
