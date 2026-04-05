@@ -352,8 +352,12 @@ Fill in your info below and tap ¡Vamos! <span style="font-size:11px;opacity:.7;
 <button class="tt-tab" data-tcat="lesson" onclick="setTCat('lesson',this)">📚 Lesson</button>
 <button class="tt-tab" onclick="setTCat('animals',this)">🐾 Animals</button>
 <button class="tt-tab" onclick="setTCat('food',this)">🍎 Food</button>
+<button class="tt-tab" onclick="setTCat('sports',this)">⚽ Sports</button>
+<button class="tt-tab" onclick="setTCat('vehicles',this)">🚗 Vehicles</button>
 <button class="tt-tab" onclick="setTCat('colors',this)">🎨 Colors</button>
 <button class="tt-tab" onclick="setTCat('body',this)">🖐🏾 Body</button>
+<button class="tt-tab" onclick="setTCat('shapes',this)">🔷 Shapes</button>
+<button class="tt-tab" onclick="setTCat('clothes',this)">👕 Clothes</button>
 <button class="tt-tab" onclick="setTCat('count',this)">🔢 Count</button>
 <button class="tt-tab" onclick="setTCat('nature',this)">🌴 Nature</button>
 <button class="tt-tab" onclick="setTCat('bubbles',this)">🫧 Bubbles</button>
@@ -538,11 +542,30 @@ document.querySelectorAll('#ob-levels .ob-lvl').forEach(b=>b.addEventListener('c
 
 /* ===== TODDLER BUTTONS ===== */
 const TOYS=[
+// ANIMALS (16)
 {emoji:"🐄",es:"Vaca",en:"Cow",cat:"animals"},{emoji:"🐔",es:"Pollo",en:"Chicken",cat:"animals"},{emoji:"🐕",es:"Perro",en:"Dog",cat:"animals"},{emoji:"🐱",es:"Gato",en:"Cat",cat:"animals"},{emoji:"🐟",es:"Pez",en:"Fish",cat:"animals"},{emoji:"🐢",es:"Tortuga",en:"Turtle",cat:"animals"},{emoji:"🦜",es:"Pájaro",en:"Bird",cat:"animals"},{emoji:"🐸",es:"Rana",en:"Frog",cat:"animals"},
+{emoji:"🦁",es:"León",en:"Lion",cat:"animals"},{emoji:"🐒",es:"Mono",en:"Monkey",cat:"animals"},{emoji:"🐴",es:"Caballo",en:"Horse",cat:"animals"},{emoji:"🐷",es:"Cerdo",en:"Pig",cat:"animals"},{emoji:"🦋",es:"Mariposa",en:"Butterfly",cat:"animals"},{emoji:"🐝",es:"Abeja",en:"Bee",cat:"animals"},{emoji:"🐊",es:"Cocodrilo",en:"Crocodile",cat:"animals"},{emoji:"🐘",es:"Elefante",en:"Elephant",cat:"animals"},
+// FOOD (16)
 {emoji:"🍌",es:"Guineo",en:"Banana",cat:"food"},{emoji:"🍎",es:"Manzana",en:"Apple",cat:"food"},{emoji:"🌮",es:"Baleada",en:"Baleada",cat:"food"},{emoji:"💧",es:"Agua",en:"Water",cat:"food"},{emoji:"🥛",es:"Leche",en:"Milk",cat:"food"},{emoji:"🍚",es:"Arroz",en:"Rice",cat:"food"},{emoji:"🧀",es:"Queso",en:"Cheese",cat:"food"},{emoji:"🍞",es:"Pan",en:"Bread",cat:"food"},
-{emoji:"🔴",es:"Rojo",en:"Red",cat:"colors"},{emoji:"🔵",es:"Azul",en:"Blue",cat:"colors"},{emoji:"🟢",es:"Verde",en:"Green",cat:"colors"},{emoji:"🟡",es:"Amarillo",en:"Yellow",cat:"colors"},{emoji:"⚫",es:"Negro",en:"Black",cat:"colors"},{emoji:"⚪",es:"Blanco",en:"White",cat:"colors"},{emoji:"🟠",es:"Naranja",en:"Orange",cat:"colors"},{emoji:"🟣",es:"Morado",en:"Purple",cat:"colors"},
+{emoji:"🍇",es:"Uvas",en:"Grapes",cat:"food"},{emoji:"🍊",es:"Naranja",en:"Orange",cat:"food"},{emoji:"🥕",es:"Zanahoria",en:"Carrot",cat:"food"},{emoji:"🌽",es:"Maíz",en:"Corn",cat:"food"},{emoji:"🍦",es:"Helado",en:"Ice cream",cat:"food"},{emoji:"🍪",es:"Galleta",en:"Cookie",cat:"food"},{emoji:"🥑",es:"Aguacate",en:"Avocado",cat:"food"},{emoji:"🍫",es:"Chocolate",en:"Chocolate",cat:"food"},
+// COLORS (10)
+{emoji:"🔴",es:"Rojo",en:"Red",cat:"colors"},{emoji:"🔵",es:"Azul",en:"Blue",cat:"colors"},{emoji:"🟢",es:"Verde",en:"Green",cat:"colors"},{emoji:"🟡",es:"Amarillo",en:"Yellow",cat:"colors"},{emoji:"⚫",es:"Negro",en:"Black",cat:"colors"},{emoji:"⚪",es:"Blanco",en:"White",cat:"colors"},{emoji:"🟠",es:"Naranja",en:"Orange",cat:"colors"},{emoji:"🟣",es:"Morado",en:"Purple",cat:"colors"},{emoji:"🩷",es:"Rosado",en:"Pink",cat:"colors"},{emoji:"🟤",es:"Café",en:"Brown",cat:"colors"},
+// BODY (12)
 {emoji:"🖐🏾",es:"Mano",en:"Hand",cat:"body"},{emoji:"👃🏾",es:"Nariz",en:"Nose",cat:"body"},{emoji:"👁️",es:"Ojo",en:"Eye",cat:"body"},{emoji:"👄",es:"Boca",en:"Mouth",cat:"body"},{emoji:"👂🏾",es:"Oreja",en:"Ear",cat:"body"},{emoji:"🦶🏾",es:"Pie",en:"Foot",cat:"body"},{emoji:"🦵🏾",es:"Rodilla",en:"Knee",cat:"body"},{emoji:"💪🏾",es:"Brazo",en:"Arm",cat:"body"},
-{emoji:"☀️",es:"Sol",en:"Sun",cat:"nature"},{emoji:"🌙",es:"Luna",en:"Moon",cat:"nature"},{emoji:"⭐",es:"Estrella",en:"Star",cat:"nature"},{emoji:"🌊",es:"Mar",en:"Sea",cat:"nature"},{emoji:"🌴",es:"Palma",en:"Palm tree",cat:"nature"},{emoji:"🌺",es:"Flor",en:"Flower",cat:"nature"},{emoji:"🌧️",es:"Lluvia",en:"Rain",cat:"nature"},{emoji:"☁️",es:"Nube",en:"Cloud",cat:"nature"}
+{emoji:"🦷",es:"Diente",en:"Tooth",cat:"body"},{emoji:"👅",es:"Lengua",en:"Tongue",cat:"body"},{emoji:"🫁",es:"Barriga",en:"Belly",cat:"body"},{emoji:"🧠",es:"Cabeza",en:"Head",cat:"body"},
+// NATURE (12)
+{emoji:"☀️",es:"Sol",en:"Sun",cat:"nature"},{emoji:"🌙",es:"Luna",en:"Moon",cat:"nature"},{emoji:"⭐",es:"Estrella",en:"Star",cat:"nature"},{emoji:"🌊",es:"Mar",en:"Sea",cat:"nature"},{emoji:"🌴",es:"Palma",en:"Palm tree",cat:"nature"},{emoji:"🌺",es:"Flor",en:"Flower",cat:"nature"},{emoji:"🌧️",es:"Lluvia",en:"Rain",cat:"nature"},{emoji:"☁️",es:"Nube",en:"Cloud",cat:"nature"},
+{emoji:"🌈",es:"Arcoíris",en:"Rainbow",cat:"nature"},{emoji:"🌵",es:"Cactus",en:"Cactus",cat:"nature"},{emoji:"🍃",es:"Hoja",en:"Leaf",cat:"nature"},{emoji:"🌋",es:"Volcán",en:"Volcano",cat:"nature"},
+// SPORTS (12) - NEW
+{emoji:"⚽",es:"Fútbol",en:"Soccer",cat:"sports"},{emoji:"🏀",es:"Básquetbol",en:"Basketball",cat:"sports"},{emoji:"⚾",es:"Béisbol",en:"Baseball",cat:"sports"},{emoji:"🏈",es:"Fútbol Americano",en:"Football",cat:"sports"},{emoji:"🎾",es:"Tenis",en:"Tennis",cat:"sports"},{emoji:"🏊",es:"Nadar",en:"Swimming",cat:"sports"},
+{emoji:"🚴",es:"Bicicleta",en:"Cycling",cat:"sports"},{emoji:"🏃",es:"Correr",en:"Running",cat:"sports"},{emoji:"⛳",es:"Golf",en:"Golf",cat:"sports"},{emoji:"🥊",es:"Boxeo",en:"Boxing",cat:"sports"},{emoji:"🤸",es:"Gimnasia",en:"Gymnastics",cat:"sports"},{emoji:"🛹",es:"Patineta",en:"Skateboard",cat:"sports"},
+// VEHICLES (10) - NEW
+{emoji:"🚗",es:"Carro",en:"Car",cat:"vehicles"},{emoji:"🚌",es:"Autobús",en:"Bus",cat:"vehicles"},{emoji:"✈️",es:"Avión",en:"Airplane",cat:"vehicles"},{emoji:"🚂",es:"Tren",en:"Train",cat:"vehicles"},{emoji:"🚢",es:"Barco",en:"Boat",cat:"vehicles"},{emoji:"🚒",es:"Bomberos",en:"Fire truck",cat:"vehicles"},
+{emoji:"🚑",es:"Ambulancia",en:"Ambulance",cat:"vehicles"},{emoji:"🚀",es:"Cohete",en:"Rocket",cat:"vehicles"},{emoji:"🚁",es:"Helicóptero",en:"Helicopter",cat:"vehicles"},{emoji:"🏍️",es:"Moto",en:"Motorcycle",cat:"vehicles"},
+// SHAPES (8) - NEW
+{emoji:"⭕",es:"Círculo",en:"Circle",cat:"shapes"},{emoji:"⬛",es:"Cuadrado",en:"Square",cat:"shapes"},{emoji:"🔺",es:"Triángulo",en:"Triangle",cat:"shapes"},{emoji:"⭐",es:"Estrella",en:"Star",cat:"shapes"},{emoji:"❤️",es:"Corazón",en:"Heart",cat:"shapes"},{emoji:"💎",es:"Diamante",en:"Diamond",cat:"shapes"},{emoji:"🔷",es:"Rombo",en:"Rhombus",cat:"shapes"},{emoji:"🟰",es:"Rectángulo",en:"Rectangle",cat:"shapes"},
+// CLOTHES (8) - NEW
+{emoji:"👕",es:"Camisa",en:"Shirt",cat:"clothes"},{emoji:"👖",es:"Pantalones",en:"Pants",cat:"clothes"},{emoji:"👟",es:"Zapatos",en:"Shoes",cat:"clothes"},{emoji:"🧦",es:"Calcetines",en:"Socks",cat:"clothes"},{emoji:"🎩",es:"Sombrero",en:"Hat",cat:"clothes"},{emoji:"🧥",es:"Chaqueta",en:"Jacket",cat:"clothes"},{emoji:"👗",es:"Vestido",en:"Dress",cat:"clothes"},{emoji:"🩱",es:"Traje de baño",en:"Swimsuit",cat:"clothes"}
 ];
 const NUMS=["","Uno","Dos","Tres","Cuatro","Cinco","Seis","Siete","Ocho","Nueve","Diez","Once","Doce","Trece","Catorce","Quince","Diecis\u00e9is","Diecisiete","Dieciocho","Diecinueve","Veinte"];
 const COLORS_GAME=[{es:"Rojo",hex:"#E53E3E"},{es:"Azul",hex:"#3182CE"},{es:"Verde",hex:"#38A169"},{es:"Amarillo",hex:"#ECC94B"},{es:"Naranja",hex:"#DD6B20"},{es:"Morado",hex:"#805AD5"},{es:"Rosado",hex:"#D53F8C"},{es:"Negro",hex:"#1A1B4B"},{es:"Blanco",hex:"#F5F5F5"},{es:"Caf\u00e9",hex:"#8B5E3C"}];
@@ -941,7 +964,7 @@ if(exitBtn){exitBtn.addEventListener('mousedown',startExit);exitBtn.addEventList
 exitBtn.addEventListener('touchstart',e=>{e.preventDefault();startExit();});exitBtn.addEventListener('touchend',cancelExit);exitBtn.addEventListener('touchcancel',cancelExit);}
 function renderToys(){
   var gameCats=['bubbles','memory','paint','lesson'];
-  var items=tCat==='all'?sh(TOYS).slice(0,12):gameCats.includes(tCat)?[]:TOYS.filter(function(t){return t.cat===tCat;});
+  var items=tCat==='all'?sh(TOYS).slice(0,16):gameCats.includes(tCat)?[]:TOYS.filter(function(t){return t.cat===tCat;});
   var lblKey=appLang==='en'?'en':'es';var spkKey=appLang==='en'?'en':'es';
   document.getElementById('toyGrid').innerHTML=items.map(function(t){return '<button class="toy-btn" data-speak="'+t[spkKey]+'" data-lang="'+appLang+'">'+t.emoji+'<span class="toy-lbl">'+t[lblKey]+'</span></button>';}).join('');
   document.getElementById('count-game').style.display=tCat==='count'?'block':'none';
@@ -950,7 +973,7 @@ function renderToys(){
   document.getElementById('memory-game').style.display=tCat==='memory'?'block':'none';
   document.getElementById('paint-game').style.display=tCat==='paint'?'block':'none';
   document.getElementById('lesson-game').style.display=tCat==='lesson'?'block':'none';
-  var matchCats=['animals','food','body','nature'];
+  var matchCats=['animals','food','body','nature','sports','vehicles','shapes','clothes'];
   document.getElementById('match-game').style.display=matchCats.includes(tCat)?'block':'none';
   if(tCat==='colors')startColorGame();
   if(tCat==='count')updCount();
@@ -960,7 +983,7 @@ function renderToys(){
   if(tCat==='paint')setTimeout(initPaint,100);
   if(tCat==='lesson')startLesson();
 }
-const MATCH_TITLES={animals:'🐾 ¡Toca el Animal!',food:'🍎 ¡Toca la Comida!',body:'🖐🏾 ¡Toca!',nature:'🌴 ¡Toca!'};
+const MATCH_TITLES={animals:'🐾 ¡Toca el Animal!',food:'🍎 ¡Toca la Comida!',body:'🖐🏾 ¡Toca!',nature:'🌴 ¡Toca!',sports:'⚽ ¡Toca el Deporte!',vehicles:'🚗 ¡Toca el Vehículo!',shapes:'🔷 ¡Toca la Forma!',clothes:'👕 ¡Toca la Ropa!'};
 let matchTarget=null,matchScore=0,matchStreak=0;
 function startMatchGame(cat){
   const pool=sh(TOYS.filter(t=>t.cat===cat));
@@ -1465,20 +1488,35 @@ h+=`<div class="subpg ${morePage==='grid'?'act':''}" id="m-grid"><div class="mor
 ].map(([id,ico,title,desc])=>`<button class="more-card" onclick="openMore('${id}')"><div class="more-ico">${ico}</div><h3>${title}</h3><p>${desc}</p></button>`).join('')}</div></div>`;
 
 h+=`<div class="subpg ${morePage==='gs'?'act':''}" id="m-gs"><button class="back-btn" onclick="openMore('grid')">← Back to More</button>
-<div class="card"><h3>👋🏾 Welcome to ¡Vamos!</h3><p style="font-size:13px;">This is your free 12-month Spanish learning program for you and your toddler. You\'ll learn conversational Honduran Spanish together — just 45 minutes a day. No experience needed. Everything you need is inside this app.</p></div>
-<div class="card hl-teal"><h3>📱 Install on Your Phone</h3><p style="font-size:13px;">For the best experience, add this to your home screen:<br><br><b>iPhone:</b> Tap the share button (⬆️) at the bottom of Safari → scroll down → tap "Add to Home Screen"<br><b>Android:</b> Tap the three dots (⋮) → tap "Add to Home Screen"<br><br>This makes it open like a real app with no browser bar. Your progress saves automatically.</p></div>
-<div class="card"><h3>🏠 The Today Tab</h3><p style="font-size:13px;">This is your daily home base. Here\'s what you\'ll see:<br><br>- <b>First-time banner</b> — If you\'re new (0 weeks completed), a teal banner at the top links you right to this guide<br>- <b>Help Me button</b> — Tap for emergency parenting phrases in Spanish (for toddler meltdowns). It\'s collapsible — tap the header to expand<br>- <b>Progress ring</b> — Shows how far through the 48-week program you are<br>- <b>Stats row</b> — Your streak, words learned, quiz score, and weeks completed<br>- <b>Quick Tools strip</b> — A scrollable row of shortcuts to Getting Started, Schedule, Honduran Guide, Songs, Resources, and Cognates. Tap any to jump there instantly<br>- <b>Today's Tasks</b> — 8 daily activities. Tap any task for detailed instructions. Check them off as you go<br>- <b>Florida Quest</b> — 10 real-world activities around Fort Myers. These don\'t reset daily — check them off as you complete them over time</p></div>
-<div class="card"><h3>📖 The Learn Tab</h3><p style="font-size:13px;">Your 48-week curriculum organized into 4 phases. Open Phase 1 → Week 1 and follow each step. Every week tells you exactly what to do — which video to watch, which phrases to practice, which songs to sing. Check off weeks as you finish them.</p></div>
-<div class="card"><h3>🃏 Cards & Quiz Tabs</h3><p style="font-size:13px;"><b>Cards:</b> 12 flashcard decks with 120+ words. Tap to flip, tap 🔊 to hear pronunciation. Includes Honduran slang, parenting phrases, and kitchen vocabulary.<br><br><b>Quiz:</b> 10 random questions from all decks. Multiple choice with instant feedback and confetti. Great for a quick 2-minute practice.</p></div>
-<div class="card"><h3>📋 The More Tab</h3><p style="font-size:13px;">Tap More at the bottom for: this Getting Started guide, daily/weekend schedule, resources (apps, YouTube, podcasts), Honduran guide (slang, food, recipes, music), songs, cognates (words you already know), and settings.</p></div>
-<div class="card hl-gold"><h3>👶🏾 Toddler Mode</h3><p style="font-size:13px;">Tap the gold TODDLER button in the top right corner. This opens a full-screen play area for your child:<br><br>- Tap any picture to hear the Spanish word<br>- 7 category tabs: Animals, Food, Colors, Body, Count, Nature<br>- Counting Game — numbers 1-10 with tap navigation<br>- Color Matching Game — "Toca ROJO!" with confetti rewards<br>- Punta Drums — 3 drums with sound and vibration<br><br><b>The exit button requires holding for 3 seconds</b> so your toddler can\'t accidentally leave. For even stronger protection, use Guided Access (iPhone) or Screen Pinning (Android) — see the Lock section below.</p></div>
-<div class="card hl-teal"><h3>🔒 Lock Your Phone for Toddler Mode</h3><p style="font-size:13px;">When you hand your phone to your child, lock them in so they can\'t leave:<br><br><b>iPhone (Guided Access):</b><br>- Settings → Accessibility → Guided Access → turn ON<br>- Set a passcode<br>- Open ¡Vamos! → enter Toddler Mode<br>- Triple-click the side button → tap Start<br>- To unlock: triple-click → enter passcode → tap End<br><br><b>Android (Screen Pinning):</b><br>- Settings → Security → Screen Pinning → turn ON<br>- Open ¡Vamos! → enter Toddler Mode<br>- Open Recent Apps → tap the app icon → tap Pin<br>- To unpin: hold Back + Overview buttons together</p></div>
+<div class="card"><h3>👋🏾 Welcome to ¡Vamos!</h3><p style="font-size:13px;">A free 12-month Spanish learning program for you and your toddler. Learn conversational Honduran Spanish together — 45 minutes a day, no experience needed. Everything is inside this app.</p></div>
+
+<div class="card hl-teal"><h3>📱 Install on Your Phone</h3><p style="font-size:13px;">Add this to your home screen for the best experience:<br><br><b>iPhone:</b> Tap the share button (⬆️) at the bottom of Safari → scroll down → tap "Add to Home Screen"<br><b>Android:</b> Tap the three dots (⋮) → tap "Add to Home Screen"<br><br>This makes it open like a real app. Your progress saves automatically.</p></div>
+
+<div class="card"><h3>🏠 The Today Tab</h3><p style="font-size:13px;">Your daily home base. Here\\'s what you\\'ll see:<br><br>- <b>Quick Tools strip</b> — Scrollable shortcuts to Schedule, Honduran Guide, Songs, Resources, Cognates, and Library<br>- <b>Buenos días hero</b> — Personalized greeting with a daily motivational quote in Spanish (with pronunciation)<br>- <b>📚 This Week card</b> — Shows your current curriculum week, what to focus on, and preview of this week\\'s vocabulary. Has two buttons: <b>Open Lesson</b> (jumps to the curriculum) and <b>Toddler Lesson</b> (opens Toddler Mode with this week\\'s words as a game)<br>- <b>🆘 Help Me</b> — Emergency parenting phrases for toddler meltdowns (Cálmate, Usa tus palabras, Respira, Te quiero mucho)<br>- <b>Progress ring + Stats</b> — Your streak, words learned, quiz score, and weeks completed<br>- <b>📋 Today\\'s Tasks</b> — 8 daily activities (collapsed by default — tap to expand). Each task has step-by-step instructions and gold phrase chips with 🔊 audio<br>- <b>🌴 Florida Quest</b> — 10 real-world adventures around Fort Myers (also collapsed — tap to expand)</p></div>
+
+<div class="card"><h3>📖 The Learn Tab</h3><p style="font-size:13px;">Your 48-week curriculum organized into 4 phases:<br><br>- <b>Phase 1</b> (Months 1-3) — Foundation: first words, colors, family, commands<br>- <b>Phase 2</b> (Months 4-6) — Neighborhood: food, weather, animals, routines<br>- <b>Phase 3</b> (Months 7-9) — Conversations: past tense, feelings, shopping<br>- <b>Phase 4</b> (Months 10-12) — Fluency: extended conversations, culture, subjunctive<br><br>Open Phase 1 → Week 1 and follow each step. Every week has detailed instructions, speakable phrase chips, and checkboxes. Check off individual steps AND whole weeks as you complete them.</p></div>
+
+<div class="card"><h3>🃏 Cards & Quiz Tabs</h3><p style="font-size:13px;"><b>Cards:</b> 12 flashcard decks with 129 words covering Greetings, Numbers, Colors, Family, Food, Body, Commands, Feelings, Honduran Slang, Parenting, Kitchen Soul, and Neighborhood. Tap to flip, tap 🔊 to hear. Filter by level: 🌱 Beginner, 🌿 Growing, 🌳 Confident.<br><br><b>Quiz:</b> 10 random questions filtered by level. Multiple choice with instant feedback and confetti.<br><br><b>🌐 English Mode:</b> Switch to Learn English in Settings. Cards flip (English front, Spanish back), Quiz shows English questions, and Toddler Mode labels switch to English. Great for bilingual families.</p></div>
+
+<div class="card"><h3>📋 The More Tab</h3><p style="font-size:13px;">Tap More at the bottom for:<br><br>- <b>🚀 Getting Started</b> — This guide<br>- <b>📅 Schedule</b> — Daily and weekend learning rhythm<br>- <b>📚 Resources</b> — Apps, YouTube channels, podcasts, community groups<br>- <b>🇭🇳 Honduran Guide</b> — Slang, pronunciation, food, recipes, music<br>- <b>🎵 Songs</b> — 9 Spanish songs with inline YouTube playback<br>- <b>🏛️ Library</b> — Lee County Library daily literacy calendar, book recommendations, and 1,000 Books Before Kindergarten program<br>- <b>🔗 Cognates</b> — Words you already know + the -tion → -ción cheat code<br>- <b>⚙️ Settings</b> — Profile, English/Spanish mode toggle, app tour replay, reset</p></div>
+
+<div class="card hl-gold"><h3>👶🏾 Toddler Mode</h3><p style="font-size:13px;">Tap the gold <b>TODDLER</b> button in the top right corner. This opens a full-screen play area with <b>104 vocabulary items</b> across <b>14 category tabs</b>:<br><br><b>Learning tabs:</b><br>- <b>📚 Lesson</b> — Plays a focused game using ONLY this week\\'s curriculum words (flashcard → quiz cycle with score tracking)<br>- <b>🌟 All</b> — 16 random items from all categories<br><br><b>Vocabulary tabs</b> (tap any picture to hear the word, plus a matching game for each):<br>- <b>🐾 Animals</b> (16) — Cow, Dog, Lion, Monkey, Elephant, Butterfly...<br>- <b>🍎 Food</b> (16) — Banana, Rice, Ice Cream, Chocolate, Avocado...<br>- <b>⚽ Sports</b> (12) — Soccer, Basketball, Baseball, Football, Tennis, Swimming, Boxing, Skateboard...<br>- <b>🚗 Vehicles</b> (10) — Car, Bus, Airplane, Train, Rocket, Helicopter...<br>- <b>🎨 Colors</b> (10) — Red through Brown, plus a color matching game<br>- <b>🖐🏾 Body</b> (12) — Hand, Nose, Eye, Tooth, Tongue, Head...<br>- <b>🔷 Shapes</b> (8) — Circle, Square, Triangle, Star, Heart, Diamond...<br>- <b>👕 Clothes</b> (8) — Shirt, Pants, Shoes, Hat, Jacket, Dress...<br>- <b>🔢 Count</b> — Numbers 1-20 with tap navigation<br>- <b>🌴 Nature</b> (12) — Sun, Moon, Rainbow, Volcano, Cactus...<br><br><b>Games:</b><br>- <b>🫧 Bubbles</b> — Floating emoji bubbles to pop. Speeds up over time. After 5 pops, Hunt Mode: "Find the Perro!" Score + confetti<br>- <b>🧠 Memory</b> — Card matching with 4 difficulty levels (Easy 3 pairs → Hard 6 pairs). "Next Level" button after winning<br>- <b>🎨 Paint</b> — Finger painting with 9 colors (each announced in Spanish), 4 brush sizes (S/M/L/XL), and emoji stamps (⭐❤️🌸🐟🦋🌴🐢🎵)<br>- <b>🥁 Punta Drums</b> — 3 drums with sound and vibration<br><br><b>The exit button requires holding for 3 seconds</b> so your toddler can\\'t escape.</p></div>
+
+<div class="card hl-teal"><h3>📺 TV Mode</h3><p style="font-size:13px;">Want your toddler to play on the big screen? Open this URL on your Google TV\\'s browser:<br><br><b>vamos-spanish.vercel.app?tv=1</b><br><br>TV Mode shows a custom home screen with This Week\\'s lesson info and large game launcher buttons. All buttons are 2x bigger for TV viewing distance. Your toddler navigates with the <b>TV remote</b> — arrow keys move a gold highlight, OK/Enter selects. Games include Lesson, Free Play, Animals, Sports, Vehicles, Colors, Shapes, Bubbles, and Memory. Press Back/Escape to return to the TV home screen.</p></div>
+
+<div class="card"><h3>🔊 Voice & Sound</h3><p style="font-size:13px;">Every 🔊 button speaks the word out loud using your phone\\'s text-to-speech. The app prefers a <b>female Spanish voice</b> on both iPhone and Android.<br><br><b>In Toddler Mode</b>, the voice is higher-pitched and faster — cheerful and animated for kids.<br><br><b>In the regular app</b>, the voice is calm and clear for adult learning.<br><br><b>Sound not working?</b><br>- Check your phone isn\\'t muted<br>- Turn up media volume (not just ringer)<br>- iPhone: Settings → Siri & Search → check Spanish voice is installed<br>- Try closing and reopening the app</p></div>
+
+<div class="card hl-teal"><h3>🔒 Lock Your Phone for Toddler Mode</h3><p style="font-size:13px;"><b>iPhone (Guided Access):</b><br>- Settings → Accessibility → Guided Access → turn ON<br>- Set a passcode<br>- Open ¡Vamos! → enter Toddler Mode<br>- Triple-click the side button → tap Start<br>- To unlock: triple-click → enter passcode → tap End<br><br><b>Android (Screen Pinning):</b><br>- Settings → Security → Screen Pinning → turn ON<br>- Open ¡Vamos! → enter Toddler Mode<br>- Open Recent Apps → tap the app icon → tap Pin<br>- To unpin: hold Back + Overview buttons together</p></div>
+
 <div class="card hl-gold"><h3>⏰ Your Daily Routine</h3><p style="font-size:13px;">45 minutes total, split across the day:<br><br>- Morning song + getting dressed (5 min)<br>- Breakfast narration (5 min)<br>- Spanish video together (10 min)<br>- Play activity or Toddler Mode (10 min)<br>- Solo study during nap — Language Transfer (15 min)<br>- Bath/bedtime in Spanish (5 min)<br><br>5 out of 7 days is success. No perfection needed.</p></div>
+
 <div class="card"><h3>🎧 The #1 Resource: Language Transfer</h3><p style="font-size:13px;">Free, 90 episodes, on YouTube and Spotify. Search "Language Transfer Complete Spanish Episode 1." Listen during nap time — one episode per day. The curriculum tells you which episodes each week. Do the whole series twice — the second pass is a revelation.</p></div>
-<div class="card hl-teal"><h3>💾 Saving & Progress</h3><p style="font-size:13px;">Everything saves automatically to your phone. You\'ll see a "✓ Saved" toast each time. Your streak, tasks, weeks, flashcards, quiz scores, and profile all persist.<br><br>Progress is on THIS device only. Keep using the same phone and don\'t clear your browser data. Installing to your home screen protects your data.</p></div>
-<div class="card"><h3>🔊 Sound Not Working?</h3><p style="font-size:13px;">The 🔊 buttons use your phone's text-to-speech. If silent:<br>- Check your phone isn\'t muted<br>- Turn up media volume (not just ringer)<br>- iPhone: Settings → Siri & Search → check Spanish voice<br>- Try closing and reopening the app</p></div>
-<div class="card hl-gold"><h3>✅ Week 1 Checklist</h3><p style="font-size:13px;">1. Fill out onboarding (your name, child\'s name, age, level)<br>2. Read this guide (you\'re almost done!)<br>3. Go to Learn → Phase 1 → Week 1<br>4. Follow each step<br>5. Check off daily tasks on the Today tab<br>6. Let your toddler play in Toddler Mode<br>7. Listen to Language Transfer Episode 1 during nap time<br>8. Come back tomorrow and keep your streak going!</p></div>
-<div class="card hl-rust"><h3>❤️ A Note</h3><p style="font-size:13px;">Every word you learn is a gift to your child. You don\'t need to be perfect — just consistent. Your toddler doesn\'t judge your accent. They just hear their parent trying, and that\'s the most powerful thing in the world. ¡Va pues! 🇭🇳</p></div></div>`;
+
+<div class="card hl-teal"><h3>💾 Saving & Progress</h3><p style="font-size:13px;">Everything saves automatically to your phone. You\\'ll see a "✓ Saved" toast each time. Your streak, tasks, weeks, flashcards, quiz scores, and profile all persist.<br><br>Progress is on THIS device only. Keep using the same phone and don\\'t clear your browser data. Installing to your home screen protects your data.</p></div>
+
+<div class="card hl-gold"><h3>✅ Week 1 Checklist</h3><p style="font-size:13px;">1. Fill out onboarding (your name, child\\'s name, age, level)<br>2. Read this guide (you\\'re almost done!)<br>3. Check the <b>📚 This Week</b> card on the Today tab<br>4. Go to Learn → Phase 1 → Week 1 and follow each step<br>5. Check off daily tasks on the Today tab<br>6. Let your toddler play in Toddler Mode — try the 📚 Lesson tab<br>7. Listen to Language Transfer Episode 1 during nap time<br>8. Try TV Mode on your Google TV: <b>vamos-spanish.vercel.app?tv=1</b><br>9. Come back tomorrow and keep your streak going!</p></div>
+
+<div class="card hl-rust"><h3>❤️ A Note</h3><p style="font-size:13px;">Every word you learn is a gift to your child. You don\\'t need to be perfect — just consistent. Your toddler doesn\\'t judge your accent. They just hear their parent trying, and that\\'s the most powerful thing in the world. ¡Va pues! 🇭🇳</p></div></div>`;
 
 h+=`<div class="subpg ${morePage==='sc'?'act':''}" id="m-sc"><button class="back-btn" onclick="openMore('grid')">← Back to More</button><div class="card hl-teal"><h3>⏰ 45 min/day</h3><p>Small blocks around naps & meals. 5/7 days = success.</p></div>
 <div class="sbl"><div class="sbh">📅 Weekday</div>${[['7:00','Morning song + dress narration','5m'],['7:30','Breakfast narration','5m'],['9:00','Songs + video together','10m'],['10:00','Play activity in Spanish','10m'],['1:00','Solo study (nap time)','15m'],['6:30','Bath/bedtime routine','5m']].map(([t,a,d])=>`<div class="sr"><span class="stm">${t}</span><div class="sac">${a}</div><span style="font-size:10px;color:var(--gr);font-weight:700;">${d}</span></div>`).join('')}</div>
@@ -1550,8 +1588,9 @@ const WALK_STEPS=[
   {emoji:'📋',title:'These are your daily tasks',body:'Every day you get 8 small activities. Tap any task to see instructions and Spanish phrases you can hear spoken. Check them off as you go.',btn:'Next →',action:function(){document.querySelector('[data-p="home"]').click();}},
   {emoji:'📖',title:'Your 48-week curriculum',body:'Tap Learn at the bottom. Open Phase 1 → Week 1 for step-by-step lessons. Each week tells you exactly what to do — which videos, phrases, and songs.',btn:'Next →',action:function(){document.querySelector('[data-p="learn"]').click();}},
   {emoji:'🃏',title:'Flashcards & Quiz',body:'Cards has 12 vocabulary decks — tap to flip, tap 🔊 to hear. Quiz tests you with 10 random questions. Both track your progress.',btn:'Next →',action:function(){document.querySelector('[data-p="cards"]').click();}},
-  {emoji:'👶🏾',title:'Toddler Mode',body:'See the gold TODDLER button? Tap it anytime to let your child play. They tap pictures to hear Spanish words, play counting and color games, and bang on punta drums. The exit button requires a 3-second hold so they can\'t escape.',btn:'Next →',action:function(){document.querySelector('[data-p="home"]').click();}},
-  {emoji:'🧰',title:'Quick Tools',body:'This scrollable strip has shortcuts to the Schedule, Honduran Guide, Songs, Resources, and more. You don\'t have to dig for anything — it\'s all right here.',btn:'Next →'},
+  {emoji:'👶🏾',title:'Toddler Mode',body:'See the gold <b>TODDLER</b> button? Tap it to let your child play! <b>104 vocabulary items</b> across 14 tabs — Animals, Sports, Vehicles, Shapes, Colors, and more. Plus games: 🪷 Bubble Pop, 🧠 Memory Match, 🎨 Finger Paint, and a 📚 <b>Lesson tab</b> that teaches this week\'s curriculum words. Exit requires a 3-second hold.',btn:'Next →',action:function(){document.querySelector('[data-p="home"]').click();}},
+  {emoji:'📚',title:'This Week\'s Focus',body:'The teal <b>📚 This Week</b> card shows your current curriculum week. Tap <b>Open Lesson</b> to jump to the curriculum, or <b>Toddler Lesson</b> to play this week\'s words as a game. Tasks and Florida Quest are collapsed — tap their headers to expand.',btn:'Next →'},
+  {emoji:'🧰',title:'Quick Tools',body:'This scrollable strip has shortcuts to the Schedule, Honduran Guide, Songs, Library, Resources, and more. You don\'t have to dig for anything — it\'s all right here.',btn:'Next →'},
   {emoji:'🔊',title:'Tap 🔊 to hear any word',body:'Everywhere you see a gold 🔊 button, tap it to hear the Spanish word spoken out loud. The <span style="color:#D4A017;font-weight:700;">gold boxes</span> show phonetic pronunciation (like <span style="color:#C75B39;font-weight:700;">OH-lah</span>) so you know exactly how to say it.',btn:'Next →'},
   {emoji:'💾',title:'Your progress saves automatically',body:'Every task you check, every week you complete, every flashcard you flip — it all saves to your phone. You\'ll see a ✓ Saved notification each time. Just keep using the same phone.',btn:'Next →'},
   {emoji:'🚀',title:'You\'re ready!',body:'Start with the Today tab. Check off tasks as you do them. Open Learn → Phase 1 → Week 1 when you\'re ready to dive in.<div style="margin-top:10px;padding:8px 12px;background:#FFF8E1;border-radius:10px;border:1px solid #FFE082;text-align:center;"><b style="font-size:18px;color:#1A1B4B;">¡Va pues!</b><br><span style="font-size:12px;color:#C75B39;font-weight:700;">vah PWEHS</span> <span style="font-size:11px;color:#6B7280;">(Alright! — Honduran)</span></div>',btn:'¡Vamos! Let\'s go! 🇭🇳'}
@@ -1599,10 +1638,9 @@ document.getElementById('color-dots').addEventListener('click',e=>{const b=e.tar
 /* ===== TV MODE ===== */
 var tvMode=new URLSearchParams(window.location.search).get('tv')==='1';
 if(tvMode){
-  document.body.style.cursor='none';
   // Inject TV-optimized styles
   var tvStyle=document.createElement('style');
-  tvStyle.textContent='.toy-btn{min-width:120px;min-height:120px;font-size:64px!important;padding:30px 16px!important;border-width:6px!important;}.toy-lbl{font-size:22px!important;}.toy-grid{grid-template-columns:1fr 1fr 1fr!important;gap:20px!important;}.tt-tab{padding:12px 20px!important;font-size:16px!important;}.tm-exit{display:none!important;}.tm-float{display:none!important;}.punta-pad{display:none!important;}.drum{width:100px!important;height:100px!important;font-size:48px!important;}[data-tvfocus]{outline:4px solid var(--gold)!important;outline-offset:4px!important;transform:scale(1.05);}#tmode{padding-top:20px!important;}';
+  tvStyle.textContent='body{background:var(--ink)!important;}.hdr,.bnav,.tm-float{display:none!important;}#tv-home{display:block!important;}.pg{display:none!important;}.toy-btn{min-width:140px;min-height:140px;font-size:72px!important;padding:30px 16px!important;border-width:6px!important;}.toy-lbl{font-size:24px!important;}.toy-grid{grid-template-columns:1fr 1fr 1fr!important;gap:24px!important;max-width:800px!important;margin:0 auto!important;}.tt-tab{padding:14px 24px!important;font-size:18px!important;}.tm-exit{display:none!important;}.punta-pad .drum{width:120px!important;height:120px!important;font-size:56px!important;}#tmode{padding:30px 40px 40px!important;}#tmode h2{font-size:40px!important;}[data-tvfocus]{outline:5px solid var(--gold)!important;outline-offset:6px!important;transform:scale(1.05)!important;transition:transform .15s!important;}#match-opts{gap:20px!important;}#match-opts button{font-size:60px!important;padding:24px!important;}#match-prompt{font-size:36px!important;}#lesson-flash{padding:40px!important;}#lf-emoji{font-size:100px!important;}#lf-word{font-size:40px!important;}#lq-opts button{font-size:52px!important;padding:20px!important;}';
   document.head.appendChild(tvStyle);
 }
 
@@ -1610,32 +1648,71 @@ if(tvMode){
 showOnboard();
 rH();rL();dk=sh([...V[cD]]);rC();rQ();rM();renderToys();
 
-/* TV Mode: auto-launch Toddler Mode */
-if(tvMode&&profile){
-  setTimeout(function(){
-    toggleTM();
-    // Start on Lesson tab
-    setTimeout(function(){
-      var btn=document.querySelector('[data-tcat="lesson"]');
-      setTCat('lesson',btn);
-    },300);
-  },500);
+/* TV Mode: show TV home or launch into toddler mode */
+if(tvMode){
+  var tvHome=document.createElement('div');
+  tvHome.id='tv-home';
+  tvHome.style.cssText='display:none;padding:40px;max-width:900px;margin:0 auto;';
+  var cw2=getCurrentWeek();var cwT2=WEEK_TITLES[cw2]||'Week '+cw2;
+  var cwV2=WEEK_VOCAB[Math.min(cw2,WEEK_VOCAB.length-1)]||WEEK_VOCAB[1];
+  var pn=profile?profile.child:'Baby';
+  tvHome.innerHTML='<div style="text-align:center;margin-bottom:30px;"><h1 style="font-family:Baloo 2,cursive;font-size:48px;color:var(--gold);margin-bottom:4px;">¡Vamos!</h1><p style="font-size:20px;color:rgba(255,255,255,.6);">'+pn+'\'s Learning TV</p></div>'
+  +'<div style="background:linear-gradient(135deg,var(--teal),#006666);border-radius:20px;padding:30px;margin-bottom:24px;border:3px solid var(--gold);">'
+  +'<div style="display:flex;justify-content:space-between;align-items:center;"><div><div style="font-size:14px;font-weight:800;color:rgba(255,255,255,.7);text-transform:uppercase;letter-spacing:1px;">📚 This Week</div><div style="font-family:Baloo 2,cursive;font-size:32px;font-weight:800;color:var(--w);margin-top:4px;">Week '+cw2+': '+cwT2+'</div></div><div style="background:var(--gold);color:var(--ink);width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:Baloo 2;font-size:28px;font-weight:800;">'+cw2+'</div></div>'
+  +'<div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;">'+cwV2.slice(0,8).map(function(w){return '<span style="background:rgba(255,255,255,.15);padding:6px 14px;border-radius:50px;font-size:16px;font-weight:700;color:var(--w);">'+w.e+' '+w.es+'</span>';}).join('')+'</div></div>'
+  +'<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;">'
+  +'<button onclick="tvLaunch(\'lesson\')" style="padding:24px;border-radius:20px;background:linear-gradient(135deg,var(--gold),#B8860B);color:var(--ink);border:3px solid var(--gold);font-family:Baloo 2,cursive;font-size:22px;font-weight:800;box-shadow:0 8px 24px rgba(0,0,0,.3);">📚 Lesson</button>'
+  +'<button onclick="tvLaunch(\'all\')" style="padding:24px;border-radius:20px;background:linear-gradient(135deg,var(--ink2),#3D3E7E);color:var(--gold);border:3px solid var(--gold);font-family:Baloo 2,cursive;font-size:22px;font-weight:800;box-shadow:0 8px 24px rgba(0,0,0,.3);">🌟 Free Play</button>'
+  +'<button onclick="tvLaunch(\'animals\')" style="padding:24px;border-radius:20px;background:linear-gradient(135deg,#2D4A22,#1A3A12);color:#81C784;border:3px solid #4CAF50;font-family:Baloo 2,cursive;font-size:22px;font-weight:800;box-shadow:0 8px 24px rgba(0,0,0,.3);">🐾 Animals</button>'
+  +'<button onclick="tvLaunch(\'sports\')" style="padding:24px;border-radius:20px;background:linear-gradient(135deg,#1B5E20,#2E7D32);color:#A5D6A7;border:3px solid #66BB6A;font-family:Baloo 2,cursive;font-size:22px;font-weight:800;box-shadow:0 8px 24px rgba(0,0,0,.3);">⚽ Sports</button>'
+  +'<button onclick="tvLaunch(\'vehicles\')" style="padding:24px;border-radius:20px;background:linear-gradient(135deg,#37474F,#546E7A);color:#B0BEC5;border:3px solid #78909C;font-family:Baloo 2,cursive;font-size:22px;font-weight:800;box-shadow:0 8px 24px rgba(0,0,0,.3);">🚗 Vehicles</button>'
+  +'<button onclick="tvLaunch(\'colors\')" style="padding:24px;border-radius:20px;background:linear-gradient(135deg,#4A1942,#2D1028);color:#E1BEE7;border:3px solid #9C27B0;font-family:Baloo 2,cursive;font-size:22px;font-weight:800;box-shadow:0 8px 24px rgba(0,0,0,.3);">🎨 Colors</button>'
+  +'<button onclick="tvLaunch(\'shapes\')" style="padding:24px;border-radius:20px;background:linear-gradient(135deg,#E65100,#BF360C);color:#FFCCBC;border:3px solid #FF7043;font-family:Baloo 2,cursive;font-size:22px;font-weight:800;box-shadow:0 8px 24px rgba(0,0,0,.3);">🔷 Shapes</button>'
+  +'<button onclick="tvLaunch(\'bubbles\')" style="padding:24px;border-radius:20px;background:linear-gradient(135deg,#0D47A1,#1565C0);color:#BBDEFB;border:3px solid #42A5F5;font-family:Baloo 2,cursive;font-size:22px;font-weight:800;box-shadow:0 8px 24px rgba(0,0,0,.3);">🫧 Bubbles</button>'
+  +'<button onclick="tvLaunch(\'memory\')" style="padding:24px;border-radius:20px;background:linear-gradient(135deg,#880E4F,#AD1457);color:#F8BBD0;border:3px solid #EC407A;font-family:Baloo 2,cursive;font-size:22px;font-weight:800;box-shadow:0 8px 24px rgba(0,0,0,.3);">🧠 Memory</button>'
+  +'</div>'
+  +'<div style="text-align:center;margin-top:24px;"><button onclick="tvLaunch(\'home\')" style="padding:14px 30px;border-radius:50px;background:rgba(255,255,255,.1);color:rgba(255,255,255,.5);border:1px solid rgba(255,255,255,.2);font-size:14px;font-weight:700;">← Back to Phone Mode</button></div>';
+  document.body.appendChild(tvHome);
+  tvHome.style.display='block';
+
   // D-pad / remote navigation
   var tvBtns=[],tvIdx=0;
   function tvRefresh(){
-    tvBtns=Array.from(document.querySelectorAll('#tmode button:not(.tm-exit):not([style*="display:none"])'));
+    tvBtns=Array.from(document.querySelectorAll('#tv-home button, #tmode button:not(.tm-exit):not([style*="display: none"])'));
+    tvBtns=tvBtns.filter(function(b){return b.offsetParent!==null;});
     tvBtns.forEach(function(b){b.removeAttribute('data-tvfocus');});
+    if(tvIdx>=tvBtns.length)tvIdx=0;
     if(tvBtns[tvIdx])tvBtns[tvIdx].setAttribute('data-tvfocus','1');
   }
   document.addEventListener('keydown',function(e){
-    var cols=3;
+    var cols=tvHome.style.display!=='none'?2:3;
     if(e.key==='ArrowRight'){tvIdx=Math.min(tvIdx+1,tvBtns.length-1);tvRefresh();e.preventDefault();}
     else if(e.key==='ArrowLeft'){tvIdx=Math.max(tvIdx-1,0);tvRefresh();e.preventDefault();}
     else if(e.key==='ArrowDown'){tvIdx=Math.min(tvIdx+cols,tvBtns.length-1);tvRefresh();e.preventDefault();}
     else if(e.key==='ArrowUp'){tvIdx=Math.max(tvIdx-cols,0);tvRefresh();e.preventDefault();}
     else if(e.key==='Enter'||e.key===' '){if(tvBtns[tvIdx])tvBtns[tvIdx].click();e.preventDefault();}
+    else if(e.key==='Escape'||e.key==='Backspace'){tvGoHome();e.preventDefault();}
   });
   setInterval(tvRefresh,1000);
+}
+function tvLaunch(cat){
+  if(cat==='home'){window.location.search='';return;}
+  var tvH=document.getElementById('tv-home');
+  if(tvH)tvH.style.display='none';
+  if(!document.getElementById('tmode').classList.contains('act'))toggleTM();
+  setTimeout(function(){
+    var btn=document.querySelector('[data-tcat="'+cat+'"]')||document.querySelector('.tt-tab');
+    setTCat(cat,btn);
+    tvIdx=0;
+  },300);
+}
+function tvGoHome(){
+  var tvH=document.getElementById('tv-home');
+  if(tvH){
+    if(document.getElementById('tmode').classList.contains('act'))toggleTM();
+    tvH.style.display='block';
+    tvIdx=0;
+  }
 }
 </script>
 </body>
