@@ -1438,11 +1438,48 @@ function clearPaint(){
   speak('Borrar','es');
 }
 
+/* ===== LESSON UTILS (shared data helpers for both Toddler and Path lesson systems) ===== */
+const LessonUtils={
+  // Get the vocab array for a given week with safe bounds + fallback
+  weekVocab:function(weekNum){
+    const idx=Math.max(1,Math.min(weekNum|0,WEEK_VOCAB.length-1));
+    return WEEK_VOCAB[idx]||WEEK_VOCAB[1]||[];
+  },
+  // Pool of distractor words drawn from every week except the one being studied
+  distractorPool:function(skipIdx){
+    const pool=[];
+    for(let i=1;i<WEEK_VOCAB.length;i++){
+      if(i===skipIdx)continue;
+      const v=WEEK_VOCAB[i];
+      if(v)v.forEach(function(w){pool.push(w);});
+    }
+    return pool;
+  },
+  // Pool of every vocab word across all weeks (used for practice/strengthen mode)
+  allVocab:function(){
+    const all=[];
+    for(let i=1;i<WEEK_VOCAB.length;i++){
+      const v=WEEK_VOCAB[i];
+      if(v)v.forEach(function(w){all.push(w);});
+    }
+    return all;
+  },
+  // Generate N options for a word: the correct answer plus distractors, shuffled
+  // `key` is 'es' or 'en' — determines which field must differ between answer & distractors
+  makeOptions:function(correct,pool,count,key){
+    const k=key||'es';
+    const wrong=sh(pool.filter(function(x){return x[k]!==correct[k];})).slice(0,Math.max(1,(count||4)-1));
+    return sh([correct,...wrong]);
+  },
+  // Convenience: vocab for the user's current week
+  currentWeekVocab:function(){return this.weekVocab(getCurrentWeek());}
+};
+
 /* ===== LESSON GAME (curriculum in Toddler Mode) ===== */
 var lessonWords=[],lessonIdx=0,lessonScore=0,lessonMode='flash';
 function startToddlerLesson(){
   var cw=getCurrentWeek();
-  var vocab=WEEK_VOCAB[Math.min(cw,WEEK_VOCAB.length-1)]||WEEK_VOCAB[1];
+  var vocab=LessonUtils.weekVocab(cw);
   lessonWords=sh([...vocab]);
   lessonIdx=0;lessonScore=0;lessonMode='flash';
   document.getElementById('lesson-week').textContent='Week '+cw+': '+(WEEK_TITLES[cw]||'');
@@ -1475,10 +1512,8 @@ function showLessonStep(){
     document.getElementById('lesson-quiz').style.display='block';
     document.getElementById('lq-prompt').textContent=w.e+' '+w[otherKey];
     document.getElementById('lq-result').textContent='';
-    var pool=[w];
-    var others=sh(lessonWords.filter(function(x){return x.es!==w.es;}));
-    for(var i=0;i<others.length&&pool.length<4;i++)pool.push(others[i]);
-    pool=sh(pool);
+    // Use LessonUtils.makeOptions with the current lesson words as the distractor pool
+    var pool=LessonUtils.makeOptions(w,lessonWords,4,lblKey);
     document.getElementById('lq-opts').innerHTML=pool.map(function(o){
       return '<button onclick="checkLesson(\''+o[lblKey].replace(/'/g,"\\'")+'\')" style="background:var(--w);border:5px solid var(--ink);border-radius:20px;padding:16px 10px;font-size:36px;box-shadow:0 6px 0 var(--ink);text-align:center;">'+o.e+'<span style="display:block;font-family:Baloo 2;font-size:13px;color:var(--ink);margin-top:4px;font-weight:800;">'+o[lblKey]+'</span></button>';
     }).join('');
@@ -1528,7 +1563,7 @@ let h=`
 </div>
 </div><div class="hero"><h2>${spB('Buenos días')} ¡Buenos días${profile?' '+profile.name:''}!</h2><div style="font-size:12px;color:rgba(255,255,255,.5);margin-top:2px;">🗣 BWEH-nohs DEE-ahs · Good morning!</div><div class="dt2" style="margin-top:8px;">${dn}, ${ds}${profile?' · '+profile.child+'\'s learning day':''}</div><div class="mot">${spB(mo.es)} <b>"${mo.es}"</b><br><span style="color:#F59E0B;font-size:12px;font-weight:700;">🗣 ${mo.ph}</span><br><span style="font-style:normal;opacity:.7;">${mo.en}</span></div></div>
 `;
-const cw=getCurrentWeek();const cwTitle=WEEK_TITLES[cw]||'Week '+cw;const cwVocab=WEEK_VOCAB[cw]||WEEK_VOCAB[1];const cwPhase=cw<=12?1:cw<=24?2:cw<=36?3:4;
+const cw=getCurrentWeek();const cwTitle=WEEK_TITLES[cw]||'Week '+cw;const cwVocab=LessonUtils.weekVocab(cw);const cwPhase=cw<=12?1:cw<=24?2:cw<=36?3:4;
 h+=`<div style="background:linear-gradient(135deg,var(--teal),#006666);border-radius:var(--r);padding:18px;margin-bottom:14px;border:2px solid var(--gold);box-shadow:var(--shl);">
 <div style="display:flex;justify-content:space-between;align-items:center;">
 <div><div style="font-size:11px;font-weight:800;color:rgba(255,255,255,.7);text-transform:uppercase;letter-spacing:1px;">📚 This Week</div>
@@ -1735,14 +1770,89 @@ function openLessonNode(w){
   startLesson(w);
 }
 
+/* ===== FOCUS TRAP (keyboard accessibility for lesson overlay) ===== */
+const FocusTrap={
+  prev:null,           // element focused before overlay opened
+  container:null,      // the overlay element
+  keyHandler:null,     // bound keydown handler so we can detach it
+  activate:function(containerEl){
+    this.container=containerEl;
+    this.prev=document.activeElement;
+    this.keyHandler=this._onKey.bind(this);
+    document.addEventListener('keydown',this.keyHandler,true);
+    // Move focus into the overlay after it renders
+    setTimeout(()=>this.focusFirst(),50);
+  },
+  deactivate:function(){
+    if(this.keyHandler)document.removeEventListener('keydown',this.keyHandler,true);
+    this.keyHandler=null;this.container=null;
+    // Restore focus to what was focused before we opened
+    if(this.prev&&this.prev.focus){try{this.prev.focus();}catch(e){}}
+    this.prev=null;
+  },
+  getFocusable:function(){
+    if(!this.container)return [];
+    const sel='button:not([disabled]), [tabindex]:not([tabindex="-1"]), a[href], input:not([disabled]), select:not([disabled])';
+    return Array.from(this.container.querySelectorAll(sel)).filter(function(el){
+      return el.offsetParent!==null&&getComputedStyle(el).visibility!=='hidden';
+    });
+  },
+  // Prefer focusing a primary answer over the close button — that's where attention goes
+  focusFirst:function(){
+    if(!this.container)return;
+    const prefer=this.container.querySelector('.lp-opt:not(.ok):not(.no), .lp-pair:not(.ok), .lp-tile:not(.used), .lp-go:not([disabled]), .h-spk');
+    if(prefer&&prefer.focus){try{prefer.focus();return;}catch(e){}}
+    const f=this.getFocusable();
+    if(f.length&&f[0].focus)try{f[0].focus();}catch(e){}
+  },
+  _onKey:function(e){
+    if(!this.container||!this.container.classList.contains('act'))return;
+    // Escape closes the lesson
+    if(e.key==='Escape'){e.preventDefault();if(typeof quitLesson==='function')quitLesson();return;}
+    // Tab stays inside the overlay
+    if(e.key==='Tab'){
+      const f=this.getFocusable();
+      if(!f.length){e.preventDefault();return;}
+      const first=f[0],last=f[f.length-1],active=document.activeElement;
+      if(e.shiftKey){
+        if(active===first||!this.container.contains(active)){e.preventDefault();last.focus();}
+      } else {
+        if(active===last||!this.container.contains(active)){e.preventDefault();first.focus();}
+      }
+      return;
+    }
+    // Arrow keys navigate option grids (for TV remote d-pad)
+    if(e.key==='ArrowRight'||e.key==='ArrowLeft'||e.key==='ArrowUp'||e.key==='ArrowDown'){
+      const active=document.activeElement;
+      if(!this.container.contains(active))return;
+      const group=active.closest('.lp-opts, .lp-pairs, .lp-bank');
+      if(!group)return;
+      const items=Array.from(group.querySelectorAll('button:not([disabled])')).filter(function(el){return el.offsetParent!==null;});
+      if(!items.length)return;
+      const idx=items.indexOf(active);
+      if(idx<0)return;
+      // For 2-column grids, Up/Down moves by 2; Left/Right by 1. For bank (wrap row), 1 in any direction.
+      const cols=group.classList.contains('lp-bank')?1:2;
+      let next=idx;
+      if(e.key==='ArrowRight')next=Math.min(items.length-1,idx+1);
+      else if(e.key==='ArrowLeft')next=Math.max(0,idx-1);
+      else if(e.key==='ArrowDown')next=Math.min(items.length-1,idx+cols);
+      else if(e.key==='ArrowUp')next=Math.max(0,idx-cols);
+      if(next!==idx){e.preventDefault();items[next].focus();}
+    }
+  }
+};
+
 /* ===== LESSON PLAYER ===== */
 let LP={week:1,exs:[],idx:0,hp:5,xp:0,sel:null,locked:false,correct:0,wrong:0,built:[],practice:false,wkSeen:[]};
 function startLesson(weekNum){
   LP.week=weekNum;LP.idx=0;LP.hp=5;LP.xp=0;LP.sel=null;LP.locked=false;LP.correct=0;LP.wrong=0;LP.built=[];LP.practice=false;LP.wkSeen=[];
   LP.exs=buildExercises(weekNum);
-  document.getElementById('lessonPlayer').classList.add('act');
+  const ov=document.getElementById('lessonPlayer');
+  ov.classList.add('act');
   document.body.style.overflow='hidden';
   renderExercise();
+  FocusTrap.activate(ov);
 }
 function startStrengthen(){
   const weakKeys=Object.keys(S.wk||{}).filter(function(k){return S.wk[k]&&S.wk[k].count>0;});
@@ -1752,40 +1862,36 @@ function startStrengthen(){
   }
   LP.week=0;LP.idx=0;LP.hp=5;LP.xp=0;LP.sel=null;LP.locked=false;LP.correct=0;LP.wrong=0;LP.built=[];LP.practice=true;LP.wkSeen=[];
   LP.exs=buildPracticeExercises(weakKeys);
-  document.getElementById('lessonPlayer').classList.add('act');
+  const ov=document.getElementById('lessonPlayer');
+  ov.classList.add('act');
   document.body.style.overflow='hidden';
   renderExercise();
+  FocusTrap.activate(ov);
 }
 function quitLesson(){
   document.getElementById('lessonPlayer').classList.remove('act');
   document.body.style.overflow='';
   speechSynthesis.cancel();
+  FocusTrap.deactivate();
 }
-function poolFromOtherWeeks(skipIdx){
-  const pool=[];
-  for(let i=1;i<WEEK_VOCAB.length;i++){if(i===skipIdx)continue;const v=WEEK_VOCAB[i];if(v)v.forEach(function(w){pool.push(w);});}
-  return pool;
-}
+function poolFromOtherWeeks(skipIdx){return LessonUtils.distractorPool(skipIdx);}
 function buildExercises(weekNum){
-  const idx=Math.min(weekNum,WEEK_VOCAB.length-1);
-  const vocab=WEEK_VOCAB[idx]||WEEK_VOCAB[1];
-  const pool=poolFromOtherWeeks(idx);
+  const idx=Math.max(1,Math.min(weekNum|0,WEEK_VOCAB.length-1));
+  const vocab=LessonUtils.weekVocab(weekNum);
+  const pool=LessonUtils.distractorPool(idx);
   const words=sh([...vocab]);
   const ex=[];
   // 1. Picture/emoji match
   words.slice(0,2).forEach(function(w){
-    const wrong=sh(pool.filter(function(x){return x.es!==w.es;})).slice(0,3);
-    ex.push({type:'pick',prompt:'Tap the right word',hero:{em:w.e},answer:w.es,word:w,opts:sh([w,...wrong]),speak:w.es});
+    ex.push({type:'pick',prompt:'Tap the right word',hero:{em:w.e},answer:w.es,word:w,opts:LessonUtils.makeOptions(w,pool,4,'es'),speak:w.es});
   });
   // 2. Tap what you hear
   words.slice(2,4).forEach(function(w){
-    const wrong=sh(pool.filter(function(x){return x.es!==w.es;})).slice(0,3);
-    ex.push({type:'hear',prompt:'Tap what you hear',speak:w.es,answer:w.es,word:w,opts:sh([w,...wrong])});
+    ex.push({type:'hear',prompt:'Tap what you hear',speak:w.es,answer:w.es,word:w,opts:LessonUtils.makeOptions(w,pool,4,'es')});
   });
   // 3. Translate (Spanish to English)
   words.slice(0,2).forEach(function(w){
-    const wrong=sh(pool.filter(function(x){return x.en!==w.en;})).slice(0,3);
-    ex.push({type:'translate',prompt:'What does this mean?',hero:{wd:w.es,em:w.e},answer:w.en,word:w,opts:sh([w,...wrong]),speak:w.es,asEnglish:true});
+    ex.push({type:'translate',prompt:'What does this mean?',hero:{wd:w.es,em:w.e},answer:w.en,word:w,opts:LessonUtils.makeOptions(w,pool,4,'en'),speak:w.es,asEnglish:true});
   });
   // 4. Sentence builder (only if vocab has multi-word entries)
   const multi=vocab.filter(function(w){const t=(w.es||'').split(/\s+/);return t.length>=2&&t.length<=5;});
@@ -1805,15 +1911,13 @@ function buildExercises(weekNum){
   return [first,...rest].filter(Boolean);
 }
 function buildPracticeExercises(weakKeys){
-  const allVocab=[];
-  for(let i=1;i<WEEK_VOCAB.length;i++){const v=WEEK_VOCAB[i];if(v)v.forEach(function(w){allVocab.push(w);});}
+  const allVocab=LessonUtils.allVocab();
   const weakWords=sh(weakKeys).slice(0,6).map(function(k){return S.wk[k]?S.wk[k].word||{es:k,en:S.wk[k].en||k,e:S.wk[k].e||'💬'}:{es:k,en:k,e:'💬'};});
   const ex=[];
   weakWords.forEach(function(w,i){
-    const wrong=sh(allVocab.filter(function(x){return x.es!==w.es;})).slice(0,3);
-    if(i%3===0)ex.push({type:'pick',prompt:'Tap the right word',hero:{em:w.e||'💬'},answer:w.es,word:w,opts:sh([w,...wrong]),speak:w.es});
-    else if(i%3===1)ex.push({type:'hear',prompt:'Tap what you hear',speak:w.es,answer:w.es,word:w,opts:sh([w,...wrong])});
-    else ex.push({type:'translate',prompt:'What does this mean?',hero:{wd:w.es,em:w.e||'💬'},answer:w.en,word:w,opts:sh([w,...wrong]),speak:w.es,asEnglish:true});
+    if(i%3===0)ex.push({type:'pick',prompt:'Tap the right word',hero:{em:w.e||'💬'},answer:w.es,word:w,opts:LessonUtils.makeOptions(w,allVocab,4,'es'),speak:w.es});
+    else if(i%3===1)ex.push({type:'hear',prompt:'Tap what you hear',speak:w.es,answer:w.es,word:w,opts:LessonUtils.makeOptions(w,allVocab,4,'es')});
+    else ex.push({type:'translate',prompt:'What does this mean?',hero:{wd:w.es,em:w.e||'💬'},answer:w.en,word:w,opts:LessonUtils.makeOptions(w,allVocab,4,'en'),speak:w.es,asEnglish:true});
   });
   return ex;
 }
@@ -1867,6 +1971,8 @@ function renderExercise(){
   } else {
     document.getElementById('lpBottom').innerHTML='<button class="lp-go" id="lpGo" disabled onclick="checkAnswer()">Check</button>';
   }
+  // Refocus first interactive control so keyboard/remote users always know where they are
+  if(FocusTrap.container)setTimeout(function(){FocusTrap.focusFirst();},30);
 }
 function pickOpt(i){
   if(LP.locked)return;
@@ -2001,7 +2107,9 @@ function checkAnswer(){
 function showFeedback(ok,msg){
   const fb='<div class="lp-fb '+(ok?'ok':'no')+'"><div class="fb-em">'+(ok?'✅':'❌')+'</div><div><div class="fb-tx">'+(ok?'Nice work!':'Not quite')+'</div><div class="fb-ans">'+msg+'</div></div></div>';
   const goCls=ok?'lp-go':'lp-go no';
-  document.getElementById('lpBottom').innerHTML=fb+'<button class="'+goCls+'" onclick="advanceLesson()">Continue</button>';
+  document.getElementById('lpBottom').innerHTML=fb+'<button class="'+goCls+'" id="lpContinue" onclick="advanceLesson()">Continue</button>';
+  // Focus the Continue button so pressing Enter/Space advances — huge win for TV remote + keyboard users
+  setTimeout(function(){const c=document.getElementById('lpContinue');if(c)c.focus();},30);
 }
 function loseHeart(){
   LP.wrong++;
@@ -2019,7 +2127,8 @@ function failLesson(){
   document.getElementById('lpProg').style.width='100%';
   document.getElementById('lpBody').innerHTML='<div class="lp-end"><div class="e-em">💔</div><div class="e-big">Out of hearts</div><div class="e-sub">No worries — that\'s how brains learn. Try again, you\'re close!</div></div>';
   const retryFn=LP.practice?'startStrengthen()':'startLesson('+LP.week+')';
-  document.getElementById('lpBottom').innerHTML='<button class="lp-go again" onclick="'+retryFn+'">Retry Lesson</button>';
+  document.getElementById('lpBottom').innerHTML='<button class="lp-go again" id="lpContinue" onclick="'+retryFn+'">Retry Lesson</button>';
+  setTimeout(function(){const c=document.getElementById('lpContinue');if(c)c.focus();},30);
 }
 function completeLesson(){
   const total=LP.exs.length;
@@ -2069,7 +2178,8 @@ function completeLesson(){
       +'<div class="e-stat terra"><div class="es-n">'+LP.hp+'/5</div><div class="es-l">Hearts</div></div>'
     +'</div>'
     +'</div>';
-  document.getElementById('lpBottom').innerHTML='<button class="lp-go" onclick="finishAndReturn()">Continue</button>';
+  document.getElementById('lpBottom').innerHTML='<button class="lp-go" id="lpContinue" onclick="finishAndReturn()">Continue</button>';
+  setTimeout(function(){const c=document.getElementById('lpContinue');if(c)c.focus();},30);
 }
 function finishAndReturn(){
   quitLesson();
@@ -2446,7 +2556,7 @@ if(tvMode){
   tvHome.id='tv-home';
   tvHome.style.cssText='display:none;padding:40px;max-width:900px;margin:0 auto;';
   var cw2=getCurrentWeek();var cwT2=WEEK_TITLES[cw2]||'Week '+cw2;
-  var cwV2=WEEK_VOCAB[Math.min(cw2,WEEK_VOCAB.length-1)]||WEEK_VOCAB[1];
+  var cwV2=LessonUtils.weekVocab(cw2);
   var pn=profile?profile.child:'Baby';
   tvHome.innerHTML='<div style="text-align:center;margin-bottom:30px;"><h1 style="font-family:Baloo 2,cursive;font-size:48px;color:var(--gold);margin-bottom:4px;">¡Vamos!</h1><p style="font-size:20px;color:rgba(255,255,255,.6);">'+pn+'\'s Learning TV</p></div>'
   +'<div style="background:linear-gradient(135deg,var(--teal),#006666);border-radius:20px;padding:30px;margin-bottom:24px;border:3px solid var(--gold);">'
