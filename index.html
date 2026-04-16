@@ -186,7 +186,7 @@ button,.cb,.wkc,.spk,.splg{min-width:44px;min-height:44px;}
 .lp-ov{position:fixed;inset:0;background:var(--sand);z-index:300;display:none;flex-direction:column;overflow:hidden;}
 .lp-ov.act{display:flex;}
 .lp-top{display:flex;align-items:center;gap:10px;padding:calc(env(safe-area-inset-top,12px)+12px) 14px 12px;background:var(--w);border-bottom:1px solid var(--bd);}
-.lp-x{width:36px;height:36px;border-radius:50%;background:var(--grl);color:var(--gr);font-size:18px;font-weight:800;display:flex;align-items:center;justify-content:center;border:none;cursor:pointer;flex-shrink:0;}
+.lp-x{width:44px;height:44px;border-radius:50%;background:var(--grl);color:var(--gr);font-size:18px;font-weight:800;display:flex;align-items:center;justify-content:center;border:none;cursor:pointer;flex-shrink:0;}
 .lp-pbar{flex:1;height:14px;background:var(--grl);border-radius:50px;overflow:hidden;border:2px solid var(--bd);}
 .lp-pfill{height:100%;background:linear-gradient(90deg,var(--teal),var(--gold));border-radius:50px;transition:width .4s ease;box-shadow:inset 0 -3px 0 rgba(0,0,0,.15);}
 .lp-hp{display:flex;align-items:center;gap:4px;color:#FF5252;font-family:'Baloo 2',cursive;font-size:18px;font-weight:800;flex-shrink:0;}
@@ -577,11 +577,11 @@ Fill in your info below and tap ¡Vamos! <span style="font-size:11px;opacity:.7;
 </nav>
 
 <!-- LESSON PLAYER OVERLAY -->
-<div class="lp-ov" id="lessonPlayer">
+<div class="lp-ov" id="lessonPlayer" role="dialog" aria-modal="true" aria-label="Spanish lesson">
 <div class="lp-top">
 <button class="lp-x" onclick="quitLesson()" aria-label="Quit lesson">✕</button>
-<div class="lp-pbar"><div class="lp-pfill" id="lpProg" style="width:0%"></div></div>
-<div class="lp-hp" id="lpHp">❤️ 5</div>
+<div class="lp-pbar" role="progressbar" aria-label="Lesson progress"><div class="lp-pfill" id="lpProg" style="width:0%"></div></div>
+<div class="lp-hp" id="lpHp" aria-label="Hearts remaining">❤️ 5</div>
 </div>
 <div class="lp-body" id="lpBody"></div>
 <div class="lp-bottom" id="lpBottom"></div>
@@ -684,13 +684,88 @@ const WEEK_VOCAB=[null,
 [{e:'👩🏾',es:'Mamá',en:'Mom'},{e:'👨🏾',es:'Papá',en:'Dad'},{e:'👶🏾',es:'Bebé',en:'Baby'},{e:'👦🏾',es:'Hermano',en:'Brother'},{e:'👧🏾',es:'Hermana',en:'Sister'},{e:'👴🏾',es:'Abuelo',en:'Grandpa'},{e:'👵🏾',es:'Abuela',en:'Grandma'}],
 [{e:'👋🏾',es:'Ven aquí',en:'Come here'},{e:'👀',es:'Mira',en:'Look'},{e:'🪑',es:'Siéntate',en:'Sit down'},{e:'🤲🏾',es:'Dame',en:'Give me'},{e:'🚶',es:'Vamos',en:'Let us go'},{e:'✋🏾',es:'Espera',en:'Wait'},{e:'⚠️',es:'Cuidado',en:'Be careful'}],
 [{e:'6️⃣',es:'Seis',en:'Six'},{e:'7️⃣',es:'Siete',en:'Seven'},{e:'8️⃣',es:'Ocho',en:'Eight'},{e:'9️⃣',es:'Nueve',en:'Nine'},{e:'🔟',es:'Diez',en:'Ten'},{e:'⭕',es:'Círculo',en:'Circle'},{e:'⬛',es:'Cuadrado',en:'Square'},{e:'⭐',es:'Estrella',en:'Star'}],
-[{e:'🍗',es:'Quiero',en:'I want'},{e:'🚫',es:'No quiero',en:'I don not want'},{e:'🥄',es:'Cuchara',en:'Spoon'},{e:'➕',es:'Más',en:'More'},{e:'✅',es:'Todo',en:'All done'},{e:'🤲🏾',es:'Toma',en:'Here you go'},{e:'🍽️',es:'Vamos a comer',en:'Let us eat'}],
+[{e:'🍗',es:'Quiero',en:'I want'},{e:'🚫',es:'No quiero',en:'I do not want'},{e:'🥄',es:'Cuchara',en:'Spoon'},{e:'➕',es:'Más',en:'More'},{e:'✅',es:'Todo',en:'All done'},{e:'🤲🏾',es:'Toma',en:'Here you go'},{e:'🍽️',es:'Vamos a comer',en:'Let us eat'}],
 [{e:'⏰',es:'Es hora de comer',en:'Time to eat'},{e:'😴',es:'Es hora de dormir',en:'Time to sleep'},{e:'🛁',es:'Es hora de bañarse',en:'Time to bathe'},{e:'1️⃣',es:'Primero',en:'First'},{e:'2️⃣',es:'Luego',en:'Then'},{e:'✅',es:'Listo',en:'Ready'}],
 [{e:'👋🏾',es:'Ven aquí, siéntate',en:'Come here, sit down'},{e:'📘',es:'Dame el libro azul',en:'Give me the blue book'},{e:'🥛',es:'Quiero más leche',en:'I want more milk'},{e:'🌴',es:'Vamos al parque',en:'Let us go to the park'},{e:'🌙',es:'Buenas noches',en:'Good night'}],
 [{e:'❓',es:'Qué',en:'What'},{e:'👤',es:'Quién',en:'Who'},{e:'📍',es:'Dónde',en:'Where'},{e:'🕐',es:'Cuándo',en:'When'},{e:'🤔',es:'Por qué',en:'Why'},{e:'🔢',es:'Cuántos',en:'How many'}],
 [{e:'🐘',es:'Grande',en:'Big'},{e:'🐜',es:'Pequeño',en:'Small'},{e:'🌹',es:'Bonito',en:'Pretty'},{e:'🔥',es:'Caliente',en:'Hot'},{e:'🧊',es:'Frío',en:'Cold'},{e:'😋',es:'Rico',en:'Delicious'}],
 [{e:'📦',es:'En',en:'In'},{e:'⬆️',es:'Sobre',en:'On top'},{e:'⬇️',es:'Debajo',en:'Under'},{e:'➡️',es:'Al lado',en:'Next to'},{e:'🔙',es:'Detrás',en:'Behind'},{e:'📥',es:'Dentro',en:'Inside'}],
-[{e:'🎉',es:'Celebración',en:'Celebration'},{e:'🎤',es:'Grabar',en:'Record'},{e:'🌮',es:'Baleada',en:'Baleada'},{e:'🇭🇳',es:'Va pues',en:'Alright'},{e:'🎵',es:'Cantar',en:'Sing'},{e:'📚',es:'Leer',en:'Read'}]
+[{e:'🎉',es:'Celebración',en:'Celebration'},{e:'🎤',es:'Grabar',en:'Record'},{e:'🌮',es:'Baleada',en:'Baleada'},{e:'🇭🇳',es:'Va pues',en:'Alright'},{e:'🎵',es:'Cantar',en:'Sing'},{e:'📚',es:'Leer',en:'Read'}],
+// === Phase 2 — Months 4-6 ===
+// Week 13: Kitchen Verbs
+[{e:'🍳',es:'Cocinar',en:'To cook'},{e:'🔪',es:'Cortar',en:'To cut'},{e:'🥣',es:'Mezclar',en:'To mix'},{e:'🍲',es:'Hervir',en:'To boil'},{e:'🧂',es:'Sazonar',en:'To season'},{e:'🥗',es:'Probar',en:'To taste'}],
+// Week 14: Body Parts
+[{e:'👤',es:'Cabeza',en:'Head'},{e:'👀',es:'Ojos',en:'Eyes'},{e:'👃🏾',es:'Nariz',en:'Nose'},{e:'👄',es:'Boca',en:'Mouth'},{e:'✋🏾',es:'Manos',en:'Hands'},{e:'🦶🏾',es:'Pies',en:'Feet'},{e:'🦷',es:'Dientes',en:'Teeth'}],
+// Week 15: Mealtime Mastery
+[{e:'🍽️',es:'Plato',en:'Plate'},{e:'🥤',es:'Vaso',en:'Cup'},{e:'🍴',es:'Tenedor',en:'Fork'},{e:'🥄',es:'Cuchara',en:'Spoon'},{e:'🍞',es:'Pan',en:'Bread'},{e:'🧈',es:'Mantequilla',en:'Butter'},{e:'🧀',es:'Queso',en:'Cheese'}],
+// Week 16: Kitchen Soul (Honduran cuisine)
+[{e:'🫘',es:'Frijoles',en:'Beans'},{e:'🍚',es:'Arroz',en:'Rice'},{e:'🍌',es:'Plátano',en:'Plantain'},{e:'🫓',es:'Tortilla',en:'Tortilla'},{e:'🌽',es:'Maíz',en:'Corn'},{e:'🥥',es:'Coco',en:'Coconut'},{e:'🌮',es:'Baleada',en:'Baleada'}],
+// Week 17: Weather
+[{e:'☀️',es:'Sol',en:'Sun'},{e:'🌧️',es:'Lluvia',en:'Rain'},{e:'☁️',es:'Nubes',en:'Clouds'},{e:'🌬️',es:'Viento',en:'Wind'},{e:'🌈',es:'Arcoíris',en:'Rainbow'},{e:'🥵',es:'Hace calor',en:'It is hot'},{e:'🥶',es:'Hace frío',en:'It is cold'}],
+// Week 18: Getting Dressed
+[{e:'👕',es:'Camisa',en:'Shirt'},{e:'👖',es:'Pantalones',en:'Pants'},{e:'👟',es:'Zapatos',en:'Shoes'},{e:'🧦',es:'Calcetines',en:'Socks'},{e:'🎩',es:'Sombrero',en:'Hat'},{e:'🧥',es:'Chaqueta',en:'Jacket'}],
+// Week 19: Florida Animals
+[{e:'🐊',es:'Caimán',en:'Alligator'},{e:'🦩',es:'Flamenco',en:'Flamingo'},{e:'🐢',es:'Tortuga',en:'Turtle'},{e:'🐟',es:'Pez',en:'Fish'},{e:'🦋',es:'Mariposa',en:'Butterfly'},{e:'🦎',es:'Lagartija',en:'Lizard'},{e:'🐬',es:'Delfín',en:'Dolphin'}],
+// Week 20: Morning Routines
+[{e:'😴',es:'Despertarse',en:'To wake up'},{e:'🪥',es:'Cepillarse los dientes',en:'To brush teeth'},{e:'🧼',es:'Lavarse la cara',en:'To wash face'},{e:'👕',es:'Vestirse',en:'To get dressed'},{e:'🍳',es:'Desayunar',en:'To eat breakfast'}],
+// Week 21: Question Words (deeper)
+[{e:'❓',es:'Cuál',en:'Which'},{e:'⏰',es:'A qué hora',en:'At what time'},{e:'🔄',es:'Cómo',en:'How'},{e:'📊',es:'Cuánto',en:'How much'},{e:'📍',es:'De dónde',en:'From where'},{e:'🛣️',es:'Hasta dónde',en:'How far'}],
+// Week 22: Playground Spanish
+[{e:'🏞️',es:'Columpio',en:'Swing'},{e:'🛝',es:'Resbaladilla',en:'Slide'},{e:'🏃',es:'Correr',en:'To run'},{e:'🤸',es:'Saltar',en:'To jump'},{e:'🧗',es:'Subir',en:'To climb'},{e:'👫🏾',es:'Amigo',en:'Friend'},{e:'⚽',es:'Pelota',en:'Ball'}],
+// Week 23: Describing Everything
+[{e:'💪🏾',es:'Fuerte',en:'Strong'},{e:'😴',es:'Cansado',en:'Tired'},{e:'⚡',es:'Rápido',en:'Fast'},{e:'🐢',es:'Lento',en:'Slow'},{e:'✨',es:'Limpio',en:'Clean'},{e:'🧹',es:'Sucio',en:'Dirty'},{e:'🔊',es:'Ruidoso',en:'Loud'}],
+// Week 24: Phase 2 Complete
+[{e:'🎉',es:'Lo logramos',en:'We did it'},{e:'🙌🏾',es:'Qué bueno',en:'How good'},{e:'🌟',es:'Muy bien',en:'Very good'},{e:'💯',es:'Perfecto',en:'Perfect'},{e:'🏆',es:'Ganamos',en:'We won'}],
+// === Phase 3 — Months 7-9 ===
+// Week 25: Simple Past Tense
+[{e:'🍽️',es:'Comí',en:'I ate'},{e:'🚶',es:'Caminé',en:'I walked'},{e:'🗣️',es:'Hablé',en:'I spoke'},{e:'👀',es:'Vi',en:'I saw'},{e:'🛌',es:'Dormí',en:'I slept'},{e:'🤝🏾',es:'Ayudé',en:'I helped'}],
+// Week 26: Bedtime Recaps
+[{e:'🌙',es:'Hoy fue un buen día',en:'Today was a good day'},{e:'⭐',es:'Vimos',en:'We saw'},{e:'🎮',es:'Jugamos',en:'We played'},{e:'🍎',es:'Comimos',en:'We ate'},{e:'💖',es:'Te quiero',en:'I love you'}],
+// Week 27: Irregular Verbs
+[{e:'📍',es:'Fui',en:'I went'},{e:'💼',es:'Tuve',en:'I had'},{e:'💭',es:'Hice',en:'I did/made'},{e:'🫶🏾',es:'Estuve',en:'I was'},{e:'🎁',es:'Di',en:'I gave'},{e:'🗣️',es:'Dije',en:'I said'}],
+// Week 28: Telling Stories
+[{e:'📖',es:'Había una vez',en:'Once upon a time'},{e:'⏩',es:'Entonces',en:'Then'},{e:'🏁',es:'Al final',en:'At the end'},{e:'👦🏾',es:'El niño',en:'The boy'},{e:'👧🏾',es:'La niña',en:'The girl'},{e:'🎭',es:'Colorín colorado',en:'The end'}],
+// Week 29: Emotions
+[{e:'😊',es:'Contento',en:'Happy'},{e:'😢',es:'Triste',en:'Sad'},{e:'😡',es:'Enojado',en:'Angry'},{e:'😨',es:'Asustado',en:'Scared'},{e:'😲',es:'Sorprendido',en:'Surprised'},{e:'🥰',es:'Orgulloso',en:'Proud'}],
+// Week 30: Opinions
+[{e:'👍🏾',es:'Me gusta',en:'I like it'},{e:'👎🏾',es:'No me gusta',en:'I do not like it'},{e:'💭',es:'Creo que',en:'I think that'},{e:'🤔',es:'Tal vez',en:'Maybe'},{e:'✅',es:'De acuerdo',en:'I agree'},{e:'❤️',es:'Me encanta',en:'I love it'}],
+// Week 31: Connectors
+[{e:'➕',es:'Y',en:'And'},{e:'⚖️',es:'Pero',en:'But'},{e:'🌟',es:'Porque',en:'Because'},{e:'🔄',es:'Entonces',en:'So'},{e:'🔁',es:'También',en:'Also'},{e:'❌',es:'Ni',en:'Nor'}],
+// Week 32: Feelings in Action
+[{e:'🥺',es:'Me siento',en:'I feel'},{e:'🤗',es:'Abrazo',en:'Hug'},{e:'😭',es:'Llorar',en:'To cry'},{e:'😂',es:'Reír',en:'To laugh'},{e:'😮‍💨',es:'Respira',en:'Breathe'},{e:'💆🏾',es:'Cálmate',en:'Calm down'}],
+// Week 33: Shopping
+[{e:'🛒',es:'Comprar',en:'To buy'},{e:'💵',es:'Dinero',en:'Money'},{e:'🏷️',es:'Cuánto cuesta',en:'How much is it'},{e:'🛍️',es:'Mercado',en:'Market'},{e:'🏪',es:'Tienda',en:'Store'},{e:'💳',es:'Tarjeta',en:'Card'}],
+// Week 34: Restaurants
+[{e:'🍽️',es:'Menú',en:'Menu'},{e:'🧑🏾‍🍳',es:'Mesero',en:'Waiter'},{e:'💧',es:'Agua por favor',en:'Water please'},{e:'🧾',es:'La cuenta',en:'The check'},{e:'🍴',es:'Comida',en:'Food'},{e:'😋',es:'Delicioso',en:'Delicious'}],
+// Week 35: Directions
+[{e:'⬅️',es:'Izquierda',en:'Left'},{e:'➡️',es:'Derecha',en:'Right'},{e:'⬆️',es:'Derecho',en:'Straight'},{e:'⏸️',es:'Parar',en:'To stop'},{e:'🔁',es:'Dar vuelta',en:'To turn'},{e:'📍',es:'Aquí',en:'Here'},{e:'🎯',es:'Allá',en:'There'}],
+// Week 36: Phase 3 Complete
+[{e:'🎉',es:'Ya hablamos más',en:'Now we speak more'},{e:'📈',es:'Hemos mejorado',en:'We have improved'},{e:'💪🏾',es:'Podemos conversar',en:'We can have conversations'},{e:'🗣️',es:'En español',en:'In Spanish'}],
+// === Phase 4 — Months 10-12 ===
+// Week 37: Conversation Connectors
+[{e:'💬',es:'Por cierto',en:'By the way'},{e:'🎯',es:'En realidad',en:'Actually'},{e:'⚖️',es:'Sin embargo',en:'However'},{e:'🔗',es:'Además',en:'Besides'},{e:'🎬',es:'Finalmente',en:'Finally'},{e:'🤷🏾',es:'De todos modos',en:'Anyway'}],
+// Week 38: Honduran Deep Dive
+[{e:'🇭🇳',es:'Qué onda',en:'What is up'},{e:'💵',es:'Pisto',en:'Money'},{e:'👦🏾',es:'Cipote',en:'Kid'},{e:'😎',es:'Maje',en:'Dude'},{e:'😮',es:'Puchica',en:'Wow'},{e:'👌🏾',es:'Cheque',en:'Okay'}],
+// Week 39: Spanish Hour
+[{e:'🕐',es:'Una hora',en:'One hour'},{e:'🗣️',es:'Solo español',en:'Only Spanish'},{e:'🚫',es:'Sin inglés',en:'Without English'},{e:'💪🏾',es:'Tú puedes',en:'You can'},{e:'🎯',es:'Enfócate',en:'Focus'}],
+// Week 40: Month 10 Milestone
+[{e:'🏆',es:'10 meses',en:'10 months'},{e:'📊',es:'Has avanzado',en:'You have advanced'},{e:'⭐',es:'Eres bilingüe',en:'You are bilingual'},{e:'🎉',es:'Sigue así',en:'Keep going'}],
+// Week 41: Subjunctive Intro
+[{e:'✨',es:'Espero que',en:'I hope that'},{e:'💭',es:'Quiero que',en:'I want that'},{e:'🙏🏾',es:'Ojalá',en:'Hopefully'},{e:'💙',es:'Tal vez sea',en:'Maybe it is'},{e:'🌟',es:'Que tengas',en:'May you have'}],
+// Week 42: Real-Time Narration
+[{e:'👁️',es:'Mira lo que hago',en:'Watch what I do'},{e:'🖐🏾',es:'Estoy cocinando',en:'I am cooking'},{e:'🧺',es:'Estamos doblando',en:'We are folding'},{e:'🚗',es:'Estoy manejando',en:'I am driving'},{e:'📚',es:'Estoy leyendo',en:'I am reading'}],
+// Week 43: Storytelling
+[{e:'📖',es:'Te cuento una historia',en:'Let me tell you a story'},{e:'🎭',es:'El personaje',en:'The character'},{e:'🏰',es:'El lugar',en:'The place'},{e:'💥',es:'Lo que pasó',en:'What happened'},{e:'🎬',es:'El final',en:'The ending'}],
+// Week 44: Month 11 Assessment
+[{e:'📝',es:'Cuéntame',en:'Tell me'},{e:'🧠',es:'Lo que aprendiste',en:'What you learned'},{e:'🎯',es:'En español',en:'In Spanish'},{e:'⭐',es:'Muy orgulloso',en:'Very proud'}],
+// Week 45: 10-Min Conversations
+[{e:'🗣️',es:'Conversación',en:'Conversation'},{e:'⏱️',es:'Diez minutos',en:'Ten minutes'},{e:'🔄',es:'Turnándonos',en:'Taking turns'},{e:'💬',es:'Temas diferentes',en:'Different topics'},{e:'🎤',es:'Sin traducir',en:'Without translating'}],
+// Week 46: Share Knowledge
+[{e:'🤝🏾',es:'Enseña a otros',en:'Teach others'},{e:'👨‍👩‍👧‍👦',es:'Con la familia',en:'With family'},{e:'📚',es:'Comparte',en:'Share'},{e:'🌍',es:'Tu cultura',en:'Your culture'},{e:'🇭🇳',es:'Orgullo catracho',en:'Honduran pride'}],
+// Week 47: Time Capsule
+[{e:'📦',es:'Cápsula de tiempo',en:'Time capsule'},{e:'🎙️',es:'Graba tu voz',en:'Record your voice'},{e:'📝',es:'Escribe',en:'Write'},{e:'📸',es:'Fotos',en:'Photos'},{e:'💝',es:'Un regalo',en:'A gift'}],
+// Week 48: You Did It!
+[{e:'🏆',es:'Lo lograste',en:'You did it'},{e:'🎓',es:'Un año entero',en:'A whole year'},{e:'💛',es:'Tu hijo bilingüe',en:'Your bilingual child'},{e:'🌟',es:'Una familia catracha',en:'A Honduran family'},{e:'🇭🇳',es:'¡Va pues!',en:'Alright!'}]
 ];
 const WEEK_TITLES=[null,'Your First Words','Colors & Greetings','Family & Naming','Daily Commands','Numbers & Counting','Wants & Needs','Daily Routines','Putting It Together','Questions','Describing Things','Locations','Phase 1 Complete!',
 'Kitchen Verbs','Body Parts','Mealtime Mastery','Kitchen Soul','Weather','Getting Dressed','Florida Animals','Morning Routines','Question Words','Playground Spanish','Describing Everything','Phase 2 Complete!',
@@ -1009,7 +1084,13 @@ const MO=[
 
 /* ===== STATE ===== */
 const L={g(k,d){try{const v=localStorage.getItem('v_'+k);return v?JSON.parse(v):d}catch{return d}},s(k,v){try{localStorage.setItem('v_'+k,JSON.stringify(v))}catch{}}};
-function localDay(){return new Date().toLocaleDateString('en-CA');} // YYYY-MM-DD in local tz
+function localDay(){
+  const d=new Date();
+  const y=d.getFullYear();
+  const m=String(d.getMonth()+1).padStart(2,'0');
+  const day=String(d.getDate()).padStart(2,'0');
+  return y+'-'+m+'-'+day;
+}
 let S={sk:L.g('sk',0),la:L.g('la',''),dc:L.g('dc',{}),dd:L.g('dd',''),wd:L.g('wd',{}),fk:L.g('fk',{}),qt:L.g('qt',0),qc:L.g('qc',0),fq:L.g('fq',{}),sd:L.g('sd',{}),xp:L.g('xp',0),wl:L.g('wl',{}),lxp:L.g('lxp',0),lxpd:L.g('lxpd',''),wk:L.g('wk',{}),fr:L.g('fr',0),fl:L.g('fl',0),lc:L.g('lc',0),pf:L.g('pf',0),tm:L.g('tm',0),dq:L.g('dq',null),dqd:L.g('dqd',''),ac:L.g('ac',{}),sw:L.g('sw',0)};
 let expTask=null;
 let homeSec={tasks:false,fq:false,help:false};
@@ -1043,7 +1124,11 @@ function rd(){if(S.dd!==localDay()){S.dc={};S.dd=localDay();sv();}}
 
 /* ===== SPEECH ===== */
 function speak(t,lang){if(!('speechSynthesis' in window))return;speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);const useLang=lang||'es';const prefix=useLang==='en'?'en':'es';u.lang=useLang==='en'?'en-US':'es-MX';const inTM=document.getElementById('tmode').classList.contains('act');u.rate=inTM?1.05:.85;u.pitch=inTM?1.6:1.2;const vs=speechSynthesis.getVoices();const match=vs.filter(x=>x.lang.startsWith(prefix));const fem=match.find(x=>/female|paulina|monica|lupe|samantha|karen|fiona|zuzana|tessa/i.test(x.name))||match.find(x=>!/male|jorge|juan|diego|carlos|daniel|thomas|david/i.test(x.name));if(fem)u.voice=fem;else if(match.length)u.voice=match[0];speechSynthesis.speak(u);}
-if('speechSynthesis' in window)speechSynthesis.getVoices();
+if('speechSynthesis' in window){
+  speechSynthesis.getVoices();
+  // iOS Safari populates voices asynchronously on first load — listen for them
+  speechSynthesis.onvoiceschanged=function(){speechSynthesis.getVoices();};
+}
 function spB(t,lang){return `<button class="spk" data-speak="${t.replace(/"/g,'&quot;')}" data-lang="${lang||'es'}">🔊</button>`;}
 function sh(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=0|Math.random()*(i+1);[b[i],b[j]]=[b[j],b[i]];}return b;}
 
@@ -1106,7 +1191,7 @@ function renderToys(){
   if(tCat==='bubbles')setTimeout(startBubbles,100);
   if(tCat==='memory')startMemory();
   if(tCat==='paint')setTimeout(initPaint,100);
-  if(tCat==='lesson')startLesson();
+  if(tCat==='lesson')startToddlerLesson();
 }
 const MATCH_TITLES={animals:'🐾 ¡Toca el Animal!',food:'🍎 ¡Toca la Comida!',body:'🖐🏾 ¡Toca!',nature:'🌴 ¡Toca!',sports:'⚽ ¡Toca el Deporte!',vehicles:'🚗 ¡Toca el Vehículo!',shapes:'🔷 ¡Toca la Forma!',clothes:'👕 ¡Toca la Ropa!'};
 let matchTarget=null,matchScore=0,matchStreak=0;
@@ -1355,7 +1440,7 @@ function clearPaint(){
 
 /* ===== LESSON GAME (curriculum in Toddler Mode) ===== */
 var lessonWords=[],lessonIdx=0,lessonScore=0,lessonMode='flash';
-function startLesson(){
+function startToddlerLesson(){
   var cw=getCurrentWeek();
   var vocab=WEEK_VOCAB[Math.min(cw,WEEK_VOCAB.length-1)]||WEEK_VOCAB[1];
   lessonWords=sh([...vocab]);
@@ -1844,7 +1929,8 @@ function pickPair(side,i){
   }
   // Wrong — track weak words for both sides
   const lWord=ps.left[lIdx];const rWord=ps.right[rIdx];
-  trackWeak({es:lId,en:ps.right.find(function(x){return x.id===lId;}).v,e:lWord.em});
+  const rightMatch=ps.right.find(function(x){return x.id===lId;});
+  trackWeak({es:lId,en:rightMatch?rightMatch.v:'',e:lWord?lWord.em:'💬'});
   lBtn.classList.add('no');rBtn.classList.add('no');
   loseHeart();
   setTimeout(function(){
@@ -1858,9 +1944,20 @@ function trackWeak(w){
   if(!w||!w.es)return;
   if(!S.wk)S.wk={};
   const k=w.es;
-  if(!S.wk[k])S.wk[k]={es:w.es,en:w.en||'',e:w.e||'💬',count:0,word:w};
+  if(!S.wk[k])S.wk[k]={es:w.es,en:w.en||'',e:w.e||'💬',count:0,word:w,ts:Date.now()};
   S.wk[k].count=(S.wk[k].count||0)+1;
   S.wk[k].word=w;
+  S.wk[k].ts=Date.now();
+  // Cap at 50 entries — drop lowest-count / oldest first
+  const keys=Object.keys(S.wk);
+  if(keys.length>50){
+    const sorted=keys.slice().sort(function(a,b){
+      const ca=(S.wk[a].count||0),cb=(S.wk[b].count||0);
+      if(ca!==cb)return ca-cb;
+      return (S.wk[a].ts||0)-(S.wk[b].ts||0);
+    });
+    for(let i=0;i<keys.length-50;i++)delete S.wk[sorted[i]];
+  }
   sv();
 }
 function strengthenWeak(w){
@@ -1878,7 +1975,7 @@ function checkAnswer(){
     got=LP.built.map(function(b){return b.word;}).join(' ');
     right=got===e.answer;
     LP.locked=true;
-    document.querySelectorAll('#lpBuilt .lp-tile').forEach(function(b){b.classList.add(right?'ok':'no');b.style.borderColor=right?'var(--teal)':'var(--terra)';b.style.background=right?'var(--teall)':'var(--terral);';b.style.color=right?'var(--teald)':'var(--terra)';});
+    document.querySelectorAll('#lpBuilt .lp-tile').forEach(function(b){b.classList.add(right?'ok':'no');b.style.borderColor=right?'var(--teal)':'var(--terra)';b.style.background=right?'var(--teall)':'var(--terral)';b.style.color=right?'var(--teald)':'var(--terra)';});
   } else {
     if(LP.sel===null)return;
     const opt=e.opts[LP.sel];
