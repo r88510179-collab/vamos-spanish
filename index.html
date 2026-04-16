@@ -581,7 +581,7 @@ Fill in your info below and tap ¡Vamos! <span style="font-size:11px;opacity:.7;
 <div class="lp-top">
 <button class="lp-x" onclick="quitLesson()" aria-label="Quit lesson">✕</button>
 <div class="lp-pbar" role="progressbar" aria-label="Lesson progress"><div class="lp-pfill" id="lpProg" style="width:0%"></div></div>
-<div class="lp-hp" id="lpHp" aria-label="Hearts remaining">❤️ 5</div>
+<div class="lp-hp" id="lpHp" aria-label="Hearts remaining" aria-live="polite">❤️ 5</div>
 </div>
 <div class="lp-body" id="lpBody"></div>
 <div class="lp-bottom" id="lpBottom"></div>
@@ -1414,14 +1414,14 @@ function initPaint(){
     canvas.addEventListener('mouseup',function(){drawing=false;});
   }
   var lblKey=appLang==='en'?'en':'es';
-  document.getElementById('paint-colors').innerHTML=PAINT_COLORS.map(function(c){return '<button onclick="setPaintColor(\''+c.hex+'\',\''+c[lblKey]+'\')" style="width:36px;height:36px;border-radius:50%;background:'+c.hex+';border:3px solid '+(c.hex==='#ECC94B'||c.hex==='#FFFFFF'?'#999':'var(--ink)')+';box-shadow:0 3px 0 rgba(0,0,0,0.2);"></button>';}).join('');
+  document.getElementById('paint-colors').innerHTML=PAINT_COLORS.map(function(c){return '<button onclick="setPaintColor(\''+c.hex+'\',\''+c[lblKey]+'\')" style="width:44px;height:44px;border-radius:50%;background:'+c.hex+';border:3px solid '+(c.hex==='#ECC94B'||c.hex==='#FFFFFF'?'#999':'var(--ink)')+';box-shadow:0 3px 0 rgba(0,0,0,0.2);"></button>';}).join('');
   document.getElementById('paint-tools').innerHTML='<div style="display:flex;gap:6px;justify-content:center;margin-top:8px;">'
-    +'<button onclick="paintBrush=4" style="width:32px;height:32px;border-radius:50%;border:2px solid var(--ink);background:var(--grl);font-size:10px;font-weight:800;">S</button>'
-    +'<button onclick="paintBrush=8" style="width:32px;height:32px;border-radius:50%;border:2px solid var(--ink);background:var(--grl);font-size:10px;font-weight:800;">M</button>'
-    +'<button onclick="paintBrush=16" style="width:32px;height:32px;border-radius:50%;border:2px solid var(--ink);background:var(--grl);font-size:10px;font-weight:800;">L</button>'
-    +'<button onclick="paintBrush=30" style="width:32px;height:32px;border-radius:50%;border:2px solid var(--ink);background:var(--grl);font-size:10px;font-weight:800;">XL</button>'
+    +'<button onclick="paintBrush=4" style="width:44px;height:44px;border-radius:50%;border:2px solid var(--ink);background:var(--grl);font-size:11px;font-weight:800;">S</button>'
+    +'<button onclick="paintBrush=8" style="width:44px;height:44px;border-radius:50%;border:2px solid var(--ink);background:var(--grl);font-size:11px;font-weight:800;">M</button>'
+    +'<button onclick="paintBrush=16" style="width:44px;height:44px;border-radius:50%;border:2px solid var(--ink);background:var(--grl);font-size:11px;font-weight:800;">L</button>'
+    +'<button onclick="paintBrush=30" style="width:44px;height:44px;border-radius:50%;border:2px solid var(--ink);background:var(--grl);font-size:11px;font-weight:800;">XL</button>'
     +'</div>'
-    +'<div style="display:flex;gap:8px;justify-content:center;margin-top:8px;">'+STAMPS.map(function(s){return '<button onclick="stampEmoji(\''+s+'\')" style="font-size:24px;background:none;border:none;padding:4px;">'+s+'</button>';}).join('')+'</div>';
+    +'<div style="display:flex;gap:8px;justify-content:center;margin-top:8px;">'+STAMPS.map(function(s){return '<button onclick="stampEmoji(\''+s+'\')" style="font-size:24px;background:none;border:none;min-width:44px;min-height:44px;padding:4px;">'+s+'</button>';}).join('')+'</div>';
 }
 function setPaintColor(hex,name){paintColor=hex;speak(name,appLang);}
 function stampEmoji(em){
@@ -1468,7 +1468,15 @@ const LessonUtils={
   // `key` is 'es' or 'en' — determines which field must differ between answer & distractors
   makeOptions:function(correct,pool,count,key){
     const k=key||'es';
-    const wrong=sh(pool.filter(function(x){return x[k]!==correct[k];})).slice(0,Math.max(1,(count||4)-1));
+    const want=Math.max(2,(count||4));
+    var wrong=sh(pool.filter(function(x){return x[k]!==correct[k];})).slice(0,want-1);
+    if(wrong.length<want-1){
+      const all=this.allVocab().filter(function(x){
+        if(x[k]===correct[k])return false;
+        return !wrong.some(function(y){return y[k]===x[k];});
+      });
+      wrong=wrong.concat(sh(all).slice(0,(want-1)-wrong.length));
+    }
     return sh([correct,...wrong]);
   },
   // Convenience: vocab for the user's current week
@@ -1613,7 +1621,7 @@ h+=`<div class="cls ${homeSec.help?'':'cp'}" style="background:var(--ink);color:
 <div style="font-family:'Baloo 2',cursive;font-size:18px;font-weight:800;color:var(--gold);margin-top:2px;">${cc} of ${TK.length} done</div></div>
 <div style="display:flex;align-items:center;gap:10px;"><div style="background:${cc>=TK.length?'var(--teal)':'var(--gold)'};color:var(--ink);width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Baloo 2';font-size:16px;font-weight:800;">${cc>=TK.length?'✓':cc+'/'+ TK.length}</div><span style="color:rgba(255,255,255,.4);font-size:18px;font-weight:800;">${homeSec.tasks?'▲':'▼'}</span></div></div>
 <div style="height:4px;background:rgba(255,255,255,.15);border-radius:2px;margin:12px 0 ${homeSec.tasks?'14px':'0'};"><div style="height:100%;background:linear-gradient(90deg,var(--teal),var(--gold));border-radius:2px;width:${Math.round(cc/TK.length*100)}%;transition:width .4s;"></div></div>
-${homeSec.tasks?TK.map(t=>{const dn2=S.dc[t.id];const ex=expTask===t.id;const catIco={daily:'📅',florida:'🌴',parent:'💛',culture:'🇭🇳'};return '<div style="background:'+(dn2?'rgba(0,128,128,.15)':'rgba(255,255,255,.06)')+';border-radius:14px;padding:12px 14px;margin-bottom:8px;border:1px solid '+(dn2?'var(--teal)':'rgba(255,255,255,.1)')+';cursor:pointer;" onclick="tgE(\''+t.id+'\')"><div style="display:flex;align-items:center;gap:10px;"><button onclick="event.stopPropagation();tgD(\''+t.id+'\')" style="width:32px;height:32px;min-width:32px;border-radius:10px;border:3px solid '+(dn2?'var(--teal)':'rgba(255,255,255,.3)')+';background:'+(dn2?'var(--teal)':'transparent')+';color:var(--w);font-size:16px;display:flex;align-items:center;justify-content:center;">'+(dn2?'✓':'')+'</button><div style="flex:1;"><div style="font-size:13px;font-weight:700;color:'+(dn2?'rgba(255,255,255,.5)':'var(--w)')+';'+(dn2?'text-decoration:line-through;':'')+'">'+t.t+'</div><div style="font-size:11px;color:rgba(255,255,255,.4);margin-top:2px;">'+(catIco[t.cat]||'📅')+' '+t.s+'</div></div><span style="color:rgba(255,255,255,.3);font-size:14px;">'+(ex?'▲':'▼')+'</span></div>'+(ex?'<div style="margin-top:12px;padding:14px;background:rgba(255,255,255,.08);border-radius:12px;font-size:12.5px;color:rgba(255,255,255,.85);line-height:1.65;">'+t.d+(t.phrases?t.phrases.map(function(p2){var parts=p2.split('|');var es=parts[0];var ph2=parts.length===3?parts[1]:'';var en=parts.length===3?parts[2]:(parts[1]||'');return '<div style="display:flex;align-items:flex-start;gap:6px;background:rgba(212,160,23,.15);padding:8px 10px;border-radius:8px;margin:6px 0;font-weight:700;font-size:14px;border:1px solid rgba(212,160,23,.3);flex-wrap:wrap;color:var(--gold);">'+spB(es)+' <span>'+es+'</span>'+(ph2?' <span style="color:var(--terra);font-size:12px;font-weight:700;">🗣 '+ph2+'</span>':'')+(en?' <span style="color:rgba(255,255,255,.5);font-weight:500;margin-left:8px;">('+en+')</span>':'')+'</div>';}).join(''):'')+'</div>':'')+'</div>';}).join(''):''}
+${homeSec.tasks?TK.map(t=>{const dn2=S.dc[t.id];const ex=expTask===t.id;const catIco={daily:'📅',florida:'🌴',parent:'💛',culture:'🇭🇳'};return '<div style="background:'+(dn2?'rgba(0,128,128,.15)':'rgba(255,255,255,.06)')+';border-radius:14px;padding:12px 14px;margin-bottom:8px;border:1px solid '+(dn2?'var(--teal)':'rgba(255,255,255,.1)')+';cursor:pointer;" onclick="tgE(\''+t.id+'\')"><div style="display:flex;align-items:center;gap:10px;"><button onclick="event.stopPropagation();tgD(\''+t.id+'\')" style="width:44px;height:44px;min-width:44px;border-radius:10px;border:3px solid '+(dn2?'var(--teal)':'rgba(255,255,255,.3)')+';background:'+(dn2?'var(--teal)':'transparent')+';color:var(--w);font-size:16px;display:flex;align-items:center;justify-content:center;">'+(dn2?'✓':'')+'</button><div style="flex:1;"><div style="font-size:13px;font-weight:700;color:'+(dn2?'rgba(255,255,255,.5)':'var(--w)')+';'+(dn2?'text-decoration:line-through;':'')+'">'+t.t+'</div><div style="font-size:11px;color:rgba(255,255,255,.4);margin-top:2px;">'+(catIco[t.cat]||'📅')+' '+t.s+'</div></div><span style="color:rgba(255,255,255,.3);font-size:14px;">'+(ex?'▲':'▼')+'</span></div>'+(ex?'<div style="margin-top:12px;padding:14px;background:rgba(255,255,255,.08);border-radius:12px;font-size:12.5px;color:rgba(255,255,255,.85);line-height:1.65;">'+t.d+(t.phrases?t.phrases.map(function(p2){var parts=p2.split('|');var es=parts[0];var ph2=parts.length===3?parts[1]:'';var en=parts.length===3?parts[2]:(parts[1]||'');return '<div style="display:flex;align-items:flex-start;gap:6px;background:rgba(212,160,23,.15);padding:8px 10px;border-radius:8px;margin:6px 0;font-weight:700;font-size:14px;border:1px solid rgba(212,160,23,.3);flex-wrap:wrap;color:var(--gold);">'+spB(es)+' <span>'+es+'</span>'+(ph2?' <span style="color:var(--terra);font-size:12px;font-weight:700;">🗣 '+ph2+'</span>':'')+(en?' <span style="color:rgba(255,255,255,.5);font-weight:500;margin-left:8px;">('+en+')</span>':'')+'</div>';}).join(''):'')+'</div>':'')+'</div>';}).join(''):''}
 </div>
 
 <div style="background:linear-gradient(135deg,#2D4A22,#1A3A12);border-radius:var(--r);padding:16px;margin-bottom:14px;border:2px solid #4CAF50;box-shadow:var(--shl);">
@@ -1621,7 +1629,7 @@ ${homeSec.tasks?TK.map(t=>{const dn2=S.dc[t.id];const ex=expTask===t.id;const ca
 <div><div style="font-size:11px;font-weight:800;color:rgba(255,255,255,.6);text-transform:uppercase;letter-spacing:1px;">🌴 Florida Quest</div>
 <div style="font-family:'Baloo 2',cursive;font-size:18px;font-weight:800;color:#81C784;margin-top:2px;">Fort Myers Adventures</div></div>
 <div style="display:flex;align-items:center;gap:10px;"><div style="background:#4CAF50;color:var(--w);width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Baloo 2';font-size:14px;font-weight:800;">${Object.values(S.fq||{}).filter(Boolean).length}/${FQ.length}</div><span style="color:rgba(255,255,255,.4);font-size:18px;font-weight:800;">${homeSec.fq?'▲':'▼'}</span></div></div>
-${homeSec.fq?FQ.map(q=>{const dn3=S.fq&&S.fq[q.id];return '<div style="background:'+(dn3?'rgba(76,175,80,.15)':'rgba(255,255,255,.06)')+';border-radius:14px;padding:12px 14px;margin-bottom:8px;margin-top:12px;border:1px solid '+(dn3?'#4CAF50':'rgba(255,255,255,.1)')+';display:flex;align-items:flex-start;gap:10px;"><button onclick="tgFQ(\''+q.id+'\')" style="width:28px;height:28px;min-width:28px;border-radius:8px;border:3px solid '+(dn3?'#4CAF50':'rgba(255,255,255,.3)')+';background:'+(dn3?'#4CAF50':'transparent')+';color:var(--w);font-size:14px;display:flex;align-items:center;justify-content:center;margin-top:2px;">'+(dn3?'✓':'')+'</button><div style="flex:1;"><div style="font-size:13px;font-weight:700;color:'+(dn3?'rgba(255,255,255,.5)':'var(--w)')+';'+(dn3?'text-decoration:line-through;':'')+'">'+q.t+'</div><div style="font-size:11px;color:rgba(255,255,255,.5);margin-top:3px;">'+q.d+'</div>'+(q.phrases?q.phrases.map(function(p2){var parts=p2.split('|');var es=parts[0];var ph2=parts.length===3?parts[1]:'';var en=parts.length===3?parts[2]:(parts[1]||'');return '<div style="display:flex;align-items:flex-start;gap:6px;background:rgba(76,175,80,.12);padding:6px 10px;border-radius:8px;margin:4px 0;font-weight:700;font-size:12px;border:1px solid rgba(76,175,80,.25);flex-wrap:wrap;color:#81C784;">'+spB(es)+' '+es+(ph2?' <span style="color:var(--terra);font-size:11px;">🗣 '+ph2+'</span>':'')+(en?' <span style="color:rgba(255,255,255,.4);font-weight:500;font-size:11px;">('+en+')</span>':'')+'</div>';}).join(''):'')+'</div></div>';}).join(''):''}
+${homeSec.fq?FQ.map(q=>{const dn3=S.fq&&S.fq[q.id];return '<div style="background:'+(dn3?'rgba(76,175,80,.15)':'rgba(255,255,255,.06)')+';border-radius:14px;padding:12px 14px;margin-bottom:8px;margin-top:12px;border:1px solid '+(dn3?'#4CAF50':'rgba(255,255,255,.1)')+';display:flex;align-items:flex-start;gap:10px;"><button onclick="tgFQ(\''+q.id+'\')" style="width:44px;height:44px;min-width:44px;border-radius:8px;border:3px solid '+(dn3?'#4CAF50':'rgba(255,255,255,.3)')+';background:'+(dn3?'#4CAF50':'transparent')+';color:var(--w);font-size:14px;display:flex;align-items:center;justify-content:center;margin-top:2px;">'+(dn3?'✓':'')+'</button><div style="flex:1;"><div style="font-size:13px;font-weight:700;color:'+(dn3?'rgba(255,255,255,.5)':'var(--w)')+';'+(dn3?'text-decoration:line-through;':'')+'">'+q.t+'</div><div style="font-size:11px;color:rgba(255,255,255,.5);margin-top:3px;">'+q.d+'</div>'+(q.phrases?q.phrases.map(function(p2){var parts=p2.split('|');var es=parts[0];var ph2=parts.length===3?parts[1]:'';var en=parts.length===3?parts[2]:(parts[1]||'');return '<div style="display:flex;align-items:flex-start;gap:6px;background:rgba(76,175,80,.12);padding:6px 10px;border-radius:8px;margin:4px 0;font-weight:700;font-size:12px;border:1px solid rgba(76,175,80,.25);flex-wrap:wrap;color:#81C784;">'+spB(es)+' '+es+(ph2?' <span style="color:var(--terra);font-size:11px;">🗣 '+ph2+'</span>':'')+(en?' <span style="color:rgba(255,255,255,.4);font-weight:500;font-size:11px;">('+en+')</span>':'')+'</div>';}).join(''):'')+'</div></div>';}).join(''):''}
 </div>
 
 ${profile?`<button onclick="shareStreak()" style="width:100%;padding:14px;border-radius:50px;background:var(--ink);color:var(--gold);font-weight:700;font-size:14px;border:2px solid var(--gold);margin-bottom:16px;">📤 Share ${S.sk}-Day Streak with Partner</button>`:''}`;
@@ -1776,6 +1784,7 @@ const FocusTrap={
   container:null,      // the overlay element
   keyHandler:null,     // bound keydown handler so we can detach it
   activate:function(containerEl){
+    if(this.keyHandler) document.removeEventListener('keydown',this.keyHandler,true);
     this.container=containerEl;
     this.prev=document.activeElement;
     this.keyHandler=this._onKey.bind(this);
@@ -1845,6 +1854,16 @@ const FocusTrap={
 
 /* ===== LESSON PLAYER ===== */
 let LP={week:1,exs:[],idx:0,hp:5,xp:0,sel:null,locked:false,correct:0,wrong:0,built:[],practice:false,wkSeen:[]};
+function setLessonProgress(pct){
+  const fill=document.getElementById('lpProg');
+  if(fill)fill.style.width=pct+'%';
+  const bar=fill?fill.parentElement:null;
+  if(bar){
+    bar.setAttribute('aria-valuenow',String(pct));
+    bar.setAttribute('aria-valuemin','0');
+    bar.setAttribute('aria-valuemax','100');
+  }
+}
 function startLesson(weekNum){
   LP.week=weekNum;LP.idx=0;LP.hp=5;LP.xp=0;LP.sel=null;LP.locked=false;LP.correct=0;LP.wrong=0;LP.built=[];LP.practice=false;LP.wkSeen=[];
   LP.exs=buildExercises(weekNum);
@@ -1871,10 +1890,9 @@ function startStrengthen(){
 function quitLesson(){
   document.getElementById('lessonPlayer').classList.remove('act');
   document.body.style.overflow='';
-  speechSynthesis.cancel();
+  if('speechSynthesis' in window) speechSynthesis.cancel();
   FocusTrap.deactivate();
 }
-function poolFromOtherWeeks(skipIdx){return LessonUtils.distractorPool(skipIdx);}
 function buildExercises(weekNum){
   const idx=Math.max(1,Math.min(weekNum|0,WEEK_VOCAB.length-1));
   const vocab=LessonUtils.weekVocab(weekNum);
@@ -1926,7 +1944,7 @@ function renderExercise(){
   if(LP.hp<=0){return failLesson();}
   const e=LP.exs[LP.idx];
   LP.sel=null;LP.locked=false;LP.pairsState=null;LP.built=[];
-  document.getElementById('lpProg').style.width=Math.round(LP.idx/LP.exs.length*100)+'%';
+  setLessonProgress(Math.round(LP.idx/LP.exs.length*100));
   document.getElementById('lpHp').innerHTML='❤️ '+LP.hp;
   let body='<div class="lp-prompt">'+e.prompt+'</div>';
   if(e.type==='pick'){
@@ -2105,7 +2123,7 @@ function checkAnswer(){
   }
 }
 function showFeedback(ok,msg){
-  const fb='<div class="lp-fb '+(ok?'ok':'no')+'"><div class="fb-em">'+(ok?'✅':'❌')+'</div><div><div class="fb-tx">'+(ok?'Nice work!':'Not quite')+'</div><div class="fb-ans">'+msg+'</div></div></div>';
+  const fb='<div class="lp-fb '+(ok?'ok':'no')+'" aria-live="assertive" role="status"><div class="fb-em">'+(ok?'✅':'❌')+'</div><div><div class="fb-tx">'+(ok?'Nice work!':'Not quite')+'</div><div class="fb-ans">'+msg+'</div></div></div>';
   const goCls=ok?'lp-go':'lp-go no';
   document.getElementById('lpBottom').innerHTML=fb+'<button class="'+goCls+'" id="lpContinue" onclick="advanceLesson()">Continue</button>';
   // Focus the Continue button so pressing Enter/Space advances — huge win for TV remote + keyboard users
@@ -2124,7 +2142,7 @@ function advanceLesson(){
   renderExercise();
 }
 function failLesson(){
-  document.getElementById('lpProg').style.width='100%';
+  setLessonProgress(100);
   document.getElementById('lpBody').innerHTML='<div class="lp-end"><div class="e-em">💔</div><div class="e-big">Out of hearts</div><div class="e-sub">No worries — that\'s how brains learn. Try again, you\'re close!</div></div>';
   const retryFn=LP.practice?'startStrengthen()':'startLesson('+LP.week+')';
   document.getElementById('lpBottom').innerHTML='<button class="lp-go again" id="lpContinue" onclick="'+retryFn+'">Retry Lesson</button>';
@@ -2162,7 +2180,7 @@ function completeLesson(){
   }
   us();sv();confetti();
   checkAch();
-  document.getElementById('lpProg').style.width='100%';
+  setLessonProgress(100);
   document.getElementById('lpHp').innerHTML='❤️ '+LP.hp;
   const heading=isPerfect?'¡Perfecto!':(acc>=80?'¡Muy bien!':'Lesson Done');
   const freezeNote=earnedFreeze?'<div style="background:linear-gradient(135deg,#E0F2F1,#B2DFDB);border:2px solid var(--teal);color:var(--teald);padding:10px 14px;border-radius:12px;margin-bottom:18px;font-weight:700;font-size:13px;">🧊 You earned a streak freeze! Saved for a missed day.</div>':'';
@@ -2238,8 +2256,8 @@ const ACH=[
   {id:'perfect_first',ic:'🏆',name:'Flawless',desc:'Complete a lesson with all 5 hearts',check:function(){return (S.pf||0)>=1;}},
   {id:'perfect_5',ic:'🏅',name:'Pristine',desc:'Complete 5 perfect lessons',check:function(){return (S.pf||0)>=5;}},
   {id:'crown_first',ic:'👑',name:'Crowned',desc:'Reach crown level 5 on any week',check:function(){return Object.values(S.wl||{}).some(function(v){return v>=5;});}},
-  {id:'phase1',ic:'📚',name:'Foundation Built',desc:'Complete all 12 weeks of Phase 1',check:function(){for(var i=1;i<=12;i++){if(!S.wd['w'+i])return false;}return true;}},
-  {id:'phase2',ic:'📚',name:'Neighborhood Pro',desc:'Complete all 12 weeks of Phase 2',check:function(){for(var i=13;i<=24;i++){if(!S.wd['w'+i])return false;}return true;}},
+  {id:'phase1',ic:'📚',name:'Foundation Built',desc:'Complete all 12 weeks of Phase 1',check:function(){const wd=S.wd||{};for(var i=1;i<=12;i++){if(!wd['w'+i])return false;}return true;}},
+  {id:'phase2',ic:'📚',name:'Neighborhood Pro',desc:'Complete all 12 weeks of Phase 2',check:function(){const wd=S.wd||{};for(var i=13;i<=24;i++){if(!wd['w'+i])return false;}return true;}},
   {id:'strengthen_10',ic:'💪',name:'Resilient',desc:'Strengthen 10 weak words',check:function(){return (S.sw||0)>=10;}},
   {id:'freeze_save',ic:'🧊',name:'Saved by the Freeze',desc:'Use your first streak freeze',check:function(){return (S.fl||0)>=1;}},
   {id:'fq_first',ic:'🌴',name:'Florida Explorer',desc:'Complete your first Florida Quest',check:function(){return Object.values(S.fq||{}).filter(Boolean).length>=1;}},
@@ -2373,7 +2391,7 @@ h+=`<div class="subpg ${morePage==='gs'?'act':''}" id="m-gs"><button class="back
 
 <div class="card"><h3>🏠 The Today Tab</h3><p style="font-size:13px;">Your daily home base. Here\\'s what you\\'ll see:<br><br>- <b>Quick Tools strip</b> — Scrollable shortcuts to Schedule, Honduran Guide, Songs, Resources, Cognates, and Library<br>- <b>Buenos días hero</b> — Personalized greeting with a daily motivational quote in Spanish (with pronunciation)<br>- <b>📚 This Week card</b> — Shows your current curriculum week, what to focus on, and preview of this week\\'s vocabulary. Has four buttons: <b>▶ Start Week N Lesson</b> (opens the Duolingo-style lesson player directly), <b>🛤️ Open Path</b> (jumps to the skill tree), <b>📖 Curriculum</b> (opens the detailed weekly steps), and <b>👶🏾 Toddler</b> (opens Toddler Mode with this week\\'s words as a game)<br>- <b>🛤️ Your Path card</b> — Daily XP progress, total XP, and current streak. Big <b>Open Path</b> button + a red <b>💪 Practice (N)</b> button when you have weak words to strengthen<br>- <b>🆘 Help Me</b> — Emergency parenting phrases for toddler meltdowns<br>- <b>Progress ring + 5 Stats</b> — Streak · Total XP · Words · Quiz ✓ · Weeks completed<br>- <b>📋 Today\\'s Tasks</b> — 8 daily activities (collapsed by default). Each task has step-by-step instructions and gold phrase chips with 🔊 audio<br>- <b>🌴 Florida Quest</b> — 10 real-world adventures around Fort Myers (also collapsed)</p></div>
 
-<div class="card hl-gold"><h3>🛤️ The Path Tab (NEW)</h3><p style="font-size:13px;"><b>The fastest way to learn — Duolingo-style.</b> All 48 weeks shown as a winding skill tree with circular nodes. Tap an unlocked node to start a quick lesson.<br><br><b>Node colors:</b><br>- <span style="color:var(--terra);font-weight:700;">🔴 Red pulsing</span> — Your current week (start here)<br>- <span style="color:var(--gold);font-weight:700;">🟡 Gold pulsing</span> — Available, not yet started<br>- <span style="color:var(--teal);font-weight:700;">🟢 Teal with ⭐</span> — Completed (gold crown badge shows mastery 1–5)<br>- <span style="color:#9CA3AF;font-weight:700;">⬜ Gray with 🔒</span> — Locked until you finish earlier weeks<br><br><b>The HUD at top shows:</b> 🔥 streak · ⭐ total XP · ❤️ hearts (always 5 at lesson start) · 🧊 streak freezes (when you have any). Below that: today\\'s XP goal (30 XP daily target).<br><br><b>💪 Strengthen card</b> appears when you\\'ve missed words. Tap to do a practice lesson built only from words you got wrong recently. Each correct answer removes that word from the weak-words list.<br><br><b>The lesson player itself</b> runs 5–7 mixed exercises pulled from that week\\'s vocab:<br>- <b>Picture pick</b> — Emoji shown, tap the right Spanish word<br>- <b>Tap what you hear</b> — Audio plays, tap which Spanish word it was (tap 🔊 to replay)<br>- <b>Translate</b> — Spanish word shown, tap the English meaning<br>- <b>Build the sentence</b> — Tap word tiles in order to construct a Spanish sentence from English<br>- <b>Match pairs</b> — 4 Spanish/English pairs to tap together<br><br><b>Hearts:</b> Wrong answer = lose a heart. Out of 5 hearts = lesson resets (no progress lost — just retry). <b>XP rewards:</b> 10 base + 2 per correct + 5 perfect bonus. <b>Crowns:</b> Complete the same week multiple times to bump its crown level (1 → 5).</p></div>
+<div class="card hl-gold"><h3>🛤️ The Path Tab (NEW)</h3><p style="font-size:13px;"><b>The fastest way to learn — Duolingo-style.</b> All 48 weeks shown as a winding skill tree with circular nodes. Tap an unlocked node to start a quick lesson.<br><br><b>Node colors:</b><br>- <span style="color:var(--terra);font-weight:700;">🔴 Red pulsing</span> — Your current week (start here)<br>- <span style="color:var(--gold);font-weight:700;">🟡 Gold pulsing</span> — Available, not yet started<br>- <span style="color:var(--teal);font-weight:700;">🟢 Teal with ⭐</span> — Completed (gold crown badge shows mastery 1–5)<br>- <span style="color:#9CA3AF;font-weight:700;">⬜ Gray with 🔒</span> — Locked until you finish earlier weeks<br><br><b>The HUD at top shows:</b> 🔥 streak · ⭐ total XP · ❤️ hearts (always 5 at lesson start) · 🧊 streak freezes (when you have any). Below that: today\\'s XP goal (30 XP daily target).<br><br><b>💪 Strengthen card</b> appears when you\\'ve missed words. Tap to do a practice lesson built only from words you got wrong recently. Each correct answer removes that word from the weak-words list.<br><br><b>The lesson player itself</b> runs 6–8 mixed exercises pulled from that week\\'s vocab:<br>- <b>Picture pick</b> — Emoji shown, tap the right Spanish word<br>- <b>Tap what you hear</b> — Audio plays, tap which Spanish word it was (tap 🔊 to replay)<br>- <b>Translate</b> — Spanish word shown, tap the English meaning<br>- <b>Build the sentence</b> — Tap word tiles in order to construct a Spanish sentence from English<br>- <b>Match pairs</b> — 4 Spanish/English pairs to tap together<br><br><b>Hearts:</b> Wrong answer = lose a heart. Out of 5 hearts = lesson resets (no progress lost — just retry). <b>XP rewards:</b> 10 base + 2 per correct + 5 perfect bonus. <b>Crowns:</b> Complete the same week multiple times to bump its crown level (1 → 5).</p></div>
 
 <div class="card"><h3>📖 The Learn Tab</h3><p style="font-size:13px;">Your 48-week curriculum organized into 4 phases — same content as the Path, but with detailed text-based instructions for parents:<br><br>- <b>Phase 1</b> (Months 1-3) — Foundation: first words, colors, family, commands<br>- <b>Phase 2</b> (Months 4-6) — Neighborhood: food, weather, animals, routines<br>- <b>Phase 3</b> (Months 7-9) — Conversations: past tense, feelings, shopping<br>- <b>Phase 4</b> (Months 10-12) — Fluency: extended conversations, culture, subjunctive<br><br>Open Phase 1 → Week 1 and follow each step. Every week has detailed instructions, speakable phrase chips, and checkboxes. <b>The Path tab is the gamified way to study; the Learn tab is the deep-dive reading version.</b> They share the same week numbering — finishing a Path lesson also marks the corresponding Learn week as complete.</p></div>
 
@@ -2413,7 +2431,7 @@ h+=`<div class="subpg ${morePage==='ach'?'act':''}" id="m-ach"><button class="ba
 <p style="font-size:12px;color:rgba(255,255,255,.7);margin-top:6px;">Keep learning to unlock more badges</p>
 </div>
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px;">
-${ACH.map(function(a){const u=S.ac&&S.ac[a.id];return '<div class="card" style="margin-bottom:0;padding:14px 12px;text-align:center;'+(u?'background:linear-gradient(135deg,#FFF8E1,#FFE082);border:2px solid var(--gold);':'background:var(--grl);border:1px solid var(--bd);opacity:.55;')+'"><div style="font-size:34px;line-height:1;margin-bottom:6px;'+(u?'':'filter:grayscale(100%);')+'">'+a.ic+'</div><div style="font-family:\'Baloo 2\',cursive;font-size:13px;font-weight:800;color:var(--ink);">'+a.name+'</div><div style="font-size:11px;color:var(--gr);margin-top:3px;line-height:1.3;">'+a.desc+'</div>'+(u?'<div style="font-size:10px;color:var(--teal);font-weight:700;margin-top:6px;">✓ Unlocked</div>':'<div style="font-size:10px;color:var(--gr2);font-weight:700;margin-top:6px;">🔒 Locked</div>')+'</div>';}).join('')}
+${ACH.map(function(a){const u=S.ac&&S.ac[a.id];const label=a.name+': '+a.desc+' — '+(u?'unlocked':'locked');return '<div class="card" aria-label="'+label.replace(/"/g,'&quot;')+'" style="margin-bottom:0;padding:14px 12px;text-align:center;'+(u?'background:linear-gradient(135deg,#FFF8E1,#FFE082);border:2px solid var(--gold);':'background:var(--grl);border:1px solid var(--bd);opacity:.7;')+'"><div style="font-size:34px;line-height:1;margin-bottom:6px;'+(u?'':'filter:grayscale(100%);')+'">'+a.ic+'</div><div style="font-family:\'Baloo 2\',cursive;font-size:13px;font-weight:800;color:var(--ink);">'+a.name+'</div><div style="font-size:11px;'+(u?'color:var(--gr)':'color:var(--ink)')+';margin-top:3px;line-height:1.3;">'+a.desc+'</div>'+(u?'<div style="font-size:10px;color:var(--teal);font-weight:700;margin-top:6px;">✓ Unlocked</div>':'<div style="font-size:10px;color:var(--gr2);font-weight:700;margin-top:6px;">🔒 Locked</div>')+'</div>';}).join('')}
 </div>
 </div>`;
 
@@ -2489,7 +2507,7 @@ const WALK_STEPS=[
   {emoji:'💪',title:'Strengthen weak words',body:'When you get a word wrong in a lesson, it goes into a <b>weak words</b> pile. The red <b>💪 Strengthen</b> card on the Path tab (and a Practice button on Today) opens a special lesson built only from words you missed — get them right and they leave the pile.',btn:'Next →'},
   {emoji:'📖',title:'Your 48-week curriculum',body:'Tap <b>Learn</b> at the bottom. Open Phase 1 → Week 1 for the detailed text version of each week — what to do, which videos to watch, which phrases to say. The Path and Learn tabs share progress; complete a Path lesson and the Learn week marks done too.',btn:'Next →',action:function(){document.querySelector('[data-p="learn"]').click();}},
   {emoji:'🃏',title:'Flashcards & Quiz',body:'Cards has 12 vocabulary decks — tap to flip, tap 🔊 to hear. Quiz tests you with 10 random questions. Both track your progress.',btn:'Next →',action:function(){document.querySelector('[data-p="cards"]').click();}},
-  {emoji:'👶🏾',title:'Toddler Mode',body:'See the gold <b>TODDLER</b> button? Tap it to let your child play! <b>104 vocabulary items</b> across 14 tabs — Animals, Sports, Vehicles, Shapes, Colors, and more. Plus games: 🪷 Bubble Pop, 🧠 Memory Match, 🎨 Finger Paint, and a 📚 <b>Lesson tab</b> that teaches this week\'s curriculum words. Exit requires a 3-second hold.',btn:'Next →',action:function(){document.querySelector('[data-p="home"]').click();}},
+  {emoji:'👶🏾',title:'Toddler Mode',body:'See the gold <b>TODDLER</b> button? Tap it to let your child play! <b>104 vocabulary items</b> across 14 tabs — Animals, Sports, Vehicles, Shapes, Colors, and more. Plus games: 🫧 Bubbles, 🧠 Memory Match, 🎨 Finger Paint, and a 📚 <b>Lesson tab</b> that teaches this week\'s curriculum words. Exit requires a 3-second hold.',btn:'Next →',action:function(){document.querySelector('[data-p="home"]').click();}},
   {emoji:'📚',title:'This Week\'s Focus',body:'The teal <b>📚 This Week</b> card has four buttons: <b>▶ Start Week N Lesson</b> (gold — opens the Path lesson player directly), <b>🛤️ Open Path</b>, <b>📖 Curriculum</b>, and <b>👶🏾 Toddler</b>. Right below it the dark <b>🛤️ Your Path</b> card shows daily XP progress, streak, total XP, and a Practice button when you have weak words.',btn:'Next →'},
   {emoji:'🧰',title:'Quick Tools',body:'This scrollable strip has shortcuts to the Schedule, Honduran Guide, Songs, Library, Resources, and more. You don\'t have to dig for anything — it\'s all right here.',btn:'Next →'},
   {emoji:'🔊',title:'Tap 🔊 to hear any word',body:'Everywhere you see a gold 🔊 button, tap it to hear the Spanish word spoken out loud. The <span style="color:#D4A017;font-weight:700;">gold boxes</span> show phonetic pronunciation (like <span style="color:#C75B39;font-weight:700;">OH-lah</span>) so you know exactly how to say it.',btn:'Next →'},
