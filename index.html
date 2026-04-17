@@ -1475,6 +1475,16 @@ function startMeLlamo(){
   var mamaEN='My mom\'s name is '+pn;
   var h='<div style="font-size:80px;margin:16px 0;">👋🏾</div>';
   h+='<div style="font-family:\'Baloo 2\',cursive;font-size:28px;font-weight:800;color:var(--ink);margin-bottom:4px;">¡Hola!</div>';
+  // Sir Kendrick intro video — he says his own name in English then Spanish
+  h+='<div style="background:linear-gradient(135deg,var(--ink),var(--ink2));border:4px solid var(--gold);border-radius:20px;padding:16px;margin:16px 0;box-shadow:var(--shl);">';
+  h+='<div style="font-family:\'Baloo 2\',cursive;font-size:20px;font-weight:800;color:var(--gold);margin-bottom:6px;">🎬 Watch Sir Kendrick!</div>';
+  h+='<div style="font-size:13px;color:rgba(255,255,255,.8);margin-bottom:12px;">He says his name in English, then in Spanish!</div>';
+  h+='<video id="sirkendrick-video" controls playsinline preload="metadata" style="width:100%;max-width:420px;border-radius:14px;background:#000;display:block;margin:0 auto;">';
+  h+='<source src="sir-kendrick-intro.mp4" type="video/mp4">';
+  h+='Your browser doesn\'t support video playback.';
+  h+='</video>';
+  h+='<a href="sir-kendrick-intro.mp4" target="_blank" rel="noopener" style="display:block;text-align:center;margin-top:10px;font-size:12px;font-weight:700;color:var(--gold);text-decoration:underline;">Video not loading? Tap here ↗</a>';
+  h+='</div>';
   h+='<div style="background:var(--goldl);border:3px solid var(--gold);border-radius:16px;padding:20px;margin:16px 0;">';
   h+='<div style="font-family:\'Baloo 2\',cursive;font-size:24px;font-weight:800;color:var(--ink);">'+meES+'</div>';
   h+='<div style="font-size:13px;color:var(--gr);margin-top:4px;">'+meEN+'</div>';
