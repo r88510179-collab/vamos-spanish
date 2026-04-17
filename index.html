@@ -419,6 +419,14 @@ Fill in your info below and tap ¡Vamos! <span style="font-size:11px;opacity:.7;
 <button class="ob-opt" data-age="4" style="flex:1;padding:12px;border-radius:12px;border:2px solid rgba(255,255,255,.2);background:rgba(255,255,255,.05);color:var(--w);font-family:'Quicksand';font-size:15px;font-weight:700;">4 yr</button>
 </div>
 
+<label style="font-size:12px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.5px;">Your role</label>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:6px 0 16px;" id="ob-roles">
+<button class="ob-role" data-role="mami" style="padding:12px 8px;border-radius:12px;border:2px solid var(--gold);background:rgba(212,160,23,.15);color:var(--gold);font-family:'Quicksand';font-size:14px;font-weight:700;">👩🏾 Mami</button>
+<button class="ob-role" data-role="papi" style="padding:12px 8px;border-radius:12px;border:2px solid rgba(255,255,255,.2);background:rgba(255,255,255,.05);color:var(--w);font-family:'Quicksand';font-size:14px;font-weight:700;">👨🏾 Papi</button>
+<button class="ob-role" data-role="abuelita" style="padding:12px 8px;border-radius:12px;border:2px solid rgba(255,255,255,.2);background:rgba(255,255,255,.05);color:var(--w);font-family:'Quicksand';font-size:14px;font-weight:700;">👵🏾 Abuelita</button>
+<button class="ob-role" data-role="abuelito" style="padding:12px 8px;border-radius:12px;border:2px solid rgba(255,255,255,.2);background:rgba(255,255,255,.05);color:var(--w);font-family:'Quicksand';font-size:14px;font-weight:700;">👴🏾 Abuelito</button>
+<button class="ob-role" data-role="otro" style="grid-column:span 2;padding:12px 8px;border-radius:12px;border:2px solid rgba(255,255,255,.2);background:rgba(255,255,255,.05);color:var(--w);font-family:'Quicksand';font-size:14px;font-weight:700;">🤗 Otro (Other)</button>
+</div>
 <label style="font-size:12px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.5px;">Your Spanish level</label>
 <div style="display:flex;flex-direction:column;gap:8px;margin:6px 0 24px;" id="ob-levels">
 <button class="ob-lvl" data-lvl="0" style="padding:14px;border-radius:12px;border:2px solid var(--gold);background:rgba(212,160,23,.15);color:var(--gold);font-family:'Quicksand';font-size:14px;font-weight:700;text-align:left;">🌱 <b>Zero</b> — I don't know any Spanish</button>
@@ -636,6 +644,13 @@ function resetOnboardForm(){
     b.style.color=on?'var(--gold)':'var(--w)';
     b.classList.toggle('ob-sel',on);
   });
+  document.querySelectorAll('#ob-roles .ob-role').forEach((b,i)=>{
+    const on=i===0;
+    b.style.borderColor=on?'var(--gold)':'rgba(255,255,255,.2)';
+    b.style.background=on?'rgba(212,160,23,.15)':'rgba(255,255,255,.05)';
+    b.style.color=on?'var(--gold)':'var(--w)';
+    b.classList.toggle('ob-sel',on);
+  });
   document.querySelectorAll('#ob-levels .ob-lvl').forEach((b,i)=>{
     const on=i===0;
     b.style.borderColor=on?'var(--gold)':'rgba(255,255,255,.2)';
@@ -650,7 +665,9 @@ function saveOnboard(){
   const child=document.getElementById('ob-child').value.trim()||'Baby';
   const ageEl=document.querySelector('#ob-ages .ob-sel');
   const lvlEl=document.querySelector('#ob-levels .ob-sel');
-  profile={name,child,age:ageEl?+ageEl.dataset.age:2,level:lvlEl?+lvlEl.dataset.lvl:0};
+  const roleEl=document.querySelector('#ob-roles .ob-sel');
+  const role=roleEl?roleEl.dataset.role:'mami';
+  profile={name,child,age:ageEl?+ageEl.dataset.age:2,level:lvlEl?+lvlEl.dataset.lvl:0,role:role};
   localStorage.setItem('v_profile',JSON.stringify(profile));
   document.getElementById('onboard').style.display='none';
   rH();rL();
@@ -658,6 +675,10 @@ function saveOnboard(){
 }
 document.querySelectorAll('#ob-ages .ob-opt').forEach(b=>b.addEventListener('click',function(){
   document.querySelectorAll('#ob-ages .ob-opt').forEach(x=>{x.style.borderColor='rgba(255,255,255,.2)';x.style.background='rgba(255,255,255,.05)';x.style.color='var(--w)';x.classList.remove('ob-sel');});
+  this.style.borderColor='var(--gold)';this.style.background='rgba(212,160,23,.15)';this.style.color='var(--gold)';this.classList.add('ob-sel');
+}));
+document.querySelectorAll('#ob-roles .ob-role').forEach(b=>b.addEventListener('click',function(){
+  document.querySelectorAll('#ob-roles .ob-role').forEach(x=>{x.style.borderColor='rgba(255,255,255,.2)';x.style.background='rgba(255,255,255,.05)';x.style.color='var(--w)';x.classList.remove('ob-sel');});
   this.style.borderColor='var(--gold)';this.style.background='rgba(212,160,23,.15)';this.style.color='var(--gold)';this.classList.add('ob-sel');
 }));
 document.querySelectorAll('#ob-levels .ob-lvl').forEach(b=>b.addEventListener('click',function(){
@@ -1468,11 +1489,18 @@ var meTapCount=0;
 function startMeLlamo(){
   meTapCount=0;
   var cn=profile?profile.child:'Bebé';
-  var pn=profile?profile.name:'Mamá';
+  var role=profile&&profile.role?profile.role:'mami';
+  // Toddler-warm Spanish labels keyed to role
+  var ROLE_ES={mami:'Mami',papi:'Papi',abuelita:'Abuelita',abuelito:'Abuelito',otro:'Familia'};
+  var ROLE_EN={mami:'Mommy',papi:'Daddy',abuelita:'Grandma',abuelito:'Grandpa',otro:'Family'};
+  var ROLE_EMOJI={mami:'👩🏾',papi:'👨🏾',abuelita:'👵🏾',abuelito:'👴🏾',otro:'🤗'};
+  var roleES=ROLE_ES[role]||'Mami';
+  var roleEN=ROLE_EN[role]||'Mommy';
+  var roleEM=ROLE_EMOJI[role]||'👩🏾';
   var meES='Me llamo '+cn;
   var meEN='My name is '+cn;
-  var mamaES='Mi mamá se llama '+pn;
-  var mamaEN='My mom\'s name is '+pn;
+  var holaRoleES='¡Hola '+roleES+'!';
+  var holaRoleEN='Hi '+roleEN+'!';
   var h='<div style="font-size:80px;margin:16px 0;">👋🏾</div>';
   h+='<div style="font-family:\'Baloo 2\',cursive;font-size:28px;font-weight:800;color:var(--ink);margin-bottom:4px;">¡Hola!</div>';
   // Sir Kendrick intro video — he says his own name in English then Spanish
@@ -1485,15 +1513,18 @@ function startMeLlamo(){
   h+='</video>';
   h+='<a href="sir-kendrick-intro.mp4" target="_blank" rel="noopener" style="display:block;text-align:center;margin-top:10px;font-size:12px;font-weight:700;color:var(--gold);text-decoration:underline;">Video not loading? Tap here ↗</a>';
   h+='</div>';
+  // Child's self-intro card
   h+='<div style="background:var(--goldl);border:3px solid var(--gold);border-radius:16px;padding:20px;margin:16px 0;">';
   h+='<div style="font-family:\'Baloo 2\',cursive;font-size:24px;font-weight:800;color:var(--ink);">'+meES+'</div>';
   h+='<div style="font-size:13px;color:var(--gr);margin-top:4px;">'+meEN+'</div>';
   h+='<button class="spk" data-speak="'+meES.replace(/"/g,'&quot;')+'" style="margin-top:12px;padding:10px 24px;font-size:16px;background:var(--gold);border-color:var(--gold);color:var(--ink);">🔊 Hear it!</button>';
   h+='</div>';
+  // Role greeting card ("¡Hola papi!")
   h+='<div style="background:var(--teall);border:3px solid var(--teal);border-radius:16px;padding:20px;margin:16px 0;">';
-  h+='<div style="font-family:\'Baloo 2\',cursive;font-size:22px;font-weight:800;color:var(--ink);">'+mamaES+'</div>';
-  h+='<div style="font-size:13px;color:var(--gr);margin-top:4px;">'+mamaEN+'</div>';
-  h+='<button class="spk" data-speak="'+mamaES.replace(/"/g,'&quot;')+'" style="margin-top:12px;padding:10px 24px;font-size:16px;background:var(--teal);border-color:var(--teal);color:var(--w);">🔊 Hear it!</button>';
+  h+='<div style="font-size:48px;line-height:1;margin-bottom:6px;">'+roleEM+'</div>';
+  h+='<div style="font-family:\'Baloo 2\',cursive;font-size:26px;font-weight:800;color:var(--ink);">'+holaRoleES+'</div>';
+  h+='<div style="font-size:13px;color:var(--gr);margin-top:4px;">'+holaRoleEN+'</div>';
+  h+='<button class="spk" data-speak="'+holaRoleES.replace(/"/g,'&quot;')+'" style="margin-top:12px;padding:10px 24px;font-size:16px;background:var(--teal);border-color:var(--teal);color:var(--w);">🔊 Hear it!</button>';
   h+='</div>';
   h+='<button onclick="meTap()" style="width:100%;padding:18px;border-radius:50px;background:var(--ink);color:var(--gold);font-family:\'Baloo 2\',cursive;font-size:20px;font-weight:800;border:4px solid var(--gold);margin-top:12px;box-shadow:0 6px 0 #0d0d2e;">👋🏾 Say it! Tap me!</button>';
   h+='<div id="me-cheer" style="font-family:\'Baloo 2\';font-size:22px;margin-top:12px;min-height:32px;"></div>';
@@ -2722,6 +2753,7 @@ h+=`<div class="subpg ${morePage==='st'?'act':''}" id="m-st"><button class="back
 <div style="background:var(--grl);padding:14px;border-radius:var(--rs);margin-bottom:8px;"><b>Name:</b> ${profile?profile.name:'Not set'}</div>
 <div style="background:var(--grl);padding:14px;border-radius:var(--rs);margin-bottom:8px;"><b>Child:</b> ${profile?profile.child:'Not set'}</div>
 <div style="background:var(--grl);padding:14px;border-radius:var(--rs);margin-bottom:8px;"><b>Child's age:</b> ${profile?profile.age+' years':'Not set'}</div>
+<div style="background:var(--grl);padding:14px;border-radius:var(--rs);margin-bottom:8px;"><b>Your role:</b> ${profile?({mami:'👩🏾 Mami',papi:'👨🏾 Papi',abuelita:'👵🏾 Abuelita',abuelito:'👴🏾 Abuelito',otro:'🤗 Otro'}[profile.role||'mami']):'Not set'}</div>
 <div style="background:var(--grl);padding:14px;border-radius:var(--rs);margin-bottom:8px;"><b>Spanish level:</b> ${profile?['🌱 Zero','🌿 A little','🌳 Some'][profile.level]:'Not set'}</div>
 <button onclick="editProfile()" style="width:100%;padding:12px;border-radius:50px;background:var(--terra);color:var(--w);font-weight:700;font-size:14px;margin-top:12px;">Edit Profile</button>
 </div>
