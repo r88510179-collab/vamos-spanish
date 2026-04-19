@@ -1297,13 +1297,30 @@ function startBubbles(){
   setHuntTarget();
 }
 function setHuntTarget(){
+  var hunt=document.getElementById('bubble-hunt');
   if(bubbleScore>=5&&Math.random()>0.3){
     var t=sh([...TOYS])[0];
     var lblKey=appLang==='en'?'en':'es';
     bubbleHunt=t[lblKey];
-    document.getElementById('bubble-hunt').innerHTML='🎯 Find: <b>'+bubbleHunt+'</b>';
-    speak('Busca '+bubbleHunt,appLang);
-  }else{bubbleHunt=null;document.getElementById('bubble-hunt').textContent='';}
+    hunt.innerHTML='🎯 Find: <b>'+bubbleHunt+'</b>';
+    // Pulse the hunt banner briefly so the visual change is obvious
+    hunt.style.transition='transform .3s ease';
+    hunt.style.transform='scale(1.15)';
+    setTimeout(function(){if(hunt)hunt.style.transform='scale(1)';},300);
+    // Delay the announcement so it doesn't collide with the just-popped
+    // bubble's word. speak() calls speechSynthesis.cancel() first, so
+    // back-to-back speak() calls step on each other.
+    var targetWord=bubbleHunt;
+    setTimeout(function(){
+      // Guard against race: only announce if this is still the active target
+      if(bubbleHunt===targetWord&&tCat==='bubbles'){
+        speak('Busca '+targetWord,appLang);
+      }
+    },450);
+  }else{
+    bubbleHunt=null;
+    hunt.textContent='';
+  }
 }
 function spawnBubble(){
   var area=document.getElementById('bubble-area');
