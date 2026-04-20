@@ -46,6 +46,9 @@ button,.cb,.wkc,.spk,.splg{min-width:44px;min-height:44px;}
 /* TODDLER MODE FLOAT */
 .tm-float{position:fixed;top:calc(env(safe-area-inset-top,12px)+12px);right:14px;background:var(--gold);color:var(--ink);padding:8px 14px;border-radius:50px;font-size:12px;font-weight:800;box-shadow:var(--shl);z-index:90;display:flex;align-items:center;gap:5px;animation:pulse 2.5s ease infinite;}
 @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+@media (max-width:767px) and (orientation:portrait){
+  .tm-float{top:auto;right:14px;bottom:calc(env(safe-area-inset-bottom,0px) + 100px);padding:12px 18px;font-size:13px;border:2px solid var(--ink);box-shadow:0 6px 16px rgba(0,0,0,.25);}
+}
 
 /* BOTTOM NAV */
 .bnav{position:fixed;bottom:0;left:0;right:0;background:var(--ink);border-top:3px solid var(--gold);display:flex;justify-content:space-around;padding:6px 0 max(6px,env(safe-area-inset-bottom));z-index:100;}
@@ -337,7 +340,14 @@ button,.cb,.wkc,.spk,.splg{min-width:44px;min-height:44px;}
 .walk-skip{padding:12px 20px;border-radius:50px;background:var(--grl);color:var(--gr);font-size:13px;font-weight:600;}
 .walk-dots{display:flex;gap:6px;justify-content:center;margin-top:12px;}
 .walk-dot{width:8px;height:8px;border-radius:50%;background:var(--bd);}
-.walk-dot.act{background:var(--teal);} 
+.walk-dot.act{background:var(--teal);}
+.walk-shutter{position:fixed;background:rgba(0,0,0,.72);z-index:7999;pointer-events:auto;transition:all .25s ease;}
+.walk-ring{position:fixed;z-index:8001;pointer-events:none;border:4px solid var(--gold);border-radius:16px;box-shadow:0 0 0 2px rgba(255,255,255,.3),0 0 24px 8px rgba(212,160,23,.6);animation:walkPulse 1.4s ease-in-out infinite;transition:all .3s ease;}
+@keyframes walkPulse{0%,100%{box-shadow:0 0 0 2px rgba(255,255,255,.3),0 0 24px 8px rgba(212,160,23,.6);}50%{box-shadow:0 0 0 4px rgba(255,255,255,.45),0 0 36px 14px rgba(212,160,23,.85);}}
+.walk-target-tap{position:fixed;z-index:8000;cursor:pointer;background:transparent;}
+.walk-overlay.with-target{background:transparent;pointer-events:none;}
+.walk-overlay.with-target .walk-card{pointer-events:auto;}
+.walk-overlay.top-pos{align-items:flex-start;padding-top:calc(env(safe-area-inset-top,20px) + 20px);}
 </style>
 </head>
 <body>
@@ -2796,37 +2806,111 @@ function goMore(id){
 
 const WALK_STEPS=[
   {emoji:'👋🏾',title:'Welcome to ¡Vamos!',body:'<div style="font-size:11px;color:#9CA3AF;margin-bottom:8px;">VAH-mohs · Let\'s go!</div>This is your 12-month Spanish learning app for you and your toddler. Let me show you around — it takes 30 seconds.',btn:'Show me →'},
-  {emoji:'📋',title:'These are your daily tasks',body:'Every day you get 8 small activities. Tap any task to see instructions and Spanish phrases you can hear spoken. Check them off as you go.',btn:'Next →',action:function(){document.querySelector('[data-p="home"]').click();}},
-  {emoji:'🛤️',title:'The Path — your fastest way to learn',body:'Tap <b>Path</b> at the bottom. All 48 weeks shown as a Duolingo-style skill tree. Tap an unlocked node and run a quick lesson: tap-the-pairs, tap-what-you-hear, build-the-sentence, and translate exercises. <b>Hearts, XP, streak, and crowns</b> all track your progress. The red pulsing node is where you are now.',btn:'Next →',action:function(){document.querySelector('[data-p="path"]').click();}},
+  {emoji:'📋',title:'These are your daily tasks',body:'Every day you get 8 small activities. Tap any task to see instructions and Spanish phrases you can hear spoken. Check them off as you go.',btn:'Next →',action:function(){document.querySelector('[data-p="home"]').click();if(!homeSec.tasks){homeSec.tasks=true;rH();}},target:'#p-home [onclick*="tasks"]'},
+  {emoji:'🛤️',title:'The Path — your fastest way to learn',body:'Tap <b>Path</b> at the bottom. All 48 weeks shown as a Duolingo-style skill tree. Tap an unlocked node and run a quick lesson: tap-the-pairs, tap-what-you-hear, build-the-sentence, and translate exercises. <b>Hearts, XP, streak, and crowns</b> all track your progress. The red pulsing node is where you are now.',btn:'Next →',action:function(){document.querySelector('[data-p="path"]').click();},target:'.nb[data-p="path"]'},
   {emoji:'💪',title:'Strengthen weak words',body:'When you get a word wrong in a lesson, it goes into a <b>weak words</b> pile. The red <b>💪 Strengthen</b> card on the Path tab (and a Practice button on Today) opens a special lesson built only from words you missed — get them right and they leave the pile.',btn:'Next →'},
-  {emoji:'📖',title:'Your 48-week curriculum',body:'Tap <b>Learn</b> at the bottom. Open Phase 1 → Week 1 for the detailed text version of each week — what to do, which videos to watch, which phrases to say. The Path and Learn tabs share progress; complete a Path lesson and the Learn week marks done too.',btn:'Next →',action:function(){document.querySelector('[data-p="learn"]').click();}},
-  {emoji:'🃏',title:'Flashcards & Quiz',body:'Cards has 12 vocabulary decks — tap to flip, tap 🔊 to hear. Quiz tests you with 10 random questions. Both track your progress.',btn:'Next →',action:function(){document.querySelector('[data-p="cards"]').click();}},
-  {emoji:'👶🏾',title:'Toddler Mode',body:'See the gold <b>TODDLER</b> button? Tap it to let your child play! <b>114 vocabulary items</b> across 17 tabs — Animals, Food, Sports, Vehicles, Colors, Body, Shapes, Clothes, Nature, ⛅ Weather, and more. Plus games: 🫧 Bubbles, 🧠 Memory Match, 🎨 Finger Paint, 🧺 Sorting, and a 📚 <b>Lesson tab</b>. The 👋🏾 Me tab teaches your child their own name in Spanish. Exit requires a 3-second hold.',btn:'Next →',action:function(){document.querySelector('[data-p="home"]').click();}},
-  {emoji:'📚',title:'This Week\'s Focus',body:'The teal <b>📚 This Week</b> card has four buttons: <b>▶ Start Week N Lesson</b> (gold — opens the Path lesson player directly), <b>🛤️ Open Path</b>, <b>📖 Curriculum</b>, and <b>👶🏾 Toddler</b>. Right below it the dark <b>🛤️ Your Path</b> card shows daily XP progress, streak, total XP, and a Practice button when you have weak words.',btn:'Next →'},
-  {emoji:'🧰',title:'Quick Tools',body:'This scrollable strip has shortcuts to the Schedule, Honduran Guide, Songs, Library, Resources, and more. You don\'t have to dig for anything — it\'s all right here.',btn:'Next →'},
-  {emoji:'🔊',title:'Tap 🔊 to hear any word',body:'Everywhere you see a gold 🔊 button, tap it to hear the Spanish word spoken out loud. The <span style="color:#D4A017;font-weight:700;">gold boxes</span> show phonetic pronunciation (like <span style="color:#C75B39;font-weight:700;">OH-lah</span>) so you know exactly how to say it.',btn:'Next →'},
+  {emoji:'📖',title:'Your 48-week curriculum',body:'Tap <b>Learn</b> at the bottom. Open Phase 1 → Week 1 for the detailed text version of each week — what to do, which videos to watch, which phrases to say. The Path and Learn tabs share progress; complete a Path lesson and the Learn week marks done too.',btn:'Next →',action:function(){document.querySelector('[data-p="learn"]').click();},target:'.nb[data-p="learn"]'},
+  {emoji:'🃏',title:'Flashcards & Quiz',body:'Cards has 12 vocabulary decks — tap to flip, tap 🔊 to hear. Quiz tests you with 10 random questions. Both track your progress.',btn:'Next →',action:function(){document.querySelector('[data-p="cards"]').click();},target:'.nb[data-p="cards"]'},
+  {emoji:'👶🏾',title:'Toddler Mode',body:'See the gold <b>TODDLER</b> button? Tap it to let your child play! <b>114 vocabulary items</b> across 17 tabs — Animals, Food, Sports, Vehicles, Colors, Body, Shapes, Clothes, Nature, ⛅ Weather, and more. Plus games: 🫧 Bubbles, 🧠 Memory Match, 🎨 Finger Paint, 🧺 Sorting, and a 📚 <b>Lesson tab</b>. The 👋🏾 Me tab teaches your child their own name in Spanish. Exit requires a 3-second hold.',btn:'Next →',action:function(){document.querySelector('[data-p="home"]').click();},target:'.tm-float'},
+  {emoji:'📚',title:'This Week\'s Focus',body:'The teal <b>📚 This Week</b> card has four buttons: <b>▶ Start Week N Lesson</b> (gold — opens the Path lesson player directly), <b>🛤️ Open Path</b>, <b>📖 Curriculum</b>, and <b>👶🏾 Toddler</b>. Right below it the dark <b>🛤️ Your Path</b> card shows daily XP progress, streak, total XP, and a Practice button when you have weak words.',btn:'Next →',target:'#p-home [onclick*="startLesson"]'},
+  {emoji:'🧰',title:'Quick Tools',body:'This scrollable strip has shortcuts to the Schedule, Honduran Guide, Songs, Library, Resources, and more. You don\'t have to dig for anything — it\'s all right here.',btn:'Next →',target:'#p-home [onclick*="goMore"]'},
+  {emoji:'🔊',title:'Tap 🔊 to hear any word',body:'Everywhere you see a gold 🔊 button, tap it to hear the Spanish word spoken out loud. The <span style="color:#D4A017;font-weight:700;">gold boxes</span> show phonetic pronunciation (like <span style="color:#C75B39;font-weight:700;">OH-lah</span>) so you know exactly how to say it.',btn:'Next →',target:'#p-home .spk'},
   {emoji:'💾',title:'Your progress saves automatically',body:'Every task you check, every week you complete, every flashcard you flip — it all saves to your phone. You\'ll see a ✓ Saved notification each time. Just keep using the same phone.',btn:'Next →'},
   {emoji:'🚀',title:'You\'re ready!',body:'Start with the <b>Path</b> tab and try Week 1. Or check off tasks on Today. Or open Learn → Phase 1 → Week 1 for the deep dive. All paths lead to the same goal.<div style="margin-top:10px;padding:8px 12px;background:#FFF8E1;border-radius:10px;border:1px solid #FFE082;text-align:center;"><b style="font-size:18px;color:#1A1B4B;">¡Va pues!</b><br><span style="font-size:12px;color:#C75B39;font-weight:700;">vah PWEHS</span> <span style="font-size:11px;color:#6B7280;">(Alright! — Honduran)</span></div>',btn:'¡Vamos! Let\'s go! 🇭🇳'}
 ];
 
+function clearSpotlight(){
+  ['walkShT','walkShR','walkShB','walkShL','walkRing','walkTap'].forEach(function(id){
+    var el=document.getElementById(id);
+    if(el)el.remove();
+  });
+}
+
+function showSpotlight(selector){
+  clearSpotlight();
+  if(!selector)return null;
+  var el=document.querySelector(selector);
+  if(!el)return null;
+  try{el.scrollIntoView({block:'center',behavior:'smooth'});}catch(e){el.scrollIntoView();}
+  return new Promise(function(resolve){
+    setTimeout(function(){
+      var target=document.querySelector(selector);
+      if(!target){resolve(null);return;}
+      var r=target.getBoundingClientRect();
+      if(r.width===0||r.height===0){resolve(null);return;}
+      var pad=8;
+      var rx=Math.max(0,r.left-pad);
+      var ry=Math.max(0,r.top-pad);
+      var rw=r.width+pad*2;
+      var rh=r.height+pad*2;
+      var vw=window.innerWidth,vh=window.innerHeight;
+      function makeShutter(id,style){
+        var d=document.createElement('div');
+        d.id=id;d.className='walk-shutter';
+        Object.assign(d.style,style);
+        document.body.appendChild(d);
+        return d;
+      }
+      makeShutter('walkShT',{top:'0',left:'0',width:vw+'px',height:ry+'px'});
+      makeShutter('walkShB',{top:(ry+rh)+'px',left:'0',width:vw+'px',height:Math.max(0,vh-(ry+rh))+'px'});
+      makeShutter('walkShL',{top:ry+'px',left:'0',width:rx+'px',height:rh+'px'});
+      makeShutter('walkShR',{top:ry+'px',left:(rx+rw)+'px',width:Math.max(0,vw-(rx+rw))+'px',height:rh+'px'});
+      var ring=document.createElement('div');
+      ring.id='walkRing';ring.className='walk-ring';
+      var cs=getComputedStyle(target);
+      var br=cs.borderRadius||'16px';
+      Object.assign(ring.style,{top:ry+'px',left:rx+'px',width:rw+'px',height:rh+'px',borderRadius:br});
+      document.body.appendChild(ring);
+      var tap=document.createElement('div');
+      tap.id='walkTap';tap.className='walk-target-tap';
+      Object.assign(tap.style,{top:ry+'px',left:rx+'px',width:rw+'px',height:rh+'px',borderRadius:br});
+      tap.addEventListener('click',function(e){
+        e.stopPropagation();
+        try{target.click();}catch(err){}
+        setTimeout(function(){if(walkActive)nextWalk();},200);
+      });
+      document.body.appendChild(tap);
+      resolve({rect:r,bottomHalf:(ry+rh/2)>vh/2});
+    },420);
+  });
+}
+
 function showWalk(){
   if(!walkActive)return;
+  clearSpotlight();
   const step=WALK_STEPS[walkStep];
   if(!step){endWalk();return;}
   if(step.action)step.action();
   const dots=WALK_STEPS.map((_,i)=>`<div class="walk-dot ${i===walkStep?'act':''}"></div>`).join('');
   const isLast=walkStep===WALK_STEPS.length-1;
+  const isFirst=walkStep===0;
   let overlay=document.getElementById('walk-overlay');
   if(!overlay){overlay=document.createElement('div');overlay.id='walk-overlay';overlay.className='walk-overlay';document.body.appendChild(overlay);}
-  overlay.innerHTML=`<div class="walk-card"><div class="walk-emoji">${step.emoji}</div><h3>${step.title}</h3><p>${step.body}</p><div class="walk-btns">${!isLast?'<button class="walk-skip" onclick="endWalk()">Skip tour</button>':''}<button class="walk-next" onclick="${isLast?'endWalk()':'nextWalk()'}">${step.btn}</button></div><div class="walk-dots">${dots}</div></div>`;
+  const backBtn='<button class="walk-skip" onclick="prevWalk()" '+(isFirst?'disabled style="opacity:.35;cursor:not-allowed;"':'')+'>← Back</button>';
+  const skipBtn=!isLast?'<button class="walk-skip" onclick="endWalk()">Skip</button>':'';
+  const nextBtn='<button class="walk-next" onclick="'+(isLast?'endWalk()':'nextWalk()')+'">'+step.btn+'</button>';
+  overlay.innerHTML='<div class="walk-card"><div class="walk-emoji">'+step.emoji+'</div><h3>'+step.title+'</h3><p>'+step.body+'</p><div class="walk-btns">'+backBtn+skipBtn+nextBtn+'</div><div class="walk-dots">'+dots+'</div></div>';
   overlay.style.display='flex';
+  overlay.classList.remove('with-target','top-pos');
+  if(step.target){
+    showSpotlight(step.target).then(function(info){
+      if(!walkActive)return;
+      if(info){
+        overlay.classList.add('with-target');
+        if(info.bottomHalf)overlay.classList.add('top-pos');
+      }
+    });
+  }
 }
 
 function nextWalk(){walkStep++;showWalk();}
 
+function prevWalk(){if(walkStep>0){walkStep--;showWalk();}}
+
 function endWalk(){
   walkActive=false;
   L.s('walkDone',true);
+  clearSpotlight();
   const overlay=document.getElementById('walk-overlay');
   if(overlay)overlay.style.display='none';
   document.querySelector('[data-p="home"]').click();
