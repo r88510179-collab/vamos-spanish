@@ -315,6 +315,82 @@ button,.cb,.wkc,.spk,.splg{min-width:44px;min-height:44px;}
 .tt-tab.act{background:var(--ink);color:var(--gold);}
 .tm-exit{position:fixed;top:calc(env(safe-area-inset-top,12px)+12px);left:14px;font-size:16px;font-weight:800;background:var(--ink);color:var(--gold);padding:8px 16px;border-radius:50px;z-index:2001;}
 
+/* SOCCER SHOTS */
+.socc-wrap{display:flex;flex-direction:column;gap:14px;padding:12px 4px 40px;}
+.socc-field{position:relative;background:linear-gradient(180deg,#4fb15a 0%,#3a9a44 100%);border-radius:18px;border:3px solid #2c6e33;box-shadow:inset 0 0 0 6px rgba(255,255,255,.12),0 6px 18px rgba(0,0,0,.3);aspect-ratio:3/4;overflow:hidden;}
+.socc-field::before{content:"";position:absolute;inset:8px;border:3px dashed rgba(255,255,255,.35);border-radius:12px;pointer-events:none;}
+.socc-field::after{content:"";position:absolute;left:50%;top:50%;width:40%;aspect-ratio:1;border:3px solid rgba(255,255,255,.35);border-radius:50%;transform:translate(-50%,-50%);pointer-events:none;}
+.socc-cones{position:absolute;top:10%;left:0;right:0;display:flex;justify-content:space-evenly;padding:0 6%;}
+.socc-cone{width:42px;height:48px;position:relative;cursor:pointer;transition:transform .15s ease;filter:drop-shadow(0 3px 6px rgba(0,0,0,.4));}
+.socc-cone:active{transform:scale(.9);}
+.socc-cone svg{width:100%;height:100%;}
+.socc-cone.hit{animation:coneFall .5s ease forwards;}
+@keyframes coneFall{to{transform:rotate(70deg) translateY(20px);opacity:.5;}}
+.socc-runner{position:absolute;bottom:8%;left:50%;transform:translateX(-50%);font-size:56px;transition:all 1.2s cubic-bezier(.34,1.56,.64,1);filter:drop-shadow(0 4px 8px rgba(0,0,0,.35));}
+.socc-ball{position:absolute;font-size:36px;bottom:10%;left:50%;transform:translateX(-50%);cursor:pointer;transition:all .6s cubic-bezier(.34,1.56,.64,1);filter:drop-shadow(0 3px 6px rgba(0,0,0,.4));user-select:none;-webkit-user-select:none;}
+.socc-ball:active{transform:translateX(-50%) scale(.85);}
+.socc-ball.kick-small{bottom:55%;transform:translate(calc(-50% + var(--kx,0px)),0) scale(.7);}
+.socc-ball.kick-big{bottom:75%;transform:translate(calc(-50% + var(--kx,0px)),0) scale(.55);}
+.socc-ball.goal{bottom:82%;transform:translate(calc(-50% + var(--kx,0px)),0) scale(.5);animation:ballSpin .6s linear;}
+@keyframes ballSpin{from{rotate:0deg;}to{rotate:720deg;}}
+.socc-goal{position:absolute;top:4%;left:50%;transform:translateX(-50%);width:66%;height:18%;border:4px solid #fff;border-bottom:none;border-radius:6px 6px 0 0;background:repeating-linear-gradient(90deg,rgba(255,255,255,.25) 0 2px,transparent 2px 10px),repeating-linear-gradient(0deg,rgba(255,255,255,.25) 0 2px,transparent 2px 10px);box-sizing:border-box;}
+.socc-keeper{position:absolute;top:10%;left:50%;transform:translateX(-50%);font-size:44px;animation:keeperMove 2.4s ease-in-out infinite alternate;filter:drop-shadow(0 3px 5px rgba(0,0,0,.4));}
+@keyframes keeperMove{from{transform:translateX(calc(-50% - 70px));}to{transform:translateX(calc(-50% + 70px));}}
+.socc-keeper.paused{animation-play-state:paused;}
+.socc-prompt{background:var(--ink);color:var(--gold);padding:14px 16px;border-radius:14px;text-align:center;font-weight:900;font-size:20px;border:2px solid var(--gold);box-shadow:0 4px 12px rgba(0,0,0,.25);}
+.socc-prompt .en{font-size:22px;display:block;}
+.socc-prompt .es{font-size:16px;opacity:.9;margin-top:4px;display:block;color:#f7e4a0;}
+.socc-score{display:flex;justify-content:center;gap:10px;font-weight:800;}
+.socc-score .pill{background:var(--w);color:var(--ink);padding:6px 14px;border-radius:999px;border:2px solid var(--gold);}
+.socc-games{display:grid;grid-template-columns:1fr;gap:12px;}
+.socc-game-btn{background:linear-gradient(135deg,var(--gold),#c9941f);color:#1a1a1a;border:none;border-radius:16px;padding:20px 16px;font-size:18px;font-weight:900;cursor:pointer;box-shadow:0 6px 0 #8a6612,0 8px 16px rgba(0,0,0,.25);text-align:left;display:flex;align-items:center;gap:14px;}
+.socc-game-btn:active{transform:translateY(2px);box-shadow:0 4px 0 #8a6612,0 6px 12px rgba(0,0,0,.25);}
+.socc-game-btn .ico{font-size:36px;flex-shrink:0;}
+.socc-game-btn .txt{display:flex;flex-direction:column;line-height:1.15;}
+.socc-game-btn .txt small{font-size:13px;font-weight:600;opacity:.78;margin-top:3px;}
+.socc-back{background:var(--w);color:var(--ink);border:2px solid var(--gold);border-radius:12px;padding:10px 16px;font-weight:700;cursor:pointer;margin-bottom:10px;}
+.socc-body{position:relative;background:linear-gradient(180deg,#fff7e0,#ffe9a8);border-radius:18px;border:3px solid var(--gold);aspect-ratio:3/4;overflow:hidden;display:flex;justify-content:center;align-items:flex-end;padding-bottom:10px;}
+.socc-body svg{max-height:95%;width:auto;}
+.socc-hit{position:absolute;border-radius:50%;background:rgba(255,255,255,0);border:0 solid var(--gold);cursor:pointer;transition:all .25s ease;}
+.socc-hit.active{background:rgba(255,215,80,.35);border-width:4px;animation:soccPulse 1.2s ease-in-out infinite;}
+@keyframes soccPulse{0%,100%{transform:translateX(-50%) scale(1);}50%{transform:translateX(-50%) scale(1.08);}}
+.socc-hit.head{top:4%;left:50%;transform:translateX(-50%);width:28%;aspect-ratio:1;}
+.socc-hit.toes{bottom:2%;left:50%;transform:translateX(-50%);width:38%;aspect-ratio:2/1;border-radius:30px;}
+.socc-hit.ears{top:8%;left:50%;transform:translateX(-50%);width:42%;aspect-ratio:1.6/1;border-radius:40px;pointer-events:none;}
+.socc-hit.ears.active{pointer-events:auto;background:transparent;border:none;animation:none;}
+.socc-hit.ears.active::before,.socc-hit.ears.active::after{content:"";position:absolute;top:40%;width:22%;aspect-ratio:1;background:rgba(255,215,80,.35);border:4px solid var(--gold);border-radius:50%;animation:soccPulse 1.2s ease-in-out infinite;}
+.socc-hit.ears.active::before{left:2%;}
+.socc-hit.ears.active::after{right:2%;}
+.socc-clap-big{position:fixed;inset:0;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(0,0,0,.75);color:var(--gold);font-size:64px;font-weight:900;letter-spacing:2px;text-align:center;padding:20px;animation:clapIn .3s ease;}
+@keyframes clapIn{from{opacity:0;transform:scale(.7);}to{opacity:1;transform:scale(1);}}
+.socc-clap-big .hands{font-size:80px;margin-bottom:16px;animation:clapShake .4s ease infinite alternate;}
+@keyframes clapShake{from{transform:rotate(-15deg);}to{transform:rotate(15deg);}}
+.socc-clap-big .word{font-size:48px;line-height:1.1;}
+.socc-clap-big .wordes{font-size:30px;color:#f7e4a0;margin-top:8px;}
+.soccer-card{background:var(--ink);color:var(--w);border:2px solid var(--gold);border-radius:16px;padding:14px;margin-bottom:14px;box-shadow:var(--shl);}
+.soccer-card details{background:transparent;}
+.soccer-card summary{cursor:pointer;font-weight:900;font-size:17px;padding:4px 0;display:flex;align-items:center;gap:10px;color:var(--gold);list-style:none;}
+.soccer-card summary::-webkit-details-marker{display:none;}
+.soccer-card summary::after{content:"▸";margin-left:auto;transition:transform .2s ease;}
+.soccer-card details[open] summary::after{transform:rotate(90deg);}
+.soccer-card .soc-inner{padding:10px 0 4px;}
+.soc-vocab-strip{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 14px;}
+.soc-vocab-chip{background:rgba(255,255,255,.08);color:var(--w);padding:8px 12px;border-radius:999px;border:1px solid var(--gold);font-weight:700;cursor:pointer;font-size:14px;display:flex;align-items:center;gap:6px;}
+.soc-vocab-chip:active{transform:scale(.95);}
+.soc-vocab-chip .em{font-size:18px;}
+.soc-cmds{display:flex;flex-direction:column;gap:6px;margin:8px 0;}
+.soc-cmd-row{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center;padding:8px 10px;background:rgba(255,255,255,.08);border-radius:10px;font-size:14px;color:var(--w);}
+.soc-cmd-row .en{font-weight:700;text-align:right;}
+.soc-cmd-row .es{font-weight:700;color:var(--gold);}
+.soc-cmd-row .arr{opacity:.5;}
+.soc-ritual{background:rgba(255,255,255,.08);border-radius:10px;padding:10px 12px;margin:8px 0;font-size:14px;line-height:1.5;color:var(--w);}
+.soc-ritual b{color:var(--gold);}
+.soc-cheers{display:flex;flex-direction:column;gap:6px;margin-top:8px;}
+.soc-cheer{background:rgba(255,255,255,.08);padding:8px 12px;border-radius:10px;border-left:3px solid var(--gold);font-size:14px;cursor:pointer;color:var(--w);}
+.soc-cheer:active{transform:scale(.98);}
+.soc-cheer b{color:var(--gold);}
+.soc-open-tm{margin-top:12px;width:100%;padding:12px;border-radius:50px;background:var(--gold);color:var(--ink);font-weight:800;font-size:14px;border:none;border-bottom:4px solid var(--goldd);}
+
 /* CONFETTI */
 #confetti{position:fixed;inset:0;pointer-events:none;z-index:3000;}
 #toast{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 86px);transform:translateX(-50%) translateY(20px);background:var(--ink);color:var(--gold);padding:10px 16px;border-radius:999px;font-size:13px;font-weight:800;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:4000;border:1px solid var(--gold);}
@@ -465,6 +541,7 @@ Fill in your info below and tap ¡Vamos! <span style="font-size:11px;opacity:.7;
 <button class="tt-tab" onclick="setTCat('animals',this)">🐾 Animals</button>
 <button class="tt-tab" onclick="setTCat('food',this)">🍎 Food</button>
 <button class="tt-tab" onclick="setTCat('sports',this)">⚽ Sports</button>
+<button class="tt-tab" data-tcat="soccer" onclick="setTCat('soccer',this)">⚽ Soccer</button>
 <button class="tt-tab" onclick="setTCat('vehicles',this)">🚗 Vehicles</button>
 <button class="tt-tab" onclick="setTCat('colors',this)">🎨 Colors</button>
 <button class="tt-tab" onclick="setTCat('body',this)">🖐🏾 Body</button>
@@ -579,6 +656,15 @@ Fill in your info below and tap ¡Vamos! <span style="font-size:11px;opacity:.7;
 <div id="sort-item" style="text-align:center;margin:16px 0;"></div>
 <div id="sort-buckets" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px;"></div>
 <div id="sort-result" style="font-family:'Baloo 2';font-size:22px;text-align:center;margin-top:12px;min-height:32px;"></div>
+</div>
+
+<!-- Soccer Shots Game -->
+<div id="soccer-game" style="display:none;margin-top:24px;background:var(--w);border-radius:20px;padding:16px;border:4px solid var(--ink);">
+<h3 style="font-family:'Baloo 2';font-size:22px;text-align:center;">⚽ Soccer Shots</h3>
+<div class="socc-wrap">
+<div id="soccMenu" class="socc-games"></div>
+<div id="soccStage"></div>
+</div>
 </div>
 
 <div class="punta-pad">
@@ -727,6 +813,42 @@ const TOYS=[
 ];
 const NUMS=["","Uno","Dos","Tres","Cuatro","Cinco","Seis","Siete","Ocho","Nueve","Diez","Once","Doce","Trece","Catorce","Quince","Diecis\u00e9is","Diecisiete","Dieciocho","Diecinueve","Veinte"];
 const COLORS_GAME=[{es:"Rojo",hex:"#E53E3E"},{es:"Azul",hex:"#3182CE"},{es:"Verde",hex:"#38A169"},{es:"Amarillo",hex:"#ECC94B"},{es:"Naranja",hex:"#DD6B20"},{es:"Morado",hex:"#805AD5"},{es:"Rosado",hex:"#D53F8C"},{es:"Negro",hex:"#1A1B4B"},{es:"Blanco",hex:"#F5F5F5"},{es:"Caf\u00e9",hex:"#8B5E3C"}];
+const SOCCER_VOCAB=[
+  {en:'ball',es:'pelota',em:'⚽'},
+  {en:'kick',es:'patada',em:'🦵'},
+  {en:'goal',es:'gol',em:'🥅'},
+  {en:'cone',es:'cono',em:'🔶'},
+  {en:'run',es:'corre',em:'🏃'},
+  {en:'coach',es:'entrenador',em:'👨‍🏫'}
+];
+const SOCCER_CMDS=[
+  {en:'Small kick',es:'Patada pequeña'},
+  {en:'Big kick',es:'Patada grande'},
+  {en:'Dribble',es:'Dribla'},
+  {en:'Run to the cone',es:'Corre al cono'},
+  {en:'Shoot!',es:'¡Tira!'},
+  {en:'Listen',es:'Escucha'},
+  {en:'Respect',es:'Respeto'}
+];
+const SOCCER_CHEERS=[
+  {en:'Nice kick!',es:'¡Buena patada!'},
+  {en:'Go!',es:'¡Dale!'},
+  {en:'Goal!',es:'¡Gol!'},
+  {en:'Keep running!',es:'¡Sigue corriendo!'},
+  {en:'Great job!',es:'¡Buen trabajo!'}
+];
+const SOCC_ANIMALS=[
+  {emoji:'🐆',en:'cheetah',es:'guepardo'},
+  {emoji:'🐻',en:'bear',es:'oso'},
+  {emoji:'🐇',en:'bunny',es:'conejo'},
+  {emoji:'🐸',en:'frog',es:'rana'}
+];
+const SOCC_COLORS=[
+  {en:'red',es:'rojo',hex:'#e63946'},
+  {en:'blue',es:'azul',hex:'#1d6dc9'},
+  {en:'yellow',es:'amarillo',hex:'#ffc940'},
+  {en:'green',es:'verde',hex:'#4caf50'}
+];
 let tCat='all',countN=1,colorTarget=null;
 
 /* ===== WEEKLY LESSON VOCAB (Toddler Mode + This Week focus) ===== */
@@ -1145,7 +1267,7 @@ function localDay(){
 }
 let S={sk:L.g('sk',0),la:L.g('la',''),dc:L.g('dc',{}),dd:L.g('dd',''),wd:L.g('wd',{}),fk:L.g('fk',{}),qt:L.g('qt',0),qc:L.g('qc',0),fq:L.g('fq',{}),sd:L.g('sd',{}),xp:L.g('xp',0),wl:L.g('wl',{}),lxp:L.g('lxp',0),lxpd:L.g('lxpd',''),wk:L.g('wk',{}),fr:L.g('fr',0),fl:L.g('fl',0),lc:L.g('lc',0),pf:L.g('pf',0),tm:L.g('tm',0),dq:L.g('dq',null),dqd:L.g('dqd',''),ac:L.g('ac',{}),sw:L.g('sw',0),xph:L.g('xph',[]),skMax:L.g('skMax',0)};
 let expTask=null;
-let homeSec={tasks:false,fq:false,help:false};
+let homeSec={tasks:false,fq:false,help:false,soccer:false};
 let toastTimer=null;
 let morePage='grid';
 let walkStep=0;
@@ -1225,7 +1347,7 @@ function cancelExit(){if(exitTimer){clearInterval(exitTimer);exitTimer=null;}if(
 if(exitBtn){exitBtn.addEventListener('mousedown',startExit);exitBtn.addEventListener('mouseup',cancelExit);exitBtn.addEventListener('mouseleave',cancelExit);
 exitBtn.addEventListener('touchstart',e=>{e.preventDefault();startExit();});exitBtn.addEventListener('touchend',cancelExit);exitBtn.addEventListener('touchcancel',cancelExit);}
 function renderToys(){
-  var gameCats=['bubbles','memory','paint','lesson','me','sorting'];
+  var gameCats=['bubbles','memory','paint','lesson','me','sorting','soccer'];
   var items=tCat==='all'?sh(TOYS).slice(0,16):gameCats.includes(tCat)?[]:TOYS.filter(function(t){return t.cat===tCat;});
   var lblKey=appLang==='en'?'en':'es';var spkKey=appLang==='en'?'en':'es';
   document.getElementById('toyGrid').innerHTML=items.map(function(t){return '<button class="toy-btn" data-speak="'+t[spkKey]+'" data-lang="'+appLang+'">'+t.emoji+'<span class="toy-lbl">'+t[lblKey]+'</span></button>';}).join('');
@@ -1239,6 +1361,8 @@ function renderToys(){
   if(tCat==='me')startMeLlamo();
   document.getElementById('sort-game').style.display=tCat==='sorting'?'block':'none';
   if(tCat==='sorting')startSorting();
+  var socEl=document.getElementById('soccer-game');
+  if(socEl){socEl.style.display=tCat==='soccer'?'block':'none';if(tCat==='soccer')renderSoccerMenu();}
   var matchCats=['animals','food','body','nature','sports','vehicles','shapes','clothes','weather'];
   document.getElementById('match-game').style.display=matchCats.includes(tCat)?'block':'none';
   if(tCat==='colors')startColorGame();
@@ -1271,7 +1395,7 @@ function checkMatch(picked){
   if(picked===matchTarget[lblKey]){matchScore++;matchStreak++;res.textContent='🎉 ¡Sí! ¡'+matchTarget[lblKey]+'!';res.style.color='var(--teal)';confetti();speak('¡Muy bien! '+matchTarget[lblKey],appLang);setTimeout(function(){startMatchGame(matchTarget.cat);},matchStreak>=5?1200:2000);}
   else{matchStreak=0;res.textContent='🔄 ¡Otra vez!';res.style.color='var(--terra)';speak('No, otra vez','es');}
 }
-function setTCat(c,btn){tCat=c;matchScore=0;matchStreak=0;document.querySelectorAll('.tt-tab').forEach(function(t){t.classList.remove('act');});if(btn)btn.classList.add('act');renderToys();}
+function setTCat(c,btn){if(typeof closeSoccerGame==='function')closeSoccerGame();tCat=c;matchScore=0;matchStreak=0;document.querySelectorAll('.tt-tab').forEach(function(t){t.classList.remove('act');});if(btn)btn.classList.add('act');renderToys();}
 function openLessonTM(){toggleTM();setTimeout(function(){var btn=document.querySelector('[data-tcat="lesson"]');setTCat('lesson',btn);},500);}
 function countNav(dir){countN=Math.max(1,Math.min(20,countN+dir));updCount();}
 function updCount(){document.getElementById('count-display').textContent=countN;document.getElementById('count-word').textContent=NUMS[countN];speak(NUMS[countN],'es');}
@@ -1630,6 +1754,259 @@ function checkSort(picked){
   }
 }
 
+/* ===== SOCCER SHOTS GAMES ===== */
+function setSoccerOpen(v){homeSec.soccer=v;}
+function goToddlerSoccer(){
+  var tm=document.getElementById('tmode');
+  if(!tm.classList.contains('act'))toggleTM();
+  setTimeout(function(){
+    var btn=document.querySelector('.tt-tab[data-tcat="soccer"]');
+    setTCat('soccer',btn);
+  },300);
+}
+function renderSoccerMenu(){
+  var stage=document.getElementById('soccStage');
+  var menu=document.getElementById('soccMenu');
+  if(!menu)return;
+  if(stage)stage.innerHTML='';
+  menu.style.display='';
+  menu.innerHTML=''
+    +'<button class="socc-game-btn" onclick="openSoccerGame(\'ritual\')"><span class="ico">🧍</span><span class="txt">Head, Toes, Ears<small>Warmup + Listen &amp; Respect</small></span></button>'
+    +'<button class="socc-game-btn" onclick="openSoccerGame(\'cones\')"><span class="ico">🔶</span><span class="txt">Cone Color Run<small>Cheetah, Bear, Bunny, Frog</small></span></button>'
+    +'<button class="socc-game-btn" onclick="openSoccerGame(\'goal\')"><span class="ico">🥅</span><span class="txt">Goal Shot<small>Kick past the goalkeeper</small></span></button>';
+}
+function openSoccerGame(which){
+  var stage=document.getElementById('soccStage');
+  var menu=document.getElementById('soccMenu');
+  if(!stage||!menu)return;
+  menu.style.display='none';
+  var backBtn='<button class="socc-back" onclick="closeSoccerGame(true)">← Back to games</button>';
+  if(which==='ritual'){stage.innerHTML=backBtn+buildRitual();startRitual();}
+  else if(which==='cones'){stage.innerHTML=backBtn+buildCones();startCones();}
+  else if(which==='goal'){stage.innerHTML=backBtn+buildGoal();startGoal();}
+}
+function closeSoccerGame(reopenMenu){
+  if(window._soccTimers){window._soccTimers.forEach(function(t){clearTimeout(t);});window._soccTimers=[];}
+  var stage=document.getElementById('soccStage');
+  var menu=document.getElementById('soccMenu');
+  if(stage)stage.innerHTML='';
+  if(menu)menu.style.display=reopenMenu?'':menu.style.display;
+  var overlay=document.querySelector('.socc-clap-big');if(overlay)overlay.remove();
+  try{if(window.speechSynthesis)speechSynthesis.cancel();}catch(e){}
+}
+function soccTimeout(fn,ms){window._soccTimers=window._soccTimers||[];var id=setTimeout(fn,ms);window._soccTimers.push(id);return id;}
+
+function buildRitual(){
+  return ''
+    +'<div class="socc-prompt" id="ritPrompt"><span class="en">Get ready!</span><span class="es">¡Prepárate!</span></div>'
+    +'<div class="socc-body">'
+    +  '<svg viewBox="0 0 100 160" xmlns="http://www.w3.org/2000/svg">'
+    +    '<circle cx="50" cy="22" r="18" fill="#f5d0a9" stroke="#2c2c2c" stroke-width="2"/>'
+    +    '<circle cx="43" cy="20" r="2" fill="#2c2c2c"/><circle cx="57" cy="20" r="2" fill="#2c2c2c"/>'
+    +    '<path d="M44 28 Q50 32 56 28" fill="none" stroke="#2c2c2c" stroke-width="2" stroke-linecap="round"/>'
+    +    '<ellipse cx="30" cy="24" rx="4" ry="6" fill="#f5d0a9" stroke="#2c2c2c" stroke-width="2"/>'
+    +    '<ellipse cx="70" cy="24" rx="4" ry="6" fill="#f5d0a9" stroke="#2c2c2c" stroke-width="2"/>'
+    +    '<rect x="38" y="40" width="24" height="50" rx="8" fill="#d4a017" stroke="#2c2c2c" stroke-width="2"/>'
+    +    '<rect x="40" y="90" width="8" height="40" fill="#3a5070" stroke="#2c2c2c" stroke-width="2"/>'
+    +    '<rect x="52" y="90" width="8" height="40" fill="#3a5070" stroke="#2c2c2c" stroke-width="2"/>'
+    +    '<ellipse cx="44" cy="140" rx="10" ry="5" fill="#2c2c2c"/>'
+    +    '<ellipse cx="56" cy="140" rx="10" ry="5" fill="#2c2c2c"/>'
+    +  '</svg>'
+    +  '<div class="socc-hit head" data-part="head"></div>'
+    +  '<div class="socc-hit ears" data-part="ears"></div>'
+    +  '<div class="socc-hit toes" data-part="toes"></div>'
+    +'</div>';
+}
+function startRitual(){
+  var steps=[
+    {part:'head',en:'Head',es:'Cabeza'},
+    {part:'toes',en:'Toes',es:'Dedos del pie'},
+    {part:'ears',en:'Ears',es:'Orejas'}
+  ];
+  var idx=0;
+  function activate(i){
+    var s=steps[i];
+    document.querySelectorAll('.socc-hit').forEach(function(h){h.classList.remove('active');});
+    var el=document.querySelector('.socc-hit[data-part="'+s.part+'"]');
+    if(el)el.classList.add('active');
+    var p=document.getElementById('ritPrompt');
+    if(p)p.innerHTML='<span class="en">Touch your '+s.en+'</span><span class="es">Toca tu '+s.es+'</span>';
+    speak(s.en,'en');
+    soccTimeout(function(){speak(s.es,'es');},800);
+    if(el){
+      el.onclick=function(){
+        el.classList.remove('active');
+        confetti();
+        if(s.part==='ears'){doListenRespect(function(){finishRitual();});}
+        else{idx++;if(idx<steps.length)soccTimeout(function(){activate(idx);},800);}
+      };
+    }
+  }
+  activate(0);
+}
+function doListenRespect(done){
+  var overlay=document.createElement('div');
+  overlay.className='socc-clap-big';
+  overlay.innerHTML='<div class="hands">👏🏽</div><div class="word">LISTEN</div><div class="wordes">ESCUCHA</div>';
+  document.body.appendChild(overlay);
+  playClap();soccTimeout(playClap,280);
+  soccTimeout(function(){speak('Listen','en');},500);
+  soccTimeout(function(){speak('Escucha','es');},1200);
+  soccTimeout(function(){
+    overlay.querySelector('.hands').textContent='👏🏽';
+    overlay.querySelector('.word').textContent='RESPECT';
+    overlay.querySelector('.wordes').textContent='RESPETO';
+    playClap();soccTimeout(playClap,280);
+    soccTimeout(function(){speak('Respect','en');},500);
+    soccTimeout(function(){speak('Respeto','es');},1200);
+  },2600);
+  soccTimeout(function(){overlay.remove();if(done)done();},5400);
+}
+function finishRitual(){
+  var p=document.getElementById('ritPrompt');
+  if(p)p.innerHTML='<span class="en">Ready to play! ⚽</span><span class="es">¡Listos para jugar!</span>';
+  speak('Ready to play','en');
+  soccTimeout(function(){speak('Listos para jugar','es');},900);
+  confetti();
+}
+function playClap(){
+  try{
+    var Ctx=window.AudioContext||window.webkitAudioContext;
+    if(!Ctx)return;
+    if(!window._soccACtx)window._soccACtx=new Ctx();
+    var ctx=window._soccACtx;
+    var buf=ctx.createBuffer(1,ctx.sampleRate*0.08,ctx.sampleRate);
+    var d=buf.getChannelData(0);
+    for(var i=0;i<d.length;i++){d[i]=(Math.random()*2-1)*Math.pow(1-i/d.length,2);}
+    var src=ctx.createBufferSource();src.buffer=buf;
+    var g=ctx.createGain();g.gain.value=0.6;
+    src.connect(g);g.connect(ctx.destination);src.start();
+  }catch(e){}
+}
+
+function buildCones(){
+  return ''
+    +'<div class="socc-prompt" id="conePrompt"><span class="en">Get ready!</span></div>'
+    +'<div class="socc-score"><span class="pill" id="coneScore">⭐ 0</span></div>'
+    +'<div class="socc-field" id="coneField">'
+    +  '<div class="socc-cones" id="coneRow"></div>'
+    +  '<div class="socc-runner" id="coneRunner">🐆</div>'
+    +'</div>';
+}
+function startCones(){
+  window._soccConeScore=0;
+  window._soccConeAnimal=0;
+  nextConeRound();
+}
+function nextConeRound(){
+  var row=document.getElementById('coneRow');
+  var runner=document.getElementById('coneRunner');
+  if(!row||!runner)return;
+  var animal=SOCC_ANIMALS[window._soccConeAnimal%SOCC_ANIMALS.length];
+  runner.textContent=animal.emoji;
+  runner.style.transition='none';
+  runner.style.transform='translateX(-50%)';
+  runner.style.left='50%';
+  runner.style.bottom='8%';
+  var colors=SOCC_COLORS.slice().sort(function(){return Math.random()-.5;});
+  row.innerHTML=colors.map(function(c){
+    return '<div class="socc-cone" data-color="'+c.en+'">'
+      +'<svg viewBox="0 0 40 48"><polygon points="20,4 32,42 8,42" fill="'+c.hex+'" stroke="#2c2c2c" stroke-width="2"/><rect x="6" y="40" width="28" height="6" fill="#2c2c2c"/></svg>'
+      +'</div>';
+  }).join('');
+  var target=colors[Math.floor(Math.random()*colors.length)];
+  var p=document.getElementById('conePrompt');
+  if(p)p.innerHTML='<span class="en">Run to the '+target.en.toUpperCase()+' cone!</span><span class="es">¡Corre al cono '+target.es+'!</span>';
+  speak('Run to the '+target.en+' cone','en');
+  soccTimeout(function(){speak('Corre al cono '+target.es,'es');},1100);
+  row.querySelectorAll('.socc-cone').forEach(function(cone){
+    cone.addEventListener('click',function(){
+      var picked=cone.getAttribute('data-color');
+      if(picked===target.en){
+        var rect=cone.getBoundingClientRect();
+        var fieldRect=document.getElementById('coneField').getBoundingClientRect();
+        var dx=rect.left-fieldRect.left+rect.width/2-fieldRect.width/2;
+        var dy=rect.top-fieldRect.top+rect.height/2-fieldRect.height+40;
+        runner.style.transition='all 1s cubic-bezier(.34,1.56,.64,1)';
+        runner.style.transform='translate(calc(-50% + '+dx+'px),'+dy+'px)';
+        cone.classList.add('hit');
+        confetti();
+        window._soccConeScore++;
+        var s=document.getElementById('coneScore');if(s)s.textContent='⭐ '+window._soccConeScore;
+        speak('Yes!','en');
+        soccTimeout(function(){speak('¡'+animal.es+'!','es');},700);
+        window._soccConeAnimal++;
+        soccTimeout(nextConeRound,2200);
+      }else{
+        cone.style.transform='translateX(-8px)';
+        soccTimeout(function(){cone.style.transform='translateX(8px)';},80);
+        soccTimeout(function(){cone.style.transform='';},160);
+        speak('Try again','en');
+      }
+    });
+  });
+}
+
+function buildGoal(){
+  return ''
+    +'<div class="socc-prompt" id="goalPrompt"><span class="en">Tap the ball to kick!</span><span class="es">¡Toca la pelota!</span></div>'
+    +'<div class="socc-score"><span class="pill" id="goalScore">⚽ 0</span></div>'
+    +'<div class="socc-field" id="goalField">'
+    +  '<div class="socc-goal"></div>'
+    +  '<div class="socc-keeper" id="goalKeeper">🧤</div>'
+    +  '<div class="socc-ball" id="goalBall">⚽</div>'
+    +'</div>';
+}
+function startGoal(){
+  window._soccGoalScore=0;
+  setupGoalShot();
+}
+function setupGoalShot(){
+  var ball=document.getElementById('goalBall');
+  var keeper=document.getElementById('goalKeeper');
+  var prompt=document.getElementById('goalPrompt');
+  if(!ball||!keeper)return;
+  var big=Math.random()<.5;
+  if(prompt){
+    prompt.innerHTML=big
+      ?'<span class="en">BIG kick!</span><span class="es">¡Patada grande!</span>'
+      :'<span class="en">small kick</span><span class="es">patada pequeña</span>';
+  }
+  speak(big?'Big kick':'Small kick','en');
+  soccTimeout(function(){speak(big?'Patada grande':'Patada pequeña','es');},900);
+  ball.className='socc-ball';
+  ball.style.removeProperty('--kx');
+  ball.onclick=function(){
+    if(ball.classList.contains('kick-small')||ball.classList.contains('kick-big')||ball.classList.contains('goal'))return;
+    var field=document.getElementById('goalField');
+    var keeperRect=keeper.getBoundingClientRect();
+    var fieldRect=field.getBoundingClientRect();
+    var keeperCenter=keeperRect.left+keeperRect.width/2-(fieldRect.left+fieldRect.width/2);
+    var targetX=(Math.random()*2-1)*(fieldRect.width*0.35);
+    ball.style.setProperty('--kx',targetX+'px');
+    keeper.classList.add('paused');
+    var caught=Math.abs(targetX-keeperCenter)<40;
+    if(caught){
+      ball.classList.add(big?'kick-big':'kick-small');
+      soccTimeout(function(){
+        if(prompt)prompt.innerHTML='<span class="en">Almost!</span><span class="es">¡Casi!</span>';
+        speak('Almost','en');soccTimeout(function(){speak('Casi','es');},700);
+      },600);
+      soccTimeout(function(){keeper.classList.remove('paused');setupGoalShot();},2400);
+    }else{
+      ball.classList.add('goal');
+      soccTimeout(function(){
+        window._soccGoalScore++;
+        var s=document.getElementById('goalScore');if(s)s.textContent='⚽ '+window._soccGoalScore;
+        if(prompt)prompt.innerHTML='<span class="en">GOAL!</span><span class="es">¡GOL!</span>';
+        confetti();
+        speak('Goal','en');soccTimeout(function(){speak('Gol','es');},600);
+      },600);
+      soccTimeout(function(){keeper.classList.remove('paused');setupGoalShot();},2800);
+    }
+  };
+}
+
 /* ===== LESSON UTILS (shared data helpers for both Toddler and Path lesson systems) ===== */
 const LessonUtils={
   // Get the vocab array for a given week with safe bounds + fallback
@@ -1824,6 +2201,22 @@ ${homeSec.tasks?TK.map(t=>{const dn2=S.dc[t.id];const ex=expTask===t.id;const ca
 ${homeSec.fq?FQ.map(q=>{const dn3=S.fq&&S.fq[q.id];return '<div style="background:'+(dn3?'rgba(76,175,80,.15)':'rgba(255,255,255,.06)')+';border-radius:14px;padding:12px 14px;margin-bottom:8px;margin-top:12px;border:1px solid '+(dn3?'#4CAF50':'rgba(255,255,255,.1)')+';display:flex;align-items:flex-start;gap:10px;"><button onclick="tgFQ(\''+q.id+'\')" style="width:44px;height:44px;min-width:44px;border-radius:8px;border:3px solid '+(dn3?'#4CAF50':'rgba(255,255,255,.3)')+';background:'+(dn3?'#4CAF50':'transparent')+';color:var(--w);font-size:14px;display:flex;align-items:center;justify-content:center;margin-top:2px;">'+(dn3?'✓':'')+'</button><div style="flex:1;"><div style="font-size:13px;font-weight:700;color:'+(dn3?'rgba(255,255,255,.5)':'var(--w)')+';'+(dn3?'text-decoration:line-through;':'')+'">'+q.t+'</div><div style="font-size:11px;color:rgba(255,255,255,.5);margin-top:3px;">'+q.d+'</div>'+(q.phrases?q.phrases.map(function(p2){var parts=p2.split('|');var es=parts[0];var ph2=parts.length===3?parts[1]:'';var en=parts.length===3?parts[2]:(parts[1]||'');return '<div style="display:flex;align-items:flex-start;gap:6px;background:rgba(76,175,80,.12);padding:6px 10px;border-radius:8px;margin:4px 0;font-weight:700;font-size:12px;border:1px solid rgba(76,175,80,.25);flex-wrap:wrap;color:#81C784;">'+spB(es)+' '+es+(ph2?' <span style="color:var(--terra);font-size:11px;">🗣 '+ph2+'</span>':'')+(en?' <span style="color:rgba(255,255,255,.4);font-weight:500;font-size:11px;">('+en+')</span>':'')+'</div>';}).join(''):'')+'</div></div>';}).join(''):''}
 </div>
 
+
+<section class="soccer-card" id="soccerCard">
+<details id="soccerDet"${homeSec.soccer?' open':''} ontoggle="setSoccerOpen(this.open);">
+<summary>⚽ Soccer Shots Practice</summary>
+<div class="soc-inner">
+<div class="soc-ritual"><b>Pre-practice ritual:</b> Touch <b>cabeza</b> (head), <b>dedos del pie</b> (toes), and <b>orejas</b> (ears). At ears, clap twice and say <b>"Listen / Escucha"</b>, then clap twice again and say <b>"Respect / Respeto"</b>. This teaches listening to the coach.</div>
+<div style="font-weight:800;margin-top:14px;color:var(--gold);">Soccer vocabulary (tap to hear)</div>
+<div class="soc-vocab-strip">${SOCCER_VOCAB.map(function(v){return '<span class="soc-vocab-chip" data-speak="'+v.es+'" data-lang="es"><span class="em">'+v.em+'</span> <b>'+v.es+'</b> <span style="opacity:.65">'+v.en+'</span></span>';}).join('')}</div>
+<div style="font-weight:800;margin-top:6px;color:var(--gold);">Coach's commands</div>
+<div class="soc-cmds">${SOCCER_CMDS.map(function(c){return '<div class="soc-cmd-row"><span class="en">'+c.en+'</span><span class="arr">→</span><span class="es">'+c.es+'</span></div>';}).join('')}</div>
+<div style="font-weight:800;margin-top:10px;color:var(--gold);">Sideline cheers (tap to hear)</div>
+<div class="soc-cheers">${SOCCER_CHEERS.map(function(c){return '<div class="soc-cheer" data-speak="'+c.es+'" data-lang="es"><b>'+c.es+'</b> <span style="opacity:.65">— '+c.en+'</span></div>';}).join('')}</div>
+<button class="soc-open-tm" onclick="goToddlerSoccer()">Open Soccer practice in Toddler Mode →</button>
+</div>
+</details>
+</section>
 ${profile?`<button onclick="shareStreak()" style="width:100%;padding:14px;border-radius:50px;background:var(--ink);color:var(--gold);font-weight:700;font-size:14px;border:2px solid var(--gold);margin-bottom:16px;">📤 Share ${S.sk}-Day Streak with Partner</button>`:''}`;
 document.getElementById('p-home').innerHTML=h;}
 function tgHomeSec(id){homeSec[id]=!homeSec[id];rH();}
