@@ -339,9 +339,17 @@ button,.cb,.wkc,.spk,.splg{min-width:44px;min-height:44px;}
 .socc-keeper{position:absolute;top:10%;left:50%;transform:translateX(-50%);font-size:44px;animation:keeperMove 2.4s ease-in-out infinite alternate;filter:drop-shadow(0 3px 5px rgba(0,0,0,.4));}
 @keyframes keeperMove{from{transform:translateX(calc(-50% - 70px));}to{transform:translateX(calc(-50% + 70px));}}
 .socc-keeper.paused{animation-play-state:paused;}
-.socc-prompt{background:var(--ink);color:var(--gold);padding:14px 16px;border-radius:14px;text-align:center;font-weight:900;font-size:20px;border:2px solid var(--gold);box-shadow:0 4px 12px rgba(0,0,0,.25);}
-.socc-prompt .en{font-size:22px;display:block;}
-.socc-prompt .es{font-size:16px;opacity:.9;margin-top:4px;display:block;color:#f7e4a0;}
+.socc-prompt{background:var(--ink);color:var(--gold);padding:14px 16px;border-radius:14px;text-align:center;font-weight:900;font-size:20px;border:2px solid var(--gold);box-shadow:0 4px 12px rgba(0,0,0,.25);display:flex;flex-direction:column;align-items:center;}
+.socc-prompt .es{order:1;font-size:22px;font-weight:900;color:var(--gold);line-height:1.15;display:block;}
+.socc-prompt .ph{order:2;font-size:11px;color:#ffd466;font-weight:700;margin-top:3px;letter-spacing:.3px;display:block;}
+.socc-prompt .en{order:3;font-size:14px;color:#fff;opacity:.85;margin-top:3px;font-weight:600;display:block;}
+.bili-prompt{text-align:center;line-height:1.3;}
+.bili-prompt .es{font-family:'Baloo 2',cursive;font-size:22px;font-weight:800;color:var(--ink);display:block;}
+.bili-prompt .ph{font-size:11px;color:var(--terra);font-weight:700;display:block;margin-top:2px;letter-spacing:.3px;}
+.bili-prompt .en{font-size:13px;color:var(--gr);font-weight:600;display:block;margin-top:2px;}
+.bili-prompt.sm .es{font-size:17px;}.bili-prompt.sm .ph{font-size:10px;}.bili-prompt.sm .en{font-size:12px;}
+.bili-prompt.lg .es{font-size:26px;}.bili-prompt.lg .ph{font-size:12px;}.bili-prompt.lg .en{font-size:14px;}
+.bili-prompt b{color:inherit;}
 .socc-score{display:flex;justify-content:center;gap:10px;font-weight:800;}
 .socc-score .pill{background:var(--w);color:var(--ink);padding:6px 14px;border-radius:999px;border:2px solid var(--gold);}
 .socc-games{display:grid;grid-template-columns:1fr;gap:12px;}
@@ -615,7 +623,7 @@ Fill in your info below and tap ¡Vamos! <span style="font-size:11px;opacity:.7;
 
 <!-- Counting Game -->
 <div id="count-game" style="display:none;margin-top:24px;background:var(--w);border-radius:20px;padding:24px;border:4px solid var(--ink);">
-<h3 style="font-family:'Baloo 2';font-size:22px;text-align:center;">🔢 ¡Vamos a Contar! (1-20)</h3>
+<div class="bili-prompt" style="margin-bottom:8px;"><span class="es">🔢 ¡Vamos a Contar! (1-20)</span><span class="ph">🗣 VAH-mohs ah kohn-TAR</span><span class="en">Counting (1–20)</span></div>
 <div id="count-display" style="font-size:80px;text-align:center;margin:16px 0;font-family:'Baloo 2';color:var(--ink);">1</div>
 <div id="count-word" style="font-size:24px;text-align:center;font-family:'Baloo 2';color:var(--terra);margin-bottom:16px;">UNO</div>
 <div style="display:flex;gap:12px;justify-content:center;">
@@ -627,7 +635,7 @@ Fill in your info below and tap ¡Vamos! <span style="font-size:11px;opacity:.7;
 
 <!-- Match Game (all categories) -->
 <div id="match-game" style="display:none;margin-top:24px;background:var(--w);border-radius:20px;padding:24px;border:4px solid var(--ink);">
-<h3 id="match-title" style="font-family:'Baloo 2';font-size:22px;text-align:center;">🎯 ¡Toca!</h3>
+<div id="match-title" style="text-align:center;"><div class="bili-prompt"><span class="es">🎯 ¡Toca!</span><span class="ph">🗣 TOH-kah</span><span class="en">Touch!</span></div></div>
 <div id="match-prompt" style="font-family:'Baloo 2';font-size:26px;text-align:center;margin:12px 0;color:var(--ink);"></div>
 <div id="match-opts" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px;"></div>
 <div id="match-result" style="font-family:'Baloo 2';font-size:24px;text-align:center;margin-top:12px;min-height:36px;"></div>
@@ -635,8 +643,8 @@ Fill in your info below and tap ¡Vamos! <span style="font-size:11px;opacity:.7;
 
 <!-- Color Match Game -->
 <div id="color-game" style="display:none;margin-top:24px;background:var(--w);border-radius:20px;padding:24px;border:4px solid var(--ink);">
-<h3 style="font-family:'Baloo 2';font-size:22px;text-align:center;">🎨 ¡Toca el Color!</h3>
-<div id="color-prompt" style="font-family:'Baloo 2';font-size:26px;text-align:center;margin:12px 0;color:var(--ink);">Toca ROJO</div>
+<div class="bili-prompt" style="margin-bottom:8px;"><span class="es">🎨 ¡Toca el Color!</span><span class="ph">🗣 TOH-kah ehl koh-LOR</span><span class="en">Touch the Color!</span></div>
+<div id="color-prompt" style="text-align:center;margin:12px 0;"></div>
 <div id="color-dots" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px;"></div>
 <div id="color-result" style="font-family:'Baloo 2';font-size:24px;text-align:center;margin-top:12px;min-height:36px;"></div>
 </div>
@@ -644,7 +652,7 @@ Fill in your info below and tap ¡Vamos! <span style="font-size:11px;opacity:.7;
 <!-- Lesson Game (curriculum-focused) -->
 <div id="lesson-game" style="display:none;margin-top:24px;">
 <div style="background:linear-gradient(135deg,var(--teal),#006666);border-radius:20px;padding:20px;border:4px solid var(--gold);margin-bottom:16px;">
-<h3 id="lesson-title" style="font-family:'Baloo 2';font-size:20px;text-align:center;color:var(--gold);">📚 This Week's Words</h3>
+<div id="lesson-title" style="text-align:center;color:var(--gold);"><div class="bili-prompt sm" style="color:var(--gold);"><span class="es" style="color:var(--gold);">📚 Las Palabras de Esta Semana</span><span class="ph" style="color:#ffd466;">🗣 lahs pah-LAH-brahs deh EHS-tah seh-MAH-nah</span><span class="en" style="color:#fff;">This Week's Words</span></div></div>
 <p id="lesson-week" style="text-align:center;font-size:13px;color:rgba(255,255,255,.7);"></p>
 <div id="lesson-score" style="text-align:center;font-family:'Baloo 2';font-size:18px;color:var(--w);margin-top:4px;">⭐ 0</div>
 </div>
@@ -656,7 +664,7 @@ Fill in your info below and tap ¡Vamos! <span style="font-size:11px;opacity:.7;
 <button onclick="lessonNext()" style="display:block;margin:16px auto 0;padding:12px 32px;border-radius:50px;background:var(--teal);color:var(--w);font-weight:800;font-size:15px;border:none;">Next ➜</button>
 </div>
 <div id="lesson-quiz" style="display:none;background:var(--w);border-radius:20px;padding:24px;border:4px solid var(--ink);text-align:center;">
-<div style="font-size:14px;color:var(--gr);font-weight:700;">Which one is...</div>
+<div class="bili-prompt sm" style="margin-bottom:6px;"><span class="es">¿Cuál es...?</span><span class="ph">🗣 kwahl ehs</span><span class="en">Which one is…?</span></div>
 <div id="lq-prompt" style="font-family:'Baloo 2';font-size:26px;color:var(--ink);margin:8px 0;"></div>
 <div id="lq-opts" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px;"></div>
 <div id="lq-result" style="font-family:'Baloo 2';font-size:22px;text-align:center;margin-top:12px;min-height:32px;"></div>
@@ -665,8 +673,7 @@ Fill in your info below and tap ¡Vamos! <span style="font-size:11px;opacity:.7;
 
 <!-- Bubble Pop Game -->
 <div id="bubble-game" style="display:none;margin-top:24px;background:var(--w);border-radius:20px;padding:16px;border:4px solid var(--ink);position:relative;overflow:hidden;min-height:400px;">
-<h3 style="font-family:'Baloo 2';font-size:22px;text-align:center;">🫧 ¡Revienta las Burbujas!</h3>
-<p style="text-align:center;font-size:13px;color:var(--gr);margin-bottom:4px;">Tap the bubbles!</p>
+<div class="bili-prompt" style="margin-bottom:6px;"><span class="es">🫧 ¡Revienta las Burbujas!</span><span class="ph">🗣 reh-vee-EHN-tah lahs boor-BOO-hahs</span><span class="en">Pop the Bubbles!</span></div>
 <div id="bubble-score" style="text-align:center;font-family:'Baloo 2';font-size:18px;color:var(--teal);">⭐ 0</div>
 <div id="bubble-hunt" style="text-align:center;font-family:'Baloo 2';font-size:16px;color:var(--terra);min-height:24px;"></div>
 <div id="bubble-area" style="position:relative;width:100%;height:400px;overflow:hidden;border-radius:16px;background:linear-gradient(180deg,#E0F7FA,#B2EBF2);margin-top:8px;"></div>
@@ -674,8 +681,7 @@ Fill in your info below and tap ¡Vamos! <span style="font-size:11px;opacity:.7;
 
 <!-- Memory Match Game -->
 <div id="memory-game" style="display:none;margin-top:24px;background:var(--w);border-radius:20px;padding:24px;border:4px solid var(--ink);">
-<h3 style="font-family:'Baloo 2';font-size:22px;text-align:center;">🧠 ¡Memoria!</h3>
-<p style="text-align:center;font-size:13px;color:var(--gr);">Find the matching pairs!</p>
+<div class="bili-prompt" style="margin-bottom:6px;"><span class="es">🧠 ¡Memoria! Encuentra los pares</span><span class="ph">🗣 meh-MOH-ree-ah · ehn-KWEHN-trah lohs PAH-rehs</span><span class="en">Memory! Find the matching pairs</span></div>
 <div style="display:flex;gap:6px;justify-content:center;margin:8px 0;">
 <button onclick="memLevel=3;startMemory()" style="padding:6px 12px;border-radius:50px;border:2px solid var(--teal);background:var(--teall);font-size:11px;font-weight:800;color:var(--teal);">Easy</button>
 <button onclick="memLevel=4;startMemory()" style="padding:6px 12px;border-radius:50px;border:2px solid var(--goldd);background:var(--goldl);font-size:11px;font-weight:800;color:var(--goldd);">Medium</button>
@@ -690,7 +696,7 @@ Fill in your info below and tap ¡Vamos! <span style="font-size:11px;opacity:.7;
 
 <!-- Finger Paint Game -->
 <div id="paint-game" style="display:none;margin-top:24px;background:var(--w);border-radius:20px;padding:16px;border:4px solid var(--ink);">
-<h3 style="font-family:'Baloo 2';font-size:22px;text-align:center;">🎨 ¡Vamos a Pintar!</h3>
+<div class="bili-prompt" style="margin-bottom:6px;"><span class="es">🎨 ¡Vamos a Pintar!</span><span class="ph">🗣 VAH-mohs ah peen-TAR</span><span class="en">Painting!</span></div>
 <canvas id="paint-canvas" style="width:100%;height:300px;border-radius:16px;border:3px solid var(--bd);background:#FFFDE7;touch-action:none;"></canvas>
 <div style="display:flex;gap:8px;justify-content:center;margin-top:12px;flex-wrap:wrap;" id="paint-colors"></div>
 <div id="paint-tools"></div>
@@ -699,14 +705,13 @@ Fill in your info below and tap ¡Vamos! <span style="font-size:11px;opacity:.7;
 
 <!-- Me Llamo (personal intro) -->
 <div id="me-game" style="display:none;margin-top:24px;background:var(--w);border-radius:20px;padding:24px;border:4px solid var(--ink);text-align:center;">
-<h3 style="font-family:'Baloo 2';font-size:22px;">👋🏾 ¡Me Llamo!</h3>
+<div class="bili-prompt"><span class="es">👋🏾 ¡Me Llamo!</span><span class="ph">🗣 meh YAH-moh</span><span class="en">My Name Is!</span></div>
 <div id="me-content"></div>
 </div>
 
 <!-- Sorting Game -->
 <div id="sort-game" style="display:none;margin-top:24px;background:var(--w);border-radius:20px;padding:20px;border:4px solid var(--ink);">
-<h3 style="font-family:'Baloo 2';font-size:22px;text-align:center;">🧺 ¡Vamos a Ordenar!</h3>
-<p style="text-align:center;font-size:13px;color:var(--gr);">Which group does it belong to?</p>
+<div class="bili-prompt" style="margin-bottom:6px;"><span class="es">🧺 ¡Vamos a Ordenar! ¿A qué grupo pertenece?</span><span class="ph">🗣 VAH-mohs ah or-deh-NAR · ah keh GROO-poh pehr-teh-NEH-seh</span><span class="en">Sorting! Which group does it belong to?</span></div>
 <div id="sort-score" style="text-align:center;font-family:'Baloo 2';font-size:18px;color:var(--teal);margin-bottom:8px;">⭐ 0</div>
 <div id="sort-item" style="text-align:center;margin:16px 0;"></div>
 <div id="sort-buckets" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px;"></div>
@@ -715,7 +720,7 @@ Fill in your info below and tap ¡Vamos! <span style="font-size:11px;opacity:.7;
 
 <!-- Soccer Shots Game -->
 <div id="soccer-game" style="display:none;margin-top:24px;background:var(--w);border-radius:20px;padding:16px;border:4px solid var(--ink);">
-<h3 style="font-family:'Baloo 2';font-size:22px;text-align:center;">⚽ Soccer Shots</h3>
+<div class="bili-prompt" style="margin-bottom:6px;"><span class="es">⚽ ¡Vamos a Jugar Fútbol!</span><span class="ph">🗣 VAH-mohs ah hoo-GAR FOOT-bohl</span><span class="en">Soccer Shots!</span></div>
 <div class="socc-wrap">
 <div id="soccMenu" class="socc-games"></div>
 <div id="soccStage"></div>
@@ -867,7 +872,7 @@ const TOYS=[
 {emoji:"☀️",es:"Soleado",en:"Sunny",cat:"weather"},{emoji:"🌧️",es:"Lluvia",en:"Rain",cat:"weather"},{emoji:"☁️",es:"Nublado",en:"Cloudy",cat:"weather"},{emoji:"💨",es:"Ventoso",en:"Windy",cat:"weather"},{emoji:"🥵",es:"Calor",en:"Hot",cat:"weather"},{emoji:"🥶",es:"Frío",en:"Cold",cat:"weather"},{emoji:"⛈️",es:"Tormenta",en:"Storm",cat:"weather"},{emoji:"🌈",es:"Arcoíris",en:"Rainbow",cat:"weather"},{emoji:"⚡",es:"Relámpago",en:"Lightning",cat:"weather"},{emoji:"🌀",es:"Huracán",en:"Hurricane",cat:"weather"}
 ];
 const NUMS=["","Uno","Dos","Tres","Cuatro","Cinco","Seis","Siete","Ocho","Nueve","Diez","Once","Doce","Trece","Catorce","Quince","Diecis\u00e9is","Diecisiete","Dieciocho","Diecinueve","Veinte"];
-const COLORS_GAME=[{es:"Rojo",hex:"#E53E3E"},{es:"Azul",hex:"#3182CE"},{es:"Verde",hex:"#38A169"},{es:"Amarillo",hex:"#ECC94B"},{es:"Naranja",hex:"#DD6B20"},{es:"Morado",hex:"#805AD5"},{es:"Rosado",hex:"#D53F8C"},{es:"Negro",hex:"#1A1B4B"},{es:"Blanco",hex:"#F5F5F5"},{es:"Caf\u00e9",hex:"#8B5E3C"}];
+const COLORS_GAME=[{es:"Rojo",en:"Red",hex:"#E53E3E"},{es:"Azul",en:"Blue",hex:"#3182CE"},{es:"Verde",en:"Green",hex:"#38A169"},{es:"Amarillo",en:"Yellow",hex:"#ECC94B"},{es:"Naranja",en:"Orange",hex:"#DD6B20"},{es:"Morado",en:"Purple",hex:"#805AD5"},{es:"Rosado",en:"Pink",hex:"#D53F8C"},{es:"Negro",en:"Black",hex:"#1A1B4B"},{es:"Blanco",en:"White",hex:"#F5F5F5"},{es:"Caf\u00e9",en:"Brown",hex:"#8B5E3C"}];
 const SOCCER_VOCAB=[
   {en:'ball',es:'pelota',em:'⚽'},
   {en:'kick',es:'patada',em:'🦵'},
@@ -1359,6 +1364,7 @@ if('speechSynthesis' in window){
   speechSynthesis.onvoiceschanged=function(){speechSynthesis.getVoices();};
 }
 function spB(t,lang){return `<button class="spk" data-speak="${t.replace(/"/g,'&quot;')}" data-lang="${lang||'es'}">🔊</button>`;}
+function biliP(es,ph,en,size){var cls='bili-prompt'+(size?' '+size:'');return '<div class="'+cls+'"><span class="es">'+es+'</span><span class="ph">🗣 '+ph+'</span><span class="en">'+en+'</span></div>';}
 function sh(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=0|Math.random()*(i+1);[b[i],b[j]]=[b[j],b[i]];}return b;}
 
 /* ===== PHONETICS MAP ===== */
@@ -1428,15 +1434,26 @@ function renderToys(){
   if(tCat==='paint')setTimeout(initPaint,100);
   if(tCat==='lesson')startToddlerLesson();
 }
-const MATCH_TITLES={animals:'🐾 ¡Toca el Animal!',food:'🍎 ¡Toca la Comida!',body:'🖐🏾 ¡Toca!',nature:'🌴 ¡Toca!',sports:'⚽ ¡Toca el Deporte!',vehicles:'🚗 ¡Toca el Vehículo!',shapes:'🔷 ¡Toca la Forma!',clothes:'👕 ¡Toca la Ropa!',weather:'⛅ ¡Toca el Clima!'};
+const MATCH_TITLES={
+  animals:{es:'🐾 ¡Toca el Animal!',ph:'TOH-kah ehl ah-nee-MAHL',en:'Touch the Animal!'},
+  food:{es:'🍎 ¡Toca la Comida!',ph:'TOH-kah lah koh-MEE-dah',en:'Touch the Food!'},
+  body:{es:'🖐🏾 ¡Toca!',ph:'TOH-kah',en:'Touch!'},
+  nature:{es:'🌴 ¡Toca!',ph:'TOH-kah',en:'Touch!'},
+  sports:{es:'⚽ ¡Toca el Deporte!',ph:'TOH-kah ehl deh-POR-teh',en:'Touch the Sport!'},
+  vehicles:{es:'🚗 ¡Toca el Vehículo!',ph:'TOH-kah ehl veh-EE-koo-loh',en:'Touch the Vehicle!'},
+  shapes:{es:'🔷 ¡Toca la Forma!',ph:'TOH-kah lah FOR-mah',en:'Touch the Shape!'},
+  clothes:{es:'👕 ¡Toca la Ropa!',ph:'TOH-kah lah ROH-pah',en:'Touch the Clothing!'},
+  weather:{es:'⛅ ¡Toca el Clima!',ph:'TOH-kah ehl KLEE-mah',en:'Touch the Weather!'}
+};
 let matchTarget=null,matchScore=0,matchStreak=0;
 function startMatchGame(cat){
   const pool=sh(TOYS.filter(t=>t.cat===cat));
   if(pool.length<4)return;
   matchTarget=pool[0];
   const lblKey=appLang==='en'?'en':'es';
-  document.getElementById('match-title').innerHTML=(MATCH_TITLES[cat]||'🎯 ¡Toca!')+'<div style="font-size:14px;color:var(--teal);margin-top:4px;">⭐ '+matchScore+(matchStreak>=3?' 🔥'+matchStreak:'')+'</div>';
-  document.getElementById('match-prompt').innerHTML='Toca <b>'+matchTarget[lblKey]+'</b>';
+  var mt=MATCH_TITLES[cat]||{es:'🎯 ¡Toca!',ph:'TOH-kah',en:'Touch!'};
+  document.getElementById('match-title').innerHTML=biliP(mt.es,mt.ph,mt.en)+'<div style="font-size:14px;color:var(--teal);margin-top:4px;">⭐ '+matchScore+(matchStreak>=3?' 🔥'+matchStreak:'')+'</div>';
+  document.getElementById('match-prompt').innerHTML=biliP('Toca <b>'+matchTarget.es+'</b>','TOH-kah','Touch <b>'+matchTarget.en+'</b>');
   speak('Toca '+matchTarget[lblKey],appLang);
   document.getElementById('match-result').textContent='';
   var numOpts=matchScore>=10?6:4;
@@ -1460,7 +1477,7 @@ function startColorGame(){
   var numOpts=colorScore>=8?6:4;
   var pool=sh([...COLORS_GAME]).slice(0,numOpts);
   colorTarget=pool[0];
-  document.getElementById('color-prompt').innerHTML='Toca <b>'+colorTarget.es+'</b><div style="font-size:14px;color:var(--teal);margin-top:4px;">⭐ '+colorScore+'</div>';
+  document.getElementById('color-prompt').innerHTML=biliP('Toca <b>'+colorTarget.es+'</b>','TOH-kah','Touch <b>'+(colorTarget.en||colorTarget.es)+'</b>')+'<div style="font-size:14px;color:var(--teal);margin-top:4px;">⭐ '+colorScore+'</div>';
   speak('Toca '+colorTarget.es,'es');
   document.getElementById('color-result').textContent='';
   document.getElementById('color-dots').style.gridTemplateColumns=numOpts>4?'repeat(3,1fr)':'repeat(2,1fr)';
@@ -1506,7 +1523,7 @@ function setHuntTarget(){
     var t=sh([...TOYS])[0];
     var lblKey=appLang==='en'?'en':'es';
     bubbleHunt=t[lblKey];
-    hunt.innerHTML='🎯 Find: <b>'+bubbleHunt+'</b>';
+    hunt.innerHTML=biliP('🎯 Busca: <b>'+t.es+'</b>','BOOS-kah','🎯 Find: <b>'+t.en+'</b>','sm');
     // Pulse the hunt banner briefly so the visual change is obvious
     hunt.style.transition='transform .3s ease';
     hunt.style.transform='scale(1.15)';
@@ -1940,7 +1957,7 @@ function soccSay_es(es,cb){
 
 function buildRitual(){
   return ''
-    +'<div class="socc-prompt" id="ritPrompt"><span class="en">Get ready!</span><span class="es">¡Prepárate!</span></div>'
+    +'<div class="socc-prompt" id="ritPrompt"><span class="es">¡Prepárate!</span><span class="ph">🗣 preh-PAH-rah-teh</span><span class="en">Get ready!</span></div>'
     +'<div class="socc-body">'
     +  '<svg viewBox="0 0 100 160" xmlns="http://www.w3.org/2000/svg">'
     +    '<circle cx="50" cy="22" r="18" fill="#f5d0a9" stroke="#2c2c2c" stroke-width="2"/>'
@@ -1972,7 +1989,7 @@ function startRitual(){
     var el=document.querySelector('.socc-hit[data-part="'+s.part+'"]');
     if(el)el.classList.add('active');
     var p=document.getElementById('ritPrompt');
-    if(p)p.innerHTML='<span class="en">Touch your '+s.en+'</span><span class="es">Toca tu '+s.es+'</span>';
+    if(p)p.innerHTML='<span class="es">Toca tu '+s.es+'</span><span class="ph">🗣 TOH-kah too</span><span class="en">Touch your '+s.en+'</span>';
     soccSay('Touch your '+s.en,'Toca tu '+s.es);
     if(el){
       el.onclick=function(){
@@ -2046,7 +2063,7 @@ function playClap(){
 
 function buildCones(){
   return ''
-    +'<div class="socc-prompt" id="conePrompt"><span class="en">Get ready!</span></div>'
+    +'<div class="socc-prompt" id="conePrompt"><span class="es">¡Prepárate!</span><span class="ph">🗣 preh-PAH-rah-teh</span><span class="en">Get ready!</span></div>'
     +'<div class="socc-score"><span class="pill" id="coneScore">⭐ 0</span></div>'
     +'<div class="socc-field" id="coneField">'
     +  '<div class="socc-cones" id="coneRow"></div>'
@@ -2091,8 +2108,9 @@ function nextConeRound(){
   var fastSlowEs=animal.speedEs;
   if(p){
     p.innerHTML=''
-      +'<span class="en">'+fastSlow+' '+animal.en+' — run to the '+target.en.toUpperCase()+' cone!</span>'
-      +'<span class="es">'+animal.es.charAt(0).toUpperCase()+animal.es.slice(1)+' '+fastSlowEs+' — ¡corre al cono '+target.es+'!</span>';
+      +'<span class="es">'+animal.es.charAt(0).toUpperCase()+animal.es.slice(1)+' '+fastSlowEs+' — ¡corre al cono '+target.es+'!</span>'
+      +'<span class="ph">🗣 KOH-rreh ahl KOH-noh</span>'
+      +'<span class="en">'+fastSlow+' '+animal.en+' — run to the '+target.en.toUpperCase()+' cone!</span>';
   }
   soccSay(
     fastSlow+' '+animal.en+'! Run to the '+target.en+' cone.',
@@ -2139,7 +2157,7 @@ function buildGoal(){
     +  'The bar fills up — let go when you\'re ready! A tiny tap = small kick. '
     +  'A long hold = BIG kick. Try to score past the goalkeeper!'
     +'</div>'
-    +'<div class="socc-prompt" id="goalPrompt"><span class="en">Press and hold the ball!</span><span class="es">¡Mantén la pelota!</span></div>'
+    +'<div class="socc-prompt" id="goalPrompt"><span class="es">¡Mantén la pelota!</span><span class="ph">🗣 mahn-TEHN lah peh-LOH-tah</span><span class="en">Press and hold the ball!</span></div>'
     +'<div class="socc-score"><span class="pill" id="goalScore">⚽ 0</span></div>'
     +'<div class="socc-field" id="goalField">'
     +  '<div class="socc-goal"></div>'
@@ -2167,7 +2185,7 @@ function setupGoalShot(){
   ball.style.removeProperty('--kx');
   if(charge){charge.classList.remove('active');}
   if(fill){fill.style.height='0%';}
-  if(prompt){prompt.innerHTML='<span class="en">Press and HOLD the ball!</span><span class="es">¡Mantén la pelota!</span>';}
+  if(prompt){prompt.innerHTML='<span class="es">¡Mantén la pelota!</span><span class="ph">🗣 mahn-TEHN lah peh-LOH-tah</span><span class="en">Press and HOLD the ball!</span>';}
 
   // First-shot demo: animated pulsing ring around the ball to show "tap here"
   if(!window._soccGoalDemoShown){
@@ -2276,7 +2294,7 @@ function buildKickCones(){
     +  '<b>How to play:</b> The ball rolls across the field. Tap the field '
     +  'when the ball lines up with a cone to knock it over! Try to hit all 3.'
     +'</div>'
-    +'<div class="socc-prompt" id="kcPrompt"><span class="en">Watch the ball!</span><span class="es">¡Mira la pelota!</span></div>'
+    +'<div class="socc-prompt" id="kcPrompt"><span class="es">¡Mira la pelota!</span><span class="ph">🗣 MEE-rah lah peh-LOH-tah</span><span class="en">Watch the ball!</span></div>'
     +'<div class="socc-score"><span class="pill" id="kcScore">💥 0 / 3</span></div>'
     +'<div class="socc-field" id="kcField">'
     +  '<div class="socc-kc-row" id="kcRow"></div>'
@@ -2364,7 +2382,7 @@ function buildDribble(){
     +  '<b>How to play:</b> Tap the glowing foot 🦶 to dribble the ball forward. '
     +  'Alternate LEFT foot, RIGHT foot, left, right — keep the rhythm to reach the goal!'
     +'</div>'
-    +'<div class="socc-prompt" id="drPrompt"><span class="en">Tap the glowing foot!</span><span class="es">¡Toca el pie brillante!</span></div>'
+    +'<div class="socc-prompt" id="drPrompt"><span class="es">¡Toca el pie brillante!</span><span class="ph">🗣 TOH-kah ehl pee-EH bree-YAHN-teh</span><span class="en">Tap the glowing foot!</span></div>'
     +'<div class="socc-field" id="drField">'
     +  '<div class="socc-dr-meter"><div class="socc-dr-meter-fill" id="drMeterFill"></div></div>'
     +  '<div class="socc-goal"></div>'
@@ -2424,7 +2442,7 @@ function startDribble(){
     ball.style.bottom='8%';
     ball.classList.remove('socc-dr-goal-hit');
     setActive('L');
-    if(prompt) prompt.innerHTML='<span class="en">Tap the glowing foot!</span><span class="es">¡Toca el pie brillante!</span>';
+    if(prompt) prompt.innerHTML='<span class="es">¡Toca el pie brillante!</span><span class="ph">🗣 TOH-kah ehl pee-EH bree-YAHN-teh</span><span class="en">Tap the glowing foot!</span>';
   }
 
   function handleTap(side,el){
@@ -3095,15 +3113,15 @@ function buildExercises(weekNum){
   const ex=[];
   // 1. Picture/emoji match
   words.slice(0,2).forEach(function(w){
-    ex.push({type:'pick',prompt:'Tap the right word',hero:{em:w.e},answer:w.es,word:w,opts:LessonUtils.makeOptions(w,pool,4,'es'),speak:w.es});
+    ex.push({type:'pick',prompt:biliP('Toca la palabra correcta','TOH-kah lah pah-LAH-brah koh-RREK-tah','Tap the right word','sm'),hero:{em:w.e},answer:w.es,word:w,opts:LessonUtils.makeOptions(w,pool,4,'es'),speak:w.es});
   });
   // 2. Tap what you hear
   words.slice(2,4).forEach(function(w){
-    ex.push({type:'hear',prompt:'Tap what you hear',speak:w.es,answer:w.es,word:w,opts:LessonUtils.makeOptions(w,pool,4,'es')});
+    ex.push({type:'hear',prompt:biliP('Toca lo que escuchas','TOH-kah loh keh ehs-KOO-chahs','Tap what you hear','sm'),speak:w.es,answer:w.es,word:w,opts:LessonUtils.makeOptions(w,pool,4,'es')});
   });
   // 3. Translate (Spanish to English)
   words.slice(0,2).forEach(function(w){
-    ex.push({type:'translate',prompt:'What does this mean?',hero:{wd:w.es,em:w.e},answer:w.en,word:w,opts:LessonUtils.makeOptions(w,pool,4,'en'),speak:w.es,asEnglish:true});
+    ex.push({type:'translate',prompt:biliP('¿Qué significa?','keh seeg-nee-FEE-kah','What does this mean?','sm'),hero:{wd:w.es,em:w.e},answer:w.en,word:w,opts:LessonUtils.makeOptions(w,pool,4,'en'),speak:w.es,asEnglish:true});
   });
   // 4. Sentence builder (only if vocab has multi-word entries)
   const multi=vocab.filter(function(w){const t=(w.es||'').split(/\s+/);return t.length>=2&&t.length<=5;});
@@ -3111,12 +3129,12 @@ function buildExercises(weekNum){
     const w=multi[0|Math.random()*multi.length];
     const tokens=w.es.split(/\s+/);
     const distractorTokens=sh(pool.flatMap(function(x){return (x.es||'').split(/\s+/);}).filter(function(t){return t&&!tokens.includes(t)&&t.length>1;})).slice(0,Math.max(2,5-tokens.length));
-    ex.push({type:'build',prompt:'Build the sentence',english:w.en,speak:w.es,answer:tokens.join(' '),word:w,bank:sh([...tokens,...distractorTokens])});
+    ex.push({type:'build',prompt:biliP('Construye la oración','kohns-TROO-yeh lah oh-rah-see-OHN','Build the sentence','sm'),english:w.en,speak:w.es,answer:tokens.join(' '),word:w,bank:sh([...tokens,...distractorTokens])});
   }
   // 5. Pairs match
   const pairWords=sh([...vocab]).slice(0,4);
   if(pairWords.length>=3){
-    ex.push({type:'pairs',prompt:'Tap the matching pairs',pairs:pairWords});
+    ex.push({type:'pairs',prompt:biliP('Toca los pares','TOH-kah lohs PAH-rehs','Tap the matching pairs','sm'),pairs:pairWords});
   }
   const first=ex.shift();
   const rest=sh(ex);
@@ -3127,9 +3145,9 @@ function buildPracticeExercises(weakKeys){
   const weakWords=sh(weakKeys).slice(0,6).map(function(k){return S.wk[k]?S.wk[k].word||{es:k,en:S.wk[k].en||k,e:S.wk[k].e||'💬'}:{es:k,en:k,e:'💬'};});
   const ex=[];
   weakWords.forEach(function(w,i){
-    if(i%3===0)ex.push({type:'pick',prompt:'Tap the right word',hero:{em:w.e||'💬'},answer:w.es,word:w,opts:LessonUtils.makeOptions(w,allVocab,4,'es'),speak:w.es});
-    else if(i%3===1)ex.push({type:'hear',prompt:'Tap what you hear',speak:w.es,answer:w.es,word:w,opts:LessonUtils.makeOptions(w,allVocab,4,'es')});
-    else ex.push({type:'translate',prompt:'What does this mean?',hero:{wd:w.es,em:w.e||'💬'},answer:w.en,word:w,opts:LessonUtils.makeOptions(w,allVocab,4,'en'),speak:w.es,asEnglish:true});
+    if(i%3===0)ex.push({type:'pick',prompt:biliP('Toca la palabra correcta','TOH-kah lah pah-LAH-brah koh-RREK-tah','Tap the right word','sm'),hero:{em:w.e||'💬'},answer:w.es,word:w,opts:LessonUtils.makeOptions(w,allVocab,4,'es'),speak:w.es});
+    else if(i%3===1)ex.push({type:'hear',prompt:biliP('Toca lo que escuchas','TOH-kah loh keh ehs-KOO-chahs','Tap what you hear','sm'),speak:w.es,answer:w.es,word:w,opts:LessonUtils.makeOptions(w,allVocab,4,'es')});
+    else ex.push({type:'translate',prompt:biliP('¿Qué significa?','keh seeg-nee-FEE-kah','What does this mean?','sm'),hero:{wd:w.es,em:w.e||'💬'},answer:w.en,word:w,opts:LessonUtils.makeOptions(w,allVocab,4,'en'),speak:w.es,asEnglish:true});
   });
   return ex;
 }
@@ -3140,7 +3158,7 @@ function renderExercise(){
   LP.sel=null;LP.locked=false;LP.pairsState=null;LP.built=[];
   setLessonProgress(Math.round(LP.idx/LP.exs.length*100));
   document.getElementById('lpHp').innerHTML='❤️ '+LP.hp;
-  let body='<div class="lp-prompt">'+e.prompt+'</div>';
+  let body='<div class="lp-prompt" style="font-size:inherit;font-weight:inherit;">'+e.prompt+'</div>';
   if(e.type==='pick'){
     body+='<div class="lp-hero"><div class="h-em">'+e.hero.em+'</div></div>';
     body+='<div class="lp-opts">';
@@ -3158,7 +3176,7 @@ function renderExercise(){
     e.opts.forEach(function(o,i){body+='<button class="lp-opt" data-pick="'+i+'" onclick="pickOpt('+i+')">'+(o.en||o)+'</button>';});
     body+='</div>';
   } else if(e.type==='build'){
-    body+='<div class="lp-hero" style="padding:18px 16px;"><div style="font-size:12px;color:var(--gr);font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">Translate this</div><div class="h-wd" style="font-size:22px;">'+e.english+'</div></div>';
+    body+='<div class="lp-hero" style="padding:18px 16px;"><div class="bili-prompt sm" style="margin-bottom:6px;"><span class="es">Traduce esto</span><span class="ph">🗣 trah-DOO-seh EHS-toh</span><span class="en">Translate this</span></div><div class="h-wd" style="font-size:22px;">'+e.english+'</div></div>';
     body+='<div class="lp-built" id="lpBuilt"></div>';
     body+='<div class="lp-bank" id="lpBank">';
     e.bank.forEach(function(t,i){body+='<button class="lp-tile" data-i="'+i+'" onclick="pickTile('+i+')">'+t+'</button>';});
