@@ -176,6 +176,8 @@ button,.cb,.wkc,.spk,.splg{min-width:44px;min-height:44px;}
 .path-node.done .pn-lbl{color:var(--teal);border-color:var(--teal);}
 .path-node.curr .pn-circ{background:linear-gradient(135deg,var(--terra),#A0421B);color:var(--w);box-shadow:0 6px 0 #7B3014,0 10px 20px rgba(199,91,57,.4);animation:pulse2 1.6s ease infinite;}
 @keyframes pulse2{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+#bubble-area.bubble-flash{animation:bubbleFlash 0.55s ease 3;}
+@keyframes bubbleFlash{0%,100%{box-shadow:inset 0 0 0 0 rgba(212,160,23,0);}50%{box-shadow:inset 0 0 0 8px rgba(212,160,23,0.85);}}
 .path-node .pn-crown{position:absolute;top:-8px;right:-4px;background:var(--gold);color:var(--ink);width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;border:2px solid var(--w);}
 .path-node .pn-lock{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:24px;}
 .path-line{position:absolute;left:50%;top:-14px;width:3px;height:14px;background:repeating-linear-gradient(to bottom,var(--bd) 0 4px,transparent 4px 8px);transform:translateX(-50%);z-index:-1;}
@@ -1471,7 +1473,21 @@ function checkColor(picked){
 }
 
 /* ===== BUBBLE POP GAME ===== */
-let bubbleRAF=0,bubbleScore=0,bubbles=[],bubbleHunt=null;
+let bubbleRAF=0,bubbleScore=0,bubbles=[],bubbleHunt=null,bubbleAnnounceCool=0;
+function announceBubbles(){
+  var area=document.getElementById('bubble-area');
+  if(area){
+    area.classList.remove('bubble-flash');
+    void area.offsetWidth;
+    area.classList.add('bubble-flash');
+    setTimeout(function(){if(area)area.classList.remove('bubble-flash');},2000);
+  }
+  var now=Date.now();
+  if(now-bubbleAnnounceCool>3500){
+    bubbleAnnounceCool=now;
+    speak('¡Burbujas! ¡Tócalas!','es');
+  }
+}
 function startBubbles(){
   bubbleScore=0;bubbleHunt=null;
   document.getElementById('bubble-score').textContent='⭐ 0';
@@ -1482,6 +1498,7 @@ function startBubbles(){
   spawnBubble();spawnBubble();spawnBubble();spawnBubble();
   animateBubbles();
   setHuntTarget();
+  setTimeout(announceBubbles,400);
 }
 function setHuntTarget(){
   var hunt=document.getElementById('bubble-hunt');
@@ -1554,6 +1571,7 @@ function spawnBubble(){
 function animateBubbles(){
   var area=document.getElementById('bubble-area');
   if(!area||tCat!=='bubbles'){bubbleRAF=0;return;}
+  var prevLive=bubbles.filter(function(b){return b.parentElement;}).length;
   bubbles=bubbles.filter(function(b){return b.parentElement;});
   bubbles.forEach(function(b){
     var cur=parseFloat(b.style.bottom)||0;
@@ -1564,6 +1582,7 @@ function animateBubbles(){
   // Cap at 5 bubbles on screen so toddlers aren't overwhelmed (was 3+score/8, could grow unbounded)
   var target=Math.min(5,3+Math.floor(bubbleScore/12));
   if(bubbles.length<target)spawnBubble();
+  if(prevLive===0&&bubbles.length>0){announceBubbles();}
   bubbleRAF=requestAnimationFrame(animateBubbles);
 }
 
