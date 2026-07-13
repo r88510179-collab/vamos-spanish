@@ -1374,6 +1374,67 @@ window.addEventListener('error',function(){
 if('serviceWorker' in navigator&&location.protocol==='https:'){
   window.addEventListener('load',function(){navigator.serviceWorker.register('/sw.js').catch(function(){});});
 }
+/* ===== SCREEN WAKE LOCK (Toddler Mode keeps screen on) ===== */
+var wlSentinel=null;
+function wlOn(){if(!('wakeLock' in navigator))return;navigator.wakeLock.request('screen').then(function(s){wlSentinel=s;}).catch(function(){});}
+function wlOff(){if(wlSentinel){try{wlSentinel.release();}catch(e){}wlSentinel=null;}}
+document.addEventListener('visibilitychange',function(){
+  var tm=document.getElementById('tmode');
+  if(document.visibilityState==='visible'&&tm&&tm.classList.contains('act'))wlOn();
+});
+/* ===== BACKUP & RESTORE (progress lives only in localStorage) ===== */
+function backupData(){
+  var out={_app:'vamos',_v:1,_date:new Date().toISOString()};
+  for(var i=0;i<localStorage.length;i++){var k=localStorage.key(i);if(k&&k.indexOf('v_')===0)out[k]=localStorage.getItem(k);}
+  var fname='vamos-backup-'+localDay()+'.json';
+  var blob=new Blob([JSON.stringify(out)],{type:'application/json'});
+  var file=null;try{file=new File([blob],fname,{type:'application/json'});}catch(e){}
+  if(file&&navigator.canShare&&navigator.share&&navigator.canShare({files:[file]})){
+    navigator.share({files:[file],title:'Vamos backup'}).catch(function(){dlBackup(blob,fname);});
+  }else{dlBackup(blob,fname);}
+}
+function dlBackup(blob,fname){
+  var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=fname;document.body.appendChild(a);a.click();
+  setTimeout(function(){URL.revokeObjectURL(a.href);a.remove();},1500);
+  var t=document.getElementById('toast');
+  if(t){t.textContent='💾 Backup saved to your downloads';t.classList.add('sh');setTimeout(function(){t.classList.remove('sh');t.textContent='✓ Saved';},2200);}
+}
+function restoreData(inp){
+  var f=inp.files&&inp.files[0];if(!f)return;
+  var r=new FileReader();
+  r.onload=function(){
+    try{
+      var d=JSON.parse(r.result);
+      if(!d||d._app!=='vamos')throw 0;
+      var n=0;
+      for(var k in d){if(k.indexOf('v_')===0&&typeof d[k]==='string'){localStorage.setItem(k,d[k]);n++;}}
+      if(!n)throw 0;
+      alert('Restored '+n+' items from '+(d._date?d._date.slice(0,10):'backup')+'. The app will now reload.');
+      location.reload();
+    }catch(e){alert('That file is not a Vamos backup. Nothing was changed.');}
+  };
+  r.readAsText(f);inp.value='';
+}
+/* ===== SAFER RESET (two confirms, only touches app keys) ===== */
+function resetAll(){
+  if(!confirm('Erase ALL progress? Streaks, XP, and completed weeks will be gone. Tip: tap Cancel and use Save a Backup first for a safety copy.'))return;
+  if(!confirm('Last chance — really erase everything? This cannot be undone.'))return;
+  var ks=[];for(var i=0;i<localStorage.length;i++){var k=localStorage.key(i);if(k&&k.indexOf('v_')===0)ks.push(k);}
+  ks.forEach(function(k){localStorage.removeItem(k);});
+  location.reload();
+}
+/* ===== VOICE CHECK (shows which Spanish voice this phone uses) ===== */
+function voiceCheck(){
+  var out=document.getElementById('vc-out');
+  var vs=(speechSynthesis.getVoices()||[]).filter(function(v){return v.lang&&v.lang.indexOf('es')===0;});
+  if(!vs.length){
+    if(out)out.innerHTML='⚠️ <b>No Spanish voice found on this phone.</b><br><br><b>iPhone:</b> Settings → Accessibility → Spoken Content → Voices → Spanish → download <b>Paulina</b> or <b>Mónica</b>.<br><b>Android:</b> Settings → search <b>Text-to-speech</b> → Google engine → install Spanish.<br><br>Then close and reopen the app.';
+    return;
+  }
+  var fem=vs.find(function(x){return /female|paulina|monica|lupe|samantha|karen|fiona|zuzana|tessa/i.test(x.name);})||vs.find(function(x){return !/male|jorge|juan|diego|carlos|daniel|thomas|david/i.test(x.name);})||vs[0];
+  if(out)out.innerHTML='✅ Voice: <b>'+fem.name+'</b> ('+fem.lang+') · '+vs.length+' Spanish voice(s) on this phone';
+  speak('¡Hola! Soy tu voz en español. ¿Cómo estás?','es');
+}
 function spB(t,lang){return `<button class="spk" data-speak="${t.replace(/"/g,'&quot;')}" data-lang="${lang||'es'}">🔊</button>`;}
 function biliP(es,ph,en,size){var cls='bili-prompt'+(size?' '+size:'');return '<div class="'+cls+'"><span class="es">'+es+'</span><span class="ph">🗣 '+ph+'</span><span class="en">'+en+'</span></div>';}
 function sh(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=0|Math.random()*(i+1);[b[i],b[j]]=[b[j],b[i]];}return b;}
@@ -1410,7 +1471,7 @@ async function playDrum(t){
 }
 
 /* ===== TODDLER MODE ===== */
-function toggleTM(){const tm=document.getElementById('tmode');const entering=!tm.classList.contains('act');tm.classList.toggle('act');if(entering){S.tm=(S.tm||0)+1;sv();if(typeof checkAch==='function')checkAch();try{document.documentElement.requestFullscreen?.();}catch(e){}for(let i=0;i<5;i++)history.pushState({toddler:true},'');window.addEventListener('popstate',tmPopTrap);}else{try{document.exitFullscreen?.();}catch(e){}window.removeEventListener('popstate',tmPopTrap);history.replaceState({},'');}if(profile)document.getElementById('tm-greeting').textContent='¡Hola '+profile.child+'!';}
+function toggleTM(){const tm=document.getElementById('tmode');const entering=!tm.classList.contains('act');tm.classList.toggle('act');if(entering){S.tm=(S.tm||0)+1;sv();if(typeof checkAch==='function')checkAch();try{document.documentElement.requestFullscreen?.();}catch(e){}for(let i=0;i<5;i++)history.pushState({toddler:true},'');window.addEventListener('popstate',tmPopTrap);wlOn();}else{try{document.exitFullscreen?.();}catch(e){}window.removeEventListener('popstate',tmPopTrap);history.replaceState({},'');wlOff();}if(profile)document.getElementById('tm-greeting').textContent='¡Hola '+profile.child+'!';}
 function tmPopTrap(e){if(document.getElementById('tmode').classList.contains('act')){history.pushState({toddler:true},'');}}
 let exitTimer=null;let exitCount=3;
 const exitBtn=document.getElementById('tm-lock-exit');
@@ -3789,8 +3850,19 @@ h+=`<div class="subpg ${morePage==='st'?'act':''}" id="m-st"><button class="back
 <button onclick="setLang('es')" style="flex:1;padding:14px;border-radius:12px;border:3px solid ${appLang==='es'?'var(--teal)':'var(--bd)'};background:${appLang==='es'?'var(--teall)':'var(--w)'};font-weight:700;font-size:14px;color:var(--ink);">🇪🇸 Learn Spanish<br><span style="font-size:11px;font-weight:500;color:var(--gr);">I speak English</span></button>
 <button onclick="setLang('en')" style="flex:1;padding:14px;border-radius:12px;border:3px solid ${appLang==='en'?'var(--teal)':'var(--bd)'};background:${appLang==='en'?'var(--teall)':'var(--w)'};font-weight:700;font-size:14px;color:var(--ink);">🇺🇸 Learn English<br><span style="font-size:11px;font-weight:500;color:var(--gr);">Hablo español</span></button>
 </div></div>
+<div class="card hl-gold"><h3>💾 Backup & Restore</h3>
+<p style="font-size:13px;margin-bottom:10px;">All progress lives only on this phone. Save a backup every month or two — you can bring it to a new phone or undo a mistake.</p>
+<button onclick="backupData()" style="width:100%;padding:12px;border-radius:50px;background:var(--gold);color:var(--ink);font-weight:800;font-size:14px;">💾 Save a Backup</button>
+<label style="display:block;text-align:center;width:100%;padding:12px;border-radius:50px;background:var(--w);border:3px solid var(--gold);color:var(--ink);font-weight:800;font-size:14px;margin-top:8px;cursor:pointer;">📥 Restore from Backup<input type="file" accept=".json,application/json" style="display:none;" onchange="restoreData(this)"></label>
+<p style="font-size:11px;color:var(--gr);margin-top:8px;">Restoring replaces current progress with the backup.</p>
+</div>
+<div class="card hl-teal"><h3>🔊 Voice Check</h3>
+<p style="font-size:13px;margin-bottom:10px;">Tap to hear the exact Spanish voice this phone will use.</p>
+<button onclick="voiceCheck()" style="padding:10px 20px;border-radius:50px;background:var(--teal);color:var(--w);font-weight:700;font-size:13px;">🔊 Test Spanish Voice</button>
+<div id="vc-out" style="font-size:12px;margin-top:10px;line-height:1.5;"></div>
+</div>
 <div class="card"><h3>🎓 App Tour</h3><p style="margin-bottom:8px;">Watch the walkthrough again to learn how the app works.</p><button onclick="walkStep=0;walkActive=true;L.s('walkDone',false);showWalk();" style="padding:10px 20px;border-radius:50px;background:var(--teal);color:var(--w);font-weight:700;font-size:13px;">Replay Tour</button></div>
-<div class="card hl-gold"><h3>📊 Reset Progress</h3><p style="margin-bottom:8px;">Start completely fresh. This cannot be undone.</p><button onclick="if(confirm('Reset ALL progress?')){localStorage.clear();location.reload();}" style="padding:10px 20px;border-radius:50px;background:var(--terra);color:var(--w);font-weight:700;font-size:13px;">Reset Everything</button></div></div>`;
+<div class="card hl-gold"><h3>📊 Reset Progress</h3><p style="margin-bottom:8px;">Start completely fresh. This cannot be undone.</p><button onclick="resetAll()" style="padding:10px 20px;border-radius:50px;background:var(--terra);color:var(--w);font-weight:700;font-size:13px;">Reset Everything</button></div></div>`;
 document.getElementById('p-more').innerHTML=h;}
 function openMore(id){morePage=id;rM();}
 function setLang(lang){appLang=lang;L.s('appLang',lang);rC();rQ();rM();renderToys();showSaved();}
