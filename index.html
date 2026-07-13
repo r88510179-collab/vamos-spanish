@@ -599,7 +599,7 @@ Fill in your info below and tap ¡Vamos! <span style="font-size:11px;opacity:.7;
 <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-top:16px;" id="ttabs">
 <button class="tt-tab act" onclick="setTCat('all',this)">🌟 All</button>
 <button class="tt-tab" onclick="setTCat('me',this)">👋🏾 Me</button>
-<button class="tt-tab" data-tcat="lesson" onclick="setTCat('lesson',this)">📚 Lesson</button>
+<button class="tt-tab" data-tcat="lesson" onclick="setTCat('lesson',this)">📚 Lesson</button><button class="tt-tab" data-tcat="simon" onclick="setTCat('simon',this)">🤸🏾 Simón</button>
 <button class="tt-tab" onclick="setTCat('animals',this)">🐾 Animals</button>
 <button class="tt-tab" onclick="setTCat('food',this)">🍎 Food</button>
 <button class="tt-tab" onclick="setTCat('sports',this)">⚽ Sports</button>
@@ -622,15 +622,27 @@ Fill in your info below and tap ¡Vamos! <span style="font-size:11px;opacity:.7;
 
 <!-- Counting Game -->
 <div id="count-game" style="display:none;margin-top:24px;background:var(--w);border-radius:20px;padding:24px;border:4px solid var(--ink);">
-<div class="bili-prompt" style="margin-bottom:8px;"><span class="es">🔢 ¡Vamos a Contar! (1-20)</span><span class="ph">🗣 VAH-mohs ah kohn-TAR</span><span class="en">Counting (1–20)</span></div>
-<div id="count-display" style="font-size:80px;text-align:center;margin:16px 0;font-family:'Baloo 2';color:var(--ink);">1</div>
-<div id="count-word" style="font-size:24px;text-align:center;font-family:'Baloo 2';color:var(--terra);margin-bottom:16px;">UNO</div>
-<div style="display:flex;gap:12px;justify-content:center;">
-<button onclick="countNav(-1)" style="width:60px;height:60px;border-radius:50%;background:var(--ink);color:var(--gold);font-size:28px;font-weight:800;border:3px solid var(--gold);">←</button>
-<button onclick="speakCount()" style="width:60px;height:60px;border-radius:50%;background:var(--gold);color:var(--ink);font-size:28px;border:3px solid var(--ink);">🔊</button>
-<button onclick="countNav(1)" style="width:60px;height:60px;border-radius:50%;background:var(--ink);color:var(--gold);font-size:28px;font-weight:800;border:3px solid var(--gold);">→</button>
+<div class="bili-prompt" style="margin-bottom:4px;"><span class="es">🔢 ¡Toca y Cuenta!</span><span class="ph">🗣 TOH-kah ee KWEHN-tah</span><span class="en">Tap and Count!</span></div>
+<div style="text-align:center;font-family:'Baloo 2';font-size:17px;color:var(--terra);margin-bottom:12px;">¿Cuántos hay? · How many?</div>
+<div id="tc-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;justify-items:center;"></div>
+<div id="tc-count" style="font-size:64px;text-align:center;font-family:'Baloo 2';color:var(--ink);min-height:78px;margin-top:6px;"></div>
+<div id="tc-word" style="font-size:22px;text-align:center;font-family:'Baloo 2';color:var(--terra);min-height:30px;"></div>
+<div style="text-align:center;margin-top:10px;"><button onclick="startTapCount()" style="padding:12px 24px;border-radius:50px;background:var(--ink);color:var(--gold);font-weight:800;font-size:16px;border:3px solid var(--gold);">🔄 Otra vez</button></div>
+</div>
+
+<!-- Simon Dice (TPR commands — do the action together in real life) -->
+<div id="simon-game" style="display:none;margin-top:24px;background:var(--w);border-radius:20px;padding:24px;border:4px solid var(--ink);">
+<div class="bili-prompt" style="margin-bottom:8px;"><span class="es">🤸🏾 ¡Simón Dice!</span><span class="ph">🗣 see-MOHN DEE-seh</span><span class="en">Simon Says!</span></div>
+<div style="text-align:center;font-size:13px;color:var(--gr);margin-bottom:8px;">Do the action together in real life, then tap the gold button!</div>
+<div id="si-score" style="text-align:center;font-family:'Baloo 2';font-size:16px;color:var(--teal);margin-bottom:4px;">⭐ 0</div>
+<div id="si-emoji" style="font-size:96px;text-align:center;min-height:112px;line-height:1.1;"></div>
+<div id="si-cmd" style="text-align:center;margin:8px 0;"></div>
+<div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:12px;">
+<button onclick="simonRepeat()" style="padding:14px 20px;border-radius:50px;background:var(--w);border:3px solid var(--ink);color:var(--ink);font-weight:800;font-size:16px;">🔊 Repite</button>
+<button onclick="simonDone()" style="padding:14px 26px;border-radius:50px;background:var(--gold);border:3px solid var(--ink);color:var(--ink);font-weight:800;font-size:18px;">✅ ¡Lo hicimos!</button>
 </div>
 </div>
+
 
 <!-- Match Game (all categories) -->
 <div id="match-game" style="display:none;margin-top:24px;background:var(--w);border-radius:20px;padding:24px;border:4px solid var(--ink);">
@@ -859,7 +871,7 @@ const TOYS=[
 {emoji:"🌈",es:"Arcoíris",en:"Rainbow",cat:"nature"},{emoji:"🌵",es:"Cactus",en:"Cactus",cat:"nature"},{emoji:"🍃",es:"Hoja",en:"Leaf",cat:"nature"},{emoji:"🌋",es:"Volcán",en:"Volcano",cat:"nature"},
 // SPORTS (12) - NEW
 {emoji:"⚽",es:"Fútbol",en:"Soccer",cat:"sports"},{emoji:"🏀",es:"Básquetbol",en:"Basketball",cat:"sports"},{emoji:"⚾",es:"Béisbol",en:"Baseball",cat:"sports"},{emoji:"🏈",es:"Fútbol Americano",en:"Football",cat:"sports"},{emoji:"🎾",es:"Tenis",en:"Tennis",cat:"sports"},{emoji:"🏊",es:"Nadar",en:"Swimming",cat:"sports"},
-{emoji:"🚴",es:"Bicicleta",en:"Cycling",cat:"sports"},{emoji:"🏃",es:"Correr",en:"Running",cat:"sports"},{emoji:"⛳",es:"Golf",en:"Golf",cat:"sports"},{emoji:"🥊",es:"Boxeo",en:"Boxing",cat:"sports"},{emoji:"🤸",es:"Gimnasia",en:"Gymnastics",cat:"sports"},{emoji:"🛹",es:"Patineta",en:"Skateboard",cat:"sports"},
+{emoji:"🚴",es:"Bicicleta",en:"Cycling",cat:"sports"},{emoji:"🏃",es:"Correr",en:"Running",cat:"sports"},{emoji:"⛳",es:"Golf",en:"Golf",cat:"sports"},{emoji:"🥊",es:"Boxeo",en:"Boxing",cat:"sports"},{emoji:"🤸🏾",es:"Gimnasia",en:"Gymnastics",cat:"sports"},{emoji:"🛹",es:"Patineta",en:"Skateboard",cat:"sports"},
 // VEHICLES (10) - NEW
 {emoji:"🚗",es:"Carro",en:"Car",cat:"vehicles"},{emoji:"🚌",es:"Autobús",en:"Bus",cat:"vehicles"},{emoji:"✈️",es:"Avión",en:"Airplane",cat:"vehicles"},{emoji:"🚂",es:"Tren",en:"Train",cat:"vehicles"},{emoji:"🚢",es:"Barco",en:"Boat",cat:"vehicles"},{emoji:"🚒",es:"Bomberos",en:"Fire truck",cat:"vehicles"},
 {emoji:"🚑",es:"Ambulancia",en:"Ambulance",cat:"vehicles"},{emoji:"🚀",es:"Cohete",en:"Rocket",cat:"vehicles"},{emoji:"🚁",es:"Helicóptero",en:"Helicopter",cat:"vehicles"},{emoji:"🏍️",es:"Moto",en:"Motorcycle",cat:"vehicles"},
@@ -874,7 +886,7 @@ const NUMS=["","Uno","Dos","Tres","Cuatro","Cinco","Seis","Siete","Ocho","Nueve"
 const COLORS_GAME=[{es:"Rojo",en:"Red",hex:"#E53E3E"},{es:"Azul",en:"Blue",hex:"#3182CE"},{es:"Verde",en:"Green",hex:"#38A169"},{es:"Amarillo",en:"Yellow",hex:"#ECC94B"},{es:"Naranja",en:"Orange",hex:"#DD6B20"},{es:"Morado",en:"Purple",hex:"#805AD5"},{es:"Rosado",en:"Pink",hex:"#D53F8C"},{es:"Negro",en:"Black",hex:"#1A1B4B"},{es:"Blanco",en:"White",hex:"#F5F5F5"},{es:"Caf\u00e9",en:"Brown",hex:"#8B5E3C"}];
 const SOCCER_VOCAB=[
   {en:'ball',es:'pelota',em:'⚽'},
-  {en:'kick',es:'patada',em:'🦵'},
+  {en:'kick',es:'patada',em:'🦵🏾'},
   {en:'goal',es:'gol',em:'🥅'},
   {en:'cone',es:'cono',em:'🔶'},
   {en:'run',es:'corre',em:'🏃'},
@@ -944,7 +956,7 @@ const WEEK_VOCAB=[null,
 // Week 21: Question Words (deeper)
 [{e:'❓',es:'Cuál',en:'Which'},{e:'⏰',es:'A qué hora',en:'At what time'},{e:'🔄',es:'Cómo',en:'How'},{e:'📊',es:'Cuánto',en:'How much'},{e:'📍',es:'De dónde',en:'From where'},{e:'🛣️',es:'Hasta dónde',en:'How far'}],
 // Week 22: Playground Spanish
-[{e:'🏞️',es:'Columpio',en:'Swing'},{e:'🛝',es:'Resbaladilla',en:'Slide'},{e:'🏃',es:'Correr',en:'To run'},{e:'🤸',es:'Saltar',en:'To jump'},{e:'🧗',es:'Subir',en:'To climb'},{e:'👫🏾',es:'Amigo',en:'Friend'},{e:'⚽',es:'Pelota',en:'Ball'}],
+[{e:'🏞️',es:'Columpio',en:'Swing'},{e:'🛝',es:'Resbaladilla',en:'Slide'},{e:'🏃',es:'Correr',en:'To run'},{e:'🤸🏾',es:'Saltar',en:'To jump'},{e:'🧗',es:'Subir',en:'To climb'},{e:'👫🏾',es:'Amigo',en:'Friend'},{e:'⚽',es:'Pelota',en:'Ball'}],
 // Week 23: Describing Everything
 [{e:'💪🏾',es:'Fuerte',en:'Strong'},{e:'😴',es:'Cansado',en:'Tired'},{e:'⚡',es:'Rápido',en:'Fast'},{e:'🐢',es:'Lento',en:'Slow'},{e:'✨',es:'Limpio',en:'Clean'},{e:'🧹',es:'Sucio',en:'Dirty'},{e:'🔊',es:'Ruidoso',en:'Loud'}],
 // Week 24: Phase 2 Complete
@@ -1499,7 +1511,7 @@ function renderToys(){
   var matchCats=['animals','food','body','nature','sports','vehicles','shapes','clothes','weather'];
   document.getElementById('match-game').style.display=matchCats.includes(tCat)?'block':'none';
   if(tCat==='colors')startColorGame();
-  if(tCat==='count')updCount();
+  document.getElementById('simon-game').style.display=tCat==='simon'?'block':'none';if(tCat==='simon')startSimon();if(tCat==='count')startTapCount();
   if(matchCats.includes(tCat))startMatchGame(tCat);
   if(tCat==='bubbles')setTimeout(startBubbles,100);
   if(tCat==='memory')startMemory();
@@ -1541,9 +1553,70 @@ function checkMatch(picked){
 }
 function setTCat(c,btn){if(typeof closeSoccerGame==='function')closeSoccerGame();tCat=c;matchScore=0;matchStreak=0;document.querySelectorAll('.tt-tab').forEach(function(t){t.classList.remove('act');});if(btn)btn.classList.add('act');renderToys();}
 function openLessonTM(){toggleTM();setTimeout(function(){var btn=document.querySelector('[data-tcat="lesson"]');setTCat('lesson',btn);},500);}
-function countNav(dir){countN=Math.max(1,Math.min(20,countN+dir));updCount();}
-function updCount(){document.getElementById('count-display').textContent=countN;document.getElementById('count-word').textContent=NUMS[countN];speak(NUMS[countN],'es');}
-function speakCount(){speak(NUMS[countN],'es');}
+/* ===== TAP-TO-COUNT — one-to-one correspondence counting (ages 2-3) ===== */
+var tcTarget=3,tcTapped=0,tcRound=0;
+function startTapCount(){
+  tcTapped=0;
+  tcTarget=Math.min(3+Math.floor(tcRound/2),10);
+  var pool=TOYS.filter(function(t){return t.cat==='animals'||t.cat==='food';});
+  var item=pool[0|Math.random()*pool.length];
+  var g=document.getElementById('tc-grid');if(!g)return;
+  var htm='';
+  for(var i=0;i<tcTarget;i++)htm+='<button class="tc-obj" data-tc="1" style="font-size:50px;background:var(--goldl);border:4px solid var(--gold);border-radius:20px;width:84px;height:84px;line-height:1;">'+item.emoji+'</button>';
+  g.innerHTML=htm;
+  document.getElementById('tc-count').textContent='';
+  document.getElementById('tc-word').textContent='';
+  speak('¿Cuántos hay? ¡Toca y cuenta!','es');
+}
+function tapCountObj(btn){
+  if(btn.dataset.tc!=='1')return;
+  btn.dataset.tc='0';
+  btn.style.background='var(--teall)';btn.style.borderColor='var(--teal)';btn.style.transform='scale(.92)';btn.textContent='⭐';
+  tcTapped++;
+  document.getElementById('tc-count').textContent=tcTapped;
+  document.getElementById('tc-word').textContent=(NUMS[tcTapped]||'').toUpperCase();
+  speak(NUMS[tcTapped]||String(tcTapped),'es');
+  if(tcTapped>=tcTarget){
+    tcRound++;
+    confetti();
+    setTimeout(function(){speak('¡'+(NUMS[tcTarget]||tcTarget)+'! ¡Muy bien!','es');},800);
+    setTimeout(startTapCount,2600);
+  }
+}
+document.addEventListener('click',function(e){var b=e.target.closest('.tc-obj');if(b)tapCountObj(b);});
+/* ===== SIMON DICE — TPR commands, parent and toddler act together ===== */
+const SIMON_CMDS=[
+  {es:'Toca tu nariz',ph:'TOH-kah too nah-REES',en:'Touch your nose',em:'👃🏾'},
+  {es:'Toca tu cabeza',ph:'TOH-kah too kah-BEH-sah',en:'Touch your head',em:'🙆🏾'},
+  {es:'Toca tus orejas',ph:'TOH-kah toos oh-REH-hahs',en:'Touch your ears',em:'👂🏾'},
+  {es:'Toca tus pies',ph:'TOH-kah toos pee-EHS',en:'Touch your feet',em:'🦶🏾'},
+  {es:'Toca tu boca',ph:'TOH-kah too BOH-kah',en:'Touch your mouth',em:'👄'},
+  {es:'Aplaude',ph:'ah-PLOW-deh',en:'Clap your hands',em:'👏🏾'},
+  {es:'Salta',ph:'SAHL-tah',en:'Jump',em:'🦘'},
+  {es:'Baila',ph:'BY-lah',en:'Dance',em:'💃🏾'},
+  {es:'Siéntate',ph:'see-EHN-tah-teh',en:'Sit down',em:'🪑'},
+  {es:'Párate',ph:'PAH-rah-teh',en:'Stand up',em:'🧍🏾'},
+  {es:'Manos arriba',ph:'MAH-nohs ah-REE-bah',en:'Hands up',em:'🙌🏾'},
+  {es:'Da una vuelta',ph:'dah OO-nah VWEL-tah',en:'Spin around',em:'🌀'},
+  {es:'Un abrazo grande',ph:'oon ah-BRAH-soh GRAHN-deh',en:'A big hug',em:'🤗'},
+  {es:'Camina como pato',ph:'kah-MEE-nah KOH-moh PAH-toh',en:'Walk like a duck',em:'🦆'}
+];
+var siQueue=[],siCur=null,siScore=0;
+function startSimon(){siScore=0;var s=document.getElementById('si-score');if(s)s.textContent='⭐ 0';siQueue=sh(SIMON_CMDS);simonNext();}
+function simonNext(){
+  if(!siQueue.length)siQueue=sh(SIMON_CMDS);
+  siCur=siQueue.pop();
+  document.getElementById('si-emoji').textContent=siCur.em;
+  document.getElementById('si-cmd').innerHTML=biliP('Simón dice… <b>'+siCur.es+'</b>','see-MOHN DEE-seh… '+siCur.ph,'Simon says… '+siCur.en);
+  simonRepeat();
+}
+function simonRepeat(){if(siCur)speak('Simón dice... '+siCur.es,'es');}
+function simonDone(){
+  siScore++;var s=document.getElementById('si-score');if(s)s.textContent='⭐ '+siScore;
+  confetti();
+  speak('¡Muy bien!','es');
+  setTimeout(simonNext,1500);
+}
 var colorScore=0,colorCount=0;
 function startColorGame(){
   var numOpts=colorScore>=8?6:4;
@@ -1932,10 +2005,10 @@ function renderSoccerMenu(){
   if(stage)stage.innerHTML='';
   menu.style.display='';
   menu.innerHTML=''
-    +'<button class="socc-game-btn" onclick="openSoccerGame(\'ritual\')"><span class="ico">🧍</span><span class="txt">Head, Toes, Ears<small>Warmup + Listen &amp; Respect</small></span></button>'
+    +'<button class="socc-game-btn" onclick="openSoccerGame(\'ritual\')"><span class="ico">🧍🏾</span><span class="txt">Head, Toes, Ears<small>Warmup + Listen &amp; Respect</small></span></button>'
     +'<button class="socc-game-btn" onclick="openSoccerGame(\'cones\')"><span class="ico">🔶</span><span class="txt">Cone Color Run<small>Cheetah, Bear, Bunny, Frog</small></span></button>'
     +'<button class="socc-game-btn" onclick="openSoccerGame(\'kickcones\')"><span class="ico">💥</span><span class="txt">Kick-Over-Cones<small>Time your kick to knock over cones</small></span></button>'
-    +'<button class="socc-game-btn" onclick="openSoccerGame(\'dribble\')"><span class="ico">🦶</span><span class="txt">Dribble Rhythm<small>Tap left-right to dribble to the goal</small></span></button>'
+    +'<button class="socc-game-btn" onclick="openSoccerGame(\'dribble\')"><span class="ico">🦶🏾</span><span class="txt">Dribble Rhythm<small>Tap left-right to dribble to the goal</small></span></button>'
     +'<button class="socc-game-btn" onclick="openSoccerGame(\'goal\')"><span class="ico">🥅</span><span class="txt">Goal Shot<small>Hold to charge, release to kick</small></span></button>';
 }
 function openSoccerGame(which){
@@ -2451,7 +2524,7 @@ function startKickCones(){
 function buildDribble(){
   return ''
     +'<div class="socc-help">'
-    +  '<b>How to play:</b> Tap the glowing foot 🦶 to dribble the ball forward. '
+    +  '<b>How to play:</b> Tap the glowing foot 🦶🏾 to dribble the ball forward. '
     +  'Alternate LEFT foot, RIGHT foot, left, right — keep the rhythm to reach the goal!'
     +'</div>'
     +'<div class="socc-prompt" id="drPrompt"><span class="es">¡Toca el pie brillante!</span><span class="ph">🗣 TOH-kah ehl pee-EH bree-YAHN-teh</span><span class="en">Tap the glowing foot!</span></div>'
@@ -2461,8 +2534,8 @@ function buildDribble(){
     +  '<div class="socc-dr-path"></div>'
     +  '<div class="socc-dr-ball" id="drBall">⚽</div>'
     +  '<div class="socc-dr-feet">'
-    +    '<div class="socc-dr-foot active" id="drLeft" data-side="L">🦶</div>'
-    +    '<div class="socc-dr-foot" id="drRight" data-side="R" style="transform:scaleX(-1);">🦶</div>'
+    +    '<div class="socc-dr-foot active" id="drLeft" data-side="L">🦶🏾</div>'
+    +    '<div class="socc-dr-foot" id="drRight" data-side="R" style="transform:scaleX(-1);">🦶🏾</div>'
     +  '</div>'
     +'</div>';
 }
