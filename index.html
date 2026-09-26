@@ -314,6 +314,36 @@ button,.cb,.wkc,.spk,.splg{min-width:44px;min-height:44px;}
 .drum:active{transform:scale(.9);}
 .tt-tab{padding:8px 14px;border-radius:50px;background:var(--w);color:var(--ink);font-size:12px;font-weight:800;border:3px solid var(--ink);}
 .tt-tab.act{background:var(--ink);color:var(--gold);}
+.tm-favs{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:16px;}
+.tm-fav{min-width:0;background:var(--w);border:5px solid var(--ink);border-radius:24px;padding:16px 8px;box-shadow:0 6px 0 var(--ink);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-height:124px;transition:transform .1s;}
+.tm-fav .e{font-size:58px;line-height:1;pointer-events:none;}
+.tm-fav .l{font-family:'Baloo 2',cursive;font-size:20px;font-weight:800;color:var(--ink);pointer-events:none;}
+.tm-fav:active{transform:translateY(4px);box-shadow:0 2px 0 var(--ink);}
+.tm-fav[data-fav="lesson"]{grid-column:1/-1;min-height:76px;flex-direction:row;gap:10px;background:var(--teall);}
+.tm-fav[data-fav="lesson"] .e{font-size:38px;}
+.tm-fav.act{background:var(--ink);}
+.tm-fav.act .l{color:var(--gold);}
+#tmode.tm-playing .tm-favs{grid-template-columns:repeat(5,1fr);gap:8px;margin-top:10px;}
+#tmode.tm-playing .tm-fav{min-height:0;padding:8px 2px;border-width:3px;border-radius:16px;box-shadow:0 3px 0 var(--ink);grid-column:auto;flex-direction:column;gap:2px;}
+#tmode.tm-playing .tm-fav .e{font-size:30px;}
+#tmode.tm-playing .tm-fav .l{font-size:10px;}
+#tmode.tm-playing .tm-splash,#tmode.tm-playing .tm-hint{display:none!important;}
+#tmode.tm-playing #tm-greeting{font-size:22px;margin-top:44px!important;}
+.tm-more-btn{margin-top:14px;padding:8px 18px;border-radius:50px;background:transparent;border:2px dashed var(--ink);color:var(--ink);font-weight:800;font-size:13px;}
+#ttabs{display:none!important;}
+#ttabs.open{display:flex!important;}
+@keyframes tmWiggle{0%,100%{transform:translateX(0);}20%{transform:translateX(-8px);}40%{transform:translateX(8px);}60%{transform:translateX(-5px);}80%{transform:translateX(5px);}}
+.tm-wiggle{animation:tmWiggle .45s ease;}
+@keyframes drumHit{0%{transform:scale(1);box-shadow:0 0 0 0 rgba(212,160,23,.9);}40%{transform:scale(1.18);box-shadow:0 0 0 22px rgba(212,160,23,0);}100%{transform:scale(1);box-shadow:0 0 0 0 rgba(212,160,23,0);}}
+.drum.hit{animation:drumHit .35s ease-out;}
+@keyframes padFlash{0%{background:#3d3f8f;}100%{background:var(--ink);}}
+.punta-pad.flash{animation:padFlash .3s ease-out;}
+#punta-pad.big{padding:28px 16px;}
+#punta-pad.big .drum-row{gap:18px;flex-wrap:wrap;margin-top:18px;}
+#punta-pad.big .drum{width:104px;height:104px;font-size:50px;border-width:6px;}
+#tmode{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;}
+html.tm-on,html.tm-on body{overscroll-behavior:none;overflow:hidden;}
+html.tm-on #toast{display:none!important;}
 .tm-exit{position:fixed;top:calc(env(safe-area-inset-top,12px)+12px);left:14px;font-size:16px;font-weight:800;background:var(--ink);color:var(--gold);padding:8px 16px;border-radius:50px;z-index:2001;}
 
 /* SOCCER SHOTS */
@@ -591,13 +621,23 @@ Fill in your info below and tap ¡Vamos! <span style="font-size:11px;opacity:.7;
 
 <div id="tmode">
 <button class="tm-exit" id="tm-lock-exit">🔒 Hold to Exit</button>
-<img src="/icons/toddler-splash.png" style="width:100%;max-width:400px;border-radius:16px;margin:0 auto 12px;display:block;" alt="¡Hola!">
+<img class="tm-splash" src="/icons/toddler-splash.png" style="width:100%;max-width:400px;border-radius:16px;margin:0 auto 12px;display:block;" alt="¡Hola!">
 <h2 id="tm-greeting" style="font-family:'Baloo 2';font-size:30px;color:var(--ink);margin-top:30px;">¡Hola Bebé!</h2>
-<p style="font-size:14px;font-weight:700;color:var(--ink2);">Tap the pictures to hear the words!</p>
+<p class="tm-hint" style="font-size:14px;font-weight:700;color:var(--ink2);">¡Escoge un juego! · Pick a game!</p>
+
+<!-- Favorite games: big tiles a toddler can pick himself -->
+<div class="tm-favs" id="tm-favs">
+<button class="tm-fav" data-fav="bubbles" onclick="tmFav('bubbles')"><span class="e">🫧</span><span class="l">Burbujas</span></button>
+<button class="tm-fav" data-fav="match" onclick="tmFav('match')"><span class="e">🎯</span><span class="l">¡Toca!</span></button>
+<button class="tm-fav" data-fav="drums" onclick="tmFav('drums')"><span class="e">🥁</span><span class="l">Tambores</span></button>
+<button class="tm-fav" data-fav="paint" onclick="tmFav('paint')"><span class="e">🎨</span><span class="l">Pintar</span></button>
+<button class="tm-fav" data-fav="lesson" onclick="tmFav('lesson')"><span class="e">📚</span><span class="l">Lección</span></button>
+</div>
+<button class="tm-more-btn" id="tm-more-btn" onclick="tmMore()">➕ Más juegos</button>
 
 <!-- Toddler Category Tabs -->
 <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-top:16px;" id="ttabs">
-<button class="tt-tab act" onclick="setTCat('all',this)">🌟 All</button>
+<button class="tt-tab" onclick="setTCat('all',this)">🌟 All</button>
 <button class="tt-tab" onclick="setTCat('me',this)">👋🏾 Me</button>
 <button class="tt-tab" data-tcat="lesson" onclick="setTCat('lesson',this)">📚 Lesson</button><button class="tt-tab" data-tcat="simon" onclick="setTCat('simon',this)">🤸🏾 Simón</button>
 <button class="tt-tab" onclick="setTCat('animals',this)">🐾 Animals</button>
@@ -738,13 +778,13 @@ Fill in your info below and tap ¡Vamos! <span style="font-size:11px;opacity:.7;
 </div>
 </div>
 
-<div class="punta-pad">
+<div class="punta-pad" id="punta-pad" style="display:none;">
 <p style="font-weight:800;font-size:16px;">🥁 PUNTA DRUMS</p>
 <p style="font-size:12px;opacity:.8;">Tap the drums! ¡Baila punta!</p>
 <div class="drum-row">
-<button class="drum" onclick="playDrum('hi')">🪘</button>
-<button class="drum" onclick="playDrum('mid')">🥁</button>
-<button class="drum" onclick="playDrum('lo')">🪘</button>
+<button class="drum" onclick="playDrum('hi',this)">🪘</button>
+<button class="drum" onclick="playDrum('mid',this)">🥁</button>
+<button class="drum" onclick="playDrum('lo',this)">🪘</button>
 </div>
 </div>
 </div>
@@ -920,7 +960,7 @@ const SOCC_COLORS=[
   {en:'yellow',es:'amarillo',hex:'#ffc940'},
   {en:'green',es:'verde',hex:'#4caf50'}
 ];
-let tCat='all',countN=1,colorTarget=null;
+let tCat='home',countN=1,colorTarget=null;
 
 /* ===== WEEKLY LESSON VOCAB (Toddler Mode + This Week focus) ===== */
 const WEEK_VOCAB=[null,
@@ -1466,7 +1506,11 @@ function confetti(){const c=document.getElementById('confetti'),x=c.getContext('
 
 /* ===== DRUM ===== */
 let drumAudioCtx=null;
-async function playDrum(t){
+async function playDrum(t,btn){
+  // Visual hit: iPhone Safari has no vibration, so the pulse is the feedback there
+  if(btn){btn.classList.remove('hit');void btn.offsetWidth;btn.classList.add('hit');}
+  var pad=document.getElementById('punta-pad');
+  if(pad){pad.classList.remove('flash');void pad.offsetWidth;pad.classList.add('flash');}
   if(navigator.vibrate)navigator.vibrate(t==='hi'?30:t==='mid'?50:70);
   try{
     if(!drumAudioCtx)drumAudioCtx=new (window.AudioContext||window.webkitAudioContext)();
@@ -1483,7 +1527,7 @@ async function playDrum(t){
 }
 
 /* ===== TODDLER MODE ===== */
-function toggleTM(){const tm=document.getElementById('tmode');const entering=!tm.classList.contains('act');tm.classList.toggle('act');if(entering){S.tm=(S.tm||0)+1;sv();if(typeof checkAch==='function')checkAch();try{document.documentElement.requestFullscreen?.();}catch(e){}for(let i=0;i<5;i++)history.pushState({toddler:true},'');window.addEventListener('popstate',tmPopTrap);wlOn();}else{try{document.exitFullscreen?.();}catch(e){}window.removeEventListener('popstate',tmPopTrap);history.replaceState({},'');wlOff();}if(profile)document.getElementById('tm-greeting').textContent='¡Hola '+profile.child+'!';}
+function toggleTM(){const tm=document.getElementById('tmode');const entering=!tm.classList.contains('act');tm.classList.toggle('act');document.documentElement.classList.toggle('tm-on',entering);if(entering){setTCat('home',null);S.tm=(S.tm||0)+1;sv();if(typeof checkAch==='function')checkAch();try{document.documentElement.requestFullscreen?.();}catch(e){}for(let i=0;i<5;i++)history.pushState({toddler:true},'');window.addEventListener('popstate',tmPopTrap);wlOn();}else{try{document.exitFullscreen?.();}catch(e){}window.removeEventListener('popstate',tmPopTrap);history.replaceState({},'');wlOff();}if(profile)document.getElementById('tm-greeting').textContent='¡Hola '+profile.child+'!';}
 function tmPopTrap(e){if(document.getElementById('tmode').classList.contains('act')){history.pushState({toddler:true},'');}}
 let exitTimer=null;let exitCount=3;
 const exitBtn=document.getElementById('tm-lock-exit');
@@ -1492,7 +1536,7 @@ function cancelExit(){if(exitTimer){clearInterval(exitTimer);exitTimer=null;}if(
 if(exitBtn){exitBtn.addEventListener('mousedown',startExit);exitBtn.addEventListener('mouseup',cancelExit);exitBtn.addEventListener('mouseleave',cancelExit);
 exitBtn.addEventListener('touchstart',e=>{e.preventDefault();startExit();});exitBtn.addEventListener('touchend',cancelExit);exitBtn.addEventListener('touchcancel',cancelExit);}
 function renderToys(){
-  var gameCats=['bubbles','memory','paint','lesson','me','sorting','soccer'];
+  var gameCats=['bubbles','memory','paint','lesson','me','sorting','soccer','home','match','drums'];
   var items=tCat==='all'?sh(TOYS).slice(0,16):gameCats.includes(tCat)?[]:TOYS.filter(function(t){return t.cat===tCat;});
   var lblKey=appLang==='en'?'en':'es';var spkKey=appLang==='en'?'en':'es';
   document.getElementById('toyGrid').innerHTML=items.map(function(t){return '<button class="toy-btn" data-speak="'+t[spkKey]+'" data-lang="'+appLang+'">'+t.emoji+'<span class="toy-lbl">'+t[lblKey]+'</span></button>';}).join('');
@@ -1509,10 +1553,12 @@ function renderToys(){
   var socEl=document.getElementById('soccer-game');
   if(socEl){socEl.style.display=tCat==='soccer'?'block':'none';if(tCat==='soccer')renderSoccerMenu();}
   var matchCats=['animals','food','body','nature','sports','vehicles','shapes','clothes','weather'];
-  document.getElementById('match-game').style.display=matchCats.includes(tCat)?'block':'none';
+  document.getElementById('match-game').style.display=(matchCats.includes(tCat)||tCat==='match')?'block':'none';
+  var pad=document.getElementById('punta-pad');if(pad){pad.style.display=tCat==='drums'?'block':'none';pad.classList.toggle('big',tCat==='drums');}
   if(tCat==='colors')startColorGame();
   document.getElementById('simon-game').style.display=tCat==='simon'?'block':'none';if(tCat==='simon')startSimon();if(tCat==='count')startTapCount();
   if(matchCats.includes(tCat))startMatchGame(tCat);
+  if(tCat==='match')startMatchGame(pickMatchCat());
   if(tCat==='bubbles')setTimeout(startBubbles,100);
   if(tCat==='memory')startMemory();
   if(tCat==='paint')setTimeout(initPaint,100);
@@ -1530,6 +1576,15 @@ const MATCH_TITLES={
   weather:{es:'⛅ ¡Toca el Clima!',ph:'TOH-kah ehl KLEE-mah',en:'Touch the Weather!'}
 };
 let matchTarget=null,matchScore=0,matchStreak=0;
+// Favorite "¡Toca!" tile rotates categories every 3 correct answers
+var MATCH_ROT=['animals','food','vehicles','sports','nature','clothes','body'];
+function pickMatchCat(){return MATCH_ROT[Math.floor(matchScore/3)%MATCH_ROT.length];}
+// Errorless feedback for toddlers: no "no", no red. Wiggle the tapped item and repeat the prompt.
+function gentleRetry(resEl,sayText,lang,btn){
+  if(resEl)resEl.textContent='';
+  if(btn){btn.classList.remove('tm-wiggle');void btn.offsetWidth;btn.classList.add('tm-wiggle');}
+  if(sayText)speak(sayText,lang||'es');
+}
 function startMatchGame(cat){
   const pool=sh(TOYS.filter(t=>t.cat===cat));
   if(pool.length<4)return;
@@ -1540,18 +1595,20 @@ function startMatchGame(cat){
   document.getElementById('match-prompt').innerHTML=biliP('Toca <b>'+matchTarget.es+'</b>','TOH-kah','Touch <b>'+matchTarget.en+'</b>');
   speak('Toca '+matchTarget[lblKey],appLang);
   document.getElementById('match-result').textContent='';
-  var numOpts=matchScore>=10?6:4;
+  var numOpts=(matchScore>=10&&tCat!=='match')?6:4;
   var opts=pool.slice(0,Math.min(numOpts,pool.length));
   document.getElementById('match-opts').style.gridTemplateColumns=numOpts>4?'repeat(3,1fr)':'repeat(2,1fr)';
-  document.getElementById('match-opts').innerHTML=opts.map(function(t){return '<button style="background:var(--w);border:5px solid var(--ink);border-radius:20px;padding:18px 10px;font-size:44px;box-shadow:0 6px 0 var(--ink);text-align:center;" onclick="checkMatch(\''+t[lblKey].replace(/'/g,"\\'")+'\')">'+t.emoji+'<span style="display:block;font-family:Baloo 2;font-size:14px;color:var(--ink);margin-top:4px;">'+t[lblKey]+'</span></button>';}).join('');
+  document.getElementById('match-opts').innerHTML=opts.map(function(t){return '<button style="background:var(--w);border:5px solid var(--ink);border-radius:20px;padding:18px 10px;font-size:44px;box-shadow:0 6px 0 var(--ink);text-align:center;" onclick="checkMatch(\''+t[lblKey].replace(/'/g,"\\'")+'\',this)">'+t.emoji+'<span style="display:block;font-family:Baloo 2;font-size:14px;color:var(--ink);margin-top:4px;">'+t[lblKey]+'</span></button>';}).join('');
 }
-function checkMatch(picked){
+function checkMatch(picked,btn){
   var res=document.getElementById('match-result');
   var lblKey=appLang==='en'?'en':'es';
-  if(picked===matchTarget[lblKey]){matchScore++;matchStreak++;res.textContent='🎉 ¡Sí! ¡'+matchTarget[lblKey]+'!';res.style.color='var(--teal)';confetti();speak('¡Muy bien! '+matchTarget[lblKey],appLang);setTimeout(function(){startMatchGame(matchTarget.cat);},matchStreak>=5?1200:2000);}
-  else{matchStreak=0;res.textContent='🔄 ¡Otra vez!';res.style.color='var(--terra)';speak('No, otra vez','es');}
+  if(picked===matchTarget[lblKey]){matchScore++;matchStreak++;res.textContent='🎉 ¡Sí! ¡'+matchTarget[lblKey]+'!';res.style.color='var(--teal)';confetti();speak('¡Muy bien! '+matchTarget[lblKey],appLang);setTimeout(function(){startMatchGame(tCat==='match'?pickMatchCat():matchTarget.cat);},matchStreak>=5?1200:2000);}
+  else{matchStreak=0;gentleRetry(res,'Toca '+matchTarget[lblKey],appLang,btn);}
 }
-function setTCat(c,btn){if(typeof closeSoccerGame==='function')closeSoccerGame();tCat=c;matchScore=0;matchStreak=0;document.querySelectorAll('.tt-tab').forEach(function(t){t.classList.remove('act');});if(btn)btn.classList.add('act');renderToys();}
+function setTCat(c,btn){if(typeof closeSoccerGame==='function')closeSoccerGame();tCat=c;matchScore=0;matchStreak=0;document.querySelectorAll('.tt-tab').forEach(function(t){t.classList.remove('act');});if(btn)btn.classList.add('act');document.querySelectorAll('.tm-fav').forEach(function(f){f.classList.toggle('act',f.dataset.fav===c);});var tmEl=document.getElementById('tmode');if(tmEl)tmEl.classList.toggle('tm-playing',c!=='home');renderToys();}
+function tmFav(c){var b=document.querySelector('.tt-tab[data-tcat="'+c+'"]');setTCat(c,b);var tmEl=document.getElementById('tmode');if(tmEl)tmEl.scrollTop=0;}
+function tmMore(){var t=document.getElementById('ttabs');if(!t)return;var open=t.classList.toggle('open');var mb=document.getElementById('tm-more-btn');if(mb)mb.textContent=open?'➖ Menos':'➕ Más juegos';}
 function openLessonTM(){toggleTM();setTimeout(function(){var btn=document.querySelector('[data-tcat="lesson"]');setTCat('lesson',btn);},500);}
 /* ===== TAP-TO-COUNT — one-to-one correspondence counting (ages 2-3) ===== */
 var tcTarget=3,tcTapped=0,tcRound=0;
@@ -1628,14 +1685,14 @@ function startColorGame(){
   document.getElementById('color-dots').style.gridTemplateColumns=numOpts>4?'repeat(3,1fr)':'repeat(2,1fr)';
   document.getElementById('color-dots').innerHTML=pool.map(function(c){return '<button style="width:100%;height:70px;border-radius:16px;background:'+c.hex+';border:4px solid var(--ink);box-shadow:0 6px 0 var(--ink);'+(c.hex==='#F5F5F5'?'border-color:#999;':'')+(c.hex==='#1A1B4B'?'':'color:var(--ink);')+'" data-color="'+c.es+'" data-speak="'+c.es+'"><span style="font-size:12px;font-weight:800;color:'+(c.hex==='#1A1B4B'||c.hex==='#805AD5'||c.hex==='#3182CE'?'#fff':'#1A1B4B')+';">'+c.es+'</span></button>';}).join('');
 }
-function checkColor(picked){
+function checkColor(picked,btnEl){
   var res=document.getElementById('color-result');
   if(picked===colorTarget.es){colorScore++;colorCount++;res.textContent='🎉 ¡Sí! ¡'+colorTarget.es+'!';res.style.color='var(--teal)';confetti();speak('¡Muy bien! '+colorTarget.es,'es');setTimeout(startColorGame,1500);}
-  else{res.textContent='🔄 ¡Otra vez!';res.style.color='var(--terra)';speak('No, otra vez','es');}
+  else{gentleRetry(res,'Toca '+colorTarget.es,'es',btnEl);}
 }
 
 /* ===== BUBBLE POP GAME ===== */
-let bubbleRAF=0,bubbleScore=0,bubbles=[],bubbleHunt=null,bubbleAnnounceCool=0;
+let bubbleRAF=0,bubbleScore=0,bubbles=[],bubbleHunt=null,bubbleAnnounceCool=0,bubbleLastT=0;
 function announceBubbles(){
   var area=document.getElementById('bubble-area');
   if(area){
@@ -1651,7 +1708,7 @@ function announceBubbles(){
   }
 }
 function startBubbles(){
-  bubbleScore=0;bubbleHunt=null;
+  bubbleScore=0;bubbleHunt=null;bubbleLastT=0;
   document.getElementById('bubble-score').textContent='⭐ 0';
   document.getElementById('bubble-hunt').textContent='';
   bubbles=[];if(bubbleRAF)cancelAnimationFrame(bubbleRAF);
@@ -1695,7 +1752,7 @@ function spawnBubble(){
   if(bubbleHunt){var hItem=TOYS.find(function(x){var k=appLang==='en'?'en':'es';return x[k]===bubbleHunt;});if(hItem&&Math.random()>0.6)t=hItem;}
   var lblKey=appLang==='en'?'en':'es';
   // Slower, more forgiving speed for toddlers
-  var speedBase=0.7+Math.min(bubbleScore*0.04,1.2);
+  var speedBase=0.7+Math.min(bubbleScore*0.02,0.5);
   var b=document.createElement('button');
   // Bigger bubbles — easier for tiny fingers (visible 100-130px, clickable bounding box 100-130px square)
   var sz=100+Math.floor(Math.random()*30);
@@ -1704,24 +1761,20 @@ function spawnBubble(){
   b.style.bottom='-'+(sz+10)+'px';
   b.innerHTML=t.emoji+'<span style="font-size:11px;font-family:Baloo 2;font-weight:700;color:#1A1B4B;margin-top:-2px;pointer-events:none;">'+t[lblKey]+'</span>';
   b.dataset.word=t[lblKey];
-  b.dataset.speed=(speedBase+Math.random()*0.6).toFixed(1);
+  b.dataset.speed=(speedBase+Math.random()*0.5).toFixed(2);
   b.dataset.popped='0';
   var popHandler=function(e){
     e.stopPropagation();e.preventDefault();
     if(b.dataset.popped==='1')return;
     b.dataset.popped='1';
     var word=b.dataset.word;
-    if(bubbleHunt&&word!==bubbleHunt){
-      b.style.transform='scale(0.85)';
-      speak('No, busca '+bubbleHunt,appLang);
-      setTimeout(function(){if(b.parentElement){b.dataset.popped='0';b.style.transform='';}},250);
-      return;
-    }
     speak(word,appLang);
     bubbleScore++;
     document.getElementById('bubble-score').textContent='⭐ '+bubbleScore;
     b.style.transform='scale(1.6)';b.style.opacity='0';
-    if(bubbleScore%5===0){confetti();setHuntTarget();}
+    // Every bubble pops (no "no"). Finding the hunt target is a bonus celebration.
+    if(bubbleHunt&&word===bubbleHunt){confetti();setHuntTarget();}
+    else if(!bubbleHunt&&bubbleScore%5===0){confetti();setHuntTarget();}
     setTimeout(function(){b.remove();spawnBubble();},300);
   };
   // pointerdown fires immediately on touch (no click delay); fall back to click for old browsers
@@ -1732,13 +1785,15 @@ function spawnBubble(){
 }
 function animateBubbles(){
   var area=document.getElementById('bubble-area');
-  if(!area||tCat!=='bubbles'){bubbleRAF=0;return;}
+  if(!area||tCat!=='bubbles'){bubbleRAF=0;bubbleLastT=0;return;}
+  // Same speed on 60Hz and 120Hz screens; clamp so a stall doesn't teleport bubbles
+  var nowT=performance.now();var k=bubbleLastT?Math.min((nowT-bubbleLastT)/16.667,3):1;bubbleLastT=nowT;
   var prevLive=bubbles.filter(function(b){return b.parentElement;}).length;
   bubbles=bubbles.filter(function(b){return b.parentElement;});
   bubbles.forEach(function(b){
     var cur=parseFloat(b.style.bottom)||0;
     var spd=parseFloat(b.dataset.speed)||1;
-    b.style.bottom=(cur+spd)+'px';
+    b.style.bottom=(cur+spd*k)+'px';
     if(cur>area.offsetHeight+80){b.remove();spawnBubble();}
   });
   // Cap at 5 bubbles on screen so toddlers aren't overwhelmed (was 3+score/8, could grow unbounded)
@@ -1982,9 +2037,7 @@ function checkSort(picked){
     speak('¡Muy bien! '+sortItem[lblKey],appLang);
     setTimeout(nextSortItem,1500);
   }else{
-    res.textContent='🔄 ¡Otra vez!';
-    res.style.color='var(--terra)';
-    speak('No, otra vez','es');
+    gentleRetry(res,sortItem[lblKey],appLang,null);
   }
 }
 
@@ -2851,8 +2904,7 @@ function checkLesson(picked){
     confetti();speak(w.es,'es');
     setTimeout(function(){lessonIdx++;showLessonStep();},1500);
   }else{
-    res.textContent='🔄 Try again!';res.style.color='var(--terra)';
-    speak('Otra vez','es');
+    gentleRetry(res,w.es,'es',null);
   }
 }
 
@@ -4077,7 +4129,8 @@ function toggleSong(i,vid){
   fb.href='https://www.youtube.com/watch?v='+vid;
   wrap.scrollIntoView({behavior:'smooth',block:'nearest'});
 }
-document.getElementById('color-dots').addEventListener('click',e=>{const b=e.target.closest('[data-color]');if(!b)return;checkColor(b.dataset.color);});
+document.getElementById('tmode').addEventListener('contextmenu',function(e){e.preventDefault();});
+document.getElementById('color-dots').addEventListener('click',e=>{const b=e.target.closest('[data-color]');if(!b)return;checkColor(b.dataset.color,b);});
 
 /* ===== TV MODE ===== */
 var tvMode=new URLSearchParams(window.location.search).get('tv')==='1';
