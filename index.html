@@ -529,6 +529,29 @@ html.tm-on #toast{display:none!important;}
 .walk-overlay.with-target .walk-card{pointer-events:auto;}
 .walk-overlay.top-pos{align-items:flex-start;padding-top:calc(env(safe-area-inset-top,20px) + 20px);}
 
+/* (icons) */
+/* Icon system */
+.ic{display:inline-block;vertical-align:-.2em;flex-shrink:0;}
+.ic .d{fill:currentColor;fill-opacity:.16;}
+.ict{width:44px;height:44px;border-radius:14px;display:grid;place-items:center;margin:0 auto 6px;}
+.ict .ic{width:24px;height:24px;}
+.more-card .more-ico.ict{margin:0 0 6px;font-size:0;}
+.pti{display:inline-grid;place-items:center;width:36px;height:36px;border-radius:12px;margin-right:10px;vertical-align:-7px;}
+.pti .ic{width:21px;height:21px;}
+.lbl-ic{margin-right:4px;vertical-align:-3px;}
+.c-terra{color:#C75B39;background:#FDEEE8;}.c-teal{color:#00796B;background:#E0F2F1;}.c-blue{color:#1C6FB8;background:#E3F0FB;}
+.c-purple{color:#6A4BC4;background:#EEE9FB;}.c-gold{color:#A87400;background:#FFF4D6;}.c-ink{color:#1A1B4B;background:#ECECF4;}
+.c-green{color:#2E7D32;background:#E8F5E9;}.c-rose{color:#C2185B;background:#FCE4EC;}
+.spk .ic{width:16px;height:16px;}
+.splg .ic{width:22px;height:22px;}
+.hdr .chip .ic{width:16px;height:16px;color:#E8622C;}
+.dm-btn .dm-ic{display:grid;place-items:center;}
+.dm-btn .dm-ic .ic{width:38px;height:38px;color:var(--ink);}
+.dm-btn.on .dm-ic .ic{color:#fff;}
+.tm-fav .e svg{width:64px;height:64px;display:block;}
+#tmode.tm-playing .tm-fav .e svg{width:34px;height:34px;}
+.tm-fav[data-fav="lesson"] .e svg{width:44px;height:44px;}
+
 /* ================= PREMIUM POLISH LAYER (v2) =================
    One design system on top of the original styles: softer surfaces, one hero color per screen,
    slim app bar, chunky 3D buttons, calmer bottom nav. Overrides only; remove this block to revert. */
@@ -639,7 +662,7 @@ button[style*="background:var(--gold)"]{box-shadow:0 4px 0 var(--goldd);}
 <!-- ONBOARDING -->
 <div id="onboard" style="display:none;position:fixed;inset:0;background:var(--ink);z-index:5000;overflow-y:auto;padding:40px 24px;">
 <div style="max-width:400px;margin:0 auto;text-align:center;color:var(--w);">
-<h1 style="font-family:'Baloo 2',cursive;font-size:32px;color:var(--gold);margin-bottom:4px;">¡Bienvenidos! <button class="spk" data-speak="Bienvenidos" style="background:var(--gold);border-color:var(--gold);color:var(--ink);font-size:13px;">🔊</button></h1>
+<h1 style="font-family:'Baloo 2',cursive;font-size:32px;color:var(--gold);margin-bottom:4px;">¡Bienvenidos! <button class="spk" data-speak="Bienvenidos" style="background:var(--gold);border-color:var(--gold);color:var(--ink);font-size:13px;"><svg class="ic" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path class="d" d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button></h1>
 <p style="font-size:14px;opacity:.8;margin-bottom:4px;">bee-ehn-veh-NEE-dohs · Welcome!</p>
 <p style="font-size:14px;opacity:.8;margin-bottom:28px;">Let's personalize your learning journey.</p>
 <div style="margin-bottom:20px;">
@@ -681,11 +704,11 @@ Yes — automatically. Everything saves to your phone. Add this to your home scr
 <div style="background:rgba(212,160,23,.1);padding:14px;border-radius:12px;border:1px solid rgba(212,160,23,.3);margin-bottom:10px;">
 <b style="color:var(--gold);font-size:15px;">🗣 Try Your First Words!</b><br><br>
 Tap 🔊 to hear each word. The phonetic guide shows you exactly how to say it:<br><br>
-<div style="background:rgba(255,255,255,.1);padding:10px;border-radius:10px;margin:8px 0;display:flex;align-items:center;gap:8px;flex-wrap:wrap;"><button class="spk" data-speak="Hola" style="background:var(--gold);border-color:var(--gold);color:var(--ink);">🔊</button><b style="font-size:18px;color:var(--gold);">Hola</b><span style="color:#F59E0B;font-size:13px;font-weight:700;">🗣 OH-lah</span><span style="color:#CBD5E1;font-size:12px;margin-left:4px;">(Hello)</span></div>
-<div style="background:rgba(255,255,255,.1);padding:10px;border-radius:10px;margin:8px 0;display:flex;align-items:center;gap:8px;flex-wrap:wrap;"><button class="spk" data-speak="Gracias" style="background:var(--gold);border-color:var(--gold);color:var(--ink);">🔊</button><b style="font-size:18px;color:var(--gold);">Gracias</b><span style="color:#F59E0B;font-size:13px;font-weight:700;">🗣 GRAH-see-ahs</span><span style="color:#CBD5E1;font-size:12px;margin-left:4px;">(Thank you)</span></div>
-<div style="background:rgba(255,255,255,.1);padding:10px;border-radius:10px;margin:8px 0;display:flex;align-items:center;gap:8px;flex-wrap:wrap;"><button class="spk" data-speak="Buenos días" style="background:var(--gold);border-color:var(--gold);color:var(--ink);">🔊</button><b style="font-size:18px;color:var(--gold);">Buenos días</b><span style="color:#F59E0B;font-size:13px;font-weight:700;">🗣 BWEH-nohs DEE-ahs</span><span style="color:#CBD5E1;font-size:12px;margin-left:4px;">(Good morning)</span></div>
-<div style="background:rgba(255,255,255,.1);padding:10px;border-radius:10px;margin:8px 0;display:flex;align-items:center;gap:8px;flex-wrap:wrap;"><button class="spk" data-speak="Te quiero mucho" style="background:var(--gold);border-color:var(--gold);color:var(--ink);">🔊</button><b style="font-size:18px;color:var(--gold);">Te quiero mucho</b><span style="color:#F59E0B;font-size:13px;font-weight:700;">🗣 teh key-EH-roh MOO-choh</span><span style="color:#CBD5E1;font-size:12px;margin-left:4px;">(I love you so much)</span></div>
-<div style="background:rgba(255,255,255,.1);padding:10px;border-radius:10px;margin:8px 0;display:flex;align-items:center;gap:8px;flex-wrap:wrap;"><button class="spk" data-speak="¡Va pues!" style="background:var(--gold);border-color:var(--gold);color:var(--ink);">🔊</button><b style="font-size:18px;color:var(--gold);">¡Va pues!</b><span style="color:#F59E0B;font-size:13px;font-weight:700;">🗣 vah PWEHS</span><span style="color:#CBD5E1;font-size:12px;margin-left:4px;">(Alright! — Honduran)</span></div>
+<div style="background:rgba(255,255,255,.1);padding:10px;border-radius:10px;margin:8px 0;display:flex;align-items:center;gap:8px;flex-wrap:wrap;"><button class="spk" data-speak="Hola" style="background:var(--gold);border-color:var(--gold);color:var(--ink);"><svg class="ic" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path class="d" d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button><b style="font-size:18px;color:var(--gold);">Hola</b><span style="color:#F59E0B;font-size:13px;font-weight:700;">🗣 OH-lah</span><span style="color:#CBD5E1;font-size:12px;margin-left:4px;">(Hello)</span></div>
+<div style="background:rgba(255,255,255,.1);padding:10px;border-radius:10px;margin:8px 0;display:flex;align-items:center;gap:8px;flex-wrap:wrap;"><button class="spk" data-speak="Gracias" style="background:var(--gold);border-color:var(--gold);color:var(--ink);"><svg class="ic" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path class="d" d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button><b style="font-size:18px;color:var(--gold);">Gracias</b><span style="color:#F59E0B;font-size:13px;font-weight:700;">🗣 GRAH-see-ahs</span><span style="color:#CBD5E1;font-size:12px;margin-left:4px;">(Thank you)</span></div>
+<div style="background:rgba(255,255,255,.1);padding:10px;border-radius:10px;margin:8px 0;display:flex;align-items:center;gap:8px;flex-wrap:wrap;"><button class="spk" data-speak="Buenos días" style="background:var(--gold);border-color:var(--gold);color:var(--ink);"><svg class="ic" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path class="d" d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button><b style="font-size:18px;color:var(--gold);">Buenos días</b><span style="color:#F59E0B;font-size:13px;font-weight:700;">🗣 BWEH-nohs DEE-ahs</span><span style="color:#CBD5E1;font-size:12px;margin-left:4px;">(Good morning)</span></div>
+<div style="background:rgba(255,255,255,.1);padding:10px;border-radius:10px;margin:8px 0;display:flex;align-items:center;gap:8px;flex-wrap:wrap;"><button class="spk" data-speak="Te quiero mucho" style="background:var(--gold);border-color:var(--gold);color:var(--ink);">${ic('speaker',16)}</button><b style="font-size:18px;color:var(--gold);">Te quiero mucho</b><span style="color:#F59E0B;font-size:13px;font-weight:700;">🗣 teh key-EH-roh MOO-choh</span><span style="color:#CBD5E1;font-size:12px;margin-left:4px;">(I love you so much)</span></div>
+<div style="background:rgba(255,255,255,.1);padding:10px;border-radius:10px;margin:8px 0;display:flex;align-items:center;gap:8px;flex-wrap:wrap;"><button class="spk" data-speak="¡Va pues!" style="background:var(--gold);border-color:var(--gold);color:var(--ink);"><svg class="ic" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path class="d" d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button><b style="font-size:18px;color:var(--gold);">¡Va pues!</b><span style="color:#F59E0B;font-size:13px;font-weight:700;">🗣 vah PWEHS</span><span style="color:#CBD5E1;font-size:12px;margin-left:4px;">(Alright! — Honduran)</span></div>
 <br><span style="font-size:12px;opacity:.7;">Every Spanish word in this app has pronunciation like this. 👆🏾</span>
 </div>
 
@@ -735,17 +758,17 @@ Fill in your info below and tap ¡Vamos! <span style="font-size:11px;opacity:.7;
 
 <div id="tmode">
 <button class="tm-exit" id="tm-lock-exit">🔒 Hold to Exit</button>
-<img class="tm-splash" src="/icons/toddler-splash.png" style="width:100%;max-width:400px;border-radius:16px;margin:0 auto 12px;display:block;" alt="¡Hola!">
+<img class="tm-splash" src="/icons/toddler-splash.webp" style="width:100%;max-width:400px;border-radius:16px;margin:0 auto 12px;display:block;" alt="¡Hola!">
 <h2 id="tm-greeting" style="font-family:'Baloo 2';font-size:30px;color:var(--ink);margin-top:30px;">¡Hola Bebé!</h2>
 <p class="tm-hint" style="font-size:14px;font-weight:700;color:var(--ink2);">¡Escogé un juego! · Pick a game!</p>
 
 <!-- Favorite games: big tiles a toddler can pick himself -->
 <div class="tm-favs" id="tm-favs">
-<button class="tm-fav" data-fav="bubbles" onclick="tmFav('bubbles')"><span class="e">🫧</span><span class="l">Burbujas</span></button>
-<button class="tm-fav" data-fav="match" onclick="tmFav('match')"><span class="e">🎯</span><span class="l">¡Tocá!</span></button>
-<button class="tm-fav" data-fav="drums" onclick="tmFav('drums')"><span class="e">🥁</span><span class="l">Tambores</span></button>
-<button class="tm-fav" data-fav="paint" onclick="tmFav('paint')"><span class="e">🎨</span><span class="l">Pintar</span></button>
-<button class="tm-fav" data-fav="lesson" onclick="tmFav('lesson')"><span class="e">📚</span><span class="l">Lección</span></button>
+<button class="tm-fav" data-fav="bubbles" onclick="tmFav('bubbles')"><span class="e"><svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="26" cy="36" r="18" fill="#CFF1FB" stroke="#3FB0DA" stroke-width="3"/><path d="M16 30a11 11 0 0 1 9-8" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round"/><circle cx="47" cy="20" r="11" fill="#E4F7FD" stroke="#3FB0DA" stroke-width="3"/><path d="M41 17a6 6 0 0 1 5-4" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round"/><circle cx="49" cy="46" r="7" fill="#E4F7FD" stroke="#3FB0DA" stroke-width="3"/></svg></span><span class="l">Burbujas</span></button>
+<button class="tm-fav" data-fav="match" onclick="tmFav('match')"><span class="e"><svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="30" cy="34" r="24" fill="#E8453C"/><circle cx="30" cy="34" r="17" fill="#fff"/><circle cx="30" cy="34" r="10" fill="#E8453C"/><circle cx="30" cy="34" r="4" fill="#fff"/><path d="M30 34L54 10" stroke="#1A1B4B" stroke-width="3.5" stroke-linecap="round"/><path d="M50 6l8 0-2 6-6 2 0-8z" fill="#2F8FDD" stroke="#1A1B4B" stroke-width="2" stroke-linejoin="round"/></svg></span><span class="l">¡Tocá!</span></button>
+<button class="tm-fav" data-fav="drums" onclick="tmFav('drums')"><span class="e"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M18 8l12 20M46 8L34 28" stroke="#9C6B3A" stroke-width="4" stroke-linecap="round"/><circle cx="18" cy="8" r="3.5" fill="#F4D6A0"/><circle cx="46" cy="8" r="3.5" fill="#F4D6A0"/><path d="M10 30v18c0 5 10 9 22 9s22-4 22-9V30" fill="#E8453C"/><path d="M12 36l8 14 8-14 8 14 8-14 8 12" stroke="#fff" stroke-width="3" fill="none" stroke-linejoin="round"/><ellipse cx="32" cy="30" rx="22" ry="8" fill="#FFF4DC" stroke="#D4A017" stroke-width="3.5"/></svg></span><span class="l">Tambores</span></button>
+<button class="tm-fav" data-fav="paint" onclick="tmFav('paint')"><span class="e"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M32 6C16 6 5 17 5 31c0 13 10 23 22 23 5 0 6-3 5-6-1-4 1-7 5-7h7c8 0 15-5 15-13C59 15 47 6 32 6z" fill="#F5CE8C" stroke="#B9862E" stroke-width="3"/><circle cx="20" cy="26" r="5" fill="#E8453C"/><circle cx="32" cy="17" r="5" fill="#FFC928"/><circle cx="45" cy="22" r="5" fill="#2F8FDD"/><circle cx="17" cy="40" r="5" fill="#34A853"/><circle cx="44" cy="37" r="4" fill="#fff" stroke="#B9862E" stroke-width="2.5"/></svg></span><span class="l">Pintar</span></button>
+<button class="tm-fav" data-fav="lesson" onclick="tmFav('lesson')"><span class="e"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M32 16c-7-5-16-6-26-4v38c10-2 19-1 26 4z" fill="#2F8FDD" stroke="#1A1B4B" stroke-width="3" stroke-linejoin="round"/><path d="M32 16c7-5 16-6 26-4v38c-10-2-19-1-26 4z" fill="#E8453C" stroke="#1A1B4B" stroke-width="3" stroke-linejoin="round"/><path d="M12 22c5-1 10-.5 14 1.5M12 30c5-1 10-.5 14 1.5M38 23.5c4-2 9-2.5 14-1.5M38 31.5c4-2 9-2.5 14-1.5" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/></svg></span><span class="l">Lección</span></button>
 </div>
 <button class="tm-more-btn" id="tm-more-btn" onclick="tmMore()">➕ Más juegos</button>
 
@@ -905,7 +928,7 @@ Fill in your info below and tap ¡Vamos! <span style="font-size:11px;opacity:.7;
 </div>
 </div>
 
-<div class="hdr"><div class="hdr-in"><div class="logo">¡V!</div><h1>¡Vamos<span>!</span></h1><span class="chip" id="hdr-streak" aria-label="Day streak">🔥 0</span></div><p>Honduran Spanish · Parent + Toddler · Florida Life</p></div>
+<div class="hdr"><div class="hdr-in"><div class="logo">¡V!</div><h1>¡Vamos<span>!</span></h1><span class="chip" id="hdr-streak" aria-label="Day streak">0</span></div><p>Honduran Spanish · Parent + Toddler · Florida Life</p></div>
 
 <div class="pg act" id="p-home"></div>
 <div class="pg" id="p-path"></div>
@@ -935,6 +958,32 @@ Fill in your info below and tap ¡Vamos! <span style="font-size:11px;opacity:.7;
 </div>
 
 <script>
+/* ===== ICON SET — custom duotone icons (replace UI emoji; vocab pictures stay emoji) ===== */
+var ICONS={
+rocket:'<path class="d" d="M12 2.5c3.2 1.6 5 5 5 8.5v4H7v-4c0-3.5 1.8-6.9 5-8.5z"/><circle cx="12" cy="9.5" r="1.8"/><path d="M7 12.5l-2.5 2.2V18L7 16.5M17 12.5l2.5 2.2V18L17 16.5M10 18.5c.5 1.6 1.2 2.6 2 3 .8-.4 1.5-1.4 2-3"/>',
+calendar:'<rect class="d" x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/><circle cx="8.5" cy="14.5" r=".6" fill="currentColor"/><circle cx="12" cy="14.5" r=".6" fill="currentColor"/><circle cx="15.5" cy="14.5" r=".6" fill="currentColor"/>',
+flag:'<rect x="3" y="5" width="18" height="14" rx="2.5" fill="#fff"/><path d="M5.5 5h13A2.5 2.5 0 0 1 21 7.5v2.2H3V7.5A2.5 2.5 0 0 1 5.5 5zM3 14.3h18v2.2a2.5 2.5 0 0 1-2.5 2.5h-13A2.5 2.5 0 0 1 3 16.5z" fill="#1E88D6" stroke="none"/><rect x="3" y="5" width="18" height="14" rx="2.5"/><g fill="#1E88D6" stroke="none"><circle cx="12" cy="12" r=".9"/><circle cx="9.3" cy="11" r=".75"/><circle cx="14.7" cy="11" r=".75"/><circle cx="9.3" cy="13" r=".75"/><circle cx="14.7" cy="13" r=".75"/></g>',
+music:'<path d="M9 18V5.5l10-2v12.5"/><circle class="d" cx="6.5" cy="18" r="2.5"/><circle class="d" cx="16.5" cy="16" r="2.5"/>',
+books:'<rect class="d" x="3.5" y="4" width="5" height="16" rx="1.2"/><rect class="d" x="9.5" y="6" width="4.5" height="14" rx="1.2"/><path d="M15.2 7.2l3.8-1 2.6 13.2-3.8 1zM5.5 8h1M11 9.5h1.5"/>',
+link:'<path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1.2 1.2"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1.2-1.2"/>',
+library:'<path class="d" d="M3 9l9-5 9 5z"/><path d="M3 9l9-5 9 5M5 9v9M9.5 9v9M14.5 9v9M19 9v9M3 20.5h18"/>',
+chart:'<rect class="d" x="4" y="12" width="3.5" height="8" rx="1"/><rect class="d" x="10.25" y="7" width="3.5" height="13" rx="1"/><rect class="d" x="16.5" y="3.5" width="3.5" height="16.5" rx="1"/>',
+trophy:'<path class="d" d="M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M7 5.5H4.5a2.5 2.5 0 0 0 2.8 3.4M17 5.5h2.5a2.5 2.5 0 0 1-2.8 3.4M12 14v3M8.5 20h7l-.8-3h-5.4z"/>',
+sliders:'<path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle class="d" cx="15" cy="7" r="2.3"/><circle class="d" cx="9" cy="17" r="2.3"/>',
+book:'<path class="d" d="M12 6.5C10 5 7 4.5 3.5 5v13c3.5-.5 6.5 0 8.5 1.5 2-1.5 5-2 8.5-1.5V5c-3.5-.5-6.5 0-8.5 1.5z"/><path d="M12 6.5v13"/>',
+path:'<path d="M6 20c0-4 12-3 12-8.5S8.5 8.5 8.5 6.5"/><circle class="d" cx="6" cy="20" r="1.7"/><path d="M8.5 8V2.8"/><path class="d" d="M8.5 3l5 1.8-5 1.8z"/>',
+checklist:'<rect class="d" x="4.5" y="4" width="15" height="17" rx="3"/><path d="M9 3h6v3H9zM8.5 11.5l1.6 1.6 3.2-3.2M8.5 16.5h7"/>',
+palm:'<path d="M12 21c.5-4 .5-8-.5-11M8 21h8"/><path class="d" d="M11.5 10C9 6.5 5.5 6.5 3.5 8c3 .2 5.3 1 8 2zM11.5 10c1-4 4.5-5.5 8-4.5-3 .7-5.5 2.2-8 4.5zM11.5 10C12 6 10 3.5 7 3c1.7 2 3.5 4 4.5 7z"/>',
+lifebuoy:'<circle class="d" cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="3.5" fill="#fff"/><path d="M6 6l3.5 3.5M18 6l-3.5 3.5M6 18l3.5-3.5M18 18l-3.5-3.5"/>',
+flame:'<path class="d" d="M12 21c-3.9 0-6.5-2.6-6.5-6.2 0-3.4 2.6-5.3 3.4-8.8 1.9 1.3 3 3 3.2 4.8 1-1 1.5-2.2 1.6-3.6 2.6 2 4.8 4.8 4.8 7.9 0 3.5-2.6 5.9-6.5 5.9z"/>',
+star:'<path class="d" d="M12 3.5l2.6 5.3 5.8.8-4.2 4.1 1 5.8L12 16.8l-5.2 2.7 1-5.8-4.2-4.1 5.8-.8z"/>',
+cards:'<rect class="d" x="7.5" y="3" width="12" height="15" rx="2.5" transform="rotate(10 13.5 10.5)"/><rect x="4.5" y="5.5" width="12" height="15" rx="2.5" fill="#fff"/><path d="M8 12.5h5M8 15.5h3"/>',
+bulb:'<path class="d" d="M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2V17h5v-1.1c0-.8.4-1.5 1-2A6 6 0 0 0 12 3z"/><path d="M10 20.5h4"/>',
+grid:'<rect class="d" x="4" y="4" width="7" height="7" rx="2"/><rect x="13" y="4" width="7" height="7" rx="2"/><rect x="4" y="13" width="7" height="7" rx="2"/><rect class="d" x="13" y="13" width="7" height="7" rx="2"/>',
+speaker:'<path class="d" d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/>',
+mic:'<rect class="d" x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21M9 21h6"/>'
+};
+function ic(n,sz){sz=sz||24;return '<svg class="ic" width="'+sz+'" height="'+sz+'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">'+(ICONS[n]||'')+'</svg>';}
 /* ===== VOCABULARY (all decks + new ones) ===== */
 const V={
 "Greetings":[{e:"Hola",n:"Hello",x:"¡Hola! ¿Cómo estás?",lv:1},{e:"Adiós",n:"Goodbye",x:"Adiós, nos vemos.",lv:1},{e:"Buenos días",n:"Good morning",x:"Buenos días.",lv:1},{e:"¡Buenas!",n:"Hi! (Honduran)",x:"¡Buenas! ¿Qué onda?",lv:1},{e:"Por favor",n:"Please",x:"Más agua, por favor.",lv:1},{e:"Gracias",n:"Thank you",x:"Muchas gracias.",lv:1},{e:"De nada",n:"You\'re welcome",x:"De nada.",lv:1},{e:"¿Cómo estás?",n:"How are you?",x:"¿Cómo estás hoy?",lv:1},{e:"Estoy bien",n:"I\'m fine",x:"Estoy bien, gracias.",lv:1},{e:"Me llamo",n:"My name is",x:"Me llamo Juan.",lv:1},{e:"Mucho gusto",n:"Nice to meet you",x:"Mucho gusto, señora.",lv:2},{e:"¿Y usted?",n:"And you? (formal)",x:"Bien, ¿y usted?",lv:2}],
@@ -1601,7 +1650,7 @@ function voiceCheck(){
   if(out)out.innerHTML='✅ Voice: <b>'+fem.name+'</b> ('+fem.lang+') · '+vs.length+' Spanish voice(s) on this phone';
   speak('¡Hola! Soy tu voz en español. ¿Cómo estás?','es');
 }
-function spB(t,lang){return `<button class="spk" data-speak="${t.replace(/"/g,'&quot;')}" data-lang="${lang||'es'}">🔊</button>`;}
+function spB(t,lang){return `<button class="spk" data-speak="${t.replace(/"/g,'&quot;')}" data-lang="${lang||'es'}">${ic('speaker',16)}</button>`;}
 function biliP(es,ph,en,size){var cls='bili-prompt'+(size?' '+size:'');return '<div class="'+cls+'"><span class="es">'+es+'</span><span class="ph">🗣 '+ph+'</span><span class="en">'+en+'</span></div>';}
 function sh(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=0|Math.random()*(i+1);[b[i],b[j]]=[b[j],b[i]];}return b;}
 
@@ -1750,11 +1799,11 @@ function dmRender(){
     if(!micBetaOn()){box.innerHTML='';return;}
     var on=DM.on&&DM.mode===m,h='';
     if(on){
-      h='<button class="dm-btn on" onclick="dmStop()" aria-label="Stop listening"><span class="dm-ring" id="dm-ring-'+m+'"></span><span class="dm-ic">🎤</span></button>'
+      h='<button class="dm-btn on" onclick="dmStop()" aria-label="Stop listening"><span class="dm-ring" id="dm-ring-'+m+'"></span><span class="dm-ic">'+ic('mic',38)+'</span></button>'
        +biliP('¡Decilo! Te estoy escuchando','deh-SEE-loh · teh ehs-TOY ehs-koo-CHAN-doh','Say it! I\'m listening','sm');
       if(m==='drums')h+='<div class="dm-count">'+(DM.count>0?NUMS[DM.count]:'¡Gritá!')+'</div>';
     }else{
-      h='<button class="dm-btn" onclick="dmStart(\''+m+'\')" aria-label="Start listening"><span class="dm-ic">🎤</span></button>'
+      h='<button class="dm-btn" onclick="dmStart(\''+m+'\')" aria-label="Start listening"><span class="dm-ic">'+ic('mic',38)+'</span></button>'
        +'<div class="dm-cap">¡Decilo! · Tap the mic, then talk</div>';
     }
     if(DM.err==='denied')h+='<div class="dm-err">The microphone is blocked. On iPhone: in Safari tap <b>aA</b> next to the web address → <b>Website Settings</b> → <b>Microphone</b> → Allow. On Android Chrome: tap the icon left of the web address → <b>Permissions</b> → Microphone.</div>';
@@ -3157,33 +3206,33 @@ function cs(){const tw=48,dw=Object.values(S.wd).filter(Boolean).length,p=Math.r
 /* ===== HOME ===== */
 function rH(){rd();us();const{dw,p,kw}=cs();const d=new Date(),dn=d.toLocaleDateString('en-US',{weekday:'long'}),ds=d.toLocaleDateString('en-US',{month:'long',day:'numeric'});const mo=MO[0|Math.random()*MO.length];const cc=Object.values(S.dc).filter(Boolean).length;
 const catCls={daily:'cat-daily',florida:'cat-florida',parent:'cat-parent',culture:'cat-culture'};
-var hs=document.getElementById('hdr-streak');if(hs)hs.textContent='🔥 '+(S.sk||0);
+var hs=document.getElementById('hdr-streak');if(hs)hs.innerHTML=ic('flame',16)+' '+(S.sk||0);
 let h=`
 <div class="hm-tools" style="margin-bottom:16px;">
 <div style="font-weight:700;font-size:13px;color:var(--gr);margin-bottom:8px;">Explore</div>
 <div style="display:flex;gap:10px;overflow-x:auto;padding:4px 0 12px;-webkit-overflow-scrolling:touch;">
-<button onclick="goMore('gs')" style="background:var(--w);border:1px solid var(--bd);border-radius:12px;padding:10px 14px;min-width:90px;text-align:center;box-shadow:var(--sh);flex-shrink:0;"><span style="font-size:22px;display:block;">🚀</span><span style="font-size:11px;font-weight:700;color:var(--ink);">Start</span></button>
-<button onclick="goMore('sc')" style="background:var(--w);border:1px solid var(--bd);border-radius:12px;padding:10px 14px;min-width:90px;text-align:center;box-shadow:var(--sh);flex-shrink:0;"><span style="font-size:22px;display:block;">📅</span><span style="font-size:11px;font-weight:700;color:var(--ink);">Schedule</span></button>
-<button onclick="goMore('hn')" style="background:var(--w);border:1px solid var(--bd);border-radius:12px;padding:10px 14px;min-width:90px;text-align:center;box-shadow:var(--sh);flex-shrink:0;"><span style="font-size:22px;display:block;">🇭🇳</span><span style="font-size:11px;font-weight:700;color:var(--ink);">Honduran</span></button>
-<button onclick="goMore('sg')" style="background:var(--w);border:1px solid var(--bd);border-radius:12px;padding:10px 14px;min-width:90px;text-align:center;box-shadow:var(--sh);flex-shrink:0;"><span style="font-size:22px;display:block;">🎵</span><span style="font-size:11px;font-weight:700;color:var(--ink);">Songs</span></button>
-<button onclick="goMore('rs')" style="background:var(--w);border:1px solid var(--bd);border-radius:12px;padding:10px 14px;min-width:90px;text-align:center;box-shadow:var(--sh);flex-shrink:0;"><span style="font-size:22px;display:block;">📚</span><span style="font-size:11px;font-weight:700;color:var(--ink);">Resources</span></button>
-<button onclick="goMore('cg')" style="background:var(--w);border:1px solid var(--bd);border-radius:12px;padding:10px 14px;min-width:90px;text-align:center;box-shadow:var(--sh);flex-shrink:0;"><span style="font-size:22px;display:block;">🔗</span><span style="font-size:11px;font-weight:700;color:var(--ink);">Cognates</span></button>
-<button onclick="goMore('lb')" style="background:var(--w);border:1px solid var(--bd);border-radius:12px;padding:10px 14px;min-width:90px;text-align:center;box-shadow:var(--sh);flex-shrink:0;"><span style="font-size:22px;display:block;">🏛️</span><span style="font-size:11px;font-weight:700;color:var(--ink);">Library</span></button>
+<button onclick="goMore('gs')" style="background:var(--w);border:1px solid var(--bd);border-radius:12px;padding:10px 14px;min-width:90px;text-align:center;box-shadow:var(--sh);flex-shrink:0;"><span class="ict c-terra">${ic('rocket')}</span><span style="font-size:11px;font-weight:700;color:var(--ink);">Start</span></button>
+<button onclick="goMore('sc')" style="background:var(--w);border:1px solid var(--bd);border-radius:12px;padding:10px 14px;min-width:90px;text-align:center;box-shadow:var(--sh);flex-shrink:0;"><span class="ict c-teal">${ic('calendar')}</span><span style="font-size:11px;font-weight:700;color:var(--ink);">Schedule</span></button>
+<button onclick="goMore('hn')" style="background:var(--w);border:1px solid var(--bd);border-radius:12px;padding:10px 14px;min-width:90px;text-align:center;box-shadow:var(--sh);flex-shrink:0;"><span class="ict c-blue">${ic('flag')}</span><span style="font-size:11px;font-weight:700;color:var(--ink);">Honduran</span></button>
+<button onclick="goMore('sg')" style="background:var(--w);border:1px solid var(--bd);border-radius:12px;padding:10px 14px;min-width:90px;text-align:center;box-shadow:var(--sh);flex-shrink:0;"><span class="ict c-purple">${ic('music')}</span><span style="font-size:11px;font-weight:700;color:var(--ink);">Songs</span></button>
+<button onclick="goMore('rs')" style="background:var(--w);border:1px solid var(--bd);border-radius:12px;padding:10px 14px;min-width:90px;text-align:center;box-shadow:var(--sh);flex-shrink:0;"><span class="ict c-gold">${ic('books')}</span><span style="font-size:11px;font-weight:700;color:var(--ink);">Resources</span></button>
+<button onclick="goMore('cg')" style="background:var(--w);border:1px solid var(--bd);border-radius:12px;padding:10px 14px;min-width:90px;text-align:center;box-shadow:var(--sh);flex-shrink:0;"><span class="ict c-teal">${ic('link')}</span><span style="font-size:11px;font-weight:700;color:var(--ink);">Cognates</span></button>
+<button onclick="goMore('lb')" style="background:var(--w);border:1px solid var(--bd);border-radius:12px;padding:10px 14px;min-width:90px;text-align:center;box-shadow:var(--sh);flex-shrink:0;"><span class="ict c-ink">${ic('library')}</span><span style="font-size:11px;font-weight:700;color:var(--ink);">Library</span></button>
 </div>
 </div><div class="hero"><h2>${spB('Buenos días')} ¡Buenos días${profile?' '+profile.name:''}!</h2><div style="font-size:12px;color:rgba(255,255,255,.5);margin-top:2px;">🗣 BWEH-nohs DEE-ahs · Good morning!</div><div class="dt2" style="margin-top:8px;">${dn}, ${ds}${profile?' · '+profile.child+'\'s learning day':''}</div><div class="mot">${spB(mo.es)} <b>"${mo.es}"</b><br><span style="color:#F59E0B;font-size:12px;font-weight:700;">🗣 ${mo.ph}</span><br><span style="font-style:normal;opacity:.7;">${mo.en}</span></div></div>
 `;
 const cw=getCurrentWeek();const cwTitle=WEEK_TITLES[cw]||'Week '+cw;const cwVocab=LessonUtils.weekVocab(cw);const cwPhase=cw<=12?1:cw<=24?2:cw<=36?3:4;
 h+=`<div class="hm-week" style="background:linear-gradient(135deg,var(--teal),#006666);border-radius:var(--r);padding:18px;margin-bottom:14px;border:2px solid var(--gold);box-shadow:var(--shl);">
 <div style="display:flex;justify-content:space-between;align-items:center;">
-<div><div style="font-size:11px;font-weight:800;color:rgba(255,255,255,.7);text-transform:uppercase;letter-spacing:1px;">📚 This Week</div>
+<div><div style="font-size:11px;font-weight:800;color:rgba(255,255,255,.7);text-transform:uppercase;letter-spacing:1px;">${ic('book',14)} This Week</div>
 <div style="font-family:'Baloo 2',cursive;font-size:20px;font-weight:800;color:var(--w);margin-top:2px;">Week ${cw}: ${cwTitle}</div>
 <div style="font-size:11px;color:rgba(255,255,255,.6);margin-top:2px;">Phase ${cwPhase} · ${cw<=12?'Foundation':cw<=24?'Neighborhood':cw<=36?'Conversations':'Fluency'}</div></div>
 <div style="background:var(--gold);color:var(--ink);width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Baloo 2';font-size:20px;font-weight:800;">${cw}</div></div>
 <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:12px;">${cwVocab.slice(0,6).map(function(w){return '<span style="background:rgba(255,255,255,.15);padding:4px 10px;border-radius:50px;font-size:12px;font-weight:700;color:var(--w);">'+w.e+' '+w.es+'</span>';}).join('')}</div>
 <div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap;">
 <button onclick="startLesson(${cw})" style="flex:1 1 100%;padding:12px;border-radius:50px;background:var(--gold);color:var(--ink);font-weight:800;font-size:14px;border:none;border-bottom:4px solid var(--goldd);">▶ Start Week ${cw} Lesson</button>
-<button onclick="document.querySelector('[data-p=path]').click();" style="flex:1;padding:10px;border-radius:50px;background:rgba(255,255,255,.2);color:var(--w);font-weight:800;font-size:12px;border:2px solid var(--w);">🛤️ Open Path</button>
-<button onclick="document.querySelector('[data-p=learn]').click();setTimeout(function(){var el=document.getElementById('ph'+(${cwPhase}-1));if(el)el.classList.add('op');},200);" style="flex:1;padding:10px;border-radius:50px;background:rgba(255,255,255,.1);color:var(--w);font-weight:700;font-size:12px;border:1px solid rgba(255,255,255,.4);">📖 Curriculum</button>
+<button onclick="document.querySelector('[data-p=path]').click();" style="flex:1;padding:10px;border-radius:50px;background:rgba(255,255,255,.2);color:var(--w);font-weight:800;font-size:12px;border:2px solid var(--w);">${ic('path',15)} Open Path</button>
+<button onclick="document.querySelector('[data-p=learn]').click();setTimeout(function(){var el=document.getElementById('ph'+(${cwPhase}-1));if(el)el.classList.add('op');},200);" style="flex:1;padding:10px;border-radius:50px;background:rgba(255,255,255,.1);color:var(--w);font-weight:700;font-size:12px;border:1px solid rgba(255,255,255,.4);">${ic('book',15)} Curriculum</button>
 <button onclick="openLessonTM()" style="flex:1;padding:10px;border-radius:50px;background:rgba(255,255,255,.1);color:var(--w);font-weight:700;font-size:12px;border:1px solid rgba(255,255,255,.4);">👶🏾 Toddler</button>
 </div></div>`;
 getDailyXP();
@@ -3191,34 +3240,34 @@ const dxpHome=getDailyXP();const dxpPct=Math.min(100,Math.round(dxpHome/30*100))
 const weakHome=Object.keys(S.wk||{}).filter(function(k){return S.wk[k]&&S.wk[k].count>0;}).length;
 h+=`<div class="hm-path hm-light" style="background:var(--w);border-radius:var(--r);padding:14px 16px;margin-bottom:14px;border:1px solid var(--bd);box-shadow:var(--sh);">
 <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
-<div><div style="font-size:11px;font-weight:800;color:#8A8FA3;text-transform:uppercase;letter-spacing:1px;">🛤️ Your Path</div>
+<div><div style="font-size:11px;font-weight:800;color:#8A8FA3;text-transform:uppercase;letter-spacing:1px;"><span style="color:var(--terra)">${ic('path',14)}</span> Your Path</div>
 <div style="font-family:'Baloo 2',cursive;font-size:18px;font-weight:800;color:var(--ink);margin-top:2px;">${dxpHome} / 30 XP today</div></div>
 <div style="display:flex;gap:10px;align-items:center;">
-<span style="color:#FFA726;font-family:'Baloo 2';font-size:18px;font-weight:800;">🔥 ${S.sk||0}</span>
+<span style="color:#FFA726;font-family:'Baloo 2';font-size:18px;font-weight:800;"><span style="color:#E8622C">${ic('flame',17)}</span> ${S.sk||0}</span>
 ${S.fr>0?`<span style="color:#4FC3F7;font-family:'Baloo 2';font-size:16px;font-weight:800;">🧊 ${S.fr}</span>`:''}
-<span style="color:var(--goldd);font-family:'Baloo 2';font-size:18px;font-weight:800;">⭐ ${S.xp||0}</span>
+<span style="color:var(--goldd);font-family:'Baloo 2';font-size:18px;font-weight:800;"><span style="color:var(--gold)">${ic('star',17)}</span> ${S.xp||0}</span>
 </div></div>
 <div style="height:8px;background:var(--grl);border-radius:4px;overflow:hidden;margin-bottom:10px;"><div style="height:100%;background:linear-gradient(90deg,var(--teal),var(--gold));border-radius:4px;width:${dxpPct}%;transition:width .4s;"></div></div>
 <div style="display:flex;gap:8px;">
-<button onclick="document.querySelector('[data-p=path]').click();" style="flex:1;padding:10px;border-radius:50px;background:var(--gold);color:var(--ink);font-weight:800;font-size:13px;border:none;border-bottom:3px solid var(--goldd);">🛤️ Open Path</button>
+<button onclick="document.querySelector('[data-p=path]').click();" style="flex:1;padding:10px;border-radius:50px;background:var(--gold);color:var(--ink);font-weight:800;font-size:13px;border:none;border-bottom:3px solid var(--goldd);">${ic('path',16)} Open Path</button>
 ${weakHome>0?`<button onclick="startStrengthen()" style="flex:1;padding:10px;border-radius:50px;background:var(--terra);color:var(--w);font-weight:800;font-size:13px;border:none;border-bottom:3px solid #7B3014;">💪🏾 Practice (${weakHome})</button>`:''}
 </div></div>`;
 h+=`<div class="cls hm-help ${homeSec.help?'':'cp'}" style="background:var(--ink);color:var(--w);border:2px solid var(--gold);">
 <button onclick="tgHomeSec('help')" class="clh tg" style="border:none;justify-content:center;">
-<span style="font-size:15px;">🆘 Help Me · Meltdown Phrases</span><span class="clx">${homeSec.help?'−':'+'}</span>
+<span style="font-size:15px;display:inline-flex;align-items:center;gap:8px;">${ic('lifebuoy',20)} Help Me · Meltdown Phrases</span><span class="clx">${homeSec.help?'−':'+'}</span>
 </button>
 <div id="helpme" class="cls-bd" style="padding:12px 16px;">
 <p style="text-align:center;font-size:12px;color:#CBD5E1;margin-bottom:10px;">Toddler meltdown? Tap for instant phrases.</p>
-<div style="background:rgba(212,160,23,.1);border:1px solid rgba(212,160,23,.2);padding:12px;border-radius:12px;margin-bottom:8px;display:flex;align-items:center;gap:10px;"><button class="spk" data-speak="Calmate mi amor" style="background:var(--gold);border-color:var(--gold);color:var(--ink);">🔊</button><div><b style="font-size:18px;color:var(--gold);">Calmate</b><br><span style="font-size:12px;color:#C8C8DA;">kahl-MAH-teh · Calm down</span></div></div>
-<div style="background:rgba(212,160,23,.1);border:1px solid rgba(212,160,23,.2);padding:12px;border-radius:12px;margin-bottom:8px;display:flex;align-items:center;gap:10px;"><button class="spk" data-speak="Usá tus palabras" style="background:var(--gold);border-color:var(--gold);color:var(--ink);">🔊</button><div><b style="font-size:18px;color:var(--gold);">Usá tus palabras</b><br><span style="font-size:12px;color:#C8C8DA;">oo-SAH toos pah-LAH-brahs · Use your words</span></div></div>
-<div style="background:rgba(212,160,23,.1);border:1px solid rgba(212,160,23,.2);padding:12px;border-radius:12px;margin-bottom:8px;display:flex;align-items:center;gap:10px;"><button class="spk" data-speak="Respirá" style="background:var(--gold);border-color:var(--gold);color:var(--ink);">🔊</button><div><b style="font-size:18px;color:var(--gold);">Respirá</b><br><span style="font-size:12px;color:#C8C8DA;">rehs-pee-RAH · Breathe</span></div></div>
-<div style="background:rgba(212,160,23,.1);border:1px solid rgba(212,160,23,.2);padding:12px;border-radius:12px;display:flex;align-items:center;gap:10px;"><button class="spk" data-speak="Te quiero mucho" style="background:var(--gold);border-color:var(--gold);color:var(--ink);">🔊</button><div><b style="font-size:18px;color:var(--gold);">Te quiero mucho</b><br><span style="font-size:12px;color:#C8C8DA;">teh key-EH-roh MOO-choh · I love you so much</span></div></div>
+<div style="background:rgba(212,160,23,.1);border:1px solid rgba(212,160,23,.2);padding:12px;border-radius:12px;margin-bottom:8px;display:flex;align-items:center;gap:10px;"><button class="spk" data-speak="Calmate mi amor" style="background:var(--gold);border-color:var(--gold);color:var(--ink);">${ic('speaker',16)}</button><div><b style="font-size:18px;color:var(--gold);">Calmate</b><br><span style="font-size:12px;color:#C8C8DA;">kahl-MAH-teh · Calm down</span></div></div>
+<div style="background:rgba(212,160,23,.1);border:1px solid rgba(212,160,23,.2);padding:12px;border-radius:12px;margin-bottom:8px;display:flex;align-items:center;gap:10px;"><button class="spk" data-speak="Usá tus palabras" style="background:var(--gold);border-color:var(--gold);color:var(--ink);">${ic('speaker',16)}</button><div><b style="font-size:18px;color:var(--gold);">Usá tus palabras</b><br><span style="font-size:12px;color:#C8C8DA;">oo-SAH toos pah-LAH-brahs · Use your words</span></div></div>
+<div style="background:rgba(212,160,23,.1);border:1px solid rgba(212,160,23,.2);padding:12px;border-radius:12px;margin-bottom:8px;display:flex;align-items:center;gap:10px;"><button class="spk" data-speak="Respirá" style="background:var(--gold);border-color:var(--gold);color:var(--ink);">${ic('speaker',16)}</button><div><b style="font-size:18px;color:var(--gold);">Respirá</b><br><span style="font-size:12px;color:#C8C8DA;">rehs-pee-RAH · Breathe</span></div></div>
+<div style="background:rgba(212,160,23,.1);border:1px solid rgba(212,160,23,.2);padding:12px;border-radius:12px;display:flex;align-items:center;gap:10px;"><button class="spk" data-speak="Te quiero mucho" style="background:var(--gold);border-color:var(--gold);color:var(--ink);">${ic('speaker',16)}</button><div><b style="font-size:18px;color:var(--gold);">Te quiero mucho</b><br><span style="font-size:12px;color:#C8C8DA;">teh key-EH-roh MOO-choh · I love you so much</span></div></div>
 </div></div>
 <div class="hm-stats"><div class="rc"><div class="rw"><svg width="120" height="120"><circle cx="60" cy="60" r="52" fill="none" stroke="var(--grl)" stroke-width="8"/><circle cx="60" cy="60" r="52" fill="none" stroke="url(#rg)" stroke-width="8" stroke-dasharray="326.7" stroke-dashoffset="${326.7-(326.7*p/100)}" stroke-linecap="round"/><defs><linearGradient id="rg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="var(--teal)"/><stop offset="100%" stop-color="var(--gold)"/></linearGradient></defs></svg><div class="rcn"><div class="rpct">${p}%</div><div class="rlb">Complete</div></div></div><div style="font-size:12px;color:var(--gr);font-weight:600;">${dw} of 48 weeks</div></div>
-<div class="srow"><div class="sc2"><div class="sn cc">🔥 ${S.sk}</div><div class="sl2">Streak</div></div><div class="sc2"><div class="sn cy">⭐ ${S.xp||0}</div><div class="sl2">XP</div></div><div class="sc2"><div class="sn cy">${kw}</div><div class="sl2">Words</div></div><div class="sc2"><div class="sn cs">${S.qc}</div><div class="sl2">Quiz ✓</div></div><div class="sc2"><div class="sn cg">${dw}</div><div class="sl2">Weeks</div></div></div></div>
+<div class="srow"><div class="sc2"><div class="sn cc">${ic('flame',16)} ${S.sk}</div><div class="sl2">Streak</div></div><div class="sc2"><div class="sn cy">${ic('star',16)} ${S.xp||0}</div><div class="sl2">XP</div></div><div class="sc2"><div class="sn cy">${kw}</div><div class="sl2">Words</div></div><div class="sc2"><div class="sn cs">${S.qc}</div><div class="sl2">Quiz ✓</div></div><div class="sc2"><div class="sn cg">${dw}</div><div class="sl2">Weeks</div></div></div></div>
 <div class="hm-tasks hm-light" style="background:var(--w);border-radius:var(--r);padding:16px;margin-bottom:14px;border:1px solid var(--bd);box-shadow:var(--sh);">
 <div onclick="tgHomeSec('tasks')" style="display:flex;justify-content:space-between;align-items:center;cursor:pointer;">
-<div><div style="font-size:11px;font-weight:800;color:#8A8FA3;text-transform:uppercase;letter-spacing:1px;">📋 Today's Tasks</div>
+<div><div style="font-size:11px;font-weight:800;color:#8A8FA3;text-transform:uppercase;letter-spacing:1px;"><span style="color:var(--teal)">${ic('checklist',14)}</span> Today's Tasks</div>
 <div style="font-family:'Baloo 2',cursive;font-size:18px;font-weight:800;color:var(--ink);margin-top:2px;">${cc} of ${TK.length} done</div></div>
 <div style="display:flex;align-items:center;gap:10px;"><div style="background:${cc>=TK.length?'var(--teal)':'var(--gold)'};color:var(--ink);width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Baloo 2';font-size:16px;font-weight:800;">${cc>=TK.length?'✓':cc+'/'+ TK.length}</div><span style="color:#8A8FA3;font-size:18px;font-weight:800;">${homeSec.tasks?'▲':'▼'}</span></div></div>
 <div style="height:4px;background:var(--grl);border-radius:2px;margin:12px 0 ${homeSec.tasks?'14px':'0'};"><div style="height:100%;background:linear-gradient(90deg,var(--teal),var(--gold));border-radius:2px;width:${Math.round(cc/TK.length*100)}%;transition:width .4s;"></div></div>
@@ -3227,7 +3276,7 @@ ${homeSec.tasks?TK.map(t=>{const dn2=S.dc[t.id];const ex=expTask===t.id;const ca
 
 <div class="hm-fq hm-light" style="background:var(--w);border-radius:var(--r);padding:16px;margin-bottom:14px;border:1px solid var(--bd);box-shadow:var(--sh);">
 <div onclick="tgHomeSec('fq')" style="display:flex;justify-content:space-between;align-items:center;cursor:pointer;">
-<div><div style="font-size:11px;font-weight:800;color:#8A8FA3;text-transform:uppercase;letter-spacing:1px;">🌴 Florida Quest</div>
+<div><div style="font-size:11px;font-weight:800;color:#8A8FA3;text-transform:uppercase;letter-spacing:1px;"><span style="color:#2E7D32">${ic('palm',14)}</span> Florida Quest</div>
 <div style="font-family:'Baloo 2',cursive;font-size:18px;font-weight:800;color:#2E7D32;margin-top:2px;">Fort Myers Adventures</div></div>
 <div style="display:flex;align-items:center;gap:10px;"><div style="background:#4CAF50;color:var(--w);width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Baloo 2';font-size:14px;font-weight:800;">${Object.values(S.fq||{}).filter(Boolean).length}/${FQ.length}</div><span style="color:#8A8FA3;font-size:18px;font-weight:800;">${homeSec.fq?'▲':'▼'}</span></div></div>
 ${homeSec.fq?FQ.map(q=>{const dn3=S.fq&&S.fq[q.id];return '<div style="background:'+(dn3?'rgba(76,175,80,.15)':'#FAF8F4')+';border-radius:14px;padding:12px 14px;margin-bottom:8px;margin-top:12px;border:1px solid '+(dn3?'#4CAF50':'var(--bd)')+';display:flex;align-items:flex-start;gap:10px;"><button onclick="tgFQ(\''+q.id+'\')" style="width:44px;height:44px;min-width:44px;border-radius:8px;border:3px solid '+(dn3?'#4CAF50':'#D6CFC3')+';background:'+(dn3?'#4CAF50':'transparent')+';color:var(--w);font-size:14px;display:flex;align-items:center;justify-content:center;margin-top:2px;">'+(dn3?'✓':'')+'</button><div style="flex:1;"><div style="font-size:13px;font-weight:700;color:'+(dn3?'#8A8FA3':'var(--ink)')+';'+(dn3?'text-decoration:line-through;':'')+'">'+q.t+'</div><div style="font-size:11px;color:#6B6F85;margin-top:3px;">'+q.d+'</div>'+(q.phrases?q.phrases.map(function(p2){var parts=p2.split('|');var es=parts[0];var ph2=parts.length===3?parts[1]:'';var en=parts.length===3?parts[2]:(parts[1]||'');return '<div style="display:flex;align-items:flex-start;gap:6px;background:rgba(76,175,80,.12);padding:6px 10px;border-radius:8px;margin:4px 0;font-weight:700;font-size:12px;border:1px solid rgba(76,175,80,.25);flex-wrap:wrap;color:#2E7D32;">'+spB(es)+' '+es+(ph2?' <span style="color:var(--terra);font-size:11px;">🗣 '+ph2+'</span>':'')+(en?' <span style="color:#8A8FA3;font-weight:500;font-size:11px;">('+en+')</span>':'')+'</div>';}).join(''):'')+'</div></div>';}).join(''):''}
@@ -3295,8 +3344,8 @@ const FQ=[
 ];
 
 /* ===== LEARN ===== */
-const PHASE_ICONS={t1:'/icons/phase-1-foundation.png',t2:'/icons/phase-2-neighborhood.png',t3:'/icons/phase-3-conversations.png',t4:'/icons/phase-4-fluency.png'};
-function rL(){let wIdx=0;let h=`<div class="pt">📖 Curriculum</div><p class="ps">Your complete 12-month roadmap. Each week tells you exactly what to do — no guessing.</p>`;
+const PHASE_ICONS={t1:'/icons/phase-1-foundation.webp',t2:'/icons/phase-2-neighborhood.webp',t3:'/icons/phase-3-conversations.webp',t4:'/icons/phase-4-fluency.webp'};
+function rL(){let wIdx=0;let h=`<div class="pt"><span class="pti c-teal">${ic('book')}</span>Curriculum</div><p class="ps">Your complete 12-month roadmap. Each week tells you exactly what to do — no guessing.</p>`;
 CU.forEach((ph,pi)=>{
 h+=`<div class="phase-card ${pi===0?'op':''}" id="ph${pi}"><div class="phase-hd" onclick="document.getElementById('ph${pi}').classList.toggle('op')"><h3><img src="${PHASE_ICONS[ph.c]||''}" alt="${ph.p}" style="width:28px;height:28px;border-radius:50%;object-fit:cover;flex-shrink:0;"><span class="ptag ${ph.c}">${ph.g}</span> ${ph.p}</h3><svg class="pchev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div><div class="phase-bd"><div class="phase-ct">`;
 if(ph.desc)h+=`<p style="font-size:13px;color:var(--gr);margin-top:12px;padding:10px;background:var(--grl);border-radius:var(--rs);">${ph.desc}</p>`;
@@ -3342,7 +3391,7 @@ function rP(){
   const cw=getCurrentWeek();
   const total=Math.min(48,WEEK_TITLES.length-1);
   const dailyGoal=30;
-  let h=`<div class="pt">🛤️ Your Path</div><p class="ps">Tap an unlocked star to start a quick lesson. Lose all 5 hearts and the lesson resets — no big deal.</p>`;
+  let h=`<div class="pt"><span class="pti c-terra">${ic('path')}</span>Your Path</div><p class="ps">Tap an unlocked star to start a quick lesson. Lose all 5 hearts and the lesson resets — no big deal.</p>`;
   // HUD
   h+=`<div class="path-hud">`
    +`<div class="stat flame"><span class="ic">🔥</span><span>${S.sk||0}</span></div>`
@@ -3603,13 +3652,13 @@ function renderExercise(){
     e.opts.forEach(function(o,i){body+='<button class="lp-opt" data-pick="'+i+'" onclick="pickOpt('+i+')">'+(o.es||o)+'</button>';});
     body+='</div>';
   } else if(e.type==='hear'){
-    body+='<div class="lp-hero"><button class="h-spk" onclick="speak(\''+(e.speak||'').replace(/'/g,"\\'")+"','es')\">🔊</button><div style=\"font-size:11px;color:var(--gr);margin-top:8px;font-weight:700;\">Tap to replay</div></div>";
+    body+='<div class="lp-hero"><button class="h-spk" onclick="speak(\''+(e.speak||'').replace(/'/g,"\\'")+"','es')\">"+ic('speaker',22)+"</button><div style=\"font-size:11px;color:var(--gr);margin-top:8px;font-weight:700;\">Tap to replay</div></div>";
     body+='<div class="lp-opts">';
     e.opts.forEach(function(o,i){body+='<button class="lp-opt" data-pick="'+i+'" onclick="pickOpt('+i+')">'+(o.es||o)+'</button>';});
     body+='</div>';
     setTimeout(function(){if(e.speak)speak(e.speak,'es');},250);
   } else if(e.type==='translate'){
-    body+='<div class="lp-hero"><div class="h-em">'+(e.hero.em||'💬')+'</div><div class="h-wd">'+e.hero.wd+'</div><button class="h-spk" onclick="speak(\''+e.hero.wd.replace(/'/g,"\\'")+"','es')\">🔊</button></div>";
+    body+='<div class="lp-hero"><div class="h-em">'+(e.hero.em||'💬')+'</div><div class="h-wd">'+e.hero.wd+'</div><button class="h-spk" onclick="speak(\''+e.hero.wd.replace(/'/g,"\\'")+"','es')\">"+ic('speaker',22)+"</button></div>";
     body+='<div class="lp-opts">';
     e.opts.forEach(function(o,i){body+='<button class="lp-opt" data-pick="'+i+'" onclick="pickOpt('+i+')">'+(o.en||o)+'</button>';});
     body+='</div>';
@@ -3949,20 +3998,20 @@ let vocabLevel=0;
 let appLang=L.g('appLang','es');
 const LVL={1:'🌱 Beginner',2:'🌿 Growing',3:'🌳 Confident'};
 function sD(n){cD=n;dk=sh([...V[n]].filter(c=>vocabLevel===0||c.lv===vocabLevel));cI=0;fK=0;fA=0;fl=false;rC();}
-function rC(){const ds=Object.keys(V);const allCount=V[cD].length;const filtCount=V[cD].filter(c=>vocabLevel===0||c.lv===vocabLevel).length;let h=`<div class="pt">🃏 Flashcards</div><p class="ps">Tap to flip · 🔊 for pronunciation</p><div style="display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap;"><button onclick="vocabLevel=0;sD('${cD}')" class="dkb ${vocabLevel===0?'act':''}">All</button><button onclick="vocabLevel=1;sD('${cD}')" class="dkb ${vocabLevel===1?'act':''}" style="${vocabLevel!==1?'border-color:var(--teal);color:var(--teal);':''}">🌱 Beginner</button><button onclick="vocabLevel=2;sD('${cD}')" class="dkb ${vocabLevel===2?'act':''}" style="${vocabLevel!==2?'border-color:var(--goldd);color:var(--goldd);':''}">🌿 Growing</button><button onclick="vocabLevel=3;sD('${cD}')" class="dkb ${vocabLevel===3?'act':''}" style="${vocabLevel!==3?'border-color:var(--terra);color:var(--terra);':''}">🌳 Confident</button></div><div style="font-size:11px;color:var(--gr);margin-bottom:10px;">${filtCount} of ${allCount} cards${vocabLevel?' at this level':''}</div><div class="dkp">${ds.map(d=>`<button class="dkb ${d===cD?'act':''}" onclick="sD('${d}')">${d}</button>`).join('')}</div>`;
+function rC(){const ds=Object.keys(V);const allCount=V[cD].length;const filtCount=V[cD].filter(c=>vocabLevel===0||c.lv===vocabLevel).length;let h=`<div class="pt"><span class="pti c-purple">${ic('cards')}</span>Flashcards</div><p class="ps">Tap to flip · 🔊 for pronunciation</p><div style="display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap;"><button onclick="vocabLevel=0;sD('${cD}')" class="dkb ${vocabLevel===0?'act':''}">All</button><button onclick="vocabLevel=1;sD('${cD}')" class="dkb ${vocabLevel===1?'act':''}" style="${vocabLevel!==1?'border-color:var(--teal);color:var(--teal);':''}">🌱 Beginner</button><button onclick="vocabLevel=2;sD('${cD}')" class="dkb ${vocabLevel===2?'act':''}" style="${vocabLevel!==2?'border-color:var(--goldd);color:var(--goldd);':''}">🌿 Growing</button><button onclick="vocabLevel=3;sD('${cD}')" class="dkb ${vocabLevel===3?'act':''}" style="${vocabLevel!==3?'border-color:var(--terra);color:var(--terra);':''}">🌳 Confident</button></div><div style="font-size:11px;color:var(--gr);margin-bottom:10px;">${filtCount} of ${allCount} cards${vocabLevel?' at this level':''}</div><div class="dkp">${ds.map(d=>`<button class="dkb ${d===cD?'act':''}" onclick="sD('${d}')">${d}</button>`).join('')}</div>`;
 if(!dk.length){sD(cD);return;}
 if(cI>=dk.length){h+=`<div class="card" style="text-align:center;padding:30px;"><h3 style="justify-content:center;">Deck Complete! 🎉</h3><div class="qbg">${fK}/${dk.length}</div><p style="color:var(--gr);">Know: <b style="color:var(--teal)">${fK}</b> · Again: <b style="color:var(--terra)">${fA}</b></p><button class="qrb" onclick="sD('${cD}')">Shuffle & Retry</button></div>`;document.getElementById('p-cards').innerHTML=h;return;}
-const c=dk[cI];const cFront=appLang==='en'?c.n:c.e;const cBack=appLang==='en'?c.e:c.n;const cSpeak=appLang==='en'?c.n:c.e;h+=`<div class="fpg">${cI+1} of ${dk.length}</div><div style="display:flex;gap:14px;justify-content:center;font-size:12px;font-weight:700;margin-bottom:10px;"><span style="color:var(--teal)">✓ ${fK}</span><span style="color:var(--terra)">✗ ${fA}</span></div><div class="fca"><div class="fcc" onclick="fl=!fl;rC()"><div class="fc ${fl?'fl':''}"><div class="ff ffr"><div class="fw">${cFront}</div><div class="fh">${LVL[c.lv]||''}</div><div class="fh">Tap to reveal</div></div><div class="ff fbk"><div class="fw">${cBack}</div><div class="ft">${cFront}</div>${PH[c.e]?`<div style="font-size:12px;color:var(--terra);font-weight:700;margin-top:4px;">🗣 ${PH[c.e]}</div>`:''}${c.x?`<div class="fe">"${c.x}"</div>`:''}</div></div></div><button class="splg" data-speak="${cSpeak.replace(/"/g,'&quot;')}" data-lang="${appLang}">🔊</button>${fl?`<div class="fcl"><button class="fcb ba" onclick="fR(0)">🔄 Again</button><button class="fcb bk" onclick="fR(1)">✓ Know it</button></div>`:''}</div>`;
+const c=dk[cI];const cFront=appLang==='en'?c.n:c.e;const cBack=appLang==='en'?c.e:c.n;const cSpeak=appLang==='en'?c.n:c.e;h+=`<div class="fpg">${cI+1} of ${dk.length}</div><div style="display:flex;gap:14px;justify-content:center;font-size:12px;font-weight:700;margin-bottom:10px;"><span style="color:var(--teal)">✓ ${fK}</span><span style="color:var(--terra)">✗ ${fA}</span></div><div class="fca"><div class="fcc" onclick="fl=!fl;rC()"><div class="fc ${fl?'fl':''}"><div class="ff ffr"><div class="fw">${cFront}</div><div class="fh">${LVL[c.lv]||''}</div><div class="fh">Tap to reveal</div></div><div class="ff fbk"><div class="fw">${cBack}</div><div class="ft">${cFront}</div>${PH[c.e]?`<div style="font-size:12px;color:var(--terra);font-weight:700;margin-top:4px;">🗣 ${PH[c.e]}</div>`:''}${c.x?`<div class="fe">"${c.x}"</div>`:''}</div></div></div><button class="splg" data-speak="${cSpeak.replace(/"/g,'&quot;')}" data-lang="${appLang}">${ic('speaker',22)}</button>${fl?`<div class="fcl"><button class="fcb ba" onclick="fR(0)">🔄 Again</button><button class="fcb bk" onclick="fR(1)">✓ Know it</button></div>`:''}</div>`;
 document.getElementById('p-cards').innerHTML=h;}
 function fR(k){const c=dk[cI];if(k){fK++;S.fk[c.e]=true;}else{fA++;S.fk[c.e]=false;}sv();cI++;fl=false;rC();}
 
 /* ===== QUIZ ===== */
 let qQ=[],qI=0,qS=0,qA=false;
 function gQ(){const raw=Object.values(V).flat(),all=raw.filter(c=>vocabLevel===0||c.lv===vocabLevel),s=sh([...all]);qQ=s.slice(0,10).map(q=>{const aKey=appLang==='en'?'e':'n';const pool=sh(raw.filter(w=>w[aKey]!==q[aKey]).map(w=>w[aKey]));const opts=[q[aKey]];for(const it of pool){if(!opts.includes(it))opts.push(it);if(opts.length===4)break;}return{...q,o:sh(opts),aKey};}).filter(q=>q.o.length===4);qI=0;qS=0;qA=false;rQ();}
-function rQ(){let h=`<div class="pt">🧩 Quiz</div>`;
+function rQ(){let h=`<div class="pt"><span class="pti c-gold">${ic('bulb')}</span>Quiz</div>`;
 if(!qQ.length){h+=`<div class="card" style="text-align:center;padding:30px;"><h3 style="justify-content:center;">Ready to test yourself?</h3><p style="margin:8px 0 12px;font-size:13px;color:var(--gr);">10 random questions${vocabLevel?' at '+LVL[vocabLevel]+' level':' from all levels'}</p><div style="display:flex;gap:6px;justify-content:center;margin-bottom:16px;flex-wrap:wrap;"><button onclick="vocabLevel=0;rQ()" class="dkb ${vocabLevel===0?'act':''}">All</button><button onclick="vocabLevel=1;rQ()" class="dkb ${vocabLevel===1?'act':''}" style="${vocabLevel!==1?'border-color:var(--teal);color:var(--teal);':''}">🌱</button><button onclick="vocabLevel=2;rQ()" class="dkb ${vocabLevel===2?'act':''}" style="${vocabLevel!==2?'border-color:var(--goldd);color:var(--goldd);':''}">🌿</button><button onclick="vocabLevel=3;rQ()" class="dkb ${vocabLevel===3?'act':''}" style="${vocabLevel!==3?'border-color:var(--terra);color:var(--terra);':''}">🌳</button></div><button class="qrb" onclick="gQ()">Start Quiz</button></div>`;document.getElementById('p-quiz').innerHTML=h;return;}
 if(qI>=qQ.length){const pc=Math.round(qS/qQ.length*100),mg=pc>=80?"¡Excelente! 🌟":pc>=50?"¡Muy bien! 💪🏾":"¡Seguí! 📚";h+=`<div class="card" style="text-align:center;padding:30px;"><h3 style="justify-content:center;">${mg}</h3><div class="qbg">${qS}/${qQ.length}</div><p style="color:var(--gr)">${pc}%</p><button class="qrb" onclick="gQ()">New Quiz</button></div>`;document.getElementById('p-quiz').innerHTML=h;return;}
-const q=qQ[qI];const qWord=appLang==='en'?q.n:q.e;const qSpeak=appLang==='en'?q.n:q.e;h+=`<div style="margin-bottom:14px;"><div style="display:flex;justify-content:space-between;font-size:12px;font-weight:600;color:var(--gr);margin-bottom:4px;"><span>Q ${qI+1}/10</span><span>Score: ${qS}</span></div><div class="qpb"><div class="qpf" style="width:${qI/qQ.length*100}%"></div></div></div><div class="qc2"><div style="font-size:13px;color:var(--gr);font-weight:600;">${appLang==='en'?'How do you say this in Spanish?':'What does this mean?'}</div><div class="qw">${qWord} <button class="splg" style="width:34px;height:34px;" data-speak="${qSpeak.replace(/"/g,'&quot;')}" data-lang="${appLang}">🔊</button></div><div class="qo">${q.o.map((o,i)=>`<button class="qob" id="q${i}" data-qi="${i}" data-qa="${o.replace(/"/g,'&quot;')}">${o}</button>`).join('')}</div></div>`;
+const q=qQ[qI];const qWord=appLang==='en'?q.n:q.e;const qSpeak=appLang==='en'?q.n:q.e;h+=`<div style="margin-bottom:14px;"><div style="display:flex;justify-content:space-between;font-size:12px;font-weight:600;color:var(--gr);margin-bottom:4px;"><span>Q ${qI+1}/10</span><span>Score: ${qS}</span></div><div class="qpb"><div class="qpf" style="width:${qI/qQ.length*100}%"></div></div></div><div class="qc2"><div style="font-size:13px;color:var(--gr);font-weight:600;">${appLang==='en'?'How do you say this in Spanish?':'What does this mean?'}</div><div class="qw">${qWord} <button class="splg" style="width:34px;height:34px;" data-speak="${qSpeak.replace(/"/g,'&quot;')}" data-lang="${appLang}">${ic('speaker',22)}</button></div><div class="qo">${q.o.map((o,i)=>`<button class="qob" id="q${i}" data-qi="${i}" data-qa="${o.replace(/"/g,'&quot;')}">${o}</button>`).join('')}</div></div>`;
 document.getElementById('p-quiz').innerHTML=h;
 document.querySelectorAll('[data-qi]').forEach(b=>b.addEventListener('click',function(){
 if(qA)return;qA=true;const idx=+this.dataset.qi,ans=this.dataset.qa,q2=qQ[qI],ok=ans===q2[q2.aKey];
@@ -4021,19 +4070,19 @@ return '<div class="subpg '+(morePage==="lb"?"act":"")+'" id="m-lb"><button clas
 +'<div style="background:var(--teall);padding:12px;border-radius:10px;margin:8px 0;border:1px solid #B2DFDB;"><b>Rain, Rain, Go Away</b><br><br><span style="font-size:13px;">Rain, rain, go away<br>Come again another day<br>Little <b>'+cn+'</b> wants to play<br>Rain, rain, go away!</span></div></div>'
 +'<div class="card hl-teal"><h3>🏛️ 1,000 Books Before Kindergarten</h3><p style="font-size:13px;">Ask your librarian about this free program! Read any book — even the same book — and log it. Goal: 1,000 books before age 5. Visit any Lee County Library branch or go to <b>leelibrary.net</b></p><a href="https://www.leelibrary.net" target="_blank" rel="noopener" style="display:inline-block;margin-top:8px;padding:8px 16px;border-radius:50px;background:var(--teal);color:var(--w);font-size:12px;font-weight:700;text-decoration:none;">Visit Lee County Library ↗</a></div></div>';
 }
-function rM(){let h=`<div class="pt">📋 More</div>`;
+function rM(){let h=`<div class="pt"><span class="pti c-ink">${ic('grid')}</span>More</div>`;
 h+=`<div class="subpg ${morePage==='grid'?'act':''}" id="m-grid"><div class="more-grid">${[
-['gs','🚀','Getting Started','Everything you need to know to use this app.'],
-['dash','📊','Parent Dashboard','Weekly progress and what to celebrate.'],
-['ach','🏆','Achievements','Badges you have unlocked along the way.'],
-['sc','📅','Schedule','Daily and weekly learning rhythm.'],
-['rs','📚','Resources','Apps, YouTube, podcasts, and community.'],
-['hn','🇭🇳','Honduran Guide','Pronunciation, slang, food, and recipes.'],
-['sg','🎵','Songs','Spanish songs with YouTube search links.'],
-['lb','🏛️','Library','Lee County daily literacy activities.'],
-['cg','🔗','Cognates','Bilingual bonus words you already know.'],
-['st','⚙️','Settings','Profile updates and reset progress tools.']
-].map(([id,ico,title,desc])=>`<button class="more-card" onclick="openMore('${id}')"><div class="more-ico">${ico}</div><h3>${title}</h3><p>${desc}</p></button>`).join('')}</div></div>`;
+['gs','rocket|c-terra','Getting Started','Everything you need to know to use this app.'],
+['dash','chart|c-teal','Parent Dashboard','Weekly progress and what to celebrate.'],
+['ach','trophy|c-gold','Achievements','Badges you have unlocked along the way.'],
+['sc','calendar|c-teal','Schedule','Daily and weekly learning rhythm.'],
+['rs','books|c-gold','Resources','Apps, YouTube, podcasts, and community.'],
+['hn','flag|c-blue','Honduran Guide','Pronunciation, slang, food, and recipes.'],
+['sg','music|c-purple','Songs','Spanish songs with YouTube search links.'],
+['lb','library|c-ink','Library','Lee County daily literacy activities.'],
+['cg','link|c-teal','Cognates','Bilingual bonus words you already know.'],
+['st','sliders|c-ink','Settings','Profile updates and reset progress tools.']
+].map(([id,ico,title,desc])=>`<button class="more-card" onclick="openMore('${id}')"><div class="more-ico ict ${ico.split('|')[1]}">${ic(ico.split('|')[0])}</div><h3>${title}</h3><p>${desc}</p></button>`).join('')}</div></div>`;
 
 h+=`<div class="subpg ${morePage==='gs'?'act':''}" id="m-gs"><button class="back-btn" onclick="openMore('grid')">← Back to More</button>
 <div class="card"><h3>👋🏾 Welcome to ¡Vamos!</h3><p style="font-size:13px;">A free 12-month Spanish learning program for you and your toddler. Learn conversational Honduran Spanish together — 45 minutes a day, no experience needed. Everything is inside this app.</p></div>
