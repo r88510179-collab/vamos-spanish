@@ -344,6 +344,18 @@ button,.cb,.wkc,.spk,.splg{min-width:44px;min-height:44px;}
 #tmode{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;}
 html.tm-on,html.tm-on body{overscroll-behavior:none;overflow:hidden;}
 html.tm-on #toast{display:none!important;}
+.dm-box{display:flex;flex-direction:column;align-items:center;gap:6px;margin:10px 0 4px;}
+.dm-box:empty{display:none;}
+.dm-btn{position:relative;width:84px;height:84px;border-radius:50%;background:var(--w);border:5px solid var(--ink);box-shadow:0 5px 0 var(--ink);display:flex;align-items:center;justify-content:center;}
+.dm-btn .dm-ic{font-size:40px;position:relative;z-index:1;pointer-events:none;}
+.dm-btn.on{background:var(--terra);border-color:var(--gold);box-shadow:0 5px 0 #8a3a22;}
+.dm-ring{position:absolute;inset:-10px;border-radius:50%;border:6px solid var(--gold);opacity:.55;transition:transform .08s linear;pointer-events:none;}
+.dm-cap{font-size:13px;font-weight:800;color:var(--ink);}
+.punta-pad .dm-cap,.punta-pad .bili-prompt .en{color:var(--gold);}
+.punta-pad .bili-prompt .es{color:#fff;}
+.punta-pad .bili-prompt .ph{color:#ffb38a;}
+.dm-count{font-family:'Baloo 2',cursive;font-size:34px;font-weight:800;color:var(--gold);min-height:44px;}
+.dm-err{font-size:12px;line-height:1.5;background:var(--terral);color:var(--ink);padding:10px 12px;border-radius:12px;max-width:340px;text-align:left;}
 .tm-exit{position:fixed;top:calc(env(safe-area-inset-top,12px)+12px);left:14px;font-size:16px;font-weight:800;background:var(--ink);color:var(--gold);padding:8px 16px;border-radius:50px;z-index:2001;}
 
 /* SOCCER SHOTS */
@@ -727,6 +739,7 @@ Fill in your info below and tap ¡Vamos! <span style="font-size:11px;opacity:.7;
 <div class="bili-prompt" style="margin-bottom:6px;"><span class="es">🫧 ¡Reventá las Burbujas!</span><span class="ph">🗣 reh-vehn-TAH lahs boor-BOO-hahs</span><span class="en">Pop the Bubbles!</span></div>
 <div id="bubble-score" style="text-align:center;font-family:'Baloo 2';font-size:18px;color:var(--teal);">⭐ 0</div>
 <div id="bubble-hunt" style="text-align:center;font-family:'Baloo 2';font-size:16px;color:var(--terra);min-height:24px;"></div>
+<div class="dm-box" data-dm="bubbles"></div>
 <div id="bubble-area" style="position:relative;width:100%;height:400px;overflow:hidden;border-radius:16px;background:linear-gradient(180deg,#E0F7FA,#B2EBF2);margin-top:8px;"></div>
 </div>
 
@@ -786,6 +799,7 @@ Fill in your info below and tap ¡Vamos! <span style="font-size:11px;opacity:.7;
 <button class="drum" onclick="playDrum('mid',this)">🥁</button>
 <button class="drum" onclick="playDrum('lo',this)">🪘</button>
 </div>
+<div class="dm-box" data-dm="drums"></div>
 </div>
 </div>
 
@@ -1527,8 +1541,132 @@ async function playDrum(t,btn){
   }catch(e){}
 }
 
+/* ===== ¡DECILO! — toddler speaking games (Beta) =====
+   The mic only listens while the 🎤 button is on. Sound is measured on the phone,
+   his clip is played back once from memory, and nothing is saved or sent anywhere. */
+var DM={on:false,mode:null,stream:null,src:null,proc:null,sink:null,ring:[],ringLen:0,rec:null,recLen:0,active:false,loudMs:0,quietMs:0,floor:0.01,muteUntil:0,count:0,level:0,anim:0,err:''};
+function micBetaOn(){return L.g('micBeta',false)===true;}
+function toggleMicBeta(){L.s('micBeta',!micBetaOn());if(!micBetaOn())dmStop();rM();dmRender();showSaved();}
+function getAC(){if(!drumAudioCtx)drumAudioCtx=new (window.AudioContext||window.webkitAudioContext)();return drumAudioCtx;}
+async function dmStart(mode){
+  DM.err='';
+  if(DM.on){DM.mode=mode;dmRender();return;}
+  if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia){DM.err='nomic';dmRender();return;}
+  var ac;
+  try{ac=getAC();if(ac.state!=='running')await ac.resume();}catch(e){DM.err='nomic';dmRender();return;}
+  try{
+    DM.stream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true,autoGainControl:true}});
+  }catch(e){DM.err=(e&&e.name==='NotAllowedError')?'denied':'nomic';dmRender();return;}
+  DM.src=ac.createMediaStreamSource(DM.stream);
+  DM.proc=ac.createScriptProcessor(2048,1,1);
+  DM.sink=ac.createGain();DM.sink.gain.value=0; // keeps the processor running without playing the mic out loud
+  DM.src.connect(DM.proc);DM.proc.connect(DM.sink);DM.sink.connect(ac.destination);
+  DM.proc.onaudioprocess=dmFrame;
+  DM.on=true;DM.mode=mode;DM.active=false;DM.rec=null;DM.ring=[];DM.ringLen=0;DM.loudMs=0;DM.floor=0.01;
+  DM.muteUntil=performance.now()+700; // let the noise floor settle first
+  if(mode==='drums')DM.count=0;
+  dmRender();dmAnimLoop();
+  setTimeout(function(){if(DM.on)speak('¡Decilo!','es');},250);
+}
+function dmStop(){
+  if(DM.proc){try{DM.proc.onaudioprocess=null;DM.proc.disconnect();}catch(e){}}
+  if(DM.src){try{DM.src.disconnect();}catch(e){}}
+  if(DM.sink){try{DM.sink.disconnect();}catch(e){}}
+  if(DM.stream){try{DM.stream.getTracks().forEach(function(t){t.stop();});}catch(e){}}
+  DM.stream=null;DM.src=null;DM.proc=null;DM.sink=null;DM.rec=null;DM.ring=[];DM.ringLen=0;DM.active=false;
+  var wasOn=DM.on;DM.on=false;
+  if(DM.anim){cancelAnimationFrame(DM.anim);DM.anim=0;}
+  if(wasOn)dmRender();
+}
+function dmFrame(e){
+  var d=e.inputBuffer.getChannelData(0),sr=e.inputBuffer.sampleRate;
+  var sum=0;for(var i=0;i<d.length;i++)sum+=d[i]*d[i];
+  var rms=Math.sqrt(sum/d.length);DM.level=rms;
+  var ms=d.length/sr*1000,now=performance.now();
+  var talking=window.speechSynthesis&&speechSynthesis.speaking;
+  if(talking)DM.muteUntil=Math.max(DM.muteUntil,now+350);
+  if(now<DM.muteUntil){DM.active=false;DM.rec=null;DM.ring=[];DM.ringLen=0;DM.loudMs=0;return;}
+  var copy=new Float32Array(d);
+  var thr=Math.max(0.035,DM.floor*3.5);
+  if(!DM.active){
+    DM.ring.push(copy);DM.ringLen+=copy.length;
+    while(DM.ring.length>1&&DM.ringLen-DM.ring[0].length>=sr*0.35){DM.ringLen-=DM.ring[0].length;DM.ring.shift();}
+    if(rms>thr){
+      DM.loudMs+=ms;
+      if(DM.loudMs>=90){DM.active=true;DM.rec=DM.ring.slice();DM.recLen=DM.ringLen;DM.quietMs=0;}
+    }else{DM.loudMs=0;DM.floor=DM.floor*0.95+rms*0.05;}
+  }else{
+    DM.rec.push(copy);DM.recLen+=copy.length;
+    if(rms<thr*0.7)DM.quietMs+=ms;else DM.quietMs=0;
+    if(DM.quietMs>=450||DM.recLen>=sr*3){
+      var clip=DM.rec,len=DM.recLen;
+      DM.active=false;DM.rec=null;DM.loudMs=0;DM.ring=[];DM.ringLen=0;
+      dmHeard(clip,len,sr);
+    }
+  }
+}
+function dmMakeBuffer(clip,len,sr){
+  var ac=getAC(),buf=ac.createBuffer(1,len,sr),out=buf.getChannelData(0),o=0,peak=0;
+  clip.forEach(function(c){out.set(c,o);o+=c.length;});
+  for(var i=0;i<len;i++){var a=Math.abs(out[i]);if(a>peak)peak=a;}
+  var g=peak>0?Math.min(4,0.9/peak):1;
+  for(var j=0;j<len;j++)out[j]*=g;
+  return buf;
+}
+function dmPlay(buf){
+  try{var ac=getAC(),s=ac.createBufferSource();s.buffer=buf;s.connect(ac.destination);s.start();}catch(e){}
+}
+function dmHeard(clip,len,sr){
+  var buf=dmMakeBuffer(clip,len,sr),dur=buf.duration*1000,now=performance.now();
+  if(DM.mode==='bubbles'){
+    DM.muteUntil=now+1000+dur+500;
+    var area=document.getElementById('bubble-area');
+    var live=bubbles.filter(function(b){return b.parentElement&&b.dataset.popped!=='1'&&(parseFloat(b.style.bottom)||0)>-20&&(parseFloat(b.style.bottom)||0)<(area?area.offsetHeight-40:400);});
+    live.sort(function(a,b){return (parseFloat(b.style.bottom)||0)-(parseFloat(a.style.bottom)||0);});
+    if(live[0]&&live[0]._pop)live[0]._pop({stopPropagation:function(){},preventDefault:function(){}});
+    setTimeout(function(){if(DM.on&&DM.mode==='bubbles')dmPlay(buf);},1000);
+  }else if(DM.mode==='drums'){
+    DM.muteUntil=now+dur+1500;
+    var drums=document.querySelectorAll('#punta-pad .drum'),kinds=['hi','mid','lo'],k=Math.floor(Math.random()*3);
+    playDrum(kinds[k],drums[k]);
+    setTimeout(function(){if(DM.on)dmPlay(buf);},150);
+    setTimeout(function(){
+      if(!DM.on||DM.mode!=='drums')return;
+      DM.count++;
+      if(DM.count>=10){confetti();speak('¡Diez! ¡Muy bien!','es');DM.count=0;}
+      else speak('¡'+NUMS[DM.count]+'!','es');
+      dmRender();
+    },dur+350);
+  }
+}
+function dmAnimLoop(){
+  if(!DM.on){DM.anim=0;return;}
+  var r=document.getElementById('dm-ring-'+DM.mode);
+  if(r){var sc=1+Math.min(DM.level*10,0.9);r.style.transform='scale('+sc.toFixed(2)+')';r.style.opacity=DM.active?'1':'.55';}
+  DM.anim=requestAnimationFrame(dmAnimLoop);
+}
+function dmRender(){
+  document.querySelectorAll('.dm-box').forEach(function(box){
+    var m=box.dataset.dm;
+    if(!micBetaOn()){box.innerHTML='';return;}
+    var on=DM.on&&DM.mode===m,h='';
+    if(on){
+      h='<button class="dm-btn on" onclick="dmStop()" aria-label="Stop listening"><span class="dm-ring" id="dm-ring-'+m+'"></span><span class="dm-ic">🎤</span></button>'
+       +biliP('¡Decilo! Te estoy escuchando','deh-SEE-loh · teh ehs-TOY ehs-koo-CHAN-doh','Say it! I\'m listening','sm');
+      if(m==='drums')h+='<div class="dm-count">'+(DM.count>0?NUMS[DM.count]:'¡Gritá!')+'</div>';
+    }else{
+      h='<button class="dm-btn" onclick="dmStart(\''+m+'\')" aria-label="Start listening"><span class="dm-ic">🎤</span></button>'
+       +'<div class="dm-cap">¡Decilo! · Tap the mic, then talk</div>';
+    }
+    if(DM.err==='denied')h+='<div class="dm-err">The microphone is blocked. On iPhone: in Safari tap <b>aA</b> next to the web address → <b>Website Settings</b> → <b>Microphone</b> → Allow. On Android Chrome: tap the icon left of the web address → <b>Permissions</b> → Microphone.</div>';
+    else if(DM.err==='nomic')h+='<div class="dm-err">This phone or browser doesn\'t allow the microphone here.</div>';
+    box.innerHTML=h;
+  });
+}
+document.addEventListener('visibilitychange',function(){if(document.visibilityState!=='visible')dmStop();});
+
 /* ===== TODDLER MODE ===== */
-function toggleTM(){const tm=document.getElementById('tmode');const entering=!tm.classList.contains('act');tm.classList.toggle('act');document.documentElement.classList.toggle('tm-on',entering);if(entering){setTCat('home',null);S.tm=(S.tm||0)+1;sv();if(typeof checkAch==='function')checkAch();try{document.documentElement.requestFullscreen?.();}catch(e){}for(let i=0;i<5;i++)history.pushState({toddler:true},'');window.addEventListener('popstate',tmPopTrap);wlOn();}else{try{document.exitFullscreen?.();}catch(e){}window.removeEventListener('popstate',tmPopTrap);history.replaceState({},'');wlOff();}if(profile)document.getElementById('tm-greeting').textContent='¡Hola '+profile.child+'!';}
+function toggleTM(){const tm=document.getElementById('tmode');const entering=!tm.classList.contains('act');tm.classList.toggle('act');document.documentElement.classList.toggle('tm-on',entering);if(entering){setTCat('home',null);S.tm=(S.tm||0)+1;sv();if(typeof checkAch==='function')checkAch();try{document.documentElement.requestFullscreen?.();}catch(e){}for(let i=0;i<5;i++)history.pushState({toddler:true},'');window.addEventListener('popstate',tmPopTrap);wlOn();}else{try{document.exitFullscreen?.();}catch(e){}window.removeEventListener('popstate',tmPopTrap);history.replaceState({},'');wlOff();dmStop();}if(profile)document.getElementById('tm-greeting').textContent='¡Hola '+profile.child+'!';}
 function tmPopTrap(e){if(document.getElementById('tmode').classList.contains('act')){history.pushState({toddler:true},'');}}
 let exitTimer=null;let exitCount=3;
 const exitBtn=document.getElementById('tm-lock-exit');
@@ -1564,6 +1702,7 @@ function renderToys(){
   if(tCat==='memory')startMemory();
   if(tCat==='paint')setTimeout(initPaint,100);
   if(tCat==='lesson')startToddlerLesson();
+  dmRender();
 }
 const MATCH_TITLES={
   animals:{es:'🐾 ¡Tocá el Animal!',ph:'toh-KAH ehl ah-nee-MAHL',en:'Touch the Animal!'},
@@ -1607,7 +1746,7 @@ function checkMatch(picked,btn){
   if(picked===matchTarget[lblKey]){matchScore++;matchStreak++;res.textContent='🎉 ¡Sí! ¡'+matchTarget[lblKey]+'!';res.style.color='var(--teal)';confetti();speak('¡Muy bien! '+matchTarget[lblKey],appLang);setTimeout(function(){startMatchGame(tCat==='match'?pickMatchCat():matchTarget.cat);},matchStreak>=5?1200:2000);}
   else{matchStreak=0;gentleRetry(res,'Tocá '+matchTarget[lblKey],appLang,btn);}
 }
-function setTCat(c,btn){if(typeof closeSoccerGame==='function')closeSoccerGame();tCat=c;matchScore=0;matchStreak=0;document.querySelectorAll('.tt-tab').forEach(function(t){t.classList.remove('act');});if(btn)btn.classList.add('act');document.querySelectorAll('.tm-fav').forEach(function(f){f.classList.toggle('act',f.dataset.fav===c);});var tmEl=document.getElementById('tmode');if(tmEl)tmEl.classList.toggle('tm-playing',c!=='home');renderToys();}
+function setTCat(c,btn){if(DM.on&&c!==DM.mode)dmStop();if(typeof closeSoccerGame==='function')closeSoccerGame();tCat=c;matchScore=0;matchStreak=0;document.querySelectorAll('.tt-tab').forEach(function(t){t.classList.remove('act');});if(btn)btn.classList.add('act');document.querySelectorAll('.tm-fav').forEach(function(f){f.classList.toggle('act',f.dataset.fav===c);});var tmEl=document.getElementById('tmode');if(tmEl)tmEl.classList.toggle('tm-playing',c!=='home');renderToys();}
 function tmFav(c){var b=document.querySelector('.tt-tab[data-tcat="'+c+'"]');setTCat(c,b);var tmEl=document.getElementById('tmode');if(tmEl)tmEl.scrollTop=0;}
 function tmMore(){var t=document.getElementById('ttabs');if(!t)return;var open=t.classList.toggle('open');var mb=document.getElementById('tm-more-btn');if(mb)mb.textContent=open?'➖ Menos':'➕ Más juegos';}
 function openLessonTM(){toggleTM();setTimeout(function(){var btn=document.querySelector('[data-tcat="lesson"]');setTCat('lesson',btn);},500);}
@@ -1778,6 +1917,7 @@ function spawnBubble(){
     else if(!bubbleHunt&&bubbleScore%5===0){confetti();setHuntTarget();}
     setTimeout(function(){b.remove();spawnBubble();},300);
   };
+  b._pop=popHandler; // lets the ¡Decilo! mic pop a bubble by voice
   // pointerdown fires immediately on touch (no click delay); fall back to click for old browsers
   if('PointerEvent' in window){b.addEventListener('pointerdown',popHandler);}
   else{b.addEventListener('touchstart',popHandler,{passive:false});b.addEventListener('click',popHandler);}
@@ -3987,6 +4127,11 @@ h+=`<div class="subpg ${morePage==='st'?'act':''}" id="m-st"><button class="back
 <p style="font-size:13px;margin-bottom:10px;">Tap to hear the exact Spanish voice this phone will use.</p>
 <button onclick="voiceCheck()" style="padding:10px 20px;border-radius:50px;background:var(--teal);color:var(--w);font-weight:700;font-size:13px;">🔊 Test Spanish Voice</button>
 <div id="vc-out" style="font-size:12px;margin-top:10px;line-height:1.5;"></div>
+</div>
+<div class="card hl-gold"><h3>🎤 Speaking Games (Beta)</h3>
+<p style="font-size:13px;margin-bottom:10px;">Adds a 🎤 button to <b>Bubbles</b> and <b>Drums</b> in Toddler Mode. Your child says anything, a bubble pops or a drum hits, and he hears his own voice played back. In Drums, the app counts each shout in Spanish up to diez.</p>
+<button onclick="toggleMicBeta()" style="width:100%;padding:12px;border-radius:50px;background:${micBetaOn()?'var(--teal)':'var(--gold)'};color:${micBetaOn()?'var(--w)':'var(--ink)'};font-weight:800;font-size:14px;">${micBetaOn()?'✅ On · tap to turn off':'🎤 Turn on Speaking Games'}</button>
+<p style="font-size:11px;color:var(--gr);margin-top:8px;line-height:1.5;"><b>Privacy:</b> the mic only listens while the 🎤 button is lit. Nothing is recorded to the phone or sent anywhere. His voice plays back once and is gone. On iPhone, sounds can play a little quieter while the mic is on.</p>
 </div>
 <div class="card"><h3>🎓 App Tour</h3><p style="margin-bottom:8px;">Watch the walkthrough again to learn how the app works.</p><button onclick="walkStep=0;walkActive=true;L.s('walkDone',false);showWalk();" style="padding:10px 20px;border-radius:50px;background:var(--teal);color:var(--w);font-weight:700;font-size:13px;">Replay Tour</button></div>
 <div class="card hl-gold"><h3>📊 Reset Progress</h3><p style="margin-bottom:8px;">Start completely fresh. This cannot be undone.</p><button onclick="resetAll()" style="padding:10px 20px;border-radius:50px;background:var(--terra);color:var(--w);font-weight:700;font-size:13px;">Reset Everything</button></div></div>`;
