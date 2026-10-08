@@ -144,7 +144,13 @@ button,.cb,.wkc,.spk,.splg{min-width:44px;min-height:44px;}
 .lesson-step{background:var(--w);border-radius:8px;padding:12px;margin-top:8px;border:1px solid var(--bd);}
 .lesson-step h5{font-size:13px;font-weight:700;color:var(--teal);margin-bottom:4px;}
 .lesson-step p{font-size:12.5px;}
-.lesson-step .phrase{display:flex;align-items:flex-start;gap:6px;background:var(--goldl);padding:8px 10px;border-radius:8px;margin:6px 0;font-weight:700;font-size:14px;border:1px solid #FFE082;flex-wrap:wrap;}
+.phrase{display:flex;align-items:center;gap:10px;background:var(--goldl);padding:8px 10px;border-radius:12px;margin:6px 0;font-weight:700;font-size:15px;border:1px solid #FFE082;color:var(--ink);}
+.phrase .spk{min-width:40px;min-height:40px;width:40px;height:40px;padding:0;justify-content:center;flex-shrink:0;}
+.phr-col{flex:1;min-width:0;display:flex;flex-direction:column;gap:1px;line-height:1.25;}
+.phr-ph{color:var(--terra);font-size:12px;font-weight:700;}
+.phr-en{color:#6B6F85;font-size:12.5px;font-weight:500;}
+.tk-phrase{background:rgba(212,160,23,.15);border-color:rgba(212,160,23,.3);}
+.fq-phrase{background:rgba(76,175,80,.12);border-color:rgba(76,175,80,.25);font-size:14px;}
 .wkc{width:22px;height:22px;border:2px solid var(--bd);border-radius:6px;background:var(--w);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:11px;color:transparent;transition:all .25s;}
 .wkc.dn{background:var(--teal);border-color:var(--teal);color:var(--w);}
 
@@ -1708,7 +1714,18 @@ function voiceCheck(){
     return;
   }
   VOX.cache={};var fem=voxPick('es')||vs[0];var enV=voxPick('en');
-  if(out)out.innerHTML='✅ Spanish voice: <b>'+fem.name+'</b> ('+fem.lang+')'+(enV?' · English voice: <b>'+enV.name+'</b>':'')+'<br><span style="font-size:12px;color:var(--gr);">'+vs.length+' Spanish voice(s) on this phone. This same voice is used everywhere in the app.</span>';
+  var fl=voxNorm(fem.lang).replace('_','-'),latin=(fl==='es-mx'||fl==='es-us'||fl==='es-419'||fl==='es-co');
+  var isIOS=/iPhone|iPad/.test(navigator.userAgent);
+  var tip='';
+  if(!latin){
+    tip='<div style="margin-top:8px;padding:10px 12px;border-radius:10px;background:var(--goldl);border:1px solid #FFE082;font-size:12.5px;color:var(--ink);line-height:1.5;"><b>Tip: get the Latin American voice.</b> '+fem.name+' has a Spain accent. Honduran Spanish sounds much closer to the Mexican voice.<br>'
+       +(isIOS?'<b>iPhone:</b> Settings → Accessibility → Spoken Content → Voices → Spanish → <b>Spanish (Mexico)</b> → download <b>Paulina</b> (the Enhanced one sounds best). Then close this app fully and reopen it.'
+             :'<b>Android:</b> Settings → search <b>Text-to-speech</b> → Google engine → Install voice data → Spanish (United States or Mexico). Then close this app fully and reopen it.')
+       +'</div>';
+  }else if(isIOS&&!/premium|enhanced/i.test(fem.voiceURI||'')){
+    tip='<div style="margin-top:8px;font-size:12px;color:var(--gr);line-height:1.5;">Optional: in Settings → Accessibility → Spoken Content → Voices → Spanish (Mexico), download the <b>Enhanced</b> version of '+fem.name+' for a clearer, more natural sound.</div>';
+  }
+  if(out)out.innerHTML='✅ Spanish voice: <b>'+fem.name+'</b> ('+fem.lang+(latin?' · Latin American ✓':'')+')'+(enV?' · English voice: <b>'+enV.name+'</b>':'')+'<br><span style="font-size:12px;color:var(--gr);">'+vs.length+' Spanish voice(s) on this phone. This same voice is used everywhere in the app.</span>'+tip;
   speak('¡Hola! Soy tu voz en español. ¿Cómo estás?','es');
 }
 function spB(t,lang){return `<button class="spk" data-speak="${t.replace(/"/g,'&quot;')}" data-lang="${lang||'es'}">${ic('speaker',16)}</button>`;}
@@ -1777,7 +1794,7 @@ async function dmStart(mode){
   DM.muteUntil=performance.now()+700; // let the noise floor settle first
   if(mode==='drums')DM.count=0;
   dmRender();dmAnimLoop();
-  setTimeout(function(){if(DM.on)speak('¡Decilo!','es');},250);
+  setTimeout(function(){if(DM.on)speak(TL('¡Decilo!','Say it!'),appLang);},250);
 }
 function dmStop(){
   if(DM.proc){try{DM.proc.onaudioprocess=null;DM.proc.disconnect();}catch(e){}}
@@ -1844,8 +1861,8 @@ function dmHeard(clip,len,sr){
     setTimeout(function(){
       if(!DM.on||DM.mode!=='drums')return;
       DM.count++;
-      if(DM.count>=10){confetti();speak('¡Diez! ¡Muy bien!','es');DM.count=0;}
-      else speak('¡'+NUMS[DM.count]+'!','es');
+      if(DM.count>=10){confetti();speak(TL('¡Diez! ¡Muy bien!','Ten! Great job!'),appLang);DM.count=0;}
+      else speak(numWord(DM.count),appLang);
       dmRender();
     },dur+350);
   }
@@ -1864,7 +1881,7 @@ function dmRender(){
     if(on){
       h='<button class="dm-btn on" onclick="dmStop()" aria-label="Stop listening"><span class="dm-ring" id="dm-ring-'+m+'"></span><span class="dm-ic">'+ic('mic',38)+'</span></button>'
        +biliP('¡Decilo! Te estoy escuchando','deh-SEE-loh · teh ehs-TOY ehs-koo-CHAN-doh','Say it! I\'m listening','sm');
-      if(m==='drums')h+='<div class="dm-count">'+(DM.count>0?NUMS[DM.count]:'¡Gritá!')+'</div>';
+      if(m==='drums')h+='<div class="dm-count">'+(DM.count>0?numWord(DM.count):TL('¡Gritá!','Shout!'))+'</div>';
     }else{
       h='<button class="dm-btn" onclick="dmStart(\''+m+'\')" aria-label="Start listening"><span class="dm-ic">'+ic('mic',38)+'</span></button>'
        +'<div class="dm-cap">¡Decilo! · Tap the mic, then talk</div>';
@@ -1932,6 +1949,9 @@ var MATCH_ROT=['animals','food','vehicles','sports','nature','clothes','body'];
 function pickMatchCat(){return MATCH_ROT[Math.floor(matchScore/3)%MATCH_ROT.length];}
 // Prompt words follow the Learning Mode so the voice never mixes languages ('Tocá perro' / 'Touch the dog').
 var TM_PROMPTS={touch:{es:'Tocá ',en:'Touch the '},find:{es:'Buscá ',en:'Find the '},good:{es:'¡Muy bien! ',en:'Great job! '}};
+const NUMS_EN=["","One","Two","Three","Four","Five","Six","Seven","Eight","Nine","Ten","Eleven","Twelve","Thirteen","Fourteen","Fifteen","Sixteen","Seventeen","Eighteen","Nineteen","Twenty"];
+function TL(es,en){return appLang==='en'?en:es;} // text in the language being learned
+function numWord(n){return (appLang==='en'?NUMS_EN[n]:NUMS[n])||String(n);}
 function tmPrompt(key,word){return (TM_PROMPTS[key][appLang==='en'?'en':'es'])+word;}
 function tmSay(key,word){speak(tmPrompt(key,word),appLang);}
 function tmYes(word){return appLang==='en'?'🎉 Yes! '+word+'!':'🎉 ¡Sí! ¡'+word+'!';}
@@ -1979,7 +1999,7 @@ function startTapCount(){
   g.innerHTML=htm;
   document.getElementById('tc-count').textContent='';
   document.getElementById('tc-word').textContent='';
-  speak('¿Cuántos hay? ¡Tocá y cuenta!','es');
+  speak(TL('¿Cuántos hay? ¡Tocá y cuenta!','How many? Tap and count!'),appLang);
 }
 function tapCountObj(btn){
   if(btn.dataset.tc!=='1')return;
@@ -1987,12 +2007,12 @@ function tapCountObj(btn){
   btn.style.background='var(--teall)';btn.style.borderColor='var(--teal)';btn.style.transform='scale(.92)';btn.textContent='⭐';
   tcTapped++;
   document.getElementById('tc-count').textContent=tcTapped;
-  document.getElementById('tc-word').textContent=(NUMS[tcTapped]||'').toUpperCase();
-  speak(NUMS[tcTapped]||String(tcTapped),'es');
+  document.getElementById('tc-word').textContent=numWord(tcTapped).toUpperCase();
+  speak(numWord(tcTapped),appLang);
   if(tcTapped>=tcTarget){
     tcRound++;
     confetti();
-    setTimeout(function(){speak('¡'+(NUMS[tcTarget]||tcTarget)+'! ¡Muy bien!','es');},800);
+    setTimeout(function(){speak(TL('¡'+(NUMS[tcTarget]||tcTarget)+'! ¡Muy bien!',(NUMS_EN[tcTarget]||tcTarget)+'! Great job!'),appLang);},800);
     setTimeout(startTapCount,2600);
   }
 }
@@ -2023,11 +2043,11 @@ function simonNext(){
   document.getElementById('si-cmd').innerHTML=biliP('Simón dice… <b>'+siCur.es+'</b>','see-MOHN DEE-seh… '+siCur.ph,'Simon says… '+siCur.en);
   simonRepeat();
 }
-function simonRepeat(){if(siCur)speak('Simón dice... '+siCur.es,'es');}
+function simonRepeat(){if(siCur)speak(TL('Simón dice... '+siCur.es,'Simon says... '+siCur.en),appLang);}
 function simonDone(){
   siScore++;var s=document.getElementById('si-score');if(s)s.textContent='⭐ '+siScore;
   confetti();
-  speak('¡Muy bien!','es');
+  speak(TL('¡Muy bien!','Great job!'),appLang);
   setTimeout(simonNext,1500);
 }
 var colorScore=0,colorCount=0;
@@ -2036,15 +2056,17 @@ function startColorGame(){
   var pool=sh([...COLORS_GAME]).slice(0,numOpts);
   colorTarget=pool[0];
   document.getElementById('color-prompt').innerHTML=biliP('Tocá <b>'+colorTarget.es+'</b>','toh-KAH','Touch <b>'+(colorTarget.en||colorTarget.es)+'</b>')+'<div style="font-size:14px;color:var(--teal);margin-top:4px;">⭐ '+colorScore+'</div>';
-  speak('Tocá '+colorTarget.es,'es');
+  var cK=appLang==='en'?'en':'es';
+  tmSay('touch',colorTarget[cK]);
   document.getElementById('color-result').textContent='';
   document.getElementById('color-dots').style.gridTemplateColumns=numOpts>4?'repeat(3,1fr)':'repeat(2,1fr)';
-  document.getElementById('color-dots').innerHTML=pool.map(function(c){return '<button style="width:100%;height:70px;border-radius:16px;background:'+c.hex+';border:4px solid var(--ink);box-shadow:0 6px 0 var(--ink);'+(c.hex==='#F5F5F5'?'border-color:#999;':'')+(c.hex==='#1A1B4B'?'':'color:var(--ink);')+'" data-color="'+c.es+'" data-speak="'+c.es+'"><span style="font-size:12px;font-weight:800;color:'+(c.hex==='#1A1B4B'||c.hex==='#805AD5'||c.hex==='#3182CE'?'#fff':'#1A1B4B')+';">'+c.es+'</span></button>';}).join('');
+  document.getElementById('color-dots').innerHTML=pool.map(function(c){return '<button style="width:100%;height:70px;border-radius:16px;background:'+c.hex+';border:4px solid var(--ink);box-shadow:0 6px 0 var(--ink);'+(c.hex==='#F5F5F5'?'border-color:#999;':'')+(c.hex==='#1A1B4B'?'':'color:var(--ink);')+'" data-color="'+c.es+'" data-speak="'+c[cK]+'" data-lang="'+appLang+'"><span style="font-size:12px;font-weight:800;color:'+(c.hex==='#1A1B4B'||c.hex==='#805AD5'||c.hex==='#3182CE'?'#fff':'#1A1B4B')+';">'+c[cK]+'</span></button>';}).join('');
 }
 function checkColor(picked,btnEl){
   var res=document.getElementById('color-result');
-  if(picked===colorTarget.es){colorScore++;colorCount++;res.textContent='🎉 ¡Sí! ¡'+colorTarget.es+'!';res.style.color='var(--teal)';confetti();speak('¡Muy bien! '+colorTarget.es,'es');setTimeout(startColorGame,1500);}
-  else{gentleRetry(res,'Tocá '+colorTarget.es,'es',btnEl);}
+  var cK=appLang==='en'?'en':'es';
+  if(picked===colorTarget.es){colorScore++;colorCount++;res.textContent=tmYes(colorTarget[cK]);res.style.color='var(--teal)';confetti();tmSay('good',colorTarget[cK]);setTimeout(startColorGame,1500);}
+  else{gentleRetry(res,tmPrompt('touch',colorTarget[cK]),appLang,btnEl);}
 }
 
 /* ===== BUBBLE POP GAME ===== */
@@ -2314,24 +2336,24 @@ function startMeLlamo(){
   h+='<div style="background:var(--goldl);border:3px solid var(--gold);border-radius:16px;padding:20px;margin:16px 0;">';
   h+='<div style="font-family:\'Baloo 2\',cursive;font-size:24px;font-weight:800;color:var(--ink);">'+meES+'</div>';
   h+='<div style="font-size:13px;color:var(--gr);margin-top:4px;">'+meEN+'</div>';
-  h+='<button class="spk" data-speak="'+meES.replace(/"/g,'&quot;')+'" style="margin-top:12px;padding:10px 24px;font-size:16px;background:var(--gold);border-color:var(--gold);color:var(--ink);">🔊 Hear it!</button>';
+  h+='<button class="spk" data-speak="'+TL(meES,meEN).replace(/"/g,'&quot;')+'" data-lang="'+appLang+'" style="margin-top:12px;padding:10px 24px;font-size:16px;background:var(--gold);border-color:var(--gold);color:var(--ink);">🔊 Hear it!</button>';
   h+='</div>';
   // Role greeting card ("¡Hola papi!")
   h+='<div style="background:var(--teall);border:3px solid var(--teal);border-radius:16px;padding:20px;margin:16px 0;">';
   h+='<div style="font-size:48px;line-height:1;margin-bottom:6px;">'+roleEM+'</div>';
   h+='<div style="font-family:\'Baloo 2\',cursive;font-size:26px;font-weight:800;color:var(--ink);">'+holaRoleES+'</div>';
   h+='<div style="font-size:13px;color:var(--gr);margin-top:4px;">'+holaRoleEN+'</div>';
-  h+='<button class="spk" data-speak="'+holaRoleES.replace(/"/g,'&quot;')+'" style="margin-top:12px;padding:10px 24px;font-size:16px;background:var(--teal);border-color:var(--teal);color:var(--w);">🔊 Hear it!</button>';
+  h+='<button class="spk" data-speak="'+TL(holaRoleES,holaRoleEN).replace(/"/g,'&quot;')+'" data-lang="'+appLang+'" style="margin-top:12px;padding:10px 24px;font-size:16px;background:var(--teal);border-color:var(--teal);color:var(--w);">🔊 Hear it!</button>';
   h+='</div>';
   h+='<button onclick="meTap()" style="width:100%;padding:18px;border-radius:50px;background:var(--ink);color:var(--gold);font-family:\'Baloo 2\',cursive;font-size:20px;font-weight:800;border:4px solid var(--gold);margin-top:12px;box-shadow:0 6px 0 #0d0d2e;">👋🏾 Say it! Tap me!</button>';
   h+='<div id="me-cheer" style="font-family:\'Baloo 2\';font-size:22px;margin-top:12px;min-height:32px;"></div>';
   document.getElementById('me-content').innerHTML=h;
-  speak(meES,'es');
+  speak(TL(meES,meEN),appLang);
 }
 function meTap(){
   meTapCount++;
   var cn=profile?profile.child:'Bebé';
-  speak('Me llamo '+cn,'es');
+  speak(TL('Me llamo '+cn,'My name is '+cn),appLang);
   var cheer=document.getElementById('me-cheer');
   if(meTapCount%3===0){confetti();cheer.textContent='🎉 ¡Muy bien, '+cn+'!';}
   else{cheer.textContent='👏🏾 ¡'+cn+'!';}
@@ -2348,6 +2370,7 @@ var SORT_PAIRS=[
   ['body','clothes'],
   ['shapes','colors']
 ];
+var SORT_CAT_LABELS_EN={animals:'🐾 Animals',food:'🍎 Food',colors:'🎨 Colors',body:'🖐🏾 Body',nature:'🌴 Nature',sports:'⚽ Sports',vehicles:'🚗 Vehicles',shapes:'🔷 Shapes',clothes:'👕 Clothes',weather:'⛅ Weather'};
 var SORT_CAT_LABELS={animals:'🐾 Animales',food:'🍎 Comida',colors:'🎨 Colores',body:'🖐🏾 Cuerpo',nature:'🌴 Naturaleza',sports:'⚽ Deportes',vehicles:'🚗 Vehículos',shapes:'🔷 Formas',clothes:'👕 Ropa',weather:'⛅ Clima'};
 function startSorting(){
   sortScore=0;
@@ -2376,8 +2399,9 @@ function nextSortItem(){
   document.getElementById('sort-item').innerHTML='<div style="font-size:72px;">'+sortItem.emoji+'</div><div style="font-family:\'Baloo 2\',cursive;font-size:22px;font-weight:800;color:var(--ink);margin-top:4px;">'+sortItem[lblKey]+'</div>';
   speak(sortItem[lblKey],appLang);
   document.getElementById('sort-result').textContent='';
-  var lA=SORT_CAT_LABELS[sortCatA]||sortCatA;
-  var lB=SORT_CAT_LABELS[sortCatB]||sortCatB;
+  var SL=appLang==='en'?SORT_CAT_LABELS_EN:SORT_CAT_LABELS;
+  var lA=SL[sortCatA]||sortCatA;
+  var lB=SL[sortCatB]||sortCatB;
   document.getElementById('sort-buckets').innerHTML=
     '<button onclick="checkSort(\''+sortCatA+'\')" style="padding:20px 10px;border-radius:20px;border:5px solid var(--ink);background:var(--goldl);font-family:\'Baloo 2\',cursive;font-size:18px;font-weight:800;color:var(--ink);box-shadow:0 6px 0 var(--ink);">'+lA+'</button>'
     +'<button onclick="checkSort(\''+sortCatB+'\')" style="padding:20px 10px;border-radius:20px;border:5px solid var(--ink);background:var(--teall);font-family:\'Baloo 2\',cursive;font-size:18px;font-weight:800;color:var(--ink);box-shadow:0 6px 0 var(--ink);">'+lB+'</button>';
@@ -2453,7 +2477,7 @@ window._soccGen=0;
 function soccSay(en,es,cb){
   var gen=window._soccGen;
   var done=function(){if(cb&&gen===window._soccGen)cb();};
-  var txt=es||en,lang=es?'es':'en';
+  var txt=(appLang==='en'&&en)?en:(es||en),lang=(appLang==='en'&&en)?'en':(es?'es':'en');
   if(!txt){soccTimeout(done,300);return;}
   speak(txt,lang,done);
 }
@@ -3167,7 +3191,7 @@ function showLessonStep(){
     lessonWords=sh(lessonWords);
     lessonMode=lessonMode==='flash'?'quiz':'flash';
     if(lessonMode==='flash'){
-      document.getElementById('lesson-title').textContent='🎉 Great job! Let us review again!';
+      document.getElementById('lesson-title').innerHTML=biliP('¡Muy bien! Otra vez','mwee bee-EHN · OH-trah vehs','Great job! One more time','sm');
     }
   }
   var w=lessonWords[lessonIdx];
@@ -3179,9 +3203,9 @@ function showLessonStep(){
     document.getElementById('lf-emoji').textContent=w.e;
     document.getElementById('lf-word').textContent=w[lblKey];
     document.getElementById('lf-trans').textContent=w[otherKey];
-    document.getElementById('lf-speak').setAttribute('data-speak',w.es);
-    document.getElementById('lf-speak').setAttribute('data-lang','es');
-    speak(w.es,'es');
+    document.getElementById('lf-speak').setAttribute('data-speak',w[lblKey]);
+    document.getElementById('lf-speak').setAttribute('data-lang',appLang);
+    speak(w[lblKey],appLang);
   }else{
     document.getElementById('lesson-flash').style.display='none';
     document.getElementById('lesson-quiz').style.display='block';
@@ -3207,10 +3231,10 @@ function checkLesson(picked){
     lessonScore++;
     document.getElementById('lesson-score').textContent='⭐ '+lessonScore;
     res.textContent=tmYes(w[lblKey]);res.style.color='var(--teal)';
-    confetti();speak(w.es,'es');
+    confetti();speak(w[lblKey],appLang);
     setTimeout(function(){lessonIdx++;showLessonStep();},1500);
   }else{
-    gentleRetry(res,w.es,'es',null);
+    gentleRetry(res,w[lblKey],appLang,null);
   }
 }
 
@@ -3288,7 +3312,7 @@ h+=`<div class="cls hm-help ${homeSec.help?'':'cp'}" style="background:var(--ink
 <div style="font-family:'Baloo 2',cursive;font-size:18px;font-weight:800;color:var(--ink);margin-top:2px;">${cc} of ${TK.length} done</div></div>
 <div style="display:flex;align-items:center;gap:10px;"><div style="background:${cc>=TK.length?'var(--teal)':'var(--gold)'};color:var(--ink);width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Baloo 2';font-size:16px;font-weight:800;">${cc>=TK.length?'✓':cc+'/'+ TK.length}</div><span style="color:#8A8FA3;font-size:18px;font-weight:800;">${homeSec.tasks?'▲':'▼'}</span></div></div>
 <div style="height:4px;background:var(--grl);border-radius:2px;margin:12px 0 ${homeSec.tasks?'14px':'0'};"><div style="height:100%;background:linear-gradient(90deg,var(--teal),var(--gold));border-radius:2px;width:${Math.round(cc/TK.length*100)}%;transition:width .4s;"></div></div>
-${homeSec.tasks?TK.map(t=>{const dn2=S.dc[t.id];const ex=expTask===t.id;const catIco={daily:'📅',florida:'🌴',parent:'💛',culture:'🇭🇳'};return '<div style="background:'+(dn2?'rgba(0,128,128,.15)':'#FAF8F4')+';border-radius:14px;padding:12px 14px;margin-bottom:8px;border:1px solid '+(dn2?'var(--teal)':'var(--bd)')+';cursor:pointer;" onclick="tgE(\''+t.id+'\')"><div style="display:flex;align-items:center;gap:10px;"><button onclick="event.stopPropagation();tgD(\''+t.id+'\')" style="width:44px;height:44px;min-width:44px;border-radius:10px;border:3px solid '+(dn2?'var(--teal)':'#D6CFC3')+';background:'+(dn2?'var(--teal)':'transparent')+';color:var(--w);font-size:16px;display:flex;align-items:center;justify-content:center;">'+(dn2?'✓':'')+'</button><div style="flex:1;"><div style="font-size:13px;font-weight:700;color:'+(dn2?'#8A8FA3':'var(--ink)')+';'+(dn2?'text-decoration:line-through;':'')+'">'+t.t+'</div><div style="font-size:11px;color:#8A8FA3;margin-top:2px;">'+(catIco[t.cat]||'📅')+' '+t.s+'</div></div><span style="color:#A9ACBC;font-size:14px;">'+(ex?'▲':'▼')+'</span></div>'+(ex?'<div style="margin-top:12px;padding:14px;background:#FAF8F4;border-radius:12px;font-size:12.5px;color:#3F4254;line-height:1.65;">'+t.d+(t.phrases?t.phrases.map(function(p2){var parts=p2.split('|');var es=parts[0];var ph2=parts.length===3?parts[1]:(PH[es]||'');var en=parts.length===3?parts[2]:(parts[1]||esToEn(es));return '<div style="display:flex;align-items:flex-start;gap:6px;background:rgba(212,160,23,.15);padding:8px 10px;border-radius:8px;margin:6px 0;font-weight:700;font-size:14px;border:1px solid rgba(212,160,23,.3);flex-wrap:wrap;color:#8A6508;">'+spB(es)+' <span>'+es+'</span>'+(ph2?' <span style="color:var(--terra);font-size:12px;font-weight:700;">🗣 '+ph2+'</span>':'')+(en?' <span style="color:#6B6F85;font-weight:500;margin-left:8px;">('+en+')</span>':'')+'</div>';}).join(''):'')+'</div>':'')+'</div>';}).join(''):''}
+${homeSec.tasks?TK.map(t=>{const dn2=S.dc[t.id];const ex=expTask===t.id;const catIco={daily:'📅',florida:'🌴',parent:'💛',culture:'🇭🇳'};return '<div style="background:'+(dn2?'rgba(0,128,128,.15)':'#FAF8F4')+';border-radius:14px;padding:12px 14px;margin-bottom:8px;border:1px solid '+(dn2?'var(--teal)':'var(--bd)')+';cursor:pointer;" onclick="tgE(\''+t.id+'\')"><div style="display:flex;align-items:center;gap:10px;"><button onclick="event.stopPropagation();tgD(\''+t.id+'\')" style="width:44px;height:44px;min-width:44px;border-radius:10px;border:3px solid '+(dn2?'var(--teal)':'#D6CFC3')+';background:'+(dn2?'var(--teal)':'transparent')+';color:var(--w);font-size:16px;display:flex;align-items:center;justify-content:center;">'+(dn2?'✓':'')+'</button><div style="flex:1;"><div style="font-size:13px;font-weight:700;color:'+(dn2?'#8A8FA3':'var(--ink)')+';'+(dn2?'text-decoration:line-through;':'')+'">'+t.t+'</div><div style="font-size:11px;color:#8A8FA3;margin-top:2px;">'+(catIco[t.cat]||'📅')+' '+t.s+'</div></div><span style="color:#A9ACBC;font-size:14px;">'+(ex?'▲':'▼')+'</span></div>'+(ex?'<div style="margin-top:12px;padding:14px;background:#FAF8F4;border-radius:12px;font-size:12.5px;color:#3F4254;line-height:1.65;">'+t.d+(t.phrases?t.phrases.map(function(p2){var parts=p2.split('|');var es=parts[0];var ph2=parts.length===3?parts[1]:(PH[es]||'');var en=parts.length===3?parts[2]:(parts[1]||esToEn(es));return '<div class="phrase tk-phrase">'+spB(es)+'<div class="phr-col"><span>'+es+'</span>'+(ph2?'<span class="phr-ph">🗣 '+ph2+'</span>':'')+(en?'<span class="phr-en">'+en+'</span>':'')+'</div></div>';}).join(''):'')+'</div>':'')+'</div>';}).join(''):''}
 </div>
 
 <div class="hm-fq hm-light" style="background:var(--w);border-radius:var(--r);padding:16px;margin-bottom:14px;border:1px solid var(--bd);box-shadow:var(--sh);">
@@ -3296,7 +3320,7 @@ ${homeSec.tasks?TK.map(t=>{const dn2=S.dc[t.id];const ex=expTask===t.id;const ca
 <div><div style="font-size:11px;font-weight:800;color:#8A8FA3;text-transform:uppercase;letter-spacing:1px;"><span style="color:#2E7D32">${ic('palm',14)}</span> Florida Quest</div>
 <div style="font-family:'Baloo 2',cursive;font-size:18px;font-weight:800;color:#2E7D32;margin-top:2px;">Fort Myers Adventures</div></div>
 <div style="display:flex;align-items:center;gap:10px;"><div style="background:#4CAF50;color:var(--w);width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Baloo 2';font-size:14px;font-weight:800;">${Object.values(S.fq||{}).filter(Boolean).length}/${FQ.length}</div><span style="color:#8A8FA3;font-size:18px;font-weight:800;">${homeSec.fq?'▲':'▼'}</span></div></div>
-${homeSec.fq?FQ.map(q=>{const dn3=S.fq&&S.fq[q.id];return '<div style="background:'+(dn3?'rgba(76,175,80,.15)':'#FAF8F4')+';border-radius:14px;padding:12px 14px;margin-bottom:8px;margin-top:12px;border:1px solid '+(dn3?'#4CAF50':'var(--bd)')+';display:flex;align-items:flex-start;gap:10px;"><button onclick="tgFQ(\''+q.id+'\')" style="width:44px;height:44px;min-width:44px;border-radius:8px;border:3px solid '+(dn3?'#4CAF50':'#D6CFC3')+';background:'+(dn3?'#4CAF50':'transparent')+';color:var(--w);font-size:14px;display:flex;align-items:center;justify-content:center;margin-top:2px;">'+(dn3?'✓':'')+'</button><div style="flex:1;"><div style="font-size:13px;font-weight:700;color:'+(dn3?'#8A8FA3':'var(--ink)')+';'+(dn3?'text-decoration:line-through;':'')+'">'+q.t+'</div><div style="font-size:11px;color:#6B6F85;margin-top:3px;">'+q.d+'</div>'+(q.phrases?q.phrases.map(function(p2){var parts=p2.split('|');var es=parts[0];var ph2=parts.length===3?parts[1]:(PH[es]||'');var en=parts.length===3?parts[2]:(parts[1]||esToEn(es));return '<div style="display:flex;align-items:flex-start;gap:6px;background:rgba(76,175,80,.12);padding:6px 10px;border-radius:8px;margin:4px 0;font-weight:700;font-size:12px;border:1px solid rgba(76,175,80,.25);flex-wrap:wrap;color:#2E7D32;">'+spB(es)+' '+es+(ph2?' <span style="color:var(--terra);font-size:11px;">🗣 '+ph2+'</span>':'')+(en?' <span style="color:#8A8FA3;font-weight:500;font-size:11px;">('+en+')</span>':'')+'</div>';}).join(''):'')+'</div></div>';}).join(''):''}
+${homeSec.fq?FQ.map(q=>{const dn3=S.fq&&S.fq[q.id];return '<div style="background:'+(dn3?'rgba(76,175,80,.15)':'#FAF8F4')+';border-radius:14px;padding:12px 14px;margin-bottom:8px;margin-top:12px;border:1px solid '+(dn3?'#4CAF50':'var(--bd)')+';display:flex;align-items:flex-start;gap:10px;"><button onclick="tgFQ(\''+q.id+'\')" style="width:44px;height:44px;min-width:44px;border-radius:8px;border:3px solid '+(dn3?'#4CAF50':'#D6CFC3')+';background:'+(dn3?'#4CAF50':'transparent')+';color:var(--w);font-size:14px;display:flex;align-items:center;justify-content:center;margin-top:2px;">'+(dn3?'✓':'')+'</button><div style="flex:1;"><div style="font-size:13px;font-weight:700;color:'+(dn3?'#8A8FA3':'var(--ink)')+';'+(dn3?'text-decoration:line-through;':'')+'">'+q.t+'</div><div style="font-size:11px;color:#6B6F85;margin-top:3px;">'+q.d+'</div>'+(q.phrases?q.phrases.map(function(p2){var parts=p2.split('|');var es=parts[0];var ph2=parts.length===3?parts[1]:(PH[es]||'');var en=parts.length===3?parts[2]:(parts[1]||esToEn(es));return '<div class="phrase fq-phrase">'+spB(es)+'<div class="phr-col"><span>'+es+'</span>'+(ph2?'<span class="phr-ph">🗣 '+ph2+'</span>':'')+(en?'<span class="phr-en">'+en+'</span>':'')+'</div></div>';}).join(''):'')+'</div></div>';}).join(''):''}
 </div>
 
 
@@ -3378,7 +3402,7 @@ if(s.phrases)s.phrases.forEach(p2=>{
 const parts=p2.split('|');const es=parts[0];
 const ph=parts.length===3?parts[1]:(PH[es]||'');
 const en=parts.length===3?parts[2]:(parts[1]||esToEn(es));
-h+=`<div class="phrase">${spB(es)} <span>${es}</span>${ph?` <span style="color:var(--terra);font-size:12px;font-weight:700;">🗣 ${ph}</span>`:''}${en?` <span style="color:var(--gr);font-weight:500;margin-left:8px;">(${en})</span>`:''}</div>`;
+h+=`<div class="phrase">${spB(es)}<div class="phr-col"><span>${es}</span>${ph?`<span class="phr-ph">🗣 ${ph}</span>`:''}${en?`<span class="phr-en">${en}</span>`:''}</div></div>`;
 });
 h+=`</div>`;
 });}
@@ -4076,13 +4100,15 @@ var LB_CAL=[
 var colors={WRITING:"var(--terra)",PLAYING:"var(--teal)",TALKING:"var(--ink)",SINGING:"var(--goldd)",COUNTING:"#7B1FA2",READING:"#1565C0"};
 var bgs={WRITING:"var(--terral)",PLAYING:"var(--teall)",TALKING:"var(--grl)",SINGING:"var(--goldl)",COUNTING:"#F3E5F5",READING:"#E3F2FD"};
 var cal=LB_CAL.map(function(r){var d=r[0],cat=r[1],act=r[2];return '<div style="padding:10px 12px;border-bottom:1px solid var(--bd);display:flex;gap:10px;align-items:flex-start;"><div style="min-width:32px;height:32px;border-radius:50%;background:'+colors[cat]+';color:var(--w);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;">'+d+'</div><div style="flex:1;"><span style="font-size:10px;font-weight:800;text-transform:uppercase;color:'+colors[cat]+';background:'+bgs[cat]+';padding:2px 7px;border-radius:50px;">'+cat+'</span><p style="font-size:12.5px;margin-top:4px;color:#374151;">'+act+'</p></div></div>';}).join("");
-var books=[["When Spring Comes","Kevin Henkes"],["Little Blue Truck\u0027s Springtime","Alice Schertle"],["The Very Hungry Caterpillar","Eric Carle"],["Bear Came Along","Richard T. Morris"]].map(function(b){return '<div style="padding:8px 0;border-bottom:1px solid var(--bd);"><b style="font-size:13px;color:var(--ink);">'+b[0]+'</b><br><span style="font-size:11px;color:var(--gr);">by '+b[1]+'</span></div>';}).join("");
+var books=[["Brown Bear, Brown Bear, What Do You See?","Bill Martin Jr. · Spanish edition: Oso pardo, oso pardo, ¿qué ves ahí?"],["The Very Hungry Caterpillar","Eric Carle · Spanish edition: La oruga muy hambrienta"],["Goodnight Moon","Margaret Wise Brown · Spanish edition: Buenas noches, Luna"],["Dear Zoo","Rod Campbell · Spanish edition: Querido zoo"],["Where Is the Green Sheep?","Mem Fox · Spanish edition: ¿Dónde está la oveja verde?"]].map(function(b){return '<div style="padding:8px 0;border-bottom:1px solid var(--bd);"><b style="font-size:13px;color:var(--ink);">'+b[0]+'</b><br><span style="font-size:11px;color:var(--gr);">'+b[1]+'</span></div>';}).join("");
+var todayN=new Date().getDate(),todayAct=LB_CAL[(todayN-1)%LB_CAL.length];
 var cn=profile?profile.child:"your child";
 return '<div class="subpg '+(morePage==="lb"?"act":"")+'" id="m-lb"><button class="back-btn" onclick="openMore(\'grid\')">← Back to More</button>'
-+'<div class="card hl-teal"><h3>🏛️ Lee County Library — April Activities</h3><p style="font-size:13px;">Daily literacy activities from your local library! Do one each day alongside your Spanish practice. These build the same skills — talking, singing, counting, reading — in English, which supercharges bilingual learning.</p><a href="https://www.leegov.com/library/Documents/2026-04-EarlyLitSheet.pdf" target="_blank" rel="noopener" style="display:inline-block;margin-top:8px;padding:8px 16px;border-radius:50px;background:var(--teal);color:var(--w);font-size:12px;font-weight:700;text-decoration:none;">📄 View Original PDF ↗</a></div>'
-+'<div class="card"><h3>📖 April Calendar</h3><p style="font-size:12px;color:var(--gr);margin-bottom:10px;">Each day has a theme: Writing, Playing, Talking, Singing, Counting, or Reading.</p>'+cal+'</div>'
-+'<div class="card hl-gold"><h3>📚 Books to Read This Month</h3><p style="font-size:13px;">Available at Lee County Library or on Overdrive/hoopla. Ask a librarian!</p><div style="margin-top:8px;">'+books+'</div></div>'
-+'<div class="card"><h3>🎵 Songs from the Calendar</h3>'
++'<div class="card hl-teal"><h3>🏛️ Daily Literacy Activities</h3><p style="font-size:13px;">One small activity a day, in the style of the Lee County Library early-literacy sheets. Do it in English or Spanish; it builds the same skills (talking, singing, counting, reading) either way.</p></div>'
++'<div class="card hl-gold" style="background:var(--goldl);"><h3>⭐ Today (day '+todayN+')</h3><div style="display:flex;gap:10px;align-items:flex-start;margin-top:4px;"><span style="font-size:10px;font-weight:800;text-transform:uppercase;color:'+colors[todayAct[1]]+';background:var(--w);padding:3px 8px;border-radius:50px;white-space:nowrap;">'+todayAct[1]+'</span><p style="font-size:14px;color:var(--ink);font-weight:600;">'+todayAct[2]+'</p></div></div>'
++'<div class="card"><h3>📖 30-Day Rotation</h3><p style="font-size:12px;color:var(--gr);margin-bottom:10px;">The number is the day of the month. Each day has a theme: Writing, Playing, Talking, Singing, Counting, or Reading. It repeats every month, so it never goes out of date.</p>'+cal+'</div>'
++'<div class="card hl-gold"><h3>📚 Picture Books in Both Languages</h3><p style="font-size:13px;">Ask a Lee County librarian for the Spanish edition, or check Libby/hoopla. Reading the same book in both languages is one of the best things you can do for a bilingual toddler.</p><div style="margin-top:8px;">'+books+'</div></div>'
++'<div class="card"><h3>🎵 Rainy-Day Songs (English)</h3>'
 +'<div style="background:var(--goldl);padding:12px;border-radius:10px;margin:8px 0;border:1px solid #FFE082;"><b>I Hear Thunder</b> <span style="font-size:11px;color:var(--gr);">(tune: Frère Jacques)</span><br><br><span style="font-size:13px;">I hear thunder, I hear thunder <span style="font-size:11px;color:var(--gr);">(pound hands on lap)</span><br>Listen, don\u0027t you? Listen, don\u0027t you? <span style="font-size:11px;color:var(--gr);">(cup hand to ear)</span><br>Pitter patter raindrops, pitter patter raindrops <span style="font-size:11px;color:var(--gr);">(wiggle fingers)</span><br>I\u0027m wet through! <span style="font-size:11px;color:var(--gr);">(shake body)</span><br>So are you! <span style="font-size:11px;color:var(--gr);">(tickle your child)</span></span></div>'
 +'<div style="background:var(--teall);padding:12px;border-radius:10px;margin:8px 0;border:1px solid #B2DFDB;"><b>Rain, Rain, Go Away</b><br><br><span style="font-size:13px;">Rain, rain, go away<br>Come again another day<br>Little <b>'+cn+'</b> wants to play<br>Rain, rain, go away!</span></div></div>'
 +'<div class="card hl-teal"><h3>🏛️ 1,000 Books Before Kindergarten</h3><p style="font-size:13px;">Ask your librarian about this free program! Read any book — even the same book — and log it. Goal: 1,000 books before age 5. Visit any Lee County Library branch or go to <b>leelibrary.net</b></p><a href="https://www.leelibrary.net" target="_blank" rel="noopener" style="display:inline-block;margin-top:8px;padding:8px 16px;border-radius:50px;background:var(--teal);color:var(--w);font-size:12px;font-weight:700;text-decoration:none;">Visit Lee County Library ↗</a></div></div>';
