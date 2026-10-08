@@ -552,7 +552,7 @@ html.tm-on #toast{display:none!important;}
 @media(max-width:380px){.srow{grid-template-columns:repeat(2,1fr);}.qo{grid-template-columns:1fr;}.toy-grid{gap:10px;}.toy-btn{padding:18px 8px;font-size:40px;}}
 
 .walk-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:8000;display:flex;align-items:flex-end;justify-content:center;padding:20px;animation:fu .3s ease;}
-.walk-card{background:var(--w);border-radius:20px;padding:24px;max-width:360px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.3);text-align:center;margin-bottom:env(safe-area-inset-bottom,20px);}
+.walk-card{background:var(--w);border-radius:20px;padding:24px;max-width:360px;width:100%;max-height:calc(100vh - 40px);overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.3);text-align:center;margin-bottom:env(safe-area-inset-bottom,20px);}
 .walk-card h3{font-family:'Baloo 2',cursive;font-size:20px;color:var(--ink);margin-bottom:8px;}
 .walk-card p{font-size:13px;color:#374151;line-height:1.6;margin-bottom:16px;}
 .walk-card .walk-emoji{font-size:48px;margin-bottom:8px;}
@@ -749,7 +749,7 @@ Tap 🔊 to hear each word. The phonetic guide shows you exactly how to say it:<
 <div style="background:rgba(255,255,255,.1);padding:10px;border-radius:10px;margin:8px 0;display:flex;align-items:center;gap:8px;flex-wrap:wrap;"><button class="spk" data-speak="Gracias" style="background:var(--gold);border-color:var(--gold);color:var(--ink);"><svg class="ic" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path class="d" d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button><b style="font-size:18px;color:var(--gold);">Gracias</b><span style="color:#F59E0B;font-size:13px;font-weight:700;">🗣 GRAH-see-ahs</span><span style="color:#CBD5E1;font-size:12px;margin-left:4px;">(Thank you)</span></div>
 <div style="background:rgba(255,255,255,.1);padding:10px;border-radius:10px;margin:8px 0;display:flex;align-items:center;gap:8px;flex-wrap:wrap;"><button class="spk" data-speak="Buenos días" style="background:var(--gold);border-color:var(--gold);color:var(--ink);"><svg class="ic" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path class="d" d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button><b style="font-size:18px;color:var(--gold);">Buenos días</b><span style="color:#F59E0B;font-size:13px;font-weight:700;">🗣 BWEH-nohs DEE-ahs</span><span style="color:#CBD5E1;font-size:12px;margin-left:4px;">(Good morning)</span></div>
 <div style="background:rgba(255,255,255,.1);padding:10px;border-radius:10px;margin:8px 0;display:flex;align-items:center;gap:8px;flex-wrap:wrap;"><button class="spk" data-speak="Te quiero mucho" style="background:var(--gold);border-color:var(--gold);color:var(--ink);">${ic('speaker',16)}</button><b style="font-size:18px;color:var(--gold);">Te quiero mucho</b><span style="color:#F59E0B;font-size:13px;font-weight:700;">🗣 teh key-EH-roh MOO-choh</span><span style="color:#CBD5E1;font-size:12px;margin-left:4px;">(I love you so much)</span></div>
-<div style="background:rgba(255,255,255,.1);padding:10px;border-radius:10px;margin:8px 0;display:flex;align-items:center;gap:8px;flex-wrap:wrap;"><button class="spk" data-speak="¡Va pues!" style="background:var(--gold);border-color:var(--gold);color:var(--ink);"><svg class="ic" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path class="d" d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button><b style="font-size:18px;color:var(--gold);">¡Va pues!</b><span style="color:#F59E0B;font-size:13px;font-weight:700;">🗣 vah PWEHS</span><span style="color:#CBD5E1;font-size:12px;margin-left:4px;">(Alright! — Honduran)</span></div>
+<div style="background:rgba(255,255,255,.1);padding:10px;border-radius:10px;margin:8px 0;display:flex;align-items:center;gap:8px;flex-wrap:wrap;"><button class="spk" data-speak="¡Va pues!" style="background:var(--gold);border-color:var(--gold);color:var(--ink);"><svg class="ic" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path class="d" d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button><b style="font-size:18px;color:var(--gold);">¡Va pues!</b><span style="color:#F59E0B;font-size:13px;font-weight:700;">🗣 vah PWEHS</span><span style="color:#CBD5E1;font-size:12px;margin-left:4px;">(Let&#39;s go! · Honduran)</span></div>
 <br><span style="font-size:12px;opacity:.7;">Every Spanish word in this app has pronunciation like this. 👆🏾</span>
 </div>
 
@@ -4687,68 +4687,91 @@ const WALK_STEPS=[
   {emoji:'💪🏾',title:'Strengthen weak words',body:'When you get a word wrong in a lesson, it goes into a <b>weak words</b> pile. The red <b>💪🏾 Strengthen</b> card on the Path tab (and a Practice button on Today) opens a special lesson built only from words you missed — get them right and they leave the pile.',btn:'Next →'},
   {emoji:'📖',title:'Your 48-week curriculum',body:'Tap <b>Learn</b> at the bottom. Open Phase 1 → Week 1 for the detailed text version of each week — what to do, which videos to watch, which phrases to say. The Path and Learn tabs share progress; complete a Path lesson and the Learn week marks done too.',btn:'Next →',action:function(){document.querySelector('[data-p="learn"]').click();},target:'.nb[data-p="learn"]'},
   {emoji:'🃏',title:'Flashcards & Quiz',body:'Cards has 12 vocabulary decks — tap to flip, tap 🔊 to hear. Quiz tests you with 10 random questions. Both track your progress.',btn:'Next →',action:function(){document.querySelector('[data-p="cards"]').click();},target:'.nb[data-p="cards"]'},
-  {emoji:'👶🏾',title:'Toddler Mode',body:'See the gold <b>TODDLER</b> button? Tap it to let your child play! <b>114 vocabulary items</b> across 17 tabs — Animals, Food, Sports, Vehicles, Colors, Body, Shapes, Clothes, Nature, ⛅ Weather, and more. Plus games: 🫧 Bubbles, 🧠 Memory Match, 🎨 Finger Paint, 🧺 Sorting, and a 📚 <b>Lesson tab</b>. The 👋🏾 Me tab teaches your child their own name in Spanish. Exit requires a 3-second hold.',btn:'Next →',action:function(){document.querySelector('[data-p="home"]').click();},target:'.tm-float'},
-  {emoji:'📚',title:'This Week\'s Focus',body:'The teal <b>📚 This Week</b> card has four buttons: <b>▶ Start Week N Lesson</b> (gold — opens the Path lesson player directly), <b>🛤️ Open Path</b>, <b>📖 Curriculum</b>, and <b>👶🏾 Toddler</b>. Right below it the dark <b>🛤️ Your Path</b> card shows daily XP progress, streak, total XP, and a Practice button when you have weak words.',btn:'Next →',target:'#p-home [onclick*="startLesson"]'},
-  {emoji:'🧰',title:'Quick Tools',body:'This scrollable strip has shortcuts to the Schedule, Honduran Guide, Songs, Library, Resources, and more. You don\'t have to dig for anything — it\'s all right here.',btn:'Next →',target:'#p-home [onclick*="goMore"]'},
+  {emoji:'👶🏾',title:'Toddler Mode',body:'See the gold <b>TODDLER</b> button? Tap it to let your child play. <b>114 picture words</b> across 20 tabs, plus games: 🫧 Bubbles, 🥁 Drums, 🧠 Memory, 🎨 Paint, ⚽ Soccer, 🧺 Sorting, 🤸🏾 Simón Dice and 🔢 Counting. The 👋🏾 Me tab teaches your child their own name in Spanish, and games earn ⭐ stickers. To leave, hold the exit button for 3 seconds.',btn:'Next →',action:function(){document.querySelector('[data-p="home"]').click();},target:'.tm-float'},
+  {emoji:'📚',title:'This Week\'s Focus',body:'This gold button in the <b>This Week</b> card starts this week\'s lesson. The buttons under it open the Path, the full Curriculum, and Toddler Mode. The <b>Your Path</b> card below it tracks your daily XP and streak.',btn:'Next →',target:'#p-home [onclick*="startLesson"]'},
+  {emoji:'🧰',title:'Quick Tools',body:'This strip scrolls sideways. The first tile, <b>¡Hablá!</b>, is speaking practice: hear a phrase, record yourself, and compare. The others open the Schedule, Honduran Guide, Songs, Resources, Cognates and Library.',btn:'Next →',target:'#p-home [onclick*="goMore"]'},
   {emoji:'🔊',title:'Tap 🔊 to hear any word',body:'Everywhere you see a gold 🔊 button, tap it to hear the Spanish word spoken out loud. The <span style="color:#D4A017;font-weight:700;">gold boxes</span> show phonetic pronunciation (like <span style="color:#C75B39;font-weight:700;">OH-lah</span>) so you know exactly how to say it.',btn:'Next →',target:'#p-home .spk'},
-  {emoji:'💾',title:'Your progress saves automatically',body:'Every task you check, every week you complete, every flashcard you flip — it all saves to your phone. You\'ll see a ✓ Saved notification each time. Just keep using the same phone.',btn:'Next →'},
-  {emoji:'🚀',title:'You\'re ready!',body:'Start with the <b>Path</b> tab and try Week 1. Or check off tasks on Today. Or open Learn → Phase 1 → Week 1 for the deep dive. All paths lead to the same goal.<div style="margin-top:10px;padding:8px 12px;background:#FFF8E1;border-radius:10px;border:1px solid #FFE082;text-align:center;"><b style="font-size:18px;color:#1A1B4B;">¡Va pues!</b><br><span style="font-size:12px;color:#C75B39;font-weight:700;">vah PWEHS</span> <span style="font-size:11px;color:#6B7280;">(Alright! — Honduran)</span></div>',btn:'¡Vamos! Let\'s go! 🇭🇳'}
+  {emoji:'💾',title:'Your progress saves automatically',body:'Every task, lesson and flashcard saves on this phone by itself (you\'ll see ✓ Saved). To keep a safety copy or move to a new phone, use <b>More → Settings → 💾 Save a Backup</b>.',btn:'Next →'},
+  {emoji:'🚀',title:'You\'re ready!',body:'Start with the <b>Path</b> tab and try Week 1. Or check off tasks on Today. Or open Learn → Phase 1 → Week 1 for the deep dive. All paths lead to the same goal.<div style="margin-top:10px;padding:8px 12px;background:#FFF8E1;border-radius:10px;border:1px solid #FFE082;text-align:center;"><b style="font-size:18px;color:#1A1B4B;">¡Va pues!</b><br><span style="font-size:12px;color:#C75B39;font-weight:700;">vah PWEHS</span> <span style="font-size:11px;color:#6B7280;">(Let\'s go! · Honduran)</span></div>',btn:'¡Vamos! Let\'s go! 🇭🇳'}
 ];
 
+var walkSpot=null,walkRaf=0;
 function clearSpotlight(){
+  walkSpot=null;
+  if(walkRaf){cancelAnimationFrame(walkRaf);walkRaf=0;}
   ['walkShT','walkShR','walkShB','walkShL','walkRing','walkTap'].forEach(function(id){
     var el=document.getElementById(id);
     if(el)el.remove();
   });
 }
-
-function showSpotlight(selector){
-  clearSpotlight();
-  if(!selector)return null;
-  var el=document.querySelector(selector);
-  if(!el)return null;
-  try{el.scrollIntoView({block:'center',behavior:'smooth'});}catch(e){el.scrollIntoView();}
-  return new Promise(function(resolve){
-    setTimeout(function(){
-      var target=document.querySelector(selector);
-      if(!target){resolve(null);return;}
-      var r=target.getBoundingClientRect();
-      if(r.width===0||r.height===0){resolve(null);return;}
-      var pad=8;
-      var rx=Math.max(0,r.left-pad);
-      var ry=Math.max(0,r.top-pad);
-      var rw=r.width+pad*2;
-      var rh=r.height+pad*2;
-      var vw=window.innerWidth,vh=window.innerHeight;
-      function makeShutter(id,style){
-        var d=document.createElement('div');
-        d.id=id;d.className='walk-shutter';
-        Object.assign(d.style,style);
-        document.body.appendChild(d);
-        return d;
-      }
-      makeShutter('walkShT',{top:'0',left:'0',width:vw+'px',height:ry+'px'});
-      makeShutter('walkShB',{top:(ry+rh)+'px',left:'0',width:vw+'px',height:Math.max(0,vh-(ry+rh))+'px'});
-      makeShutter('walkShL',{top:ry+'px',left:'0',width:rx+'px',height:rh+'px'});
-      makeShutter('walkShR',{top:ry+'px',left:(rx+rw)+'px',width:Math.max(0,vw-(rx+rw))+'px',height:rh+'px'});
-      var ring=document.createElement('div');
-      ring.id='walkRing';ring.className='walk-ring';
-      var cs=getComputedStyle(target);
-      var br=cs.borderRadius||'16px';
-      Object.assign(ring.style,{top:ry+'px',left:rx+'px',width:rw+'px',height:rh+'px',borderRadius:br});
-      document.body.appendChild(ring);
-      var tap=document.createElement('div');
-      tap.id='walkTap';tap.className='walk-target-tap';
-      Object.assign(tap.style,{top:ry+'px',left:rx+'px',width:rw+'px',height:rh+'px',borderRadius:br});
-      tap.addEventListener('click',function(e){
-        e.stopPropagation();
-        try{target.click();}catch(err){}
-        setTimeout(function(){if(walkActive)nextWalk();},200);
-      });
-      document.body.appendChild(tap);
-      resolve({rect:r,bottomHalf:(ry+rh/2)>vh/2});
-    },420);
+// True for things pinned to the screen (bottom tabs, header, Toddler button): scrolling won't move them.
+function walkPinned(el){for(var e=el;e&&e!==document.body;e=e.parentElement){var p=getComputedStyle(e).position;if(p==='fixed'||p==='sticky')return true;}return false;}
+// Draws the dim shutters + gold ring around the target from its CURRENT position. Re-run on scroll/resize.
+function walkDraw(){
+  walkRaf=0;
+  if(!walkSpot||!walkActive)return;
+  var t=walkSpot.el;
+  if(!t||!t.isConnected)t=walkSpot.el=document.querySelector(walkSpot.sel);
+  ['walkShT','walkShR','walkShB','walkShL','walkRing','walkTap'].forEach(function(id){var e=document.getElementById(id);if(e)e.remove();});
+  if(!t)return;
+  var r=t.getBoundingClientRect();
+  if(!r.width||!r.height)return;
+  var pad=8,vw=window.innerWidth,vh=window.innerHeight;
+  var rx=Math.max(0,r.left-pad),ry=Math.max(0,r.top-pad);
+  var rw=Math.min(vw-rx,r.right+pad-rx),rh=Math.min(vh-ry,r.bottom+pad-ry);
+  function mk(id,cls,st){var d=document.createElement('div');d.id=id;d.className=cls;Object.assign(d.style,st);document.body.appendChild(d);return d;}
+  mk('walkShT','walk-shutter',{top:'0',left:'0',width:vw+'px',height:ry+'px'});
+  mk('walkShB','walk-shutter',{top:(ry+rh)+'px',left:'0',width:vw+'px',height:Math.max(0,vh-(ry+rh))+'px'});
+  mk('walkShL','walk-shutter',{top:ry+'px',left:'0',width:rx+'px',height:rh+'px'});
+  mk('walkShR','walk-shutter',{top:ry+'px',left:(rx+rw)+'px',width:Math.max(0,vw-(rx+rw))+'px',height:rh+'px'});
+  var br=getComputedStyle(t).borderRadius||'16px';
+  mk('walkRing','walk-ring',{top:ry+'px',left:rx+'px',width:rw+'px',height:rh+'px',borderRadius:br});
+  var tap=mk('walkTap','walk-target-tap',{top:ry+'px',left:rx+'px',width:rw+'px',height:rh+'px',borderRadius:br});
+  tap.addEventListener('click',function(e){
+    e.stopPropagation(); // just move on: pressing the real button mid-tour (Start Lesson, ¡Hablá!) would leave the tour's page
+    if(walkActive)nextWalk();
   });
+}
+function walkRedraw(){if(walkSpot&&!walkRaf)walkRaf=requestAnimationFrame(walkDraw);}
+window.addEventListener('scroll',walkRedraw,{passive:true});
+window.addEventListener('resize',walkRedraw);
+// Puts the tour card and the target on opposite sides of the screen, scrolling the page (instantly) so both fit.
+function walkPlace(overlay,el){
+  var card=overlay.querySelector('.walk-card');
+  card.style.maxHeight='';card.style.overflowY='';
+  var vh=window.innerHeight,gap=18;
+  var nav=document.querySelector('.bnav');
+  var navTop=nav&&nav.offsetParent!==null?nav.getBoundingClientRect().top:vh;
+  var hdr=document.querySelector('.hdr');
+  var hdrBot=hdr&&hdr.offsetParent!==null?Math.max(0,hdr.getBoundingClientRect().bottom):0;
+  var r=el.getBoundingClientRect();
+  overlay.classList.add('with-target');
+  function fitAbove(){ // card at the bottom, target above it
+    overlay.classList.remove('top-pos');
+    var limit=r.bottom+gap,ct=card.getBoundingClientRect().top;
+    if(ct<limit){card.style.maxHeight=Math.max(160,card.offsetHeight-(limit-ct))+'px';card.style.overflowY='auto';}
+  }
+  if(walkPinned(el)){
+    if(r.top+r.height/2>vh/2){
+      overlay.classList.add('top-pos');
+      var cb0=card.getBoundingClientRect().bottom;
+      if(cb0>r.top-gap){card.style.maxHeight=Math.max(160,card.offsetHeight-(cb0-(r.top-gap)))+'px';card.style.overflowY='auto';}
+    }else fitAbove();
+    return;
+  }
+  // Card on top, target scrolled to just below it.
+  overlay.classList.add('top-pos');
+  var cb=card.getBoundingClientRect().bottom;
+  var room=navTop-8-(cb+gap);
+  if(room<r.height){card.style.maxHeight=Math.max(160,card.offsetHeight-(r.height-room))+'px';card.style.overflowY='auto';cb=card.getBoundingClientRect().bottom;}
+  window.scrollTo(0,Math.max(0,window.pageYOffset+r.top-(cb+gap)));
+  r=el.getBoundingClientRect();
+  if(r.top<cb+4){
+    // Target is too close to the top of the page to scroll below the card: card goes to the bottom instead.
+    window.scrollTo(0,Math.max(0,window.pageYOffset+r.top-(hdrBot+gap)));
+    r=el.getBoundingClientRect();
+    fitAbove();
+  }
 }
 
 function showWalk(){
@@ -4768,15 +4791,21 @@ function showWalk(){
   overlay.innerHTML='<div class="walk-card"><div class="walk-emoji">'+step.emoji+'</div><h3>'+step.title+'</h3><p>'+step.body+'</p><div class="walk-btns">'+backBtn+skipBtn+nextBtn+'</div><div class="walk-dots">'+dots+'</div></div>';
   overlay.style.display='flex';
   overlay.classList.remove('with-target','top-pos');
-  if(step.target){
-    showSpotlight(step.target).then(function(info){
-      if(!walkActive)return;
-      if(info){
-        overlay.classList.add('with-target');
-        if(info.bottomHalf)overlay.classList.add('top-pos');
-      }
-    });
-  }
+  if(!step.target)return;
+  const card=overlay.querySelector('.walk-card');
+  card.style.visibility='hidden'; // don't flash in the wrong spot while the page moves
+  const myStep=walkStep;
+  setTimeout(function(){ // let the step's tab switch / re-render settle first
+    if(!walkActive||walkStep!==myStep)return;
+    const el=document.querySelector(step.target);
+    const r=el?el.getBoundingClientRect():null;
+    if(r&&r.width&&r.height){
+      walkPlace(overlay,el);
+      walkSpot={sel:step.target,el:el};
+      requestAnimationFrame(function(){requestAnimationFrame(walkDraw);});
+    }
+    card.style.visibility='';
+  },80);
 }
 
 function nextWalk(){walkStep++;showWalk();}
