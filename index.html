@@ -503,13 +503,26 @@ html.tm-on #toast{display:none!important;}
 .socc-end-card .btns{display:flex;flex-direction:column;gap:10px;}
 
 /* SOCCER PHASE 2 — Kick-Over-Cones, Dribble Rhythm, Guided Practice */
-.socc-kc-row{position:absolute;top:42%;left:0;right:0;height:60px;display:flex;justify-content:space-evenly;padding:0 8%;}
-.socc-kc-cone{width:40px;height:48px;filter:drop-shadow(0 3px 5px rgba(0,0,0,.4));transition:all .4s cubic-bezier(.34,1.56,.64,1);}
-.socc-kc-cone.fell{transform:rotate(80deg) translate(8px,22px);opacity:.6;}
-.socc-kc-cone svg{width:100%;height:100%;}
-.socc-kc-ball{position:absolute;top:38%;left:-10%;font-size:32px;transition:left 2.6s linear;filter:drop-shadow(0 3px 6px rgba(0,0,0,.4));}
-.socc-kc-ball.rolling{left:110%;}
-.socc-kc-tap{position:absolute;inset:0;background:transparent;cursor:pointer;z-index:5;}
+.socc-kc-field{touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;cursor:pointer;outline:none;}
+.socc-kc-field:focus-visible{box-shadow:0 0 0 4px var(--gold),0 6px 18px rgba(0,0,0,.3);}
+.socc-kc-cones{position:absolute;inset:0;pointer-events:none;z-index:1;}
+.socc-kc-cone{position:absolute;width:44px;height:52px;transform:translate(-50%,-50%);transition:transform .4s cubic-bezier(.34,1.56,.64,1),opacity .4s;filter:drop-shadow(0 3px 5px rgba(0,0,0,.4));}
+.socc-kc-cone svg{width:100%;height:100%;display:block;}
+.socc-kc-cone .lbl{position:absolute;top:100%;left:50%;transform:translateX(-50%);margin-top:1px;font-size:12px;font-weight:900;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.8);white-space:nowrap;transition:opacity .2s;}
+.socc-kc-cone.target::before{content:"";position:absolute;left:50%;top:55%;width:70px;height:70px;border:4px solid var(--gold);border-radius:50%;background:rgba(255,215,80,.22);animation:kcPulse 1s ease-in-out infinite;}
+.socc-kc-cone.fell{transform:translate(calc(-50% + var(--dx,0px)),calc(-30% + var(--dy,0px))) rotate(var(--rot,80deg));opacity:.8;}
+.socc-kc-cone.fell .lbl{opacity:0;}
+@keyframes kcPulse{0%,100%{transform:translate(-50%,-50%) scale(.9);opacity:.9;}50%{transform:translate(-50%,-50%) scale(1.12);opacity:.55;}}
+.socc-kc-ball{position:absolute;left:50%;top:80%;font-size:34px;line-height:1;transform:translate(-50%,-50%);transition:left .6s cubic-bezier(.2,.7,.3,1),top .6s cubic-bezier(.2,.7,.3,1),opacity .2s;filter:drop-shadow(0 3px 6px rgba(0,0,0,.4));z-index:3;pointer-events:none;}
+.socc-kc-ball.spin{animation:ballSpin .6s linear;}
+.socc-kc-foot{position:absolute;left:50%;top:89%;font-size:40px;line-height:1;transform:translate(-50%,-50%);transition:left .15s ease-out,top .15s ease-out,transform .15s ease-out;z-index:2;pointer-events:none;filter:drop-shadow(0 3px 4px rgba(0,0,0,.35));}
+.socc-kc-aim{position:absolute;left:50%;top:80%;height:6px;width:0;transform-origin:0 50%;background:repeating-linear-gradient(90deg,rgba(255,255,255,.95) 0 10px,transparent 10px 18px);border-radius:3px;pointer-events:none;opacity:0;z-index:1;transition:opacity .15s;}
+.socc-kc-aim.on{opacity:1;}
+.socc-kc-aim.grow{transition:width .7s ease-out,opacity .15s;}
+.socc-kc-ghost{position:absolute;left:50%;top:82%;font-size:46px;line-height:1;transform:translate(-35%,-8%);opacity:0;pointer-events:none;z-index:5;transition:left .5s ease-in-out,top .5s ease-in-out,opacity .2s;filter:drop-shadow(0 2px 4px rgba(0,0,0,.45));}
+.socc-kc-pum{position:absolute;transform:translate(-50%,-50%);font-family:'Baloo 2',cursive;font-weight:900;font-size:28px;color:var(--gold);text-shadow:0 2px 0 var(--ink),0 0 8px rgba(0,0,0,.5);pointer-events:none;z-index:4;animation:kcPum .8s ease-out forwards;}
+@keyframes kcPum{0%{opacity:0;transform:translate(-50%,-50%) scale(.4);}30%{opacity:1;transform:translate(-50%,-70%) scale(1.15);}100%{opacity:0;transform:translate(-50%,-110%) scale(1);}}
+.socc-kc-again{display:block;margin:10px auto 0;}
 .socc-dr-path{position:absolute;top:12%;bottom:28%;left:45%;right:45%;background:linear-gradient(0deg,rgba(255,255,255,.15),rgba(255,255,255,.05));border-left:2px dashed rgba(255,255,255,.3);border-right:2px dashed rgba(255,255,255,.3);}
 .socc-dr-ball{position:absolute;left:50%;bottom:8%;font-size:30px;transform:translateX(-50%);transition:bottom .35s cubic-bezier(.45,.05,.55,.95),transform .35s cubic-bezier(.45,.05,.55,.95);filter:drop-shadow(0 3px 5px rgba(0,0,0,.35));}
 .socc-dr-feet{position:absolute;bottom:3%;left:0;right:0;display:flex;justify-content:center;gap:60px;}
@@ -2229,7 +2242,7 @@ function stTap(id){
   else speak(TL('Todavía no. ¡Jugá para ganarla!','Not yet. Play to earn it!'),appLang);
 }
 /* ===== TODDLER MODE ===== */
-function toggleTM(){const tm=document.getElementById('tmode');const entering=!tm.classList.contains('act');tm.classList.toggle('act');document.documentElement.classList.toggle('tm-on',entering);if(entering){setTCat('home',null);S.tm=(S.tm||0)+1;sv();tmLogDay();if(typeof checkAch==='function')checkAch();try{var rf=document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen();if(rf&&rf.catch)rf.catch(function(){});}catch(e){}for(let i=0;i<5;i++)history.pushState({toddler:true},'');window.addEventListener('popstate',tmPopTrap);wlOn();}else{try{var xf=document.fullscreenElement&&document.exitFullscreen&&document.exitFullscreen();if(xf&&xf.catch)xf.catch(function(){});}catch(e){}window.removeEventListener('popstate',tmPopTrap);history.replaceState({},'');wlOff();dmStop();if(typeof rH==='function')rH();if(morePage==='dash'&&typeof rM==='function')rM();}if(profile)document.getElementById('tm-greeting').textContent='¡Hola '+profile.child+'!';}
+function toggleTM(){const tm=document.getElementById('tmode');const entering=!tm.classList.contains('act');tm.classList.toggle('act');document.documentElement.classList.toggle('tm-on',entering);if(entering){setTCat('home',null);S.tm=(S.tm||0)+1;sv();tmLogDay();if(typeof checkAch==='function')checkAch();try{var rf=document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen();if(rf&&rf.catch)rf.catch(function(){});}catch(e){}for(let i=0;i<5;i++)history.pushState({toddler:true},'');window.addEventListener('popstate',tmPopTrap);wlOn();}else{try{var xf=document.fullscreenElement&&document.exitFullscreen&&document.exitFullscreen();if(xf&&xf.catch)xf.catch(function(){});}catch(e){}window.removeEventListener('popstate',tmPopTrap);history.replaceState({},'');wlOff();dmStop();if(typeof closeSoccerGame==='function')closeSoccerGame();if(typeof rH==='function')rH();if(morePage==='dash'&&typeof rM==='function')rM();}if(profile)document.getElementById('tm-greeting').textContent='¡Hola '+profile.child+'!';}
 function tmPopTrap(e){if(document.getElementById('tmode').classList.contains('act')){history.pushState({toddler:true},'');}}
 let exitTimer=null;let exitCount=3;
 const exitBtn=document.getElementById('tm-lock-exit');
@@ -2775,7 +2788,7 @@ function renderSoccerMenu(){
   menu.innerHTML=''
     +'<button class="socc-game-btn" onclick="openSoccerGame(\'ritual\')"><span class="ico">🧍🏾</span><span class="txt">Head, Toes, Ears<small>Warmup + Listen &amp; Respect</small></span></button>'
     +'<button class="socc-game-btn" onclick="openSoccerGame(\'cones\')"><span class="ico">🔶</span><span class="txt">Cone Color Run<small>Cheetah, Bear, Bunny, Frog</small></span></button>'
-    +'<button class="socc-game-btn" onclick="openSoccerGame(\'kickcones\')"><span class="ico">💥</span><span class="txt">Kick-Over-Cones<small>Time your kick to knock over cones</small></span></button>'
+    +'<button class="socc-game-btn" onclick="openSoccerGame(\'kickcones\')"><span class="ico">💥</span><span class="txt">Kick-Over-Cones<small>Aim, kick, knock the cones down</small></span></button>'
     +'<button class="socc-game-btn" onclick="openSoccerGame(\'dribble\')"><span class="ico">🦶🏾</span><span class="txt">Dribble Rhythm<small>Tap left-right to dribble to the goal</small></span></button>'
     +'<button class="socc-game-btn" onclick="openSoccerGame(\'goal\')"><span class="ico">🥅</span><span class="txt">Goal Shot<small>Hold to charge, release to kick</small></span></button>';
 }
@@ -3148,92 +3161,231 @@ function setupGoalShot(){
   }
 }
 
-/* ===== SOCCER PHASE 2: KICK-OVER-CONES ===== */
+/* ===== SOCCER PHASE 2: KICK-OVER-CONES (aim and kick) =====
+   Teaches the real drill: look at the cone, kick the ball at it, the cone falls.
+   His finger is the foot: a swipe kicks the ball that way, so aiming matters.
+   A plain tap kicks at the glowing cone, so a 2-year-old always gets a hit.
+   The first visit each session opens with a short "Mirá cómo se hace" demo. */
+var KC_SLOTS=[{x:[14,24],y:[24,34]},{x:[44,56],y:[10,18]},{x:[76,86],y:[24,34]}];
+var KC_BALL={x:50,y:80};
+var KC_PH={rojo:'ROH-hoh',azul:'ah-SOOL',amarillo:'ah-mah-REE-yoh',verde:'VEHR-deh'};
+var kcS=null;
 function buildKickCones(){
   return ''
     +'<div class="socc-help">'
-    +  '<b>How to play:</b> The ball rolls across the field. Tap the field '
-    +  'when the ball lines up with a cone to knock it over! Try to hit all 3.'
+    +  '<b>How to play:</b> Swipe from the ball toward a cone to kick it there. '
+    +  'Or just tap: the foot kicks at the glowing cone. Knock all 3 down!'
     +'</div>'
-    +'<div class="socc-prompt" id="kcPrompt"><span class="es">¡Mirá la pelota!</span><span class="ph">🗣 mee-RAH lah peh-LOH-tah</span><span class="en">Watch the ball!</span></div>'
+    +'<div class="socc-prompt" id="kcPrompt"></div>'
     +'<div class="socc-score"><span class="pill" id="kcScore">💥 0 / 3</span></div>'
-    +'<div class="socc-field" id="kcField">'
-    +  '<div class="socc-kc-row" id="kcRow"></div>'
+    +'<div class="socc-field socc-kc-field" id="kcField" tabindex="0" role="button" aria-label="Kick the ball">'
+    +  '<div class="socc-kc-aim" id="kcAim"></div>'
+    +  '<div class="socc-kc-cones" id="kcCones"></div>'
+    +  '<div class="socc-kc-foot" id="kcFoot">🦶🏾</div>'
     +  '<div class="socc-kc-ball" id="kcBall">⚽</div>'
-    +  '<div class="socc-kc-tap" id="kcTap"></div>'
-    +'</div>';
+    +  '<div class="socc-kc-ghost" id="kcGhost">👆🏾</div>'
+    +'</div>'
+    +'<button class="socc-back socc-kc-again" onclick="kcDemo()">👀 ¡Mirá cómo! · Watch how</button>';
 }
 function startKickCones(){
-  var row=document.getElementById('kcRow');
-  var ball=document.getElementById('kcBall');
-  var tap=document.getElementById('kcTap');
-  var field=document.getElementById('kcField');
-  if(!row||!ball||!tap||!field)return;
-
-  var colors=[
-    {hex:'#e63946'},{hex:'#1d6dc9'},{hex:'#ffc940'}
-  ];
-  row.innerHTML=colors.map(function(c,i){
-    return '<div class="socc-kc-cone" data-i="'+i+'">'
-      +'<svg viewBox="0 0 40 48"><polygon points="20,4 32,42 8,42" fill="'+c.hex+'" stroke="#2c2c2c" stroke-width="2"/><rect x="6" y="40" width="28" height="6" fill="#2c2c2c"/></svg>'
-      +'</div>';
+  var field=document.getElementById('kcField');if(!field)return;
+  kcS={cones:[],target:-1,hits:0,busy:true,drag:null};
+  kcLayout();kcBindInput(field);
+  if(!window._soccKcDemoSeen){window._soccKcDemoSeen=true;kcDemo();}
+  else kcCallTarget();
+}
+function kcPrompt(es,ph,en){var p=document.getElementById('kcPrompt');if(p)p.innerHTML='<span class="es">'+es+'</span><span class="ph">🗣 '+ph+'</span><span class="en">'+en+'</span>';}
+function kcGeo(){var f=document.getElementById('kcField'),r=f?f.getBoundingClientRect():{width:0,height:0};return {W:r.width,H:r.height,bx:KC_BALL.x/100*r.width,by:KC_BALL.y/100*r.height};}
+function kcPos(el,x,y){var g=kcGeo();if(!el||!g.W)return;el.style.left=(x/g.W*100)+'%';el.style.top=(y/g.H*100)+'%';}
+function kcHalt(){window._soccGen=(window._soccGen||0)+1;if(window._soccTimers){window._soccTimers.forEach(function(t){clearTimeout(t);});window._soccTimers=[];}try{if(window.speechSynthesis)speechSynthesis.cancel();}catch(e){}}
+function kcThud(f){try{var a=getAC();if(a.state!=='running')a.resume();var o=a.createOscillator(),gn=a.createGain();o.connect(gn);gn.connect(a.destination);o.type='triangle';o.frequency.setValueAtTime(f,a.currentTime);o.frequency.exponentialRampToValueAtTime(Math.max(30,f*.4),a.currentTime+.15);gn.gain.setValueAtTime(.35,a.currentTime);gn.gain.exponentialRampToValueAtTime(.001,a.currentTime+.18);o.start();o.stop(a.currentTime+.2);}catch(e){}}
+function kcScore(){var s=document.getElementById('kcScore');if(s&&kcS)s.textContent='💥 '+kcS.hits+' / '+kcS.cones.length;}
+function kcLayout(){
+  var wrap=document.getElementById('kcCones');if(!wrap||!kcS)return;
+  var cols=sh(SOCC_COLORS.slice(0,3));
+  kcS.cones=KC_SLOTS.map(function(sl,i){
+    return {c:cols[i],x:sl.x[0]+Math.random()*(sl.x[1]-sl.x[0]),y:sl.y[0]+Math.random()*(sl.y[1]-sl.y[0]),down:false};
+  });
+  wrap.innerHTML=kcS.cones.map(function(o,i){
+    return '<div class="socc-kc-cone" id="kcCone'+i+'" style="left:'+o.x.toFixed(1)+'%;top:'+o.y.toFixed(1)+'%;">'
+      +'<svg viewBox="0 0 40 48"><polygon points="20,4 32,42 8,42" fill="'+o.c.hex+'" stroke="#2c2c2c" stroke-width="2"/><rect x="6" y="40" width="28" height="6" fill="#2c2c2c"/></svg>'
+      +'<span class="lbl">'+TL(o.c.es,o.c.en)+'</span></div>';
   }).join('');
-
-  window._soccKcHit=0;
-  window._soccKcTotal=3;
-  var score=document.getElementById('kcScore');
-  if(score) score.textContent='💥 0 / 3';
-
-  soccSay('Watch the ball. Tap to kick the cones!','Mirá la pelota. ¡Tocá para patear los conos!',function(){
-    rollBall();
-  });
-
-  function rollBall(){
-    ball.classList.remove('rolling');
-    void ball.offsetHeight;
-    ball.classList.add('rolling');
+  kcS.hits=0;kcS.target=-1;kcScore();kcBallHome();
+  // A restarted demo cancels pending timers, so undo anything they would have undone:
+  // a ball mid fade-out, the demo hand, and leftover ¡PUM! labels.
+  var b=document.getElementById('kcBall'),h=document.getElementById('kcGhost');
+  if(b)b.style.opacity='1';
+  if(h){h.style.transition='none';h.style.opacity='0';}
+  document.querySelectorAll('#kcField .socc-kc-pum').forEach(function(x){if(x.parentNode)x.parentNode.removeChild(x);});
+}
+function kcBallHome(){
+  var b=document.getElementById('kcBall'),f=document.getElementById('kcFoot');if(!b||!f)return;
+  b.style.transition='none';f.style.transition='none';b.classList.remove('spin');
+  b.style.left=KC_BALL.x+'%';b.style.top=KC_BALL.y+'%';
+  f.style.left=KC_BALL.x+'%';f.style.top=(KC_BALL.y+9)+'%';f.style.transform='translate(-50%,-50%) rotate(0deg)';
+  void b.offsetHeight;b.style.transition='';f.style.transition='';
+}
+function kcReturnBall(cb){
+  var b=document.getElementById('kcBall');if(!b)return;
+  b.style.opacity='0';
+  soccTimeout(function(){kcBallHome();b.style.opacity='1';if(cb)cb();},250);
+}
+function kcAimShow(ux,uy,len,grow){
+  var a=document.getElementById('kcAim'),g=kcGeo();if(!a)return;
+  a.style.left=g.bx+'px';a.style.top=(g.by-3)+'px';
+  a.style.transform='rotate('+(Math.atan2(uy,ux)*180/Math.PI).toFixed(1)+'deg)';
+  a.classList.toggle('grow',!!grow);a.classList.add('on');
+  if(grow){a.style.width='0px';void a.offsetWidth;}
+  a.style.width=Math.round(len)+'px';
+}
+function kcAimHide(){var a=document.getElementById('kcAim');if(a){a.classList.remove('on','grow');a.style.width='0px';}}
+function kcGhost(ux,uy){
+  var h=document.getElementById('kcGhost'),g=kcGeo();if(!h)return;
+  h.style.transition='none';kcPos(h,g.bx,g.by+12);h.style.opacity='1';void h.offsetHeight;
+  h.style.transition='';kcPos(h,g.bx+ux*120,g.by+uy*120+12);
+  soccTimeout(function(){h.style.opacity='0';},650);
+}
+function kcPum(o){
+  var f=document.getElementById('kcField');if(!f)return;
+  var d=document.createElement('div');d.className='socc-kc-pum';d.textContent='¡PUM!';
+  d.style.left=o.x+'%';d.style.top=(o.y-6)+'%';f.appendChild(d);
+  soccTimeout(function(){if(d.parentNode)d.parentNode.removeChild(d);},800);
+}
+// Foot steps in behind the ball, winds up, swings through it, then the ball rolls t px along (ux,uy).
+function kcAnimateKick(ux,uy,t,done){
+  var g=kcGeo(),b=document.getElementById('kcBall'),f=document.getElementById('kcFoot');if(!b||!f)return;
+  var deg=Math.max(-60,Math.min(60,Math.atan2(uy,ux)*180/Math.PI+90));
+  kcPos(f,g.bx-ux*58,g.by-uy*58);f.style.transform='translate(-50%,-50%) rotate('+deg.toFixed(1)+'deg)';
+  soccTimeout(function(){
+    kcPos(f,g.bx-ux*18,g.by-uy*18);
+    soccTimeout(function(){
+      kcThud(150);if(navigator.vibrate)navigator.vibrate(25);
+      var dur=Math.min(.9,Math.max(.45,t/560));
+      b.style.transition='left '+dur+'s cubic-bezier(.2,.7,.3,1),top '+dur+'s cubic-bezier(.2,.7,.3,1),opacity .2s';
+      b.style.animationDuration=dur+'s';b.classList.add('spin');
+      kcPos(b,g.bx+ux*t,g.by+uy*t);
+      soccTimeout(function(){kcPos(f,g.bx,g.by+.09*g.H);f.style.transform='translate(-50%,-50%) rotate(0deg)';},260);
+      soccTimeout(function(){b.classList.remove('spin');done();},dur*1000);
+    },150);
+  },170);
+}
+// ux===null means a tap: kick at the glowing cone.
+function kcKick(ux,uy){
+  if(!kcS||kcS.busy)return;
+  var g=kcGeo(),C=kcS.cones,up=[];if(!g.W)return;
+  C.forEach(function(o,i){if(!o.down)up.push(i);});
+  if(!up.length)return;
+  function vec(i){return {x:C[i].x/100*g.W-g.bx,y:C[i].y/100*g.H-g.by};}
+  if(ux===null){var ti=(kcS.target>-1&&!C[kcS.target].down)?kcS.target:up[0],v0=vec(ti),d0=Math.hypot(v0.x,v0.y);ux=v0.x/d0;uy=v0.y/d0;}
+  // Aim help: a swipe within about 22 degrees of a standing cone goes to that cone.
+  var a0=Math.atan2(uy,ux),best=-1,bestD=9;
+  up.forEach(function(i){var v=vec(i),a=Math.atan2(v.y,v.x),da=Math.abs(Math.atan2(Math.sin(a-a0),Math.cos(a-a0)));if(da<bestD){bestD=da;best=i;}});
+  if(best>-1&&bestD<0.38){var v1=vec(best),d1=Math.hypot(v1.x,v1.y);ux=v1.x/d1;uy=v1.y/d1;}
+  // The ball stops at the first standing cone on its path.
+  var hit=-1,hitT=1e9;
+  up.forEach(function(i){var v=vec(i),t=v.x*ux+v.y*uy,perp=Math.abs(v.x*uy-v.y*ux);if(t>0&&perp<32&&t<hitT){hitT=t;hit=i;}});
+  var dist;
+  if(hit>-1)dist=Math.max(0,hitT-28);
+  else{var m=18,tx=ux>0?(g.W-m-g.bx)/ux:ux<0?(m-g.bx)/ux:1e9,ty=uy<0?(m-g.by)/uy:uy>0?(g.H-m-g.by)/uy:1e9;dist=Math.max(0,Math.min(tx,ty,g.H*.85));}
+  kcS.busy=true;
+  C.forEach(function(o,i){var el=document.getElementById('kcCone'+i);if(el)el.classList.remove('target');});
+  kcAnimateKick(ux,uy,dist,function(){kcResolve(hit,ux,uy);});
+}
+// The cone tips over and slides a little in the direction it was kicked, so he can see it lying down.
+function kcFall(el,ux,uy){if(!el)return;el.style.setProperty('--rot',(ux<-0.15?-80:80)+'deg');el.style.setProperty('--dx',(ux*24).toFixed(1)+'px');el.style.setProperty('--dy',(uy*24).toFixed(1)+'px');el.classList.add('fell');}
+function kcResolve(hit,ux,uy){
+  if(hit<0){
+    kcPrompt('¡Casi! ¡Otra vez!','KAH-see · OH-trah vehs','Almost! Try again!');
+    soccSay('Almost! Try again!','¡Casi! ¡Otra vez!');
+    soccTimeout(function(){kcReturnBall(function(){kcCallTarget(true);});},900);
+    return;
   }
-
-  tap.onclick=function(){
-    var ballRect=ball.getBoundingClientRect();
-    var ballCenter=ballRect.left+ballRect.width/2;
-    var hitAny=false;
-    row.querySelectorAll('.socc-kc-cone').forEach(function(cone){
-      if(cone.classList.contains('fell'))return;
-      var cr=cone.getBoundingClientRect();
-      var coneCenter=cr.left+cr.width/2;
-      if(Math.abs(ballCenter-coneCenter)<(cr.width*0.9)){
-        cone.classList.add('fell');
-        window._soccKcHit++;
-        hitAny=true;
-        var s=document.getElementById('kcScore');if(s) s.textContent='💥 '+window._soccKcHit+' / '+window._soccKcTotal;
-        confetti();
-      }
+  var o=kcS.cones[hit],el=document.getElementById('kcCone'+hit),wasTarget=hit===kcS.target;
+  o.down=true;kcS.hits++;kcScore();
+  kcFall(el,ux,uy);
+  kcPum(o);kcThud(80);confetti();
+  function next(){kcReturnBall(function(){kcCallTarget();});}
+  if(kcS.hits>=kcS.cones.length){
+    kcPrompt('¡Tumbaste todos los conos!','toom-BAHS-teh TOH-dohs lohs KOH-nohs','You knocked down all the cones!');
+    soccSay('You knocked down all the cones!','¡Tumbaste todos los conos!',function(){soccTimeout(function(){kcLayout();kcCallTarget();},900);});
+  }else if(wasTarget){
+    kcPrompt('¡Buena patada!','BWEH-nah pah-TAH-dah','Great kick!');
+    soccSay('Great kick!','¡Buena patada!',next);
+  }else{
+    kcPrompt('¡Pum! ¡El cono '+o.c.es+'!','poom · ehl KOH-noh '+KC_PH[o.c.es],'Boom! The '+o.c.en+' cone!');
+    soccSay('Boom! The '+o.c.en+' cone!','¡Pum! ¡El cono '+o.c.es+'!',next);
+  }
+}
+// Glow one standing cone and call it. again=true keeps the same cone after a miss (no extra talking).
+function kcCallTarget(again){
+  if(!kcS)return;
+  var C=kcS.cones,up=[];C.forEach(function(o,i){if(!o.down)up.push(i);});
+  if(!up.length)return;
+  if(!again||kcS.target<0||C[kcS.target].down){
+    var pool=up.length>1?up.filter(function(i){return i!==kcS.target;}):up;
+    kcS.target=pool[Math.floor(Math.random()*pool.length)];
+  }
+  C.forEach(function(o,i){var el=document.getElementById('kcCone'+i);if(el)el.classList.toggle('target',i===kcS.target);});
+  var c=C[kcS.target].c;
+  kcPrompt('¡Pateá el cono '+c.es+'!','pah-teh-AH ehl KOH-noh '+KC_PH[c.es],'Kick the '+c.en+' cone!');
+  kcS.busy=false;
+  if(!again)soccSay('Kick the '+c.en+' cone!','¡Pateá el cono '+c.es+'!');
+}
+// Watch-how demo: look at the cone, the finger swipes, the foot kicks, the cone falls. Then it is his turn.
+function kcDemo(){
+  if(!kcS)return;
+  kcHalt();kcAimHide();kcLayout();kcS.busy=true;
+  var C=kcS.cones,i=Math.random()<.5?0:2,g=kcGeo(),el=document.getElementById('kcCone'+i);if(!g.W)return;
+  var v={x:C[i].x/100*g.W-g.bx,y:C[i].y/100*g.H-g.by},d=Math.hypot(v.x,v.y),ux=v.x/d,uy=v.y/d;
+  kcS.target=i;
+  kcPrompt('¡Mirá cómo se hace!','mee-RAH KOH-moh seh AH-seh','Watch how to do it!');
+  soccSay('Watch how to do it!','¡Mirá cómo se hace!',function(){
+    if(el)el.classList.add('target');
+    kcAimShow(ux,uy,Math.max(0,d-30),true);
+    kcPrompt('¡Mirá el cono!','mee-RAH ehl KOH-noh','Look at the cone!');
+    soccSay('Look at the cone!','¡Mirá el cono!',function(){
+      kcAimHide();
+      kcPrompt('¡Pateá!','pah-teh-AH','Kick!');
+      soccSay('Kick!','¡Pateá!');
+      kcGhost(ux,uy);
+      soccTimeout(function(){
+        if(el)el.classList.remove('target');
+        kcAnimateKick(ux,uy,Math.max(0,d-28),function(){
+          kcFall(el,ux,uy);
+          kcPum(C[i]);kcThud(80);
+          kcPrompt('¡Pum! ¡Se cayó!','poom · seh kah-YOH','Boom! It fell down!');
+          soccSay('Boom! It fell down!','¡Pum! ¡Se cayó!',function(){
+            soccTimeout(function(){
+              if(el)el.classList.remove('fell');
+              kcReturnBall(function(){
+                kcPrompt('¡Tu turno!','too TOOR-noh','Your turn!');
+                soccSay('Your turn!','¡Tu turno!',function(){kcCallTarget();});
+              });
+            },500);
+          });
+        });
+      },350);
     });
-    if(hitAny){
-      soccSay('Great kick!','¡Buena patada!');
-      if(window._soccKcHit>=window._soccKcTotal){
-        var p=document.getElementById('kcPrompt');
-        if(p) p.innerHTML='<span class="en">All cones down!</span><span class="es">¡Todos los conos!</span>';
-        soccSay('All cones down! Amazing!','¡Todos los conos! ¡Increíble!');
-        soccTimeout(function(){
-          row.querySelectorAll('.socc-kc-cone').forEach(function(c){c.classList.remove('fell');});
-          window._soccKcHit=0;
-          var s=document.getElementById('kcScore');if(s) s.textContent='💥 0 / 3';
-          rollBall();
-        },2500);
-      }
-    }else{
-      ball.style.transform='scale(1.15)';
-      soccTimeout(function(){ball.style.transform='';},180);
-    }
-  };
-
-  ball.addEventListener('transitionend',function onTE(){
-    if(window._soccKcHit<window._soccKcTotal){
-      soccTimeout(rollBall,500);
-    }
   });
+}
+function kcBindInput(field){
+  function pt(e){var r=field.getBoundingClientRect();return {x:e.clientX-r.left,y:e.clientY-r.top};}
+  if(!('PointerEvent' in window)){field.onclick=function(){kcKick(null,null);};return;}
+  field.onpointerdown=function(e){if(!kcS||kcS.busy)return;kcS.drag={s:pt(e)};try{field.setPointerCapture(e.pointerId);}catch(x){}};
+  field.onpointermove=function(e){
+    if(!kcS||!kcS.drag||kcS.busy)return;
+    var p=pt(e),dx=p.x-kcS.drag.s.x,dy=p.y-kcS.drag.s.y,len=Math.hypot(dx,dy);
+    if(len>14)kcAimShow(dx/len,dy/len,Math.min(170,len*1.6),false);
+  };
+  field.onpointerup=function(e){
+    if(!kcS||!kcS.drag)return;
+    var p=pt(e),dx=p.x-kcS.drag.s.x,dy=p.y-kcS.drag.s.y,len=Math.hypot(dx,dy);
+    kcS.drag=null;kcAimHide();
+    if(len<28)kcKick(null,null);else kcKick(dx/len,dy/len);
+  };
+  field.onpointercancel=function(){if(kcS)kcS.drag=null;kcAimHide();};
+  field.onkeydown=function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();kcKick(null,null);}};
 }
 
 /* ===== SOCCER PHASE 2: DRIBBLE RHYTHM ===== */
@@ -3265,6 +3417,7 @@ function startDribble(){
 
   window._soccDrExpect='L';
   window._soccDrSteps=0;
+  window._soccDrDone=false;
   var totalSteps=10;
 
   function setActive(side){
@@ -3282,21 +3435,29 @@ function startDribble(){
     soccTimeout(function(){ball.style.transform='translateX(-50%) translateY(0)';},250);
 
     if(window._soccDrSteps>=totalSteps){
+      window._soccDrDone=true; // ignore extra taps until the reset (no repeat goals or stickers)
       soccTimeout(function(){
         ball.classList.add('socc-dr-goal-hit');
         ball.style.bottom='82%';
         if(prompt) prompt.innerHTML='<span class="en">GOAL! Great dribble!</span><span class="es">¡GOL! ¡Qué bien driblaste!</span>';
         confetti();
-        soccSay('Goal! Great dribble!','¡Gol! ¡Qué bien driblaste!');stAward('soc');
       },300);
-      soccTimeout(resetDribble,2800);
     }else{
       window._soccDrExpect=window._soccDrExpect==='L'?'R':'L';
       setActive(window._soccDrExpect);
     }
   }
 
+  // Runs after the last foot word finishes, so "Derecha" is never cut off by the cheer.
+  function goalCheer(){
+    soccSay('Goal! Great dribble!','¡Gol! ¡Qué bien driblaste!',function(){
+      stAward('soc');
+      soccTimeout(resetDribble,2600);
+    });
+  }
+
   function resetDribble(){
+    window._soccDrDone=false;
     window._soccDrExpect='L';
     window._soccDrSteps=0;
     if(fill) fill.style.width='0%';
@@ -3307,12 +3468,14 @@ function startDribble(){
   }
 
   function handleTap(side,el){
+    if(window._soccDrDone)return;
     if(side===window._soccDrExpect){
       el.style.boxShadow='0 0 24px 8px rgba(76,175,80,.7)';
       soccTimeout(function(){el.style.boxShadow='';},180);
-      if(window._soccDrSteps%2===0){
-        soccSay(side==='L'?'Left':'Right',side==='L'?'Izquierda':'Derecha');
-      }
+      // Name EVERY foot. (The old "every other step" check only ever landed on the left foot,
+      // because the feet alternate starting with left.) The last touch hands off to the goal cheer.
+      var lastStep=window._soccDrSteps+1>=totalSteps;
+      soccSay(side==='L'?'Left':'Right',side==='L'?'Izquierda':'Derecha',lastStep?goalCheer:null);
       advance();
     }else{
       el.style.background='rgba(230,57,70,.4)';
@@ -4670,7 +4833,9 @@ h+=`<div class="subpg ${morePage==='st'?'act':''}" id="m-st"><button class="back
 <div class="card hl-gold"><h3>📊 Reset Progress</h3><p style="margin-bottom:8px;">Start completely fresh. This cannot be undone.</p><button onclick="resetAll()" style="padding:10px 20px;border-radius:50px;background:var(--terra);color:var(--w);font-weight:700;font-size:13px;">Reset Everything</button></div></div>`;
 document.getElementById('p-more').innerHTML=h;}
 function openMore(id){if(id!=='hb'&&typeof hbStop==='function')hbStop();morePage=id;rM();}
-function setLang(lang){appLang=lang;L.s('appLang',lang);rC();rQ();rM();renderToys();showSaved();}
+// A quiz already in progress was built for the old direction (it would show the answer as the question), so start it fresh.
+// Toddler Mode redraws itself in the new language when it opens; restarting its last game here made the phone talk from Settings.
+function setLang(lang){appLang=lang;L.s('appLang',lang);qQ=[];qI=0;qS=0;qA=false;rC();rQ();rM();if(document.getElementById('tmode').classList.contains('act'))renderToys();showSaved();}
 function goMore(id){
   document.querySelectorAll('.nb').forEach(x=>x.classList.remove('act'));
   document.querySelectorAll('.pg').forEach(p=>p.classList.remove('act'));
