@@ -859,10 +859,10 @@ Fill in your info below and tap ¡Vamos! <span style="font-size:11px;opacity:.7;
 <button class="tm-float" onclick="toggleTM()">👶🏾 TODDLER</button>
 
 <div id="tmode">
-<button class="tm-exit" id="tm-lock-exit">🔒 Hold to Exit</button>
+<button class="tm-exit" id="tm-lock-exit" data-tl-es="🔒 Mantené para salir" data-tl-en="🔒 Hold to Exit">🔒 Hold to Exit</button>
 <img class="tm-splash" src="/icons/toddler-splash.webp" style="width:100%;max-width:400px;border-radius:16px;margin:0 auto 12px;display:block;" alt="¡Hola!">
 <h2 id="tm-greeting" style="font-family:'Baloo 2';font-size:30px;color:var(--ink);margin-top:30px;">¡Hola Bebé!</h2>
-<p class="tm-hint" style="font-size:14px;font-weight:700;color:var(--ink2);" data-tl-es="¡Escogé un juego! · Pick a game!" data-tl-en="Pick a game!">¡Escogé un juego! · Pick a game!</p>
+<p class="tm-hint" style="font-size:14px;font-weight:700;color:var(--ink2);" data-tl-es="¡Escogé un juego!" data-tl-en="Pick a game!">¡Escogé un juego! · Pick a game!</p>
 
 <!-- Favorite games: big tiles a toddler can pick himself -->
 <div class="tm-favs" id="tm-favs">
@@ -903,7 +903,7 @@ Fill in your info below and tap ¡Vamos! <span style="font-size:11px;opacity:.7;
 <!-- Counting Game -->
 <div id="count-game" style="display:none;margin-top:24px;background:var(--w);border-radius:20px;padding:24px;border:4px solid var(--ink);">
 <div class="bili-prompt" style="margin-bottom:4px;"><span class="es">🔢 ¡Tocá y Contá!</span><span class="ph">🗣 toh-KAH ee kohn-TAH</span><span class="en">Tap and Count!</span></div>
-<div style="text-align:center;font-family:'Baloo 2';font-size:17px;color:var(--terra);margin-bottom:12px;" data-tl-es="¿Cuántos hay? · How many?" data-tl-en="How many?">¿Cuántos hay? · How many?</div>
+<div style="text-align:center;font-family:'Baloo 2';font-size:17px;color:var(--terra);margin-bottom:12px;" data-tl-es="¿Cuántos hay?" data-tl-en="How many?">¿Cuántos hay? · How many?</div>
 <div id="tc-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;justify-items:center;"></div>
 <div id="tc-count" style="font-size:64px;text-align:center;font-family:'Baloo 2';color:var(--ink);min-height:78px;margin-top:6px;"></div>
 <div id="tc-word" style="font-size:22px;text-align:center;font-family:'Baloo 2';color:var(--terra);min-height:30px;"></div>
@@ -913,7 +913,7 @@ Fill in your info below and tap ¡Vamos! <span style="font-size:11px;opacity:.7;
 <!-- Simon Dice (TPR commands — do the action together in real life) -->
 <div id="simon-game" style="display:none;margin-top:24px;background:var(--w);border-radius:20px;padding:24px;border:4px solid var(--ink);">
 <div class="bili-prompt" style="margin-bottom:8px;"><span class="es">🤸🏾 ¡Simón Dice!</span><span class="ph">🗣 see-MOHN DEE-seh</span><span class="en">Simon Says!</span></div>
-<div style="text-align:center;font-size:13px;color:var(--gr);margin-bottom:8px;">Do the action together in real life, then tap the gold button!</div>
+<div style="text-align:center;font-size:13px;color:var(--gr);margin-bottom:8px;" data-tl-es="¡Hagan la acción juntos de verdad y después tocá el botón dorado!" data-tl-en="Do the action together in real life, then tap the gold button!">Do the action together in real life, then tap the gold button!</div>
 <div id="si-score" style="text-align:center;font-family:'Baloo 2';font-size:16px;color:var(--teal);margin-bottom:4px;">⭐ 0</div>
 <div id="si-emoji" style="font-size:96px;text-align:center;min-height:112px;line-height:1.1;"></div>
 <div id="si-cmd" style="text-align:center;margin:8px 0;"></div>
@@ -951,8 +951,8 @@ Fill in your info below and tap ¡Vamos! <span style="font-size:11px;opacity:.7;
 <div id="lf-emoji" style="font-size:72px;"></div>
 <div id="lf-word" style="font-family:'Baloo 2';font-size:28px;color:var(--ink);margin:8px 0;"></div>
 <div id="lf-trans" style="font-size:14px;color:var(--gr);"></div>
-<button id="lf-speak" class="spk" style="margin-top:12px;padding:8px 20px;font-size:14px;background:var(--gold);border-color:var(--gold);color:var(--ink);">🔊 Hear it</button>
-<button onclick="lessonNext()" style="display:block;margin:16px auto 0;padding:12px 32px;border-radius:50px;background:var(--teal);color:var(--w);font-weight:800;font-size:15px;border:none;">Next ➜</button>
+<button id="lf-speak" class="spk" style="margin-top:12px;padding:8px 20px;font-size:14px;background:var(--gold);border-color:var(--gold);color:var(--ink);" data-tl-es="🔊 ¡Escuchá!" data-tl-en="🔊 Hear it">🔊 Hear it</button>
+<button onclick="lessonNext()" style="display:block;margin:16px auto 0;padding:12px 32px;border-radius:50px;background:var(--teal);color:var(--w);font-weight:800;font-size:15px;border:none;" data-tl-es="Siguiente ➜" data-tl-en="Next ➜">Next ➜</button>
 </div>
 <div id="lesson-quiz" style="display:none;background:var(--w);border-radius:20px;padding:24px;border:4px solid var(--ink);text-align:center;">
 <div class="bili-prompt sm" style="margin-bottom:6px;"><span class="es">¿Cuál es...?</span><span class="ph">🗣 kwahl ehs</span><span class="en">Which one is…?</span></div>
@@ -975,15 +975,15 @@ Fill in your info below and tap ¡Vamos! <span style="font-size:11px;opacity:.7;
 <div id="memory-game" style="display:none;margin-top:24px;background:var(--w);border-radius:20px;padding:24px;border:4px solid var(--ink);">
 <div class="bili-prompt" style="margin-bottom:6px;"><span class="es">🧠 ¡Memoria! Encontrá los pares</span><span class="ph">🗣 meh-MOH-ree-ah · ehn-kohn-TRAH lohs PAH-rehs</span><span class="en">Memory! Find the matching pairs</span></div>
 <div style="display:flex;gap:6px;justify-content:center;margin:8px 0;">
-<button onclick="memLevel=3;startMemory()" style="padding:6px 12px;border-radius:50px;border:2px solid var(--teal);background:var(--teall);font-size:11px;font-weight:800;color:var(--teal);">Easy</button>
-<button onclick="memLevel=4;startMemory()" style="padding:6px 12px;border-radius:50px;border:2px solid var(--goldd);background:var(--goldl);font-size:11px;font-weight:800;color:var(--goldd);">Medium</button>
-<button onclick="memLevel=5;startMemory()" style="padding:6px 12px;border-radius:50px;border:2px solid var(--terra);background:var(--terral);font-size:11px;font-weight:800;color:var(--terra);">Medium+</button>
-<button onclick="memLevel=6;startMemory()" style="padding:6px 12px;border-radius:50px;border:2px solid #7B1FA2;background:#F3E5F5;font-size:11px;font-weight:800;color:#7B1FA2;">Hard</button>
+<button onclick="memLevel=3;startMemory()" style="padding:6px 12px;border-radius:50px;border:2px solid var(--teal);background:var(--teall);font-size:11px;font-weight:800;color:var(--teal);" data-tl-es="Fácil" data-tl-en="Easy">Easy</button>
+<button onclick="memLevel=4;startMemory()" style="padding:6px 12px;border-radius:50px;border:2px solid var(--goldd);background:var(--goldl);font-size:11px;font-weight:800;color:var(--goldd);" data-tl-es="Medio" data-tl-en="Medium">Medium</button>
+<button onclick="memLevel=5;startMemory()" style="padding:6px 12px;border-radius:50px;border:2px solid var(--terra);background:var(--terral);font-size:11px;font-weight:800;color:var(--terra);" data-tl-es="Medio+" data-tl-en="Medium+">Medium+</button>
+<button onclick="memLevel=6;startMemory()" style="padding:6px 12px;border-radius:50px;border:2px solid #7B1FA2;background:#F3E5F5;font-size:11px;font-weight:800;color:#7B1FA2;" data-tl-es="Difícil" data-tl-en="Hard">Hard</button>
 </div>
 <div id="mem-level" style="text-align:center;font-size:12px;margin-bottom:8px;"></div>
 <div id="mem-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:8px;"></div>
 <div id="mem-result" style="font-family:'Baloo 2';font-size:22px;text-align:center;margin-top:12px;min-height:32px;"></div>
-<button onclick="startMemory()" style="display:block;margin:12px auto 0;padding:10px 24px;border-radius:50px;background:var(--ink);color:var(--gold);font-weight:800;font-size:14px;border:3px solid var(--gold);">🔄 New Game</button>
+<button onclick="startMemory()" style="display:block;margin:12px auto 0;padding:10px 24px;border-radius:50px;background:var(--ink);color:var(--gold);font-weight:800;font-size:14px;border:3px solid var(--gold);" data-tl-es="🔄 Juego nuevo" data-tl-en="🔄 New Game">🔄 New Game</button>
 </div>
 
 <!-- Finger Paint Game -->
@@ -1022,8 +1022,8 @@ Fill in your info below and tap ¡Vamos! <span style="font-size:11px;opacity:.7;
 </div>
 
 <div class="punta-pad" id="punta-pad" style="display:none;">
-<p style="font-weight:800;font-size:16px;">🥁 PUNTA DRUMS</p>
-<p style="font-size:12px;opacity:.8;" data-tl-es="Tap the drums! ¡Bailá punta!" data-tl-en="Tap the drums! Dance punta!">Tap the drums! ¡Bailá punta!</p>
+<p style="font-weight:800;font-size:16px;" data-tl-es="🥁 TAMBORES DE PUNTA" data-tl-en="🥁 PUNTA DRUMS">🥁 PUNTA DRUMS</p>
+<p style="font-size:12px;opacity:.8;" data-tl-es="¡Tocá los tambores! ¡Bailá punta!" data-tl-en="Tap the drums! Dance punta!">Tap the drums! ¡Bailá punta!</p>
 <div class="drum-row">
 <button class="drum" onclick="playDrum('hi',this)">🪘</button>
 <button class="drum" onclick="playDrum('mid',this)">🥁</button>
@@ -2005,13 +2005,13 @@ function dmRender(){
       h='<button class="dm-btn on" onclick="dmStop()" aria-label="Stop listening"><span class="dm-ring" id="dm-ring-'+m+'"></span><span class="dm-ic">'+ic('mic',38)+'</span></button>'
        +biliP('¡Decilo! Te estoy escuchando','deh-SEE-loh · teh ehs-TOY ehs-koo-CHAHN-doh','Say it! I\'m listening','sm');
       if(m==='drums')h+='<div class="dm-count">'+(DM.count>0?numWord(DM.count):TL('¡Gritá!','Shout!'))+'</div>';
-      if(DM.last&&Date.now()-DM.last.at<15000)h+='<button class="dm-keep" onclick="dmKeep()" '+(DM.last.saved?'disabled':'')+'>'+(DM.last.saved?'✓ Saved to Time Capsule':'💾 Keep that clip')+'</button>';
+      if(DM.last&&Date.now()-DM.last.at<15000)h+='<button class="dm-keep" onclick="dmKeep()" '+(DM.last.saved?'disabled':'')+'>'+(DM.last.saved?TL('✓ Guardado en la Cápsula del Tiempo','✓ Saved to Time Capsule'):TL('💾 Guardar este audio','💾 Keep that clip'))+'</button>';
     }else{
       h='<button class="dm-btn" onclick="dmStart(\''+m+'\')" aria-label="Start listening"><span class="dm-ic">'+ic('mic',38)+'</span></button>'
-       +'<div class="dm-cap">¡Decilo! · Tap the mic, then talk</div>';
+       +'<div class="dm-cap">'+TL('¡Decilo! · Tocá el micrófono y hablá','Say it! · Tap the mic, then talk')+'</div>';
     }
-    if(DM.err==='denied')h+='<div class="dm-err">The microphone is blocked. On iPhone: in Safari tap <b>aA</b> next to the web address → <b>Website Settings</b> → <b>Microphone</b> → Allow. On Android Chrome: tap the icon left of the web address → <b>Permissions</b> → Microphone.</div>';
-    else if(DM.err==='nomic')h+='<div class="dm-err">This phone or browser doesn\'t allow the microphone here.</div>';
+    if(DM.err==='denied')h+='<div class="dm-err">'+TL('El micrófono está bloqueado. En iPhone: en Safari tocá <b>aA</b> al lado de la dirección web → <b>Website Settings</b> → <b>Microphone</b> → Allow. En Android Chrome: tocá el ícono a la izquierda de la dirección web → <b>Permissions</b> → Microphone.','The microphone is blocked. On iPhone: in Safari tap <b>aA</b> next to the web address → <b>Website Settings</b> → <b>Microphone</b> → Allow. On Android Chrome: tap the icon left of the web address → <b>Permissions</b> → Microphone.')+'</div>';
+    else if(DM.err==='nomic')h+='<div class="dm-err">'+TL('Este teléfono o navegador no deja usar el micrófono acá.','This phone or browser doesn\'t allow the microphone here.')+'</div>';
     box.innerHTML=h;
   });
 }
@@ -2283,18 +2283,19 @@ function weekDays(){ // local days (YYYY-MM-DD) of the current Mon-Sun week
 var FAM_GOAL=4;
 function famDays(){var wk=weekDays(),td=S.tmd||[];return wk.filter(function(x){return td.indexOf(x)>-1;}).length;}
 function tmLogDay(){var t=localDay();if(!S.tmd)S.tmd=[];if(S.tmd.indexOf(t)===-1){S.tmd.push(t);if(S.tmd.length>120)S.tmd=S.tmd.slice(-120);sv();}}
-function famGoalHTML(light){
+function famGoalHTML(light,tl){
+  var T=function(es,en){return tl?TL(es,en):en;};
   var n=famDays(),wk=weekDays(),td=S.tmd||[],today=localDay();
-  var dots=wk.map(function(x,i){var on=td.indexOf(x)>-1;var lab=['M','T','W','T','F','S','S'][i];return '<span class="fg-dot'+(on?' on':'')+(x===today?' today':'')+'">'+(on?'✓':lab)+'</span>';}).join('');
-  var msg=n>=FAM_GOAL?'Goal met this week! 🎉':n===0?'Open Toddler Mode together to start.':(FAM_GOAL-n)+' more day'+(FAM_GOAL-n>1?'s':'')+' to hit the goal.';
-  return '<div class="fam-goal'+(light?' light':'')+'"><div class="fg-top"><span>👩🏾👦🏾 Play together: <b>'+n+' of '+FAM_GOAL+' days</b> this week</span><span class="fg-st">⭐ '+stCount()+' sticker'+(stCount()===1?'':'s')+'</span></div><div class="fg-dots">'+dots+'</div><div class="fg-msg">'+msg+'</div></div>';
+  var dots=wk.map(function(x,i){var on=td.indexOf(x)>-1;var lab=(tl&&appLang!=='en'?['L','M','M','J','V','S','D']:['M','T','W','T','F','S','S'])[i];return '<span class="fg-dot'+(on?' on':'')+(x===today?' today':'')+'">'+(on?'✓':lab)+'</span>';}).join('');
+  var left=FAM_GOAL-n,msg=n>=FAM_GOAL?T('¡Meta cumplida esta semana! 🎉','Goal met this week! 🎉'):n===0?T('Jueguen juntos para empezar.','Open Toddler Mode together to start.'):T((left>1?'Faltan ':'Falta ')+left+(left>1?' días':' día')+' para la meta.',left+' more day'+(left>1?'s':'')+' to hit the goal.');
+  return '<div class="fam-goal'+(light?' light':'')+'"><div class="fg-top"><span>👩🏾👦🏾 '+T('Jugamos juntos: <b>'+n+' de '+FAM_GOAL+' días</b> esta semana','Play together: <b>'+n+' of '+FAM_GOAL+' days</b> this week')+'</span><span class="fg-st">⭐ '+stCount()+' '+T('calcomanía'+(stCount()===1?'':'s'),'sticker'+(stCount()===1?'':'s'))+'</span></div><div class="fg-dots">'+dots+'</div><div class="fg-msg">'+msg+'</div></div>';
 }
 function renderStickers(){
   var el=document.getElementById('sticker-game');if(!el)return;
   var total=stCount(),cn=profile&&profile.child?profile.child:'';
   var h='<div class="bili-prompt" style="margin-bottom:6px;"><span class="es">⭐ Mis calcomanías'+(cn?' · '+cn:'')+'</span><span class="ph">🗣 mees kahl-koh-mah-NEE-ahs</span><span class="en">My stickers · '+total+'</span></div>';
   h+='<div class="st-grid">'+STICKERS.map(function(st){var n=(S.st&&S.st[st.id])||0;return '<button class="st-tile'+(n?' got':'')+'" onclick="stTap(\''+st.id+'\')"><span class="st-em">'+(n?st.em:'❔')+'</span><span class="st-l">'+st[appLang==='en'?'en':'es']+'</span>'+(n>1?'<span class="st-n">×'+n+'</span>':'')+'</button>';}).join('')+'</div>';
-  h+='<div style="margin-top:12px;">'+famGoalHTML(false)+'</div>';
+  h+='<div style="margin-top:12px;">'+famGoalHTML(false,true)+'</div>';
   el.innerHTML=h;
 }
 function stTap(id){
@@ -2307,8 +2308,8 @@ function toggleTM(){const tm=document.getElementById('tmode');const entering=!tm
 function tmPopTrap(e){if(document.getElementById('tmode').classList.contains('act')){history.pushState({toddler:true},'');}}
 let exitTimer=null;let exitCount=3;
 const exitBtn=document.getElementById('tm-lock-exit');
-function startExit(){if(!exitBtn)return;exitCount=3;exitBtn.textContent='Exiting 3...';exitTimer=setInterval(()=>{exitCount--;if(exitCount<=0){clearInterval(exitTimer);exitTimer=null;exitBtn.textContent='🔒 Hold to Exit';toggleTM();}else{exitBtn.textContent='Exiting '+exitCount+'...';}},1000);}
-function cancelExit(){if(exitTimer){clearInterval(exitTimer);exitTimer=null;}if(exitBtn)exitBtn.textContent='🔒 Hold to Exit';}
+function startExit(){if(!exitBtn)return;exitCount=3;exitBtn.textContent=TL('Saliendo 3...','Exiting 3...');exitTimer=setInterval(()=>{exitCount--;if(exitCount<=0){clearInterval(exitTimer);exitTimer=null;exitBtn.textContent=TL('🔒 Mantené para salir','🔒 Hold to Exit');toggleTM();}else{exitBtn.textContent=TL('Saliendo ','Exiting ')+exitCount+'...';}},1000);}
+function cancelExit(){if(exitTimer){clearInterval(exitTimer);exitTimer=null;}if(exitBtn)exitBtn.textContent=TL('🔒 Mantené para salir','🔒 Hold to Exit');}
 if(exitBtn){exitBtn.addEventListener('mousedown',startExit);exitBtn.addEventListener('mouseup',cancelExit);exitBtn.addEventListener('mouseleave',cancelExit);
 exitBtn.addEventListener('touchstart',e=>{e.preventDefault();startExit();});exitBtn.addEventListener('touchend',cancelExit);exitBtn.addEventListener('touchcancel',cancelExit);}
 function renderToys(){
@@ -2606,10 +2607,10 @@ function startMemory(){
   grid.style.gridTemplateColumns='repeat('+cols+',1fr)';
   grid.innerHTML=memCards.map(function(c,i){return '<button id="mc'+i+'" onclick="flipMem('+i+')" style="height:75px;border-radius:16px;border:4px solid var(--ink);background:var(--ink);color:var(--gold);font-size:32px;box-shadow:0 4px 0 #0d0d2e;display:flex;align-items:center;justify-content:center;font-family:\'Baloo 2\';font-weight:800;">?</button>';}).join('');
   document.getElementById('mem-level').innerHTML=['','','',
-    '<b style="color:var(--teal)">Easy</b> (3 pairs)',
-    '<b style="color:var(--goldd)">Medium</b> (4 pairs)',
-    '<b style="color:var(--terra)">Medium+</b> (5 pairs)',
-    '<b style="color:#7B1FA2">Hard</b> (6 pairs)'
+    '<b style="color:var(--teal)">'+TL('Fácil','Easy')+'</b> '+TL('(3 pares)','(3 pairs)'),
+    '<b style="color:var(--goldd)">'+TL('Medio','Medium')+'</b> '+TL('(4 pares)','(4 pairs)'),
+    '<b style="color:var(--terra)">'+TL('Medio+','Medium+')+'</b> '+TL('(5 pares)','(5 pairs)'),
+    '<b style="color:#7B1FA2">'+TL('Difícil','Hard')+'</b> '+TL('(6 pares)','(6 pairs)')
   ][memLevel]||'';
 }
 function flipMem(i){
@@ -2636,7 +2637,7 @@ function flipMem(i){
       if(memMatched>=memCards.length/2){
         document.getElementById('mem-result').textContent=TL('🎉 ¡Ganaste!','🎉 You won!');stAward('mem');
         speak(appLang==='en'?'Great job! You won!':'¡Muy bien! ¡Ganaste!',appLang);
-        if(memLevel<6){document.getElementById('mem-result').innerHTML+='<br><button onclick="memLevel++;startMemory()" style="margin-top:8px;padding:10px 20px;border-radius:50px;background:var(--gold);color:var(--ink);font-weight:800;font-size:14px;border:3px solid var(--ink);">Next Level ➜</button>';}
+        if(memLevel<6){document.getElementById('mem-result').innerHTML+='<br><button onclick="memLevel++;startMemory()" style="margin-top:8px;padding:10px 20px;border-radius:50px;background:var(--gold);color:var(--ink);font-weight:800;font-size:14px;border:3px solid var(--ink);">'+TL('Siguiente nivel ➜','Next Level ➜')+'</button>';}
       }
       memFlipped=[];memLocked=false;
     }else{
@@ -2738,28 +2739,28 @@ function startMeLlamo(){
   h+='<div style="font-family:\'Baloo 2\',cursive;font-size:28px;font-weight:800;color:var(--ink);margin-bottom:4px;">'+TL('¡Hola!','Hi!')+'</div>';
   // Sir Kendrick intro video — he says his own name in English then Spanish
   h+='<div style="background:linear-gradient(135deg,var(--ink),var(--ink2));border:4px solid var(--gold);border-radius:20px;padding:16px;margin:16px 0;box-shadow:var(--shl);">';
-  h+='<div style="font-family:\'Baloo 2\',cursive;font-size:20px;font-weight:800;color:var(--gold);margin-bottom:6px;">🎬 Watch Sir Kendrick!</div>';
-  h+='<div style="font-size:13px;color:rgba(255,255,255,.8);margin-bottom:12px;">He says his name in English, then in Spanish!</div>';
+  h+='<div style="font-family:\'Baloo 2\',cursive;font-size:20px;font-weight:800;color:var(--gold);margin-bottom:6px;">'+TL('🎬 ¡Mirá a Sir Kendrick!','🎬 Watch Sir Kendrick!')+'</div>';
+  h+='<div style="font-size:13px;color:rgba(255,255,255,.8);margin-bottom:12px;">'+TL('¡Dice su nombre en inglés y después en español!','He says his name in English, then in Spanish!')+'</div>';
   h+='<video id="sirkendrick-video" controls playsinline preload="metadata" style="width:100%;max-width:420px;border-radius:14px;background:#000;display:block;margin:0 auto;">';
   h+='<source src="sir-kendrick-intro.mp4" type="video/mp4">';
-  h+='Your browser doesn\'t support video playback.';
+  h+=TL('Tu navegador no puede reproducir este video.','Your browser doesn\'t support video playback.');
   h+='</video>';
-  h+='<a href="sir-kendrick-intro.mp4" target="_blank" rel="noopener" style="display:block;text-align:center;margin-top:10px;font-size:12px;font-weight:700;color:var(--gold);text-decoration:underline;">Video not loading? Tap here ↗</a>';
+  h+='<a href="sir-kendrick-intro.mp4" target="_blank" rel="noopener" style="display:block;text-align:center;margin-top:10px;font-size:12px;font-weight:700;color:var(--gold);text-decoration:underline;">'+TL('¿No carga el video? Tocá acá ↗','Video not loading? Tap here ↗')+'</a>';
   h+='</div>';
   // Child's self-intro card
   h+='<div style="background:var(--goldl);border:3px solid var(--gold);border-radius:16px;padding:20px;margin:16px 0;">';
   h+='<div style="font-family:\'Baloo 2\',cursive;font-size:24px;font-weight:800;color:var(--ink);">'+TL(meES,meEN)+'</div>';
   if(appLang!=='en')h+='<div style="font-size:13px;color:var(--gr);margin-top:4px;">'+meEN+'</div>';
-  h+='<button class="spk" data-speak="'+TL(meES,meEN).replace(/"/g,'&quot;')+'" data-lang="'+appLang+'" style="margin-top:12px;padding:10px 24px;font-size:16px;background:var(--gold);border-color:var(--gold);color:var(--ink);">🔊 Hear it!</button>';
+  h+='<button class="spk" data-speak="'+TL(meES,meEN).replace(/"/g,'&quot;')+'" data-lang="'+appLang+'" style="margin-top:12px;padding:10px 24px;font-size:16px;background:var(--gold);border-color:var(--gold);color:var(--ink);">'+TL('🔊 ¡Escuchá!','🔊 Hear it!')+'</button>';
   h+='</div>';
   // Role greeting card ("¡Hola papi!")
   h+='<div style="background:var(--teall);border:3px solid var(--teal);border-radius:16px;padding:20px;margin:16px 0;">';
   h+='<div style="font-size:48px;line-height:1;margin-bottom:6px;">'+roleEM+'</div>';
   h+='<div style="font-family:\'Baloo 2\',cursive;font-size:26px;font-weight:800;color:var(--ink);">'+TL(holaRoleES,holaRoleEN)+'</div>';
   if(appLang!=='en')h+='<div style="font-size:13px;color:var(--gr);margin-top:4px;">'+holaRoleEN+'</div>';
-  h+='<button class="spk" data-speak="'+TL(holaRoleES,holaRoleEN).replace(/"/g,'&quot;')+'" data-lang="'+appLang+'" style="margin-top:12px;padding:10px 24px;font-size:16px;background:var(--teal);border-color:var(--teal);color:var(--w);">🔊 Hear it!</button>';
+  h+='<button class="spk" data-speak="'+TL(holaRoleES,holaRoleEN).replace(/"/g,'&quot;')+'" data-lang="'+appLang+'" style="margin-top:12px;padding:10px 24px;font-size:16px;background:var(--teal);border-color:var(--teal);color:var(--w);">'+TL('🔊 ¡Escuchá!','🔊 Hear it!')+'</button>';
   h+='</div>';
-  h+='<button onclick="meTap()" style="width:100%;padding:18px;border-radius:50px;background:var(--ink);color:var(--gold);font-family:\'Baloo 2\',cursive;font-size:20px;font-weight:800;border:4px solid var(--gold);margin-top:12px;box-shadow:0 6px 0 #0d0d2e;">👋🏾 Say it! Tap me!</button>';
+  h+='<button onclick="meTap()" style="width:100%;padding:18px;border-radius:50px;background:var(--ink);color:var(--gold);font-family:\'Baloo 2\',cursive;font-size:20px;font-weight:800;border:4px solid var(--gold);margin-top:12px;box-shadow:0 6px 0 #0d0d2e;">'+TL('👋🏾 ¡Decilo! ¡Tocame!','👋🏾 Say it! Tap me!')+'</button>';
   h+='<div id="me-cheer" style="font-family:\'Baloo 2\';font-size:22px;margin-top:12px;min-height:32px;"></div>';
   document.getElementById('me-content').innerHTML=h;
   speak(TL(meES,meEN),appLang);
@@ -2847,18 +2848,18 @@ function renderSoccerMenu(){
   if(stage)stage.innerHTML='';
   menu.style.display='';
   menu.innerHTML=''
-    +'<button class="socc-game-btn" onclick="openSoccerGame(\'ritual\')"><span class="ico">🧍🏾</span><span class="txt">Head, Toes, Ears<small>Warmup + Listen &amp; Respect</small></span></button>'
-    +'<button class="socc-game-btn" onclick="openSoccerGame(\'cones\')"><span class="ico">🔶</span><span class="txt">Cone Color Run<small>Cheetah, Bear, Bunny, Frog</small></span></button>'
-    +'<button class="socc-game-btn" onclick="openSoccerGame(\'kickcones\')"><span class="ico">💥</span><span class="txt">Kick-Over-Cones<small>Aim, kick, knock the cones down</small></span></button>'
-    +'<button class="socc-game-btn" onclick="openSoccerGame(\'dribble\')"><span class="ico">🦶🏾</span><span class="txt">Dribble Rhythm<small>Tap left-right to dribble to the goal</small></span></button>'
-    +'<button class="socc-game-btn" onclick="openSoccerGame(\'goal\')"><span class="ico">🥅</span><span class="txt">Goal Shot<small>Hold to charge, release to kick</small></span></button>';
+    +'<button class="socc-game-btn" onclick="openSoccerGame(\'ritual\')"><span class="ico">🧍🏾</span><span class="txt">'+TL('Cabeza, Dedos, Orejas','Head, Toes, Ears')+'<small>'+TL('Calentamiento · Escuchá y respeto','Warmup + Listen &amp; Respect')+'</small></span></button>'
+    +'<button class="socc-game-btn" onclick="openSoccerGame(\'cones\')"><span class="ico">🔶</span><span class="txt">'+TL('Carrera a los Conos','Cone Color Run')+'<small>'+TL('Guepardo, Oso, Conejo, Rana','Cheetah, Bear, Bunny, Frog')+'</small></span></button>'
+    +'<button class="socc-game-btn" onclick="openSoccerGame(\'kickcones\')"><span class="ico">💥</span><span class="txt">'+TL('Tumbá los Conos','Kick-Over-Cones')+'<small>'+TL('Apuntá, pateá y tumbá los conos','Aim, kick, knock the cones down')+'</small></span></button>'
+    +'<button class="socc-game-btn" onclick="openSoccerGame(\'dribble\')"><span class="ico">🦶🏾</span><span class="txt">'+TL('Driblá al Ritmo','Dribble Rhythm')+'<small>'+TL('Izquierda, derecha... ¡y tirá a gol!','Tap left-right to dribble to the goal')+'</small></span></button>'
+    +'<button class="socc-game-btn" onclick="openSoccerGame(\'goal\')"><span class="ico">🥅</span><span class="txt">'+TL('Tiro a Gol','Goal Shot')+'<small>'+TL('Mantené apretado y soltá para patear','Hold to charge, release to kick')+'</small></span></button>';
 }
 function openSoccerGame(which){
   var stage=document.getElementById('soccStage');
   var menu=document.getElementById('soccMenu');
   if(!stage||!menu)return;
   menu.style.display='none';
-  var backBtn='<button class="socc-back" onclick="closeSoccerGame(true)">← Back to games</button>';
+  var backBtn='<button class="socc-back" onclick="closeSoccerGame(true)">'+TL('← Volver a los juegos','← Back to games')+'</button>';
   if(which==='ritual'){stage.innerHTML=backBtn+buildRitual();startRitual();}
   else if(which==='cones'){stage.innerHTML=backBtn+buildCones();startCones();}
   else if(which==='goal'){stage.innerHTML=backBtn+buildGoal();startGoal();}
@@ -2963,13 +2964,13 @@ function startRitual(){
 function doListenRespect(done){
   var overlay=document.createElement('div');
   overlay.className='socc-clap-big';
-  overlay.innerHTML='<div class="hands">👏🏾</div><div class="word">LISTEN</div><div class="wordes">ESCUCHÁ</div>';
+  overlay.innerHTML='<div class="hands">👏🏾</div><div class="word">'+TL('ESCUCHÁ','LISTEN')+'</div><div class="wordes">'+TL('LISTEN','')+'</div>';
   document.body.appendChild(overlay);
   playClap();soccTimeout(playClap,280);
   soccSay('Listen','Escuchá',function(){
     overlay.querySelector('.hands').textContent='👏🏾';
-    overlay.querySelector('.word').textContent='RESPECT';
-    overlay.querySelector('.wordes').textContent='RESPETO';
+    overlay.querySelector('.word').textContent=TL('RESPETO','RESPECT');
+    overlay.querySelector('.wordes').textContent=TL('RESPECT','');
     playClap();soccTimeout(playClap,280);
     soccSay('Respect','Respeto',function(){
       soccTimeout(function(){overlay.remove();if(done)done();},400);
@@ -2982,12 +2983,12 @@ function finishRitual(){
     stage.innerHTML=''
       +'<div class="socc-end-card">'
       +  '<div class="big">⚽</div>'
-      +  '<div class="title">Ready to play!</div>'
-      +  (appLang==='en'?'':'<div class="sub">¡Listos para jugar!</div>')
-      +  '<div class="countdown" id="soccRitCountdown">Starting Cone Run in 3…</div>'
+      +  '<div class="title">'+TL('¡Listos para jugar!','Ready to play!')+'</div>'
+      +  ''
+      +  '<div class="countdown" id="soccRitCountdown">'+TL('La Carrera a los Conos empieza en 3…','Starting Cone Run in 3…')+'</div>'
       +  '<div class="btns">'
-      +    '<button class="socc-game-btn" onclick="openSoccerGame(\'cones\')"><span class="ico">🔶</span><span class="txt">Go to Cones now</span></button>'
-      +    '<button class="socc-back" onclick="closeSoccerGame(true)">Back to games</button>'
+      +    '<button class="socc-game-btn" onclick="openSoccerGame(\'cones\')"><span class="ico">🔶</span><span class="txt">'+TL('Ir a los Conos ya','Go to Cones now')+'</span></button>'
+      +    '<button class="socc-back" onclick="closeSoccerGame(true)">'+TL('Volver a los juegos','Back to games')+'</button>'
       +  '</div>'
       +'</div>';
   }
@@ -2998,7 +2999,7 @@ function finishRitual(){
     var cd=document.getElementById('soccRitCountdown');
     if(!cd)return; // user left / clicked button
     if(n<=0){openSoccerGame('cones');return;}
-    cd.textContent='Starting Cone Run in '+n+'…';
+    cd.textContent=TL('La Carrera a los Conos empieza en ','Starting Cone Run in ')+n+'…';
     n--;
     soccTimeout(tick,1000);
   }
@@ -3030,8 +3031,7 @@ var CR_ART={guepardo:'el',oso:'el',conejo:'el',rana:'la'};
 var crS=null;
 function buildCones(){
   return ''
-    +'<div class="socc-help"><b>How to play:</b> Listen for the animal and the color, then tap that cone to run there. '
-    +'Fast animals take big leaps. Slow animals take little steps. Then run back!</div>'
+    +'<div class="socc-help">'+TL('<b>Cómo jugar:</b> Escuchá el animal y el color, y tocá ese cono para correr hasta allá. Los animales rápidos dan saltos grandes. Los lentos dan pasitos. ¡Después volvé!','<b>How to play:</b> Listen for the animal and the color, then tap that cone to run there. Fast animals take big leaps. Slow animals take little steps. Then run back!')+'</div>'
     +'<div class="socc-prompt" id="conePrompt"></div>'
     +'<div class="socc-score"><span class="pill" id="coneScore">⭐ 0</span></div>'
     +'<div class="socc-field socc-cr-field" id="coneField">'
@@ -3118,16 +3118,14 @@ function crArrive(cone){
 function buildGoal(){
   return ''
     +'<div class="socc-help">'
-    +  '<b>How to play:</b> Press and HOLD the ball ⚽ to charge your kick. '
-    +  'The bar fills up — let go when you\'re ready! A tiny tap = small kick. '
-    +  'A long hold = BIG kick. Try to score past the goalkeeper!'
+    +  TL('<b>Cómo jugar:</b> Mantené apretada la pelota ⚽ para cargar la patada. La barra se llena: ¡soltá cuando estés listo! Un toquecito = patada chiquita. Apretar largo = patada GRANDE. ¡Tratá de meter el gol sin que el portero la ataje!','<b>How to play:</b> Press and HOLD the ball ⚽ to charge your kick. The bar fills up — let go when you\'re ready! A tiny tap = small kick. A long hold = BIG kick. Try to score past the goalkeeper!')
     +'</div>'
     +'<div class="socc-prompt" id="goalPrompt"><span class="es">¡Mantené la pelota!</span><span class="ph">🗣 mahn-teh-NEH lah peh-LOH-tah</span><span class="en">Press and hold the ball!</span></div>'
     +'<div class="socc-score"><span class="pill" id="goalScore">⚽ 0</span></div>'
     +'<div class="socc-field" id="goalField">'
     +  '<div class="socc-goal"></div>'
     +  '<div class="socc-keeper" id="goalKeeper">🧤</div>'
-    +  '<div class="socc-charge" id="goalCharge"><div class="socc-charge-fill" id="goalChargeFill"></div><div class="socc-charge-label" id="goalChargeLabel">Power</div></div>'
+    +  '<div class="socc-charge" id="goalCharge"><div class="socc-charge-fill" id="goalChargeFill"></div><div class="socc-charge-label" id="goalChargeLabel">'+TL('Fuerza','Power')+'</div></div>'
     +  '<div class="socc-ball" id="goalBall">⚽</div>'
     +'</div>';
 }
@@ -3271,8 +3269,7 @@ var kcS=null;
 function buildKickCones(){
   return ''
     +'<div class="socc-help">'
-    +  '<b>How to play:</b> Swipe from the ball toward a cone to kick it there. '
-    +  'Or just tap: the foot kicks at the glowing cone. Knock them all down!'
+    +  TL('<b>Cómo jugar:</b> Deslizá el dedo desde la pelota hacia un cono para patearla hasta allá. O tocá nomás: el pie patea al cono que brilla. ¡Tumbalos todos!','<b>How to play:</b> Swipe from the ball toward a cone to kick it there. Or just tap: the foot kicks at the glowing cone. Knock them all down!')
     +'</div>'
     +'<div class="socc-prompt" id="kcPrompt"></div>'
     +'<div class="socc-score"><span class="pill" id="kcRound"></span><span class="pill" id="kcScore">💥 0 / 3</span></div>'
@@ -3283,7 +3280,7 @@ function buildKickCones(){
     +  '<div class="socc-kc-ball" id="kcBall">⚽</div>'
     +  '<div class="socc-kc-ghost" id="kcGhost">👆🏾</div>'
     +'</div>'
-    +'<button class="socc-back socc-kc-again" onclick="kcDemo()">'+TL('👀 ¡Mirá cómo! · Watch how','👀 Watch how')+'</button>';
+    +'<button class="socc-back socc-kc-again" onclick="kcDemo()">'+TL('👀 ¡Mirá cómo!','👀 Watch how')+'</button>';
 }
 function startKickCones(){
   var field=document.getElementById('kcField');if(!field)return;
@@ -3519,8 +3516,7 @@ var drS=null;
 function buildDribble(){
   return ''
     +'<div class="socc-help">'
-    +  '<b>How to play:</b> Tap the glowing foot 🦶🏾 to dribble: LEFT, RIGHT, left, right. '
-    +  'When the ball gets close, tap <b>Shoot</b> to kick it into the goal!'
+    +  TL('<b>Cómo jugar:</b> Tocá el pie que brilla 🦶🏾 para driblar: IZQUIERDA, DERECHA, izquierda, derecha. Cuando la pelota esté cerca, tocá <b>¡Tirá!</b> para meter el gol.','<b>How to play:</b> Tap the glowing foot 🦶🏾 to dribble: LEFT, RIGHT, left, right. When the ball gets close, tap <b>Shoot</b> to kick it into the goal!')
     +'</div>'
     +'<div class="socc-prompt" id="drPrompt"></div>'
     +'<div class="socc-score"><span class="pill" id="drRound"></span></div>'
@@ -3829,7 +3825,7 @@ function startToddlerLesson(){
   var vocab=LessonUtils.weekVocab(cw);
   lessonWords=sh([...vocab]);
   lessonIdx=0;lessonScore=0;lessonMode='flash';
-  document.getElementById('lesson-week').textContent='Week '+cw+': '+(WEEK_TITLES[cw]||'');
+  document.getElementById('lesson-week').textContent=TL('Semana '+cw,'Week '+cw+': '+(WEEK_TITLES[cw]||''));
   document.getElementById('lesson-score').textContent='⭐ 0';
   showLessonStep();
 }
