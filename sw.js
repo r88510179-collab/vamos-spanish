@@ -7,6 +7,8 @@
    Bump V when you want to force old caches to be discarded (do this whenever an icon/image/video
    is replaced under the SAME file name, or phones keep showing the old one). */
 var V = 'vamos-v2';
+/* A navigation waits this long for the network before it uses the saved copy (e.g. a hotspot with no signal). */
+var NAV_TIMEOUT = 5000;
 
 self.addEventListener('install', function (e) {
   e.waitUntil(
@@ -27,16 +29,24 @@ self.addEventListener('fetch', function (e) {
   if (r.method !== 'GET') return;
   var url = new URL(r.url);
 
-  /* Navigations (including ?tv=1): network-first, cache fallback */
+  /* Navigations (including ?tv=1): network-first, cache fallback.
+     If the network has not answered after NAV_TIMEOUT, the saved copy is used. The network request
+     keeps going and still refreshes the saved copy for next time. */
   if (r.mode === 'navigate') {
+    var net = fetch(r).then(function (res) {
+      if (res && res.ok) { // never let an error page replace the saved app
+        var copy = res.clone();
+        caches.open(V).then(function (c) { c.put('/', copy); });
+      }
+      return res;
+    });
+    var stalled = new Promise(function (resolve) {
+      setTimeout(function () {
+        caches.match('/').then(function (hit) { if (hit) resolve(hit); }); // nothing saved yet: keep waiting
+      }, NAV_TIMEOUT);
+    });
     e.respondWith(
-      fetch(r).then(function (res) {
-        if (res && res.ok) { // never let an error page replace the saved app
-          var copy = res.clone();
-          caches.open(V).then(function (c) { c.put('/', copy); });
-        }
-        return res;
-      }).catch(function () { return caches.match('/'); })
+      Promise.race([net, stalled]).catch(function () { return caches.match('/'); })
     );
     return;
   }

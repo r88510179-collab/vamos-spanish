@@ -352,6 +352,7 @@ button,.cb,.wkc,.spk,.splg{min-width:44px;min-height:44px;}
 #tmode{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;}
 html.tm-on,html.tm-on body{overscroll-behavior:none;overflow:hidden;}
 html.tm-on #toast{display:none!important;}
+html.tm-on .me-vid-link{display:none!important;}
 .dm-box{display:flex;flex-direction:column;align-items:center;gap:6px;margin:10px 0 4px;}
 .dm-box:empty{display:none;}
 .dm-btn{position:relative;width:84px;height:84px;border-radius:50%;background:var(--w);border:5px solid var(--ink);box-shadow:0 5px 0 var(--ink);display:flex;align-items:center;justify-content:center;}
@@ -2304,7 +2305,9 @@ function stTap(id){
   else speak(TL('Todavía no. ¡Jugá para ganarla!','Not yet. Play to earn it!'),appLang);
 }
 /* ===== TODDLER MODE ===== */
-function toggleTM(){const tm=document.getElementById('tmode');const entering=!tm.classList.contains('act');tm.classList.toggle('act');document.documentElement.classList.toggle('tm-on',entering);if(entering){setTCat('home',null);S.tm=(S.tm||0)+1;sv();tmLogDay();if(typeof checkAch==='function')checkAch();try{var rf=document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen();if(rf&&rf.catch)rf.catch(function(){});}catch(e){}for(let i=0;i<5;i++)history.pushState({toddler:true},'');window.addEventListener('popstate',tmPopTrap);wlOn();}else{try{var xf=document.fullscreenElement&&document.exitFullscreen&&document.exitFullscreen();if(xf&&xf.catch)xf.catch(function(){});}catch(e){}window.removeEventListener('popstate',tmPopTrap);history.replaceState({},'');wlOff();dmStop();if(typeof closeSoccerGame==='function')closeSoccerGame();if(typeof rH==='function')rH();if(morePage==='dash'&&typeof rM==='function')rM();}if(profile)document.getElementById('tm-greeting').textContent=tmGreeting();}
+/* v_tmOn remembers that Toddler Mode is on, so a reload comes back into it; leaving (Hold to Exit) clears it.
+   restoring=true means it is coming back after a reload, so it does not count as opening Toddler Mode again (S.tm). */
+function toggleTM(restoring){const tm=document.getElementById('tmode');const entering=!tm.classList.contains('act');tm.classList.toggle('act');document.documentElement.classList.toggle('tm-on',entering);if(entering){L.s('tmOn',1);setTCat('home',null);if(!restoring){S.tm=(S.tm||0)+1;sv();}tmLogDay();if(typeof checkAch==='function')checkAch();try{var rf=document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen();if(rf&&rf.catch)rf.catch(function(){});}catch(e){}for(let i=0;i<5;i++)history.pushState({toddler:true},'');window.addEventListener('popstate',tmPopTrap);wlOn();}else{try{localStorage.removeItem('v_tmOn');}catch(e){}try{var xf=document.fullscreenElement&&document.exitFullscreen&&document.exitFullscreen();if(xf&&xf.catch)xf.catch(function(){});}catch(e){}window.removeEventListener('popstate',tmPopTrap);history.replaceState({},'');wlOff();dmStop();if(typeof closeSoccerGame==='function')closeSoccerGame();if(typeof rH==='function')rH();if(morePage==='dash'&&typeof rM==='function')rM();}if(profile)document.getElementById('tm-greeting').textContent=tmGreeting();}
 function tmPopTrap(e){if(document.getElementById('tmode').classList.contains('act')){history.pushState({toddler:true},'');}}
 let exitTimer=null;let exitCount=3;
 const exitBtn=document.getElementById('tm-lock-exit');
@@ -2745,7 +2748,7 @@ function startMeLlamo(){
   h+='<source src="sir-kendrick-intro.mp4" type="video/mp4">';
   h+=TL('Tu navegador no puede reproducir este video.','Your browser doesn\'t support video playback.');
   h+='</video>';
-  h+='<a href="sir-kendrick-intro.mp4" target="_blank" rel="noopener" style="display:block;text-align:center;margin-top:10px;font-size:12px;font-weight:700;color:var(--gold);text-decoration:underline;">'+TL('¿No carga el video? Tocá acá ↗','Video not loading? Tap here ↗')+'</a>';
+  h+='<a class="me-vid-link" href="sir-kendrick-intro.mp4" target="_blank" rel="noopener" style="display:block;text-align:center;margin-top:10px;font-size:12px;font-weight:700;color:var(--gold);text-decoration:underline;">'+TL('¿No carga el video? Tocá acá ↗','Video not loading? Tap here ↗')+'</a>';
   h+='</div>';
   // Child's self-intro card
   h+='<div style="background:var(--goldl);border:3px solid var(--gold);border-radius:16px;padding:20px;margin:16px 0;">';
@@ -5225,6 +5228,9 @@ if(tvMode){
   });
   setInterval(tvRefresh,1000);
 }
+/* Toddler Mode survives a reload (v_tmOn is set when it turns on, cleared when it turns off).
+   On the TV dashboard it hides the TV home first, the same way tvLaunch does. */
+if(L.g('tmOn',0)&&!document.getElementById('tmode').classList.contains('act')){var tvH0=document.getElementById('tv-home');if(tvH0)tvH0.style.display='none';toggleTM(true);}
 function tvLaunch(cat){
   if(cat==='home'){window.location.search='';return;}
   var tvH=document.getElementById('tv-home');
