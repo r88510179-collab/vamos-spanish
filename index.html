@@ -394,11 +394,19 @@ html.tm-on .me-vid-link{display:none!important;}
 .bt-bar.nope{animation:btNope .4s;}
 @keyframes btGlow{0%,100%{transform:scale(1)}50%{transform:scale(1.03)}}
 @keyframes btNope{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
-#tmode.tm-playing .bt-bar{display:none!important;}
-#tmode.tm-playing .bt-bar.ready{display:flex!important;margin-top:8px;padding:6px 12px;border-width:3px;border-radius:16px;box-shadow:0 3px 0 var(--ink);}
-#tmode.tm-playing .bt-bar.ready .bt-ic svg{width:30px;height:30px;}
-#tmode.tm-playing .bt-bar.ready .bt-l{font-size:16px;}
-#tmode.tm-playing .bt-bar.ready .bt-stars{display:none;}
+.tm-row{display:flex;align-items:stretch;justify-content:center;gap:8px;margin-top:14px;}
+.tm-row .bt-bar{margin-top:0;flex:1;width:auto;min-width:0;}
+.tm-home{flex:none;display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:76px;background:var(--w);border:3px solid var(--ink);border-radius:16px;padding:4px 12px;box-shadow:0 3px 0 var(--ink);transition:transform .1s;}
+.tm-home:active{transform:translateY(3px);box-shadow:0 1px 0 var(--ink);}
+.tm-home .e{font-size:26px;line-height:1.15;pointer-events:none;}
+.tm-home .l{font-family:'Baloo 2',cursive;font-size:13px;font-weight:800;color:var(--ink);line-height:1.1;pointer-events:none;}
+#tmode.tm-playing .tm-row{margin-top:8px;}
+#tmode.tm-playing .bt-bar{padding:6px 10px;gap:8px;border-width:3px;border-radius:16px;box-shadow:0 3px 0 var(--ink);}
+#tmode.tm-playing .bt-ic svg{width:30px;height:30px;}
+#tmode.tm-playing .bt-tx{flex-direction:row;flex-wrap:wrap;align-items:center;gap:2px 8px;}
+#tmode.tm-playing .bt-l{font-size:16px;}
+#tmode.tm-playing .bt-stars{font-size:13px;letter-spacing:0;}
+#tmode.tm-playing .bt-go,#tmode.tm-playing .bt-bar.ready .bt-go{font-size:20px;}
 #bt-ov{display:none;position:fixed;inset:0;z-index:2500;background:#0B0C2A;flex-direction:column;align-items:center;justify-content:center;touch-action:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;}
 #bt-ov.sh{display:flex;}
 .bt-stage{position:relative;width:min(100vw,calc((100vh - 150px)*1.7778));aspect-ratio:16/9;background:#000;overflow:hidden;}
@@ -920,7 +928,7 @@ Fill in your info below and tap ¡Vamos! <span style="font-size:11px;opacity:.7;
 <button class="tm-fav" data-fav="stickers" onclick="tmFav('stickers')"><span class="e"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M32 6l7.6 15.4 17 2.5-12.3 12 2.9 16.9L32 44.8l-15.2 8 2.9-16.9-12.3-12 17-2.5z" fill="#F4C430" stroke="#B9862E" stroke-width="3" stroke-linejoin="round"/><circle cx="26" cy="30" r="2.6" fill="#1A1B4B"/><circle cx="38" cy="30" r="2.6" fill="#1A1B4B"/><path d="M26 37c3 3 9 3 12 0" stroke="#1A1B4B" stroke-width="3" fill="none" stroke-linecap="round"/></svg></span><span class="l" data-tl-es="Calcomanías" data-tl-en="Stickers">Calcomanías</span></button>
 <button class="tm-fav" data-fav="lesson" onclick="tmFav('lesson')"><span class="e"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M32 16c-7-5-16-6-26-4v38c10-2 19-1 26 4z" fill="#2F8FDD" stroke="#1A1B4B" stroke-width="3" stroke-linejoin="round"/><path d="M32 16c7-5 16-6 26-4v38c-10-2-19-1-26 4z" fill="#E8453C" stroke="#1A1B4B" stroke-width="3" stroke-linejoin="round"/><path d="M12 22c5-1 10-.5 14 1.5M12 30c5-1 10-.5 14 1.5M38 23.5c4-2 9-2.5 14-1.5M38 31.5c4-2 9-2.5 14-1.5" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/></svg></span><span class="l" data-tl-es="Lección" data-tl-en="Lesson">Lección</span></button>
 </div>
-<button class="bt-bar" id="bt-bar" onclick="btTap()" style="display:none;"></button>
+<div class="tm-row"><button class="tm-home" id="tm-home" onclick="tmGoHome()" style="display:none;"><span class="e">🏠</span><span class="l" data-tl-es="Inicio" data-tl-en="Home">Inicio</span></button><button class="bt-bar" id="bt-bar" onclick="btTap()" style="display:none;"></button></div>
 <button class="tm-more-btn" id="tm-more-btn" onclick="tmMore()">➕ Más juegos</button>
 
 <!-- Toddler Category Tabs -->
@@ -2362,14 +2370,14 @@ function stTap(id){
    - it closes by itself when the turn's minutes are used or the video ends; a grown-up holds the lock button to close early
    S.bt = turns ready (0 or 1), S.btP = stickers toward the next turn.
    v_btIdx = which video is next, v_btPos = where each video stopped (so the next turn continues the story).
-   The turn is only used up once the video really starts playing. */
+   The turn is only used once YouTube reports that the video is playing. */
 var BT_VIDS=[
   {id:'wnsZ7_WHB_s',t:'Tiempo de Piscina en Verano'},
   {id:'LKkGHenemMc',t:'Una salida al cine caótica'},
   {id:'xJgaqEZvxfk',t:'Aquí viene el doble problema'},
   {id:'XY1fO-slkVA',t:'¡Muffin No Quiere Compartir!'}
 ];
-var BT={open:false,test:false,player:null,vid:null,ready:false,state:-1,started:false,played:0,tries:0,fb:false,closing:false,tick:null,readyT:null,fbT:null,closeT:null,holdT:null,holdN:3,apiCb:null,apiPoll:null};
+var BT={open:false,test:false,player:null,vid:null,ready:false,state:-1,started:false,played:0,tries:0,closing:false,tick:null,readyT:null,closeT:null,holdT:null,holdN:3,apiCb:null,apiPoll:null};
 function btOn(){return L.g('btOn',true)!==false;}
 function btNeed(){var n=L.g('btNeed',5);return [3,5,8].indexOf(n)>-1?n:5;}
 function btMin(){var n=L.g('btMin',8);return [5,8,15].indexOf(n)>-1?n:8;}
@@ -2412,6 +2420,9 @@ function btTap(){
   if(b){b.classList.add('nope');setTimeout(function(){b.classList.remove('nope');},450);}
   speak(TL('Todavía no. ¡Jugá para ver a Bluey!','Not yet. Play to watch Bluey!'),appLang);
 }
+// Home button: shown inside any game, takes him back to the Toddler Mode home screen (big game tiles + Bluey bar).
+function tmHomeBtn(){var hb=document.getElementById('tm-home');if(hb)hb.style.display=(typeof tCat!=='undefined'&&tCat!=='home'&&!btTV())?'flex':'none';}
+function tmGoHome(){setTCat('home',null);var tmEl=document.getElementById('tmode');if(tmEl)tmEl.scrollTop=0;speak(TL('Inicio','Home'),appLang);}
 function btMsg(t){var m=document.getElementById('bt-msg');if(m)m.textContent=t||'';}
 function btCloseLabel(){return TL('🔒 Mantené para cerrar','🔒 Hold to close');}
 function btOpen(test){
@@ -2419,13 +2430,13 @@ function btOpen(test){
   var ov=document.getElementById('bt-ov');if(!ov)return;
   try{speechSynthesis.cancel();}catch(e){}
   if(document.getElementById('tmode').classList.contains('act')&&tCat!=='home')setTCat('home',null);
-  BT.open=true;BT.test=!!test;BT.ready=false;BT.started=false;BT.played=0;BT.state=-1;BT.tries=0;BT.fb=false;BT.closing=false;BT.vid=null;
+  BT.open=true;BT.test=!!test;BT.ready=false;BT.started=false;BT.played=0;BT.state=-1;BT.tries=0;BT.closing=false;BT.vid=null;
   ov.innerHTML='<div class="bt-stage" id="bt-stage"><div id="bt-frame"></div><div class="bt-sh bt-sh-t"></div><div class="bt-sh bt-sh-b"></div><div class="bt-sh bt-sh-l"></div><div class="bt-sh bt-sh-r"></div><div class="bt-sh bt-sh-full" id="bt-full" onclick="btShieldTap()"></div><div class="bt-hint" id="bt-hint">👆🏾</div><div class="bt-msg" id="bt-msg"></div></div><div class="bt-time"><i id="bt-time-i"></i></div><button class="bt-close" id="bt-close">'+btCloseLabel()+'</button>';
   ov.classList.add('sh');
   btWireClose();
   btMsg('⏳');
   if(navigator.onLine===false){btFail();return;}
-  BT.readyT=setTimeout(function(){BT.readyT=null;if(BT.open&&!BT.ready&&!BT.started)btFail();},15000);
+  btWatch();
   btLoadAPI(btStartVid,btFail);
 }
 function btLoadAPI(cb,fail){
@@ -2441,8 +2452,13 @@ function btLoadAPI(cb,fail){
   }
 }
 function btApiFire(){var c=BT.apiCb;BT.apiCb=null;if(BT.apiPoll){clearInterval(BT.apiPoll);BT.apiPoll=null;}if(c&&BT.open)c();}
+function btWatch(){
+  if(BT.readyT)clearTimeout(BT.readyT);
+  BT.readyT=setTimeout(function(){BT.readyT=null;if(BT.open&&!BT.ready&&!BT.started)btFail();},15000);
+}
 function btStartVid(){
   if(!BT.open||BT.closing)return;
+  btWatch(); // every attempt gets its own 15 seconds to load
   var fr=document.getElementById('bt-frame');if(!fr)return;
   try{if(BT.player&&BT.player.destroy)BT.player.destroy();}catch(e){}
   BT.player=null;fr.innerHTML='';
@@ -2481,7 +2497,6 @@ function btOnErr(){
 function btStarted(){
   if(BT.started)return;BT.started=true;
   if(BT.readyT){clearTimeout(BT.readyT);BT.readyT=null;}
-  if(BT.fbT){clearTimeout(BT.fbT);BT.fbT=null;}
   var fu=document.getElementById('bt-full');if(fu)fu.classList.add('sh');
   var hn=document.getElementById('bt-hint');if(hn)hn.classList.remove('sh');
   btMsg('');
@@ -2490,21 +2505,20 @@ function btStarted(){
 }
 function btTick(){
   if(!BT.open||!BT.started||BT.closing)return;
-  if(BT.fb||BT.state===1)BT.played++; // only time spent actually playing counts
+  if(BT.state===1)BT.played++; // only time spent actually playing counts
   var cap=BT.test?60:btMin()*60;
   var bar=document.getElementById('bt-time-i');if(bar)bar.style.width=Math.max(0,100-BT.played/cap*100)+'%';
   if(BT.played>=cap)btFinish('time');
 }
 // Tapping the covered video does nothing, except to start it again if it got paused (phone call, screen lock).
 function btShieldTap(){
-  if(!BT.open||!BT.started||BT.fb||BT.closing)return;
+  if(!BT.open||!BT.started||BT.closing)return;
   if(BT.state!==1&&BT.state!==3){try{BT.player.playVideo();}catch(e){}}
 }
 function btSavePos(why){
   if(BT.test||!BT.vid||!BT.started)return;
   var pos=L.g('btPos',{})||{},id=BT.vid.id,cur=0,dur=0;
   try{cur=BT.player.getCurrentTime()||0;dur=BT.player.getDuration()||0;}catch(e){}
-  if(BT.fb&&!cur)cur=(pos[id]||0)+BT.played;
   if(why==='end'||why==='err'||(dur>0&&cur>=dur-20)){delete pos[id];L.s('btIdx',(parseInt(L.g('btIdx',0),10)||0)+1);}
   else if(cur>0)pos[id]=Math.floor(cur);
   L.s('btPos',pos);
@@ -2512,7 +2526,6 @@ function btSavePos(why){
 function btKill(){
   if(BT.tick){clearInterval(BT.tick);BT.tick=null;}
   if(BT.readyT){clearTimeout(BT.readyT);BT.readyT=null;}
-  if(BT.fbT){clearTimeout(BT.fbT);BT.fbT=null;}
   if(BT.apiPoll){clearInterval(BT.apiPoll);BT.apiPoll=null;}
   BT.apiCb=null;
   try{if(BT.player&&BT.player.destroy)BT.player.destroy();}catch(e){}
@@ -2565,16 +2578,6 @@ function btWireClose(){
   b.addEventListener('mousedown',btHoldStart);b.addEventListener('mouseup',btHoldCancel);b.addEventListener('mouseleave',btHoldCancel);
   b.addEventListener('touchstart',function(e){e.preventDefault();btHoldStart();});b.addEventListener('touchend',btHoldCancel);b.addEventListener('touchcancel',btHoldCancel);
 }
-// Backup for phones where the player does not report that it started: a tap that lands inside the player
-// moves focus into it. If no "playing" report arrives 5 seconds later, cover the video and start the clock anyway.
-window.addEventListener('blur',function(){
-  if(!BT.open||BT.started||BT.fbT||BT.closing)return;
-  setTimeout(function(){
-    var f=document.getElementById('bt-if');
-    if(!BT.open||BT.started||BT.fbT||!f||document.activeElement!==f)return;
-    BT.fbT=setTimeout(function(){BT.fbT=null;if(BT.open&&!BT.started&&!BT.closing){BT.fb=true;btStarted();}},5000);
-  },0);
-});
 document.addEventListener('visibilitychange',function(){
   if(document.visibilityState!=='visible'&&BT.open&&BT.player){try{BT.player.pauseVideo();}catch(e){}}
 });
@@ -2594,7 +2597,7 @@ function cancelExit(){if(exitTimer){clearInterval(exitTimer);exitTimer=null;}if(
 if(exitBtn){exitBtn.addEventListener('mousedown',startExit);exitBtn.addEventListener('mouseup',cancelExit);exitBtn.addEventListener('mouseleave',cancelExit);
 exitBtn.addEventListener('touchstart',e=>{e.preventDefault();startExit();});exitBtn.addEventListener('touchend',cancelExit);exitBtn.addEventListener('touchcancel',cancelExit);}
 function renderToys(){
-  btRenderBar();
+  btRenderBar();tmHomeBtn();
   var gameCats=['bubbles','memory','paint','lesson','me','sorting','soccer','home','match','drums','stickers'];
   var items=tCat==='all'?sh(TOYS).slice(0,16):gameCats.includes(tCat)?[]:TOYS.filter(function(t){return t.cat===tCat;});
   var lblKey=appLang==='en'?'en':'es';var spkKey=appLang==='en'?'en':'es';
