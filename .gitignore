@@ -1,0 +1,7 @@
+# Private character pack: user-owned artwork that must never be committed or deployed publicly.
+private-pack/
+*.vamospack
+*.vamospack.json
+# Local test output
+tests/output/
+node_modules/
