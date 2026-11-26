@@ -130,6 +130,7 @@ What import does:
 - Images are shrunk and stored in this browser's IndexedDB on this device only. They are never uploaded anywhere.
 - Characters are matched to roles by the `role` text in the pack's `manifest.json` (e.g. "food and family" → `chef`).
 - Scene PNGs become **place backgrounds** on their matching place: keepy-uppy → El Parque, kitchen → La Cocina, xylophone → Sala de Juegos, soccer → El Campo. Any other picture can be set per place under *Place pictures*.
+- **Welcome picture:** any picture can be shown on the loading screen each time Toddler Mode opens.
 - `references/` is never imported.
 - **Remove private pack** deletes everything it stored.
 

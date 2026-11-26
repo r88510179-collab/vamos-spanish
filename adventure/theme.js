@@ -372,12 +372,13 @@
   }
   ADV.shrink = shrink;
   function getMeta() { return ADV.packDB.getAll().then(function (a) { return a.meta || { title: '', chars: {}, scenes: {} }; }).catch(function () { return { title: '', chars: {}, scenes: {} }; }); }
-  ADV.importImage = function (file, target) { // target: {role, pose} | {scene: locId}
-    var key = target.role ? 'char-' + target.role + '-' + (target.pose || 'idle') : 'scene-' + target.scene;
+  ADV.importImage = function (file, target) { // target: {role, pose} | {scene: locId} | {splash: true}
+    var key = target.role ? 'char-' + target.role + '-' + (target.pose || 'idle') : target.splash ? 'splash' : 'scene-' + target.scene;
     return shrink(file, target.role ? 768 : 1400).then(function (blob) {
       return ADV.packDB.put('f:' + key, blob).then(getMeta).then(function (meta) {
         meta.chars = meta.chars || {}; meta.scenes = meta.scenes || {};
         if (target.role) { var c = meta.chars[target.role] = meta.chars[target.role] || { name: '', img: {} }; c.img[target.pose || 'idle'] = key; }
+        else if (target.splash) meta.splash = key;
         else meta.scenes[target.scene] = key;
         return ADV.packDB.put('meta', meta);
       });
@@ -391,6 +392,7 @@
       var keys = [];
       if (target.role && meta.chars && meta.chars[target.role]) { var c = meta.chars[target.role]; Object.keys(c.img || {}).forEach(function (p) { keys.push(c.img[p]); }); if (c.sticker) keys.push(c.sticker); delete meta.chars[target.role]; }
       if (target.scene && meta.scenes && meta.scenes[target.scene]) { keys.push(meta.scenes[target.scene]); delete meta.scenes[target.scene]; }
+      if (target.splash && meta.splash) { keys.push(meta.splash); delete meta.splash; }
       return Promise.all(keys.map(function (k) { return ADV.packDB.del('f:' + k); })).then(function () { return ADV.packDB.put('meta', meta); });
     }).then(ADV.reloadPack);
   };
@@ -445,7 +447,7 @@
             return pr.then(function () {
               return zipRead(buf, j.e).then(function (b) {
                 if (j.kind === 'svg') return new Blob([b], { type: 'image/svg+xml' });
-                return shrink(new File([b], j.path, { type: /\.png$/i.test(j.path) ? 'image/png' : 'image/jpeg' }), 1400);
+                return shrink(new File([b], j.path, { type: /\.png$/i.test(j.path) ? 'image/png' : /\.webp$/i.test(j.path) ? 'image/webp' : 'image/jpeg' }), 1400);
               }).then(function (blob) { done++; prog(done, jobs.length); return ADV.packDB.put('f:' + j.key, blob); });
             });
           }, Promise.resolve());

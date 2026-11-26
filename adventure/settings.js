@@ -69,6 +69,9 @@
       h += '<label style="cursor:pointer">' + (has ? '✅ ' : '＋ ') + esc(L.name.es) + '<input type="file" accept="image/*" style="display:none" onchange="ADV.onPickImg(this,{scene:\'' + L.id + '\'})"></label>'
         + (has && pk.source === 'device' ? '<button class="rm" style="border-radius:999px;padding:6px 10px;font-size:12px;background:var(--terral);color:var(--terra);font-weight:800" onclick="ADV.clearPackPart({scene:\'' + L.id + '\'}).then(ADV.refreshSettings)">✕</button>' : '');
     });
+    h += '</div><p class="advs-note" style="margin-top:10px"><b>Welcome picture</b> (optional): shown on the loading screen each time Toddler Mode opens.</p><div class="advs-acts">'
+      + '<label style="cursor:pointer">' + (pk && pk.source === 'device' && pk.splash ? '✅ ' : '＋ ') + 'Welcome picture<input type="file" accept="image/*" style="display:none" onchange="ADV.onPickImg(this,{splash:true})"></label>'
+      + (pk && pk.source === 'device' && pk.splash ? '<button class="rm" style="border-radius:999px;padding:6px 10px;font-size:12px;background:var(--terral);color:var(--terra);font-weight:800" onclick="ADV.clearPackPart({splash:true}).then(ADV.refreshSettings)">✕</button>' : '');
     h += '</div>' + tog('folderPack', 'Look for a private-pack folder', 'For private builds that ship a git-ignored /private-pack/ folder. Harmless if none exists.') + '</div>';
 
     // Progress

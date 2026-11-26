@@ -162,6 +162,25 @@ async function view(page) { return page.evaluate(() => window.ADV && ADV.V.view)
       await e.context().close();
     }
 
+    /* 7c. Personal pictures (any image; here a picture from the repo) */
+    console.log('Personal pictures');
+    {
+      const m = await t.newPage({ width: 1280, height: 800 });
+      await m.goto(t.base + '/'); await wait(m, 400);
+      await m.evaluate(() => goMore('adv')); await wait(m, 400);
+      const img = path.join(__dirname, '..', 'icons', 'og-image.png');
+      await m.setInputFiles('#adv-set input[onchange*="splash:true"]', img); await wait(m, 1500);
+      await m.setInputFiles('#adv-set input[onchange*="scene:\'campo\'"]', img); await wait(m, 1500);
+      await m.evaluate(() => toggleTM()); await wait(m, 300);
+      ok(await m.evaluate(() => /^blob:/.test((document.querySelector('.adv-load-splash') || {}).src || '')), 'welcome picture shows on the loading screen');
+      await wait(m, 1500);
+      await m.evaluate(() => ADV.showLoc('campo')); await wait(m, 400);
+      ok(await m.evaluate(() => document.getElementById('adv-scene').classList.contains('is-photo')), 'place picture becomes the background');
+      await m.evaluate(() => ADV.clearPack()); await wait(m, 300);
+      ok(m.__errors.length === 0, 'personal pictures: no JS errors', m.__errors.join(' | '));
+      await m.context().close();
+    }
+
     /* 8. Missing artwork never breaks play */
     console.log('Missing artwork fallback');
     {
