@@ -309,3 +309,20 @@ html.th-adv #tmode #match-prompt,html.th-adv #tmode #color-prompt{font-size:30px
 
 /* ---------- reduced motion ---------- */
 html.adv-reduced #tmode *,html.adv-reduced #tmode *::before,html.adv-reduced #tmode *::after{animation:none!important;transition:none!important;}
+
+/* Adventures has its own home navigation. Keep the existing episode reward on the map. */
+html.th-adv #tmode .tm-row { display: none; }
+html.th-adv #tmode.adv-v-world .tm-row {
+  display: flex; position: absolute; z-index: 4;
+  top: calc(env(safe-area-inset-top, 0px) + 12px); left: 10px; margin: 0;
+}
+html.th-adv #tmode .tm-row #tm-home { display: none !important; }
+html.th-adv #tmode .tm-row #bt-bar {
+  width: auto; min-height: 46px; margin: 0; gap: 4px; padding: 3px 8px;
+  border-width: 3px; border-radius: 20px; background: #fff;
+}
+html.th-adv #tmode #bt-bar .bt-ic svg { width: 27px; height: 27px; }
+html.th-adv #tmode #bt-bar .bt-l { font-size: 13px; color: var(--a-ink); }
+html.th-adv #tmode #bt-bar .bt-stars { font-size: 8px; letter-spacing: -1px; }
+html.th-adv #tmode #bt-bar .bt-go { display: none; }
+html.th-adv #tmode #bt-bar.ready { background: #ffedac; }

@@ -280,6 +280,7 @@
     setTimeout(function () { if (V.view === 'game') ADV.say(res.daily ? LINES.daily : res.friend ? LINES.friend : LINES.star, res.role); }, 900);
   }
   ADV.celebrate = function () {
+    if (typeof btEarn === 'function') btEarn();
     var res = award(V.act), el = $('adv-cele'); if (!el) return;
     var line = pickOne(LINES.did), host = res.role;
     el.innerHTML = '<div class="adv-cbox"><div class="adv-burst">' + ADV_ART.star() + ADV_ART.star() + ADV_ART.star() + '</div>'
