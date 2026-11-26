@@ -10,17 +10,16 @@
 | `adventure/assets/obj/*.svg` | ¡Vamos! artwork pack (minus `dog.svg`) | 42 (128×128) | Balloons (6 colors), colored shapes, xylophone, soccer ball. Other pack objects are kept as alternates. |
 | `adventure/assets/icons/*.svg` | ¡Vamos! artwork pack | 11 | `audio`, `back` and `play` (white glyphs on colored buttons) |
 | `adventure/assets/rewards/*.svg` | ¡Vamos! artwork pack (non-character) | 8 | Sticker-book rewards |
+| `adventure/assets/cast/*.svg` | ¡Vamos! artwork pack | 6 dogs × 6 poses + 6 stickers | **Default cast, Los Perritos** (Luna, Sol, Tomás, Mara, Nube, Pipo) |
+| `adventure/assets/brand/*.svg` | ¡Vamos! artwork pack | splash, app icon | Loading screen (splash) |
 
 **Lookup order** (`ADV.pic(id)`): item library → pack object → built-in icon → emoji fallback. Each category comes from one library, so a game never mixes two drawing styles. If an image fails to load, play continues; the test suite checks this.
 
-## 2. What stays private (never committed)
+## 2. What stays on the device (never committed)
 
-Kept off the repo because it depicts characters:
-
-- the pack's `characters/` (6 dogs × 6 poses), `animation/`, `rewards/<character>.svg`, `branding/` (contains characters), `objects/dog.svg`
-- the Bluey-themed `scenes/*.png` and `references/*.png`
-
-`references/` is design guidance only: it is never imported or shipped. The rest is used only through the private pack (see `docs/ADVENTURES.md` §5).
+- The Bluey-themed `scenes/*.png` and any other Bluey pictures. Import them on the tablet; they become place backgrounds (see `docs/ADVENTURES.md` §5).
+- `references/*.png`: flattened UI mock-ups, used as layout guidance for this build. They are not working UI, so they are not imported.
+- `animation/` strips are not used (CSS motion replaces them).
 
 ### Private slot specification
 

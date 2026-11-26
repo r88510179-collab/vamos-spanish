@@ -18,7 +18,7 @@
   var ASSET = '/adventure/assets/';
 
   /* ---------------- settings & progress (localStorage, same 'v_' prefix as the app) ---------------- */
-  var DEF = { theme: 'adventure', cap: 'bili', nar: 1, sfx: 0.7, reduced: false, daily: true, diff: 'easy', off: {}, folderPack: true };
+  var DEF = { theme: 'adventure', cast: 'perritos', cap: 'bili', nar: 1, sfx: 0.7, reduced: false, daily: true, diff: 'easy', off: {}, folderPack: true };
   function lsGet(k, d) { try { var v = localStorage.getItem('v_' + k); return v ? JSON.parse(v) : d; } catch (e) { return d; } }
   function lsSet(k, v) { try { localStorage.setItem('v_' + k, JSON.stringify(v)); } catch (e) {} }
   ADV.set = Object.assign({}, DEF, lsGet('adv', {}));
@@ -55,6 +55,19 @@
     artist: { es: 'Pintura, música y creatividad', en: 'Painting, music, creativity' },
     animals: { es: 'Animales y naturaleza', en: 'Animals and nature' }
   };
+  /* Two built-in casts. 'perritos' = the six dogs from the ¡Vamos! artwork pack (image files, default);
+     'amigos' = the code-drawn neighborhood friends in art.js (also the automatic fallback if an image fails). */
+  ADV.CASTS = {
+    perritos: { name: { es: 'Los Perritos', en: 'The Puppies' }, files: '/adventure/assets/cast/', poses: ['idle', 'wave', 'point', 'speak', 'think', 'celebrate'],
+      splash: '/adventure/assets/brand/splash.svg',
+      roles: {
+        explorer: { id: 'luna', name: 'Luna', tint: '#81B5D8' }, colors: { id: 'sol', name: 'Sol', tint: '#F6B27A' },
+        builder: { id: 'tomas', name: 'Tomás', tint: '#7FA9A0' }, chef: { id: 'mara', name: 'Mara', tint: '#E3A7C0' },
+        artist: { id: 'nube', name: 'Nube', tint: '#B9AEDF' }, animals: { id: 'pipo', name: 'Pipo', tint: '#E9C46A' }
+      } },
+    amigos: { name: { es: 'Amigos del Vecindario', en: 'Neighborhood Friends' } }
+  };
+  ADV.castId = function () { return ADV.CASTS[ADV.set.cast] ? ADV.set.cast : 'perritos'; };
   ADV.BUILTIN = {
     explorer: { art: 'nico', name: 'Nico', tint: '#F4B942' },
     colors: { art: 'lula', name: 'Lula', tint: '#CDB8F5' },
@@ -153,18 +166,36 @@
     for (var k in c.img) return c.img[k];
     return null;
   }
+  // Built-in image cast (the artwork-pack dogs): file for a role + pose, or null for the code-drawn cast.
+  var CAST_POSE = { cheer: 'celebrate', talk: 'speak', wave: 'wave', idle: 'idle', think: 'think', point: 'point' };
+  function castImg(role, pose) {
+    var C = ADV.CASTS[ADV.castId()], r = C.roles && C.roles[role];
+    if (!r) return null;
+    var p = CAST_POSE[pose] || 'idle'; if (C.poses.indexOf(p) < 0) p = 'idle';
+    return C.files + r.id + '-' + p + '.svg';
+  }
+  function castRole(role) { var C = ADV.CASTS[ADV.castId()]; return C.roles && C.roles[role]; }
+  ADV.castSplash = function () { return (ADV.pack && ADV.pack.splash) || ADV.CASTS[ADV.castId()].splash || null; };
   ADV.name = function (role) {
     var c = ADV.pack && ADV.pack.chars && ADV.pack.chars[role];
     if (c && c.name && packImg(role, 'idle')) return c.name;
+    var r = castRole(role); if (r) return r.name;
     return (ADV.BUILTIN[role] || ADV.BUILTIN.explorer).name;
   };
-  ADV.tint = function (role) { return (ADV.BUILTIN[role] || ADV.BUILTIN.explorer).tint; };
+  ADV.tint = function (role) { var r = castRole(role); return r ? r.tint : (ADV.BUILTIN[role] || ADV.BUILTIN.explorer).tint; };
+  // If a cast image cannot load (offline before first visit, missing file), swap in the code-drawn character.
+  ADV.imgFail = function (img) {
+    var box = img && img.parentNode; if (!box || box.getAttribute('data-fb')) return;
+    box.setAttribute('data-fb', '1'); box.classList.remove('is-pack');
+    var b = ADV.BUILTIN[box.getAttribute('data-role')] || ADV.BUILTIN.explorer, pose = box.getAttribute('data-pose') || 'idle';
+    box.innerHTML = ADV_ART.char(b.art, { pose: pose === 'talk' ? 'idle' : pose, talk: pose === 'talk' || pose === 'cheer' });
+  };
   /* o: {pose:'idle'|'wave'|'cheer'|'talk', mood, cls} */
   ADV.charHTML = function (role, o) {
     o = o || {};
     var pose = o.pose || 'idle', cls = 'adv-char role-' + role + ' pose-' + pose + (o.cls ? ' ' + o.cls : '');
-    var u = packImg(role, pose === 'talk' ? 'talk' : pose);
-    if (u && !o.mood) return '<div class="' + cls + ' is-pack"><img src="' + u + '" alt="" draggable="false"></div>';
+    var u = !o.mood && (packImg(role, pose === 'talk' ? 'talk' : pose) || castImg(role, pose));
+    if (u) return '<div class="' + cls + ' is-pack" data-role="' + role + '" data-pose="' + pose + '"><img src="' + u + '" alt="" draggable="false" onerror="ADV.imgFail(this)"></div>';
     var b = ADV.BUILTIN[role] || ADV.BUILTIN.explorer;
     return '<div class="' + cls + '">' + ADV_ART.char(b.art, { pose: pose === 'talk' ? 'idle' : pose, talk: pose === 'talk' || pose === 'cheer', mood: o.mood }) + '</div>';
   };
@@ -173,6 +204,8 @@
     if (c && c.sticker) return '<img src="' + c.sticker + '" alt="" draggable="false">';
     var u = packImg(role, 'cheer');
     if (u) return '<img src="' + u + '" alt="" draggable="false">';
+    var r = castRole(role);
+    if (r) return '<img src="' + ADV.CASTS[ADV.castId()].files + 'sticker-' + r.id + '.svg" alt="" draggable="false">';
     return ADV_ART.char((ADV.BUILTIN[role] || ADV.BUILTIN.explorer).art, { pose: 'cheer', talk: true });
   };
   ADV.sceneFor = function (locId) { return ADV.pack && ADV.pack.scenes && ADV.pack.scenes[locId] || null; };

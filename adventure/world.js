@@ -116,7 +116,7 @@
     setView('loading');
     var el = $('adv-loading'), t0 = Date.now(), min = ADV.reduced() ? 250 : 1100;
     function paint() {
-      var splash = ADV.pack && ADV.pack.splash;
+      var splash = ADV.castSplash();
       el.innerHTML = (splash ? '<img class="adv-load-splash" src="' + splash + '" alt="">' : '<div class="adv-load-cast">' + ['explorer', 'colors', 'chef'].map(function (r, i) { return ADV.charHTML(r, { pose: 'wave', cls: 'd' + i }); }).join('') + '</div>')
         + '<div class="adv-logo"><span class="l1">¡Vamos!</span><span class="l2">' + T({ es: 'Aventuras', en: 'Adventures' }) + '</span></div>'
         + '<div class="adv-loadbar"><i></i></div><div class="adv-load-t">' + T({ es: 'Cargando tu aventura…', en: 'Loading your adventure…' }) + '</div>';
@@ -168,7 +168,9 @@
 
   /* ---------------- a place ---------------- */
   function renderScene() {
-    var L = ADV.loc(V.loc); $('adv-scene').style.backgroundImage = L ? 'url("' + ADV.bgUrl(L) + '")' : '';
+    var L = ADV.loc(V.loc), sc = L && ADV.sceneFor(L.id);
+    $('adv-scene').style.backgroundImage = L ? 'url("' + (sc || ADV.bgUrl(L)) + '")' : '';
+    $('adv-scene').classList.toggle('is-photo', !!sc);
     $('adv-scene').setAttribute('data-loc', L ? L.id : '');
   }
   function showLoc(id) {
@@ -179,7 +181,7 @@
     var line = LINES.welcome[id] || LINES.pick, first = !V.greeted[id];
     var h = '<div class="adv-host"><button class="adv-hostbtn" data-adv="hostsay" aria-label="' + esc(ADV.name(host)) + '">' + ADV.charHTML(host, { pose: 'wave' }) + '</button>'
       + '<div class="adv-bubble big">' + T(line) + ADV.cap(line) + '</div></div>'
-      + (scene ? '<button class="adv-story" data-adv="story" aria-label="' + T(LINES.look) + '"><img src="' + scene + '" alt=""></button>' : '')
+
       + '<div class="adv-acts n' + acts.length + '">'
       + acts.map(function (a, i) {
         var A = ADV.ACTS[a];

@@ -41,6 +41,11 @@ async function view(page) { return page.evaluate(() => window.ADV && ADV.V.view)
     await p.goto(t.base + '/'); await enterTM(p);
     ok(await view(p) === 'world', 'enters the world map', await view(p));
     ok(await p.locator('.adv-place').count() === 8, '8 places on the map');
+    ok(await p.evaluate(() => /\/adventure\/assets\/cast\/luna-/.test((document.querySelector('.adv-guide .adv-char img') || {}).src || '')), 'default cast: the artwork-pack puppies (Luna guides the map)');
+    await p.evaluate(() => { ADV.setOpt('cast', 'amigos'); ADV.showWorld(false); });
+    ok(await p.evaluate(() => !!document.querySelector('.adv-guide .adv-char svg') && ADV.name('explorer') === 'Nico'), 'cast switch: neighborhood friends');
+    await p.evaluate(() => { ADV.setOpt('cast', 'perritos'); ADV.showWorld(false); });
+    ok(await p.evaluate(() => ADV.name('explorer') === 'Luna'), 'cast switch back: Luna');
     await shot(p, 'world-1280x800');
     const LOCS = await p.evaluate(() => ADV.LOCS.map(L => ({ id: L.id, acts: L.acts })));
     for (const L of LOCS) {
@@ -126,7 +131,7 @@ async function view(page) { return page.evaluate(() => window.ADV && ADV.V.view)
     /* 7. Theme switching keeps progress */
     console.log('Theme switching');
     await p.evaluate(() => { toggleTM(); goMore('adv'); }); await wait(p, 600);
-    ok(await p.locator('#adv-set .advs-th button').count() === 2, 'settings: theme picker shown');
+    ok(await p.locator('#adv-set .advs-th button').count() === 4, 'settings: theme and character pickers shown');
     await shot(p, 'settings');
     await p.evaluate(() => ADV.setOpt('theme', 'classic')); await enterTM(p);
     ok(await p.evaluate(() => getComputedStyle(document.getElementById('tm-favs')).display !== 'none' && !document.documentElement.classList.contains('th-adv')), 'switch to classic works');
@@ -166,6 +171,8 @@ async function view(page) { return page.evaluate(() => window.ADV && ADV.V.view)
       await q.goto(t.base + '/'); await enterTM(q);
       await q.evaluate(() => { ADV.showLoc('cocina'); ADV.openAct('pulperia'); }); await wait(q, 1500);
       ok(await q.locator('#adv-game .ag-card').count() > 0, 'game still renders without item art (emoji fallback)');
+      await q.evaluate(() => ADV.showWorld(false)); await wait(q, 800);
+      ok(await q.evaluate(() => !!document.querySelector('.adv-guide .adv-char svg')), 'character images missing: code-drawn character steps in');
       ok(q.__errors.length === 0, 'missing art: no JS errors', q.__errors.join(' | '));
       await q.context().close();
     }
@@ -203,6 +210,8 @@ async function view(page) { return page.evaluate(() => window.ADV && ADV.V.view)
       ok(/Done: 6 characters/.test(msg), 'zip import: 6 characters saved on device', msg);
       await enterTM(k);
       ok(await k.evaluate(() => !!document.querySelector('.adv-guide .adv-char.is-pack img[src^="blob:"]')), 'world uses the private character');
+      await k.evaluate(() => ADV.showLoc('parque')); await wait(k, 600);
+      ok(await k.evaluate(() => document.getElementById('adv-scene').classList.contains('is-photo') && /blob:/.test(document.getElementById('adv-scene').style.backgroundImage)), 'imported picture becomes the place background');
       await k.evaluate(() => ADV.showLoc('garaje')); await wait(k, 600);
       await shot(k, 'private-pack-place');
       await k.reload(); await wait(k, 1800);

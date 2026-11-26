@@ -41,14 +41,16 @@ Speech always goes through the existing `speak()`. Every line cancels the previo
 
 Every place, activity and line of dialogue names a **role**. A cast fills the roles.
 
-| Role | Teaches | Built-in original character |
-|---|---|---|
-| `explorer` | Exploring, sports, adventure | Nico (golden puppy) |
-| `colors` | Colors, shapes, matching, counting | Lula (lavender bunny) |
-| `builder` | Vehicles, puzzles, pretend play | Tío Oso (bear) |
-| `chef` | Food, family, feelings | Doña Pata (duck) |
-| `artist` | Painting, music, creativity | Mimí (cat) |
-| `animals` | Animals and nature | Coco (scarlet macaw) |
+| Role | Teaches | **Los Perritos** (default; from the artwork pack) | Amigos del Vecindario (code-drawn) |
+|---|---|---|---|
+| `explorer` | Exploring, sports, adventure | Luna | Nico (golden puppy) |
+| `colors` | Colors, shapes, matching, counting | Sol | Lula (lavender bunny) |
+| `builder` | Vehicles, puzzles, pretend play | Tomás | Tío Oso (bear) |
+| `chef` | Food, family, feelings | Mara | Doña Pata (duck) |
+| `artist` | Painting, music, creativity | Nube | Mimí (cat) |
+| `animals` | Animals and nature | Pipo | Coco (scarlet macaw) |
+
+Parents choose the cast under More → Theme & Adventures → Characters. The Perritos are image files in `adventure/assets/cast/`. If one of them fails to load, the matching code-drawn friend appears in its place automatically.
 
 Dialogue uses `{n}` for the speaking character's name. For example, `'¡Hola! Soy {n}.'` becomes "¡Hola! Soy Lula." with the built-in cast, or the private pack's name when one is loaded.
 
@@ -109,11 +111,13 @@ To add a game:
 
 ---
 
-## 5. Private characters (keeping character art off the internet)
+## 5. Bluey pictures and other personal art (device-only)
 
-The repository and `vamos-spanish.vercel.app` are **public**, so **no character-based artwork is committed or deployed**. That includes the artwork pack's six dog characters, its animation strips, character stickers and splash, and the Bluey-themed scene and reference PNGs. The public build ships only the built-in original cast.
+The repository and `vamos-spanish.vercel.app` are **public**. The artwork pack's own dogs (Los Perritos) are original and **are** committed and deployed.
 
-There are two ways to use your own character art privately.
+The **Bluey-themed pictures are not committed or deployed**: `scenes/*.png`, `references/*.png`, and the screenshots shared in chat. Publishing them would put Disney/Ludo Studio characters on a public website and repository, which risks a takedown of the whole app. They are fully usable on the tablet instead. An imported picture becomes **that place's full background** (for example, the soccer picture behind El Campo).
+
+There are two ways to load them.
 
 ### A. On the tablet (recommended)
 
@@ -125,7 +129,7 @@ What import does:
 
 - Images are shrunk and stored in this browser's IndexedDB on this device only. They are never uploaded anywhere.
 - Characters are matched to roles by the `role` text in the pack's `manifest.json` (e.g. "food and family" → `chef`).
-- Scene PNGs become optional **story pictures** on their matching place: keepy-uppy → El Parque, kitchen → La Cocina, xylophone → Sala de Juegos, soccer → El Campo.
+- Scene PNGs become **place backgrounds** on their matching place: keepy-uppy → El Parque, kitchen → La Cocina, xylophone → Sala de Juegos, soccer → El Campo. Any other picture can be set per place under *Place pictures*.
 - `references/` is never imported.
 - **Remove private pack** deletes everything it stored.
 
@@ -143,7 +147,7 @@ Only use this with a build that is **not public**: local files packaged into the
 
 The app is still a static site (no build step). After changing any `adventure/` file:
 
-1. Bump `?v=1` → `?v=2` on all seven `adventure/` tags in `index.html`.
+1. Bump the `?v=` number (currently `2`) on all seven `adventure/` tags in `index.html`.
 2. Set the same number in `AV` in `sw.js`.
 3. If you replaced an image under the same file name, also bump `V` in `sw.js` (`vamos-v3` → `vamos-v4`).
 

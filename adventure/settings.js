@@ -22,6 +22,9 @@
     h += '<div class="card hl-gold"><h3>🎨 Toddler Mode theme</h3><p style="font-size:13px;">Switching themes keeps all progress, stickers and settings.</p><div class="advs-th">'
       + '<button class="' + (S.theme === 'adventure' ? 'on' : '') + '" onclick="ADV.setOpt(\'theme\',\'adventure\')"><div class="pv">' + ADV_ART.building('casa') + '<div style="height:88px;width:66px">' + ADV_ART.char(ADV.BUILTIN.explorer.art, { pose: 'wave' }) + '</div></div>' + esc(ADV.THEMES.adventure.name.es) + '<small style="display:block;font-weight:500;color:var(--gr);font-size:11px">Illustrated neighborhood</small></button>'
       + '<button class="' + (S.theme === 'classic' ? 'on' : '') + '" onclick="ADV.setOpt(\'theme\',\'classic\')"><div class="pv" style="background:var(--gold)"><img src="/icons/toddler-splash.webp" alt=""></div>' + esc(ADV.THEMES.classic.name.es) + '<small style="display:block;font-weight:500;color:var(--gr);font-size:11px">Original big buttons</small></button>'
+      + '</div><p style="font-size:13px;margin-top:12px;"><b>Characters</b> · who hosts the neighborhood</p><div class="advs-th">'
+      + '<button class="' + (ADV.castId() === 'perritos' ? 'on' : '') + '" onclick="ADV.setOpt(\'cast\',\'perritos\')"><div class="pv">' + ['luna', 'sol', 'mara'].map(function (id) { return '<img src="/adventure/assets/cast/' + id + '-wave.svg" alt="" style="height:80px">'; }).join('') + '</div>' + esc(ADV.CASTS.perritos.name.es) + '<small style="display:block;font-weight:500;color:var(--gr);font-size:11px">Luna, Sol, Tomás, Mara, Nube, Pipo</small></button>'
+      + '<button class="' + (ADV.castId() === 'amigos' ? 'on' : '') + '" onclick="ADV.setOpt(\'cast\',\'amigos\')"><div class="pv">' + ['nico', 'lula', 'pata'].map(function (id) { return '<div style="height:84px;width:60px">' + ADV_ART.char(id, { pose: 'wave' }) + '</div>'; }).join('') + '</div>' + esc(ADV.CASTS.amigos.name.es) + '<small style="display:block;font-weight:500;color:var(--gr);font-size:11px">Nico, Lula, Tío Oso, Doña Pata, Mimí, Coco</small></button>'
       + '</div><button onclick="toggleTM()" style="margin-top:12px;width:100%;padding:12px;border-radius:50px;background:var(--ink);color:var(--gold);font-weight:800;font-size:15px;">▶ Open Toddler Mode</button></div>';
 
     // Language & sound
@@ -55,12 +58,12 @@
     ADV.ROLES.forEach(function (r) {
       var c = pk && pk.chars && pk.chars[r], has = !!(c && c.img && Object.keys(c.img).length);
       h += '<div class="advs-ch"><div class="im">' + ADV.stickerHTML(r) + '</div><div><b style="font-size:13px">' + esc(ADV.ROLE_INFO[r].en) + '</b>'
-        + '<input type="text" placeholder="Name (built-in: ' + esc(ADV.BUILTIN[r].name) + ')" value="' + esc(c && c.name || '') + '" onchange="ADV.setPackName(\'' + r + '\',this.value).then(ADV.refreshSettings)">'
+        + '<input type="text" placeholder="Name (built-in: ' + esc(ADV.name(r)) + ')" value="' + esc(c && c.name || '') + '" onchange="ADV.setPackName(\'' + r + '\',this.value).then(ADV.refreshSettings)">'
         + '<div class="advs-btns"><label>Choose image<input type="file" accept="image/*" onchange="ADV.onPickImg(this,{role:\'' + r + '\',pose:\'idle\'})"></label>'
         + '<label>Cheer pose<input type="file" accept="image/*" onchange="ADV.onPickImg(this,{role:\'' + r + '\',pose:\'celebrate\'})"></label>'
         + (has && pk.source === 'device' ? '<button class="rm" onclick="ADV.clearPackPart({role:\'' + r + '\'}).then(ADV.refreshSettings)">Use built-in</button>' : '') + '</div></div></div>';
     });
-    h += '<p class="advs-note" style="margin-top:10px"><b>Story pictures</b> (optional): a picture shown on a place\'s screen. It is decoration only, not part of a game.</p><div class="advs-acts">';
+    h += '<p class="advs-note" style="margin-top:10px"><b>Place pictures</b> (optional): your own picture becomes that place\'s background, on this device only.</p><div class="advs-acts">';
     ADV.LOCS.forEach(function (L) {
       var has = !!ADV.sceneFor(L.id);
       h += '<label style="cursor:pointer">' + (has ? '✅ ' : '＋ ') + esc(L.name.es) + '<input type="file" accept="image/*" style="display:none" onchange="ADV.onPickImg(this,{scene:\'' + L.id + '\'})"></label>'
