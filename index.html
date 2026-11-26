@@ -757,6 +757,7 @@ body{font-weight:500;letter-spacing:.1px;padding-bottom:96px;}
 /* Chunky primary buttons everywhere they're gold */
 button[style*="background:var(--gold)"]{box-shadow:0 4px 0 var(--goldd);}
 </style>
+<link rel="stylesheet" href="/adventure/adventure.css?v=1">
 </head>
 <body>
 <canvas id="confetti"></canvas>
@@ -1719,7 +1720,7 @@ function voxUtter(txt,lang){
   var useLang=lang==='en'?'en':'es';
   var u=new SpeechSynthesisUtterance(txt);
   u.lang=useLang==='en'?'en-US':'es-MX';
-  var p=voxParams();u.rate=p.rate;u.pitch=p.pitch;u.volume=1;
+  var p=voxParams();u.rate=p.rate;u.pitch=p.pitch;u.volume=(window.ADV&&ADV.narrationVolume)?ADV.narrationVolume():1;
   var v=voxPick(useLang);if(v){u.voice=v;if(v.lang)u.lang=v.lang;}
   VOX.keep.push(u);if(VOX.keep.length>8)VOX.keep.shift(); // iOS drops onend if the utterance is garbage-collected
   return u;
@@ -1854,7 +1855,7 @@ document.addEventListener('click',function(e){
 
 /* ===== CONFETTI ===== */
 let confettiRAF=0;
-function confetti(){const c=document.getElementById('confetti'),x=c.getContext('2d');if(confettiRAF)cancelAnimationFrame(confettiRAF);c.width=innerWidth;c.height=innerHeight;let p=Array.from({length:60},()=>({x:Math.random()*c.width,y:c.height+10,c:['#FFC107','#008080','#D35400','#FFFFFF'][0|Math.random()*4],vx:(Math.random()-.5)*4,vy:-(Math.random()*6+6),s:Math.random()*6+4}));let f=0;function d(){x.clearRect(0,0,c.width,c.height);p.forEach(q=>{x.fillStyle=q.c;x.fillRect(q.x,q.y,q.s,q.s);q.x+=q.vx;q.y+=q.vy;q.vy+=.15;});f++;if(f<90)confettiRAF=requestAnimationFrame(d);else{x.clearRect(0,0,c.width,c.height);confettiRAF=0;}}d();}
+function confetti(){if(window.ADV&&ADV.reduced&&ADV.reduced())return;const c=document.getElementById('confetti'),x=c.getContext('2d');if(confettiRAF)cancelAnimationFrame(confettiRAF);c.width=innerWidth;c.height=innerHeight;let p=Array.from({length:60},()=>({x:Math.random()*c.width,y:c.height+10,c:['#FFC107','#008080','#D35400','#FFFFFF'][0|Math.random()*4],vx:(Math.random()-.5)*4,vy:-(Math.random()*6+6),s:Math.random()*6+4}));let f=0;function d(){x.clearRect(0,0,c.width,c.height);p.forEach(q=>{x.fillStyle=q.c;x.fillRect(q.x,q.y,q.s,q.s);q.x+=q.vx;q.y+=q.vy;q.vy+=.15;});f++;if(f<90)confettiRAF=requestAnimationFrame(d);else{x.clearRect(0,0,c.width,c.height);confettiRAF=0;}}d();}
 
 /* ===== DRUM ===== */
 let drumAudioCtx=null;
@@ -2265,13 +2266,14 @@ var stPopT=0;
 function stAward(id){
   var st=STICKERS.find(function(x){return x.id===id;});if(!st)return;
   if(!S.st)S.st={};S.st[id]=(S.st[id]||0)+1;S.stN=(S.stN||0)+1;sv();
-  var pop=document.getElementById('st-pop');
+  var advShown=!!(window.ADV&&ADV.onSticker&&ADV.onSticker(id));
+  var pop=advShown?null:document.getElementById('st-pop');
   if(pop){
     pop.innerHTML='<div class="st-pop-em">'+st.em+'</div><div class="st-pop-t">'+TL('¡Una calcomanía!','A sticker!')+'</div><div class="st-pop-s">'+st[appLang==='en'?'en':'es']+' · '+(S.st[id])+'</div>';
     pop.classList.add('sh');
     if(stPopT)clearTimeout(stPopT);stPopT=setTimeout(function(){pop.classList.remove('sh');},2200);
   }
-  setTimeout(function(){speak(TL('¡Una calcomanía nueva!','A new sticker!'),appLang);},1100);
+  if(!advShown)setTimeout(function(){speak(TL('¡Una calcomanía nueva!','A new sticker!'),appLang);},1100);
   if(tCat==='stickers')renderStickers();
   if(typeof checkAch==='function')checkAch();
 }
@@ -2307,7 +2309,7 @@ function stTap(id){
 /* ===== TODDLER MODE ===== */
 /* v_tmOn remembers that Toddler Mode is on, so a reload comes back into it; leaving (Hold to Exit) clears it.
    restoring=true means it is coming back after a reload, so it does not count as opening Toddler Mode again (S.tm). */
-function toggleTM(restoring){const tm=document.getElementById('tmode');const entering=!tm.classList.contains('act');tm.classList.toggle('act');document.documentElement.classList.toggle('tm-on',entering);if(entering){L.s('tmOn',1);setTCat('home',null);if(!restoring){S.tm=(S.tm||0)+1;sv();}tmLogDay();if(typeof checkAch==='function')checkAch();try{var rf=document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen();if(rf&&rf.catch)rf.catch(function(){});}catch(e){}for(let i=0;i<5;i++)history.pushState({toddler:true},'');window.addEventListener('popstate',tmPopTrap);wlOn();}else{try{localStorage.removeItem('v_tmOn');}catch(e){}try{var xf=document.fullscreenElement&&document.exitFullscreen&&document.exitFullscreen();if(xf&&xf.catch)xf.catch(function(){});}catch(e){}window.removeEventListener('popstate',tmPopTrap);history.replaceState({},'');wlOff();dmStop();if(typeof closeSoccerGame==='function')closeSoccerGame();if(typeof rH==='function')rH();if(morePage==='dash'&&typeof rM==='function')rM();}if(profile)document.getElementById('tm-greeting').textContent=tmGreeting();}
+function toggleTM(restoring){const tm=document.getElementById('tmode');const entering=!tm.classList.contains('act');tm.classList.toggle('act');document.documentElement.classList.toggle('tm-on',entering);if(entering){L.s('tmOn',1);setTCat('home',null);if(!restoring){S.tm=(S.tm||0)+1;sv();}tmLogDay();if(typeof checkAch==='function')checkAch();try{var rf=document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen();if(rf&&rf.catch)rf.catch(function(){});}catch(e){}for(let i=0;i<5;i++)history.pushState({toddler:true},'');window.addEventListener('popstate',tmPopTrap);wlOn();}else{try{localStorage.removeItem('v_tmOn');}catch(e){}try{var xf=document.fullscreenElement&&document.exitFullscreen&&document.exitFullscreen();if(xf&&xf.catch)xf.catch(function(){});}catch(e){}window.removeEventListener('popstate',tmPopTrap);history.replaceState({},'');wlOff();dmStop();if(typeof closeSoccerGame==='function')closeSoccerGame();if(typeof rH==='function')rH();if(morePage==='dash'&&typeof rM==='function')rM();}if(profile)document.getElementById('tm-greeting').textContent=tmGreeting();if(window.ADV&&ADV.onToggle)ADV.onToggle(entering);}
 function tmPopTrap(e){if(document.getElementById('tmode').classList.contains('act')){history.pushState({toddler:true},'');}}
 let exitTimer=null;let exitCount=3;
 const exitBtn=document.getElementById('tm-lock-exit');
@@ -2396,7 +2398,7 @@ function checkMatch(picked,btn){
   if(picked===matchTarget[lblKey]){matchScore++;matchStreak++;if(matchScore%5===0)stAward('mat');res.textContent=tmYes(matchTarget[lblKey]);res.style.color='var(--teal)';confetti();tmSay('good',matchTarget[lblKey]);setTimeout(function(){startMatchGame(tCat==='match'?pickMatchCat():matchTarget.cat);},matchStreak>=5?1200:2000);}
   else{matchStreak=0;gentleRetry(res,tmPrompt('touch',matchTarget[lblKey]),appLang,btn);}
 }
-function setTCat(c,btn){if(DM.on&&c!==DM.mode)dmStop();if(typeof closeSoccerGame==='function')closeSoccerGame();tCat=c;matchScore=0;matchStreak=0;document.querySelectorAll('.tt-tab').forEach(function(t){t.classList.remove('act');});if(btn)btn.classList.add('act');document.querySelectorAll('.tm-fav').forEach(function(f){f.classList.toggle('act',f.dataset.fav===c);});var tmEl=document.getElementById('tmode');if(tmEl)tmEl.classList.toggle('tm-playing',c!=='home');renderToys();}
+function setTCat(c,btn){if(DM.on&&c!==DM.mode)dmStop();if(typeof closeSoccerGame==='function')closeSoccerGame();tCat=c;matchScore=0;matchStreak=0;document.querySelectorAll('.tt-tab').forEach(function(t){t.classList.remove('act');});if(btn)btn.classList.add('act');document.querySelectorAll('.tm-fav').forEach(function(f){f.classList.toggle('act',f.dataset.fav===c);});var tmEl=document.getElementById('tmode');if(tmEl)tmEl.classList.toggle('tm-playing',c!=='home');renderToys();if(window.ADV&&ADV.onCat)ADV.onCat(c);}
 function tmFav(c){var b=document.querySelector('.tt-tab[data-tcat="'+c+'"]');setTCat(c,b);var tmEl=document.getElementById('tmode');if(tmEl)tmEl.scrollTop=0;}
 function tmMore(){var t=document.getElementById('ttabs');if(!t)return;var open=t.classList.toggle('open');var mb=document.getElementById('tm-more-btn');if(mb)mb.textContent=tmMoreLabel(open);}
 function openLessonTM(){toggleTM();setTimeout(function(){var btn=document.querySelector('[data-tcat="lesson"]');setTCat('lesson',btn);},500);}
@@ -4774,6 +4776,7 @@ h+=`<div class="subpg ${morePage==='grid'?'act':''}" id="m-grid"><div class="mor
 ['sg','music|c-purple','Songs','Spanish songs with YouTube search links.'],
 ['lb','library|c-ink','Library','Lee County daily literacy activities.'],
 ['cg','link|c-teal','Cognates','Bilingual bonus words you already know.'],
+['adv','star|c-gold','Theme & Adventures','Toddler Mode theme, characters, sound and activities.'],
 ['st','sliders|c-ink','Settings','Profile updates and reset progress tools.']
 ].map(([id,ico,title,desc])=>`<button class="more-card" onclick="openMore('${id}')"><div class="more-ico ict ${ico.split('|')[1]}">${ic(ico.split('|')[0])}</div><h3>${title}</h3><p>${desc}</p></button>`).join('')}</div></div>`;
 
@@ -4949,6 +4952,7 @@ h+=`<div class="subpg ${morePage==='cg'?'act':''}" id="m-cg"><button class="back
 <div class="card"><h3>Words You Already Know</h3>${[["Chocolate","choh-koh-LAH-teh","From Nahuatl, same word!"],["Hospital","ohs-pee-TAHL","Identical"],["Familia","fah-MEE-lee-ah","Family — sounds similar"],["Música","MOO-see-kah","Music — add an accent"],["Animal","ah-nee-MAHL","Exactly the same"],["Teléfono","teh-LEH-foh-noh","Telephone — easy cognate"],["Guineo","gee-NEH-oh","Banana — Caribbean root"],["Limón","lee-MOHN","Lemon — close enough"],["Importante","eem-por-TAHN-teh","Important — just add -e"],["Información","een-for-mah-see-OHN","Information — swap the ending"],["Natural","nah-too-RAHL","Identical"],["Tropical","troh-pee-KAHL","Same in Florida!"]].map(([a,ph,b])=>`<div class="vp" style="flex-wrap:wrap;"><span class="ve">${a} ${spB(a)}</span><span style="color:var(--terra);font-size:11px;font-weight:700;width:100%;">🗣 ${ph} <span style="color:var(--gr);font-weight:500;">(${b})</span></span></div>`).join('')}</div>
 <div class="card hl-teal"><h3>💡 The -tion → -ción Cheat Code</h3><p>Almost ANY English word ending in "-tion" becomes Spanish by changing it to "-ción": nation→nación, education→educación, information→información, celebration→celebración, communication→comunicación. You just unlocked hundreds of words!</p></div></div>`;
 
+h+=`<div class="subpg ${morePage==='adv'?'act':''}" id="m-adv"><button class="back-btn" onclick="openMore('grid')">← Back to More</button><div id="adv-set">${window.ADV&&ADV.settingsHTML?ADV.settingsHTML():'<div class="card">Loading…</div>'}</div></div>`;
 h+=`<div class="subpg ${morePage==='st'?'act':''}" id="m-st"><button class="back-btn" onclick="openMore('grid')">← Back to More</button><div class="card"><h3>⚙️ Your Profile</h3>
 <p style="margin-bottom:12px;">Tap to update your info.</p>
 <div style="background:var(--grl);padding:14px;border-radius:var(--rs);margin-bottom:8px;"><b>Name:</b> ${profile?profile.name:'Not set'}</div>
@@ -5251,5 +5255,12 @@ function tvGoHome(){
   }
 }
 </script>
+<!-- ¡Vamos! Aventuras: theme engine + illustrated neighborhood (see docs/ADVENTURES.md) -->
+<script src="/adventure/art.js?v=1"></script>
+<script src="/adventure/art-items.js?v=1"></script>
+<script src="/adventure/theme.js?v=1"></script>
+<script src="/adventure/games.js?v=1"></script>
+<script src="/adventure/world.js?v=1"></script>
+<script src="/adventure/settings.js?v=1"></script>
 </body>
 </html>
