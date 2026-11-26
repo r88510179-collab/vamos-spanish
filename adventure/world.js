@@ -82,16 +82,22 @@
     showLoading();
   };
   ADV.onCat = function (c) {
-    if (!ADV.isWorld() || !tmOn() || V.view === 'off' || V.view === 'loading') return;
+    if (!ADV.isWorld() || !tmOn() || V.view === 'off') return;
     if (c === 'adv') return;
+    // A shortcut (TV mode, "Start lesson", soccer) can ask for a game while the loading screen is up: open it afterwards.
+    if (V.view === 'loading') { if (c !== 'home') V.pending = c; return; }
     if (c === 'home') { if (V.view === 'game') showWorld(false); return; }
     if (V.view === 'game' && V.act && ADV.ACTS[V.act] && ADV.ACTS[V.act].cat === c) return;
     // Opened from outside the world (TV mode, "Start lesson" in the parent app, soccer shortcut): find its place.
+    var f = actForCat(c);
+    stopGame(); V.loc = f.loc || 'escuela'; V.act = f.id; setView('game'); renderScene(); renderBar();
+  };
+  function actForCat(c) {
     var id = null, loc = null;
     Object.keys(ADV.ACTS).some(function (k) { if (ADV.ACTS[k].kind === 'cat' && ADV.ACTS[k].cat === c) { id = k; return true; } });
     if (id) ADV.LOCS.some(function (L) { if (L.acts.indexOf(id) > -1) { loc = L.id; return true; } });
-    stopGame(); V.loc = loc || 'escuela'; V.act = id; setView('game'); renderScene(); renderBar();
-  };
+    return { id: id, loc: loc };
+  }
   ADV.onSticker = function (id) {
     if (!ADV.isWorld() || !tmOn()) return false;
     var res = award(V.act || null);
@@ -106,6 +112,7 @@
   /* ---------------- loading screen ---------------- */
   function showLoading() {
     clearLater(); stopGame(); parkExisting();
+    V.pending = null;
     setView('loading');
     var el = $('adv-loading'), t0 = Date.now(), min = ADV.reduced() ? 250 : 1100;
     function paint() {
@@ -117,7 +124,11 @@
     paint();
     ADV.loadPack().then(function () {
       paint();
-      later(function () { showWorld(true); }, Math.max(0, min - (Date.now() - t0)));
+      later(function () {
+        var pc = V.pending; V.pending = null;
+        var f = pc ? actForCat(pc) : null;
+        if (f && f.id) { V.loc = f.loc || 'escuela'; openAct(f.id); } else showWorld(true);
+      }, Math.max(0, min - (Date.now() - t0)));
     });
   }
 
@@ -260,7 +271,7 @@
   var popT = 0;
   function miniPop(res) {
     var el = $('adv-pop'); if (!el) return;
-    el.innerHTML = '<span class="pc">' + ADV.charHTML(res.role, { pose: 'cheer' }) + '</span><span class="ps">' + ADV.reward('star') + '<b>+' + (res.daily ? 2 : 1) + '</b></span>';
+    el.innerHTML = '<span class="adv-pc">' + ADV.charHTML(res.role, { pose: 'cheer' }) + '</span><span class="adv-ps">' + ADV.reward('star') + '<b>+' + (res.daily ? 2 : 1) + '</b></span>';
     el.classList.remove('sh'); void el.offsetWidth; el.classList.add('sh');
     if (ADV.sfx) ADV.sfx.star();
     clearTimeout(popT); popT = setTimeout(function () { el.classList.remove('sh'); }, 2300);

@@ -41,6 +41,7 @@
       start: function (el, ctx) { if (K) K.kill(); K = kit(id, el, ctx); impl.start(K); },
       stop: function () { if (K) { K.kill(); if (impl.stop) impl.stop(K); } K = null; },
       repeat: function () { if (K) K.repeat(); },
+      answer: function () { return K ? K.answer : null; }, // the current correct choice (used by automated tests)
       pause: function () { if (K && impl.pause) impl.pause(K); },
       resume: function () { if (K && impl.resume) impl.resume(K); }
     };
@@ -119,10 +120,11 @@
       if (kind === 'color') {
         var cs = shuf(COLORS).slice(0, easy() ? 3 : 4); S.target = cs[rnd(cs.length)];
         spawn(K, cs);
+        K.answer = S.target.id;
         K.prompt({ es: '¡Tocá el globo ' + S.target.es + '!', en: 'Touch the ' + S.target.en + ' balloon!' });
       } else {
         S.target = COLORS[rnd(COLORS.length)]; S.goal = easy() ? 3 + rnd(3) : 5 + rnd(4);
-        spawn(K, [S.target]);
+        spawn(K, [S.target]); K.answer = S.target.id;
         K.prompt({ es: '¡Mantené el globo arriba! ¡Contá conmigo hasta ' + num(S.goal).es.toLowerCase() + '!', en: 'Keep the balloon up! Count with me to ' + num(S.goal).en.toLowerCase() + '!' });
       }
     }
@@ -179,7 +181,7 @@
       K.t(function () { b.classList.remove('lit'); }, ms || 380);
     }
     function play(K) {
-      K.busy = true; S.pos = 0;
+      K.busy = true; S.pos = 0; K.answer = S.seq[0];
       var names = S.seq.map(function (i) { return BARS[i]; });
       K.prompt({ es: '¡Escuchá!', en: 'Listen!' }, function () {
         S.seq.forEach(function (i, k) { K.t(function () { light(K, i, 420); }, 300 + k * 700); });
@@ -195,12 +197,13 @@
       S.seq = []; for (var i = 0; i < len; i++) { var r; do { r = rnd(BARS.length); } while (S.seq.length && r === S.seq[S.seq.length - 1]); S.seq.push(r); }
       play(K);
     }
+    function want(K) { K.answer = S.seq[S.pos]; }
     function tap(K, i) {
       if (S.free) { light(K, i); var now = Date.now(); if (now - S.lastSay > 700) { S.lastSay = now; K.say({ es: cap(BARS[i].es), en: cap(BARS[i].en) }); } return; }
       if (K.busy) return;
       light(K, i);
       if (i === S.seq[S.pos]) {
-        S.pos++;
+        S.pos++; want(K);
         if (S.pos >= S.seq.length) { K.busy = true; K.dot(S.wins); S.wins++; ADV.sfx.yes(); K.say(K.good()); K.t(function () { next(K); }, 1800); }
       } else {
         K.busy = true; ADV.sfx.soft(); ADV.wiggle(K.el.querySelectorAll('.ag-bar')[i]);
@@ -240,6 +243,7 @@
       var shelf = shuf(STOCK).slice(0, 6); S.want = shelf[rnd(6)]; S.n = 0; S.goal = 1 + rnd(easy() ? 3 : 5);
       K.el.querySelector('.ag-shelf').innerHTML = shelf.map(function (id) { return card(id); }).join('');
       K.el.querySelector('.ag-basket .in').innerHTML = '';
+      K.answer = S.want;
       K.prompt(ask(FOOD[S.want], S.goal));
     }
     function tap(K, b) {
@@ -264,7 +268,7 @@
     return {
       start: function (K) {
         S = { done: 0 };
-        var st = K.frame('<div class="ag-store"><div class="ag-shelf"></div><div class="ag-basket">' + ADV.pic('basket', 'bk') + '<div class="in"></div></div></div>', 4);
+        var st = K.frame('<div class="ag-store"><div class="ag-shelf"></div><div class="ag-basket">' + ADV.pic('basket', 'ag-bk') + '<div class="in"></div></div></div>', 4);
         st.addEventListener('click', function (e) { var b = e.target.closest('.ag-shelf .ag-card'); if (b) tap(K, b); });
         K.prompt({ es: '¡Bienvenidos a la pulpería!', en: 'Welcome to the corner store!' }, function () { order(K); });
       }
@@ -283,9 +287,10 @@
     function needLine(f) { return { es: 'Necesitamos ' + art(f) + ' ' + f.es + ' ' + f.adj.es + '.', en: 'We need the ' + f.adj.en + ' ' + f.en + '.' }; }
     function ask(K) {
       if (S.i >= S.r.need.length) {
-        S.stir = 0; K.el.querySelector('.ag-bowl').classList.add('ready');
+        S.stir = 0; K.answer = 'bowl'; K.el.querySelector('.ag-bowl').classList.add('ready');
         return K.prompt({ es: '¡A mezclar! Tocá el tazón tres veces.', en: "Let's mix! Tap the bowl three times." });
       }
+      K.answer = S.r.need[S.i];
       K.prompt(needLine(FOOD[S.r.need[S.i]]));
     }
     function tap(K, b) {
@@ -321,7 +326,7 @@
         S = { r: RECIPES[rnd(RECIPES.length)], i: 0, stir: 0 };
         var opts = shuf(S.r.need.concat(shuf(S.r.extra).slice(0, easy() ? 2 : 3)));
         var st = K.frame('<div class="ag-kitchen"><div class="ag-pantry">' + opts.map(function (id) { return card(id); }).join('') + '</div>'
-          + '<button class="ag-bowl" aria-label="tazón">' + ADV.pic('bowl', 'bw') + '<span class="in"></span>' + ADV.pic('spoon', 'sp') + '</button></div>', 4);
+          + '<button class="ag-bowl" aria-label="tazón">' + ADV.pic('bowl', 'ag-bw') + '<span class="in"></span>' + ADV.pic('spoon', 'ag-sp') + '</button></div>', 4);
         st.addEventListener('click', function (e) {
           var b = e.target.closest('.ag-pantry .ag-card'); if (b) return tap(K, b);
           if (e.target.closest('.ag-bowl')) stir(K);
@@ -345,6 +350,7 @@
       S.hide = {}; S.tries = 0;
       SPOTS.slice(0, spots).forEach(function (sp, i) { S.hide[sp.id] = toys[i]; });
       S.want = toys[rnd(spots)];
+      K.answer = Object.keys(S.hide).filter(function (k) { return S.hide[k] === S.want; })[0];
       K.el.querySelector('.ag-room').innerHTML = SPOTS.slice(0, spots).map(function (sp) {
         return '<button class="ag-spot" data-s="' + sp.id + '" aria-label="' + sp.es + '"><span class="toy">' + ADV.pic(S.hide[sp.id]) + '</span><span class="cover">' + ADV.pic(sp.id) + '</span></button>';
       }).join('');
@@ -387,7 +393,7 @@
         if (S.r >= S.rounds) return K.finish();
         var q = cfg.question(S.r), n = easy() ? 3 : 4;
         var opts = shuf(q.pool).slice(0, n); if (opts.indexOf(q.target) < 0) opts[rnd(n)] = q.target;
-        S.q = q;
+        S.q = q; K.answer = q.target;
         K.el.querySelector('.ag-choices').className = 'ag-choices n' + n;
         K.el.querySelector('.ag-choices').innerHTML = opts.map(function (o) { return '<button class="ag-card big" data-id="' + o + '" aria-label="' + esc(cfg.label(o)) + '">' + cfg.pic(o) + '</button>'; }).join('');
         K.prompt(q.ask);
@@ -422,7 +428,7 @@
     rooster: { es: 'el gallo', en: 'the rooster', s: 'quiquiriquí', sEn: 'cock-a-doodle-doo' }, frog: { es: 'la rana', en: 'the frog', s: 'croac', sEn: 'ribbit' },
     horse: { es: 'el caballo', en: 'the horse', s: 'iiii', sEn: 'neigh' }, chick: { es: 'el pollito', en: 'the chick', s: 'pío pío', sEn: 'peep peep' }
   };
-  function soundGame(id, DATA, intro, word) {
+  function soundGame(id, DATA, intro, word, who) {
     var keys = Object.keys(DATA);
     choiceGame(id, {
       intro: intro, rounds: 5,
@@ -430,7 +436,7 @@
       question: function (r) {
         var t = keys[rnd(keys.length)], a = DATA[t];
         var ask = r % 2 === 0
-          ? { es: '¿Quién dice ' + a.s + '?', en: 'Who says ' + a.sEn + '?' }
+          ? { es: who.es + ' ' + a.s + '?', en: who.en + ' ' + a.sEn + '?' }
           : { es: '¿Dónde está ' + a.es + '?', en: 'Where is ' + a.en + '?' };
         return { target: t, pool: keys, ask: ask };
       },
@@ -438,14 +444,14 @@
       no: function (p) { var a = DATA[p]; return { es: '¡Es ' + a.es + '! ¡' + cap(a.s) + '!', en: "It's " + a.en + '! ' + cap(a.sEn) + '!' }; }
     });
   }
-  soundGame('animales', ANIMALS, { es: '¡Hola! Soy {n}. ¡Escuchá a los animales!', en: "Hi! I'm {n}. Listen to the animals!" }, { es: 'dice', en: 'says' });
+  soundGame('animales', ANIMALS, { es: '¡Hola! Soy {n}. ¡Escuchá a los animales!', en: "Hi! I'm {n}. Listen to the animals!" }, { es: 'dice', en: 'says' }, { es: '¿Quién dice', en: 'Who says' });
   var VEHICLES = {
     car: { es: 'el carro', en: 'the car', s: 'run run', sEn: 'vroom vroom' }, motorcycle: { es: 'la moto', en: 'the motorcycle', s: 'brum brum', sEn: 'brrm brrm' },
     train: { es: 'el tren', en: 'the train', s: 'chu chu', sEn: 'choo choo' }, airplane: { es: 'el avión', en: 'the airplane', s: 'zuuum', sEn: 'zoom' },
     boat: { es: 'el barco', en: 'the boat', s: 'tuu tuu', sEn: 'toot toot' }, firetruck: { es: 'el camión de bomberos', en: 'the fire truck', s: 'uiu uiu', sEn: 'wee-oo wee-oo' },
     bicycle: { es: 'la bicicleta', en: 'the bicycle', s: 'rin rin', sEn: 'ring ring' }, bus: { es: 'el autobús', en: 'the bus', s: 'bip bip', sEn: 'beep beep' }
   };
-  soundGame('ruidos', VEHICLES, { es: '¡Hola! Soy {n}. ¿Qué suena en el garaje?', en: "Hi! I'm {n}. What sounds are in the garage?" }, { es: 'hace', en: 'goes' });
+  soundGame('ruidos', VEHICLES, { es: '¡Hola! Soy {n}. ¿Qué suena en el garaje?', en: "Hi! I'm {n}. What sounds are in the garage?" }, { es: 'hace', en: 'goes' }, { es: '¿Cuál hace', en: 'Which one goes' });
 
   var FAMILY = {
     mom: { es: 'mamá', en: 'mom' }, dad: { es: 'papá', en: 'dad' }, baby: { es: 'el bebé', en: 'the baby' }, grandma: { es: 'la abuela', en: 'grandma' },
